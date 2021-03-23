@@ -49,6 +49,16 @@ public class BankAccountTest {
         assertEquals(new Dollars(90), bankAccount.getBalance());
     }
 
+    @Test
+    void givenABankAccountWith100USDBalanceWhenWithdrawANegativeAmountThenItShouldRejectTheWithdraw() {
+        BankAccount bankAccount = createBankAccountWith100USDBalance();
+
+        assertThrows(IllegalArgumentException.class, () ->
+                bankAccount.withdraw(new Dollars(-10)));
+
+        assertEquals(new Dollars(100), bankAccount.getBalance());
+    }
+
     private BankAccount createBankAccountWith100USDBalance() {
         return Bank.newAccountOwnedBy(customer)
                 .withInitialBalance(new Dollars(100))

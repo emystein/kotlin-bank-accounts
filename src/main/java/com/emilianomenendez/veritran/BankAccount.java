@@ -20,12 +20,18 @@ public class BankAccount {
     }
 
     public void deposit(Dollars amountToDeposit) {
-        Preconditions.checkArgument(amountToDeposit.isPositive());
+        assertPositive(amountToDeposit);
 
         balance = balance.plus(amountToDeposit);
     }
 
     public void withdraw(Dollars amountToWithdraw) {
+        assertPositive(amountToWithdraw);
+
         balance = balance.minus(amountToWithdraw);
+    }
+
+    private void assertPositive(Dollars amountToCheck) {
+        Preconditions.checkArgument(amountToCheck.isPositive());
     }
 }
