@@ -16,18 +16,14 @@ public class BankAccountTest {
 
     @Test
     void givenACustomerAndAnInitialAmountWhenCreateABankAccountThenItShouldHaveInitialBalance() {
-        BankAccount createdAccount = Bank.newAccountOwnedBy(customer)
-                .withInitialBalance(new Dollars(100))
-                .build();
+        BankAccount createdAccount = createBankAccountWith100USDBalance();
 
         assertEquals(new Dollars(100), createdAccount.getBalance());
     }
 
     @Test
     void givenABankAccountWith100USDBalanceWhenDeposit10USDThenBalanceShouldBe110USD() {
-        BankAccount bankAccount = Bank.newAccountOwnedBy(customer)
-                .withInitialBalance(new Dollars(100))
-                .build();
+        BankAccount bankAccount = createBankAccountWith100USDBalance();
 
         bankAccount.deposit(new Dollars(10));
 
@@ -36,9 +32,7 @@ public class BankAccountTest {
 
     @Test
     void givenABankAccountWith100USDBalanceWhenDepositANegativeAmountThenItShouldRejectTheDeposit() {
-        BankAccount bankAccount = Bank.newAccountOwnedBy(customer)
-                .withInitialBalance(new Dollars(100))
-                .build();
+        BankAccount bankAccount = createBankAccountWith100USDBalance();
 
         assertThrows(IllegalArgumentException.class, () ->
                 bankAccount.deposit(new Dollars(-10)));
@@ -48,12 +42,16 @@ public class BankAccountTest {
 
     @Test
     void givenABankAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
-        BankAccount bankAccount = Bank.newAccountOwnedBy(customer)
-                .withInitialBalance(new Dollars(100))
-                .build();
+        BankAccount bankAccount = createBankAccountWith100USDBalance();
 
         bankAccount.withdraw(new Dollars(10));
 
         assertEquals(new Dollars(90), bankAccount.getBalance());
+    }
+
+    private BankAccount createBankAccountWith100USDBalance() {
+        return Bank.newAccountOwnedBy(customer)
+                .withInitialBalance(new Dollars(100))
+                .build();
     }
 }
