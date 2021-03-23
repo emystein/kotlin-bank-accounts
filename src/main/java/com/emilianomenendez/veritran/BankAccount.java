@@ -25,10 +25,17 @@ public class BankAccount {
         balance = balance.plus(amountToDeposit);
     }
 
-    public void withdraw(Dollars amountToWithdraw) {
+    public void withdraw(Dollars amountToWithdraw) throws OverdraftException  {
         assertPositive(amountToWithdraw);
+        assertSufficientFunds(amountToWithdraw);
 
         balance = balance.minus(amountToWithdraw);
+    }
+
+    private void assertSufficientFunds(Dollars amountToWithdraw) throws OverdraftException {
+        if (amountToWithdraw.isGreaterThan(balance)) {
+            throw new OverdraftException();
+        };
     }
 
     private void assertPositive(Dollars amountToCheck) {

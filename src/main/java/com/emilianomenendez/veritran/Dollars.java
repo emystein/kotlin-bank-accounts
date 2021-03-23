@@ -17,6 +17,10 @@ public class Dollars {
         return amount >= 0;
     }
 
+    public boolean isGreaterThan(Dollars amountToCheck) {
+        return amount > amountToCheck.amount;
+    }
+
     public Dollars plus(Dollars amountToAdd) {
         return new Dollars(amount += amountToAdd.amount);
     }

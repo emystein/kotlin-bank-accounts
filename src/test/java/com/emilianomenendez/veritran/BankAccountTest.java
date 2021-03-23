@@ -41,7 +41,7 @@ public class BankAccountTest {
     }
 
     @Test
-    void givenABankAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
+    void givenABankAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() throws Exception {
         BankAccount bankAccount = createBankAccountWith100USDBalance();
 
         bankAccount.withdraw(new Dollars(10));
@@ -58,6 +58,17 @@ public class BankAccountTest {
 
         assertEquals(new Dollars(100), bankAccount.getBalance());
     }
+
+    @Test
+    void givenABankAccountWith100USDBalanceWhenWithdraw200USDThenItShouldRejectTheWithdraw() {
+        BankAccount bankAccount = createBankAccountWith100USDBalance();
+
+        assertThrows(OverdraftException.class, () ->
+                bankAccount.withdraw(new Dollars(200)));
+
+        assertEquals(new Dollars(100), bankAccount.getBalance());
+    }
+
 
     private BankAccount createBankAccountWith100USDBalance() {
         return Bank.newAccountOwnedBy(customer)
