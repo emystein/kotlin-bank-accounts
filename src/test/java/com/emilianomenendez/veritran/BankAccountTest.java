@@ -98,6 +98,18 @@ public class BankAccountTest {
     }
 
     @Test
+    void givenABankAccountWhenTransferNegativeAmountToADestinationAccountThenTheTransferShouldBeRejected() {
+        BankAccount debitAccount = createBankAccountFor(francisco, new Dollars(100));
+        BankAccount creditAccount = createBankAccountFor(mabel, new Dollars(100));
+
+        assertThrows(IllegalArgumentException.class, () ->
+                debitAccount.transfer(creditAccount, new Dollars(-10)));
+
+        assertEquals(new Dollars(100), debitAccount.getBalance());
+        assertEquals(new Dollars(100), creditAccount.getBalance());
+    }
+
+    @Test
     void givenABankAccountWith100USDBalanceWhenTransfer110USDToADestinationAccountThenTheTransferShouldBeRejectedDueToInsufficientFunds() {
         BankAccount debitAccount = createBankAccountFor(francisco, new Dollars(100));
         BankAccount creditAccount = createBankAccountFor(mabel, new Dollars(100));
