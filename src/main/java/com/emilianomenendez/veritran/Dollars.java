@@ -21,6 +21,10 @@ public class Dollars {
         return new Dollars(amount += amountToAdd.amount);
     }
 
+    public Dollars minus(Dollars amountToSubtract) {
+        return new Dollars(amount -= amountToSubtract.amount);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

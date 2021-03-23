@@ -45,4 +45,15 @@ public class BankAccountTest {
 
         assertEquals(new Dollars(100), bankAccount.getBalance());
     }
+
+    @Test
+    void givenABankAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
+        BankAccount bankAccount = Bank.newAccountOwnedBy(customer)
+                .withInitialBalance(new Dollars(100))
+                .build();
+
+        bankAccount.withdraw(new Dollars(10));
+
+        assertEquals(new Dollars(90), bankAccount.getBalance());
+    }
 }

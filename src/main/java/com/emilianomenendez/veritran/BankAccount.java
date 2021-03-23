@@ -24,4 +24,8 @@ public class BankAccount {
 
         balance = balance.plus(amountToDeposit);
     }
+
+    public void withdraw(Dollars amountToWithdraw) {
+        balance = balance.minus(amountToWithdraw);
+    }
 }
