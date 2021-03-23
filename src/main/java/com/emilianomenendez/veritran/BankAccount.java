@@ -35,7 +35,7 @@ public class BankAccount {
     private void assertSufficientFunds(Dollars amountToWithdraw) throws OverdraftException {
         if (amountToWithdraw.isGreaterThan(balance)) {
             throw new OverdraftException();
-        };
+        }
     }
 
     private void assertPositive(Dollars amountToCheck) {
