@@ -9,14 +9,14 @@ public class BankAccountTest {
     private Customer customer = Customer.named("francisco");
 
     @Test
-    void givenACustomerWhenCreateAnAccountForTheCustomerThenItShouldBeOwnedByTheCustomer() {
+    void givenACustomerWhenCreateABankAccountThenItShouldBeOwnedByTheCustomer() {
         BankAccount createdAccount = Bank.newAccountOwnedBy(customer).build();
 
         assertTrue(createdAccount.isOwnedBy(customer));
     }
 
     @Test
-    void givenACustomerAndAnInitialBalanceWhenCreateAnAccountForTheCustomerThenItShouldHaveInitialBalance() {
+    void givenACustomerAndAnInitialAmountWhenCreateABankAccountThenItShouldHaveInitialBalance() {
         BankAccount createdAccount = Bank.newAccountOwnedBy(customer)
                 .withInitialBalance(new Dollars(100))
                 .build();
