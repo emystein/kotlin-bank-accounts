@@ -37,9 +37,17 @@ public class BankAccount {
     }
 
     public void transfer(BankAccount destinationAccount, Dollars amountToTransfer) throws OverdraftException {
+        assertDestinationAccountIsNotThis(destinationAccount);
+
         withdraw(amountToTransfer);
 
         destinationAccount.deposit(amountToTransfer);
+    }
+
+    private void assertDestinationAccountIsNotThis(BankAccount destinationAccount) {
+        if (destinationAccount == this) {
+            throw new SameAccountException();
+        }
     }
 
     private void assertSufficientFunds(Dollars amountToWithdraw) throws OverdraftException {

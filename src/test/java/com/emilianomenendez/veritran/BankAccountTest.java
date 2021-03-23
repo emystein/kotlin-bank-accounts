@@ -87,14 +87,36 @@ public class BankAccountTest {
     }
 
     @Test
-    void givenABankAccountWith100USDBalanceWhenTransfer10USDToADestinationAccountThenTheDestinationAccountShouldIncreaseBalanceIn10USD() throws OverdraftException {
-        BankAccount sourceAccount = createBankAccountFor(francisco, new Dollars(100));
-        BankAccount destinationAccount = createBankAccountFor(mabel, new Dollars(100));
+    void givenABankAccountWith100USDBalanceWhenTransfer10USDToADestinationAccountThenTheDestinationAccountShouldIncreaseBalanceIn10USD() throws OverdraftException, SameAccountException {
+        BankAccount debitAccount = createBankAccountFor(francisco, new Dollars(100));
+        BankAccount creditAccount = createBankAccountFor(mabel, new Dollars(100));
 
-        sourceAccount.transfer(destinationAccount, new Dollars(10));
+        debitAccount.transfer(creditAccount, new Dollars(10));
 
-        assertEquals(new Dollars(90), sourceAccount.getBalance());
-        assertEquals(new Dollars(110), destinationAccount.getBalance());
+        assertEquals(new Dollars(90), debitAccount.getBalance());
+        assertEquals(new Dollars(110), creditAccount.getBalance());
+    }
+
+    @Test
+    void givenABankAccountWith100USDBalanceWhenTransfer110USDToADestinationAccountThenTheTransferShouldBeRejectedDueToInsufficientFunds() {
+        BankAccount debitAccount = createBankAccountFor(francisco, new Dollars(100));
+        BankAccount creditAccount = createBankAccountFor(mabel, new Dollars(100));
+
+        assertThrows(OverdraftException.class, () ->
+                debitAccount.transfer(creditAccount, new Dollars(110)));
+
+        assertEquals(new Dollars(100), debitAccount.getBalance());
+        assertEquals(new Dollars(100), creditAccount.getBalance());
+    }
+
+    @Test
+    void givenABankAccountWhenTransferToTheSameAccountThenTheTransferShouldBeRejected() {
+        BankAccount debitAccount = createBankAccountFor(francisco, new Dollars(100));
+
+        assertThrows(SameAccountException.class, () ->
+                debitAccount.transfer(debitAccount, new Dollars(10)));
+
+        assertEquals(new Dollars(100), debitAccount.getBalance());
     }
 
     private BankAccount createBankAccountFor(Customer accountOwner, Dollars initialBalance) {
