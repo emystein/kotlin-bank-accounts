@@ -15,15 +15,22 @@ public class BankAccountTest {
     }
 
     @Test
+    void givenACustomerWhenCreateABankAccountWithoutInitialBalanceThenItShouldHaveInitialBalance0USD() {
+        BankAccount createdAccount = Bank.newAccountOwnedBy(customer).build();
+
+        assertEquals(new Dollars(0), createdAccount.getBalance());
+    }
+
+    @Test
     void givenACustomerAndAnInitialAmountWhenCreateABankAccountThenItShouldHaveInitialBalance() {
-        BankAccount createdAccount = createBankAccountWith100USDBalance();
+        BankAccount createdAccount = createBankAccountWithInitialBalance(new Dollars(100));
 
         assertEquals(new Dollars(100), createdAccount.getBalance());
     }
 
     @Test
     void givenABankAccountWith100USDBalanceWhenDeposit10USDThenBalanceShouldBe110USD() {
-        BankAccount bankAccount = createBankAccountWith100USDBalance();
+        BankAccount bankAccount = createBankAccountWithInitialBalance(new Dollars(100));
 
         bankAccount.deposit(new Dollars(10));
 
@@ -32,7 +39,7 @@ public class BankAccountTest {
 
     @Test
     void givenABankAccountWith100USDBalanceWhenDepositANegativeAmountThenItShouldRejectTheDeposit() {
-        BankAccount bankAccount = createBankAccountWith100USDBalance();
+        BankAccount bankAccount = createBankAccountWithInitialBalance(new Dollars(100));
 
         assertThrows(IllegalArgumentException.class, () ->
                 bankAccount.deposit(new Dollars(-10)));
@@ -42,7 +49,7 @@ public class BankAccountTest {
 
     @Test
     void givenABankAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() throws Exception {
-        BankAccount bankAccount = createBankAccountWith100USDBalance();
+        BankAccount bankAccount = createBankAccountWithInitialBalance(new Dollars(100));
 
         bankAccount.withdraw(new Dollars(10));
 
@@ -51,7 +58,7 @@ public class BankAccountTest {
 
     @Test
     void givenABankAccountWith100USDBalanceWhenWithdraw100USDThenBalanceShouldBe0USD() throws Exception {
-        BankAccount bankAccount = createBankAccountWith100USDBalance();
+        BankAccount bankAccount = createBankAccountWithInitialBalance(new Dollars(100));
 
         bankAccount.withdraw(new Dollars(100));
 
@@ -60,7 +67,7 @@ public class BankAccountTest {
 
     @Test
     void givenABankAccountWith100USDBalanceWhenWithdrawANegativeAmountThenWithdrawShouldBeRejected() {
-        BankAccount bankAccount = createBankAccountWith100USDBalance();
+        BankAccount bankAccount = createBankAccountWithInitialBalance(new Dollars(100));
 
         assertThrows(IllegalArgumentException.class, () ->
                 bankAccount.withdraw(new Dollars(-10)));
@@ -70,7 +77,7 @@ public class BankAccountTest {
 
     @Test
     void givenABankAccountWith100USDBalanceWhenWithdraw200USDThenWithdrawShouldBeRejected() {
-        BankAccount bankAccount = createBankAccountWith100USDBalance();
+        BankAccount bankAccount = createBankAccountWithInitialBalance(new Dollars(100));
 
         assertThrows(OverdraftException.class, () ->
                 bankAccount.withdraw(new Dollars(200)));
@@ -78,10 +85,9 @@ public class BankAccountTest {
         assertEquals(new Dollars(100), bankAccount.getBalance());
     }
 
-
-    private BankAccount createBankAccountWith100USDBalance() {
+    private BankAccount createBankAccountWithInitialBalance(Dollars balance) {
         return Bank.newAccountOwnedBy(customer)
-                .withInitialBalance(new Dollars(100))
+                .withInitialBalance(balance)
                 .build();
     }
 }
