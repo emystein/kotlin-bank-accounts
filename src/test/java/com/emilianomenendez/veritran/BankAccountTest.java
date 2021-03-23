@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BankAccountTest {
     private Customer francisco = Customer.named("francisco");
+    private Customer mabel = Customer.named("mabel");
 
     @Test
     void givenACustomerWhenCreateABankAccountThenItShouldBeOwnedByTheCustomer() {
@@ -83,6 +84,17 @@ public class BankAccountTest {
                 bankAccount.withdraw(new Dollars(200)));
 
         assertEquals(new Dollars(100), bankAccount.getBalance());
+    }
+
+    @Test
+    void givenABankAccountWith100USDBalanceWhenTransfer10USDToADestinationAccountThenTheDestinationAccountShouldIncreaseBalanceIn10USD() throws OverdraftException {
+        BankAccount sourceAccount = createBankAccountFor(francisco, new Dollars(100));
+        BankAccount destinationAccount = createBankAccountFor(mabel, new Dollars(100));
+
+        sourceAccount.transfer(destinationAccount, new Dollars(10));
+
+        assertEquals(new Dollars(90), sourceAccount.getBalance());
+        assertEquals(new Dollars(110), destinationAccount.getBalance());
     }
 
     private BankAccount createBankAccountFor(Customer accountOwner, Dollars initialBalance) {

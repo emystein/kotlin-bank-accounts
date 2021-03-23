@@ -36,6 +36,12 @@ public class BankAccount {
         balance = balance.minus(amountToWithdraw);
     }
 
+    public void transfer(BankAccount destinationAccount, Dollars amountToTransfer) throws OverdraftException {
+        withdraw(amountToTransfer);
+
+        destinationAccount.deposit(amountToTransfer);
+    }
+
     private void assertSufficientFunds(Dollars amountToWithdraw) throws OverdraftException {
         if (amountToWithdraw.isGreaterThan(balance)) {
             throw new OverdraftException();
