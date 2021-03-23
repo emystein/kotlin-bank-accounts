@@ -80,14 +80,14 @@ public class BankAccountTest {
     void givenABankAccountWith100USDBalanceWhenWithdraw200USDThenWithdrawShouldBeRejected() {
         BankAccount bankAccount = createBankAccountFor(francisco, new Dollars(100));
 
-        assertThrows(OverdraftException.class, () ->
+        assertThrows(InsufficientFundsException.class, () ->
                 bankAccount.withdraw(new Dollars(200)));
 
         assertEquals(new Dollars(100), bankAccount.getBalance());
     }
 
     @Test
-    void givenABankAccountWith100USDBalanceWhenTransfer10USDToADestinationAccountThenTheDestinationAccountShouldIncreaseBalanceIn10USD() throws OverdraftException, SameAccountException {
+    void givenABankAccountWith100USDBalanceWhenTransfer10USDToADestinationAccountThenTheDestinationAccountShouldIncreaseBalanceIn10USD() throws InsufficientFundsException, SameAccountException {
         BankAccount debitAccount = createBankAccountFor(francisco, new Dollars(100));
         BankAccount creditAccount = createBankAccountFor(mabel, new Dollars(100));
 
@@ -102,7 +102,7 @@ public class BankAccountTest {
         BankAccount debitAccount = createBankAccountFor(francisco, new Dollars(100));
         BankAccount creditAccount = createBankAccountFor(mabel, new Dollars(100));
 
-        assertThrows(OverdraftException.class, () ->
+        assertThrows(InsufficientFundsException.class, () ->
                 debitAccount.transfer(creditAccount, new Dollars(110)));
 
         assertEquals(new Dollars(100), debitAccount.getBalance());

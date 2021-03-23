@@ -29,14 +29,14 @@ public class BankAccount {
         balance = balance.plus(amountToDeposit);
     }
 
-    public void withdraw(Dollars amountToWithdraw) throws OverdraftException  {
+    public void withdraw(Dollars amountToWithdraw) throws InsufficientFundsException {
         assertPositive(amountToWithdraw);
         assertSufficientFunds(amountToWithdraw);
 
         balance = balance.minus(amountToWithdraw);
     }
 
-    public void transfer(BankAccount destinationAccount, Dollars amountToTransfer) throws OverdraftException {
+    public void transfer(BankAccount destinationAccount, Dollars amountToTransfer) throws InsufficientFundsException {
         assertDestinationAccountIsNotThis(destinationAccount);
 
         withdraw(amountToTransfer);
@@ -50,9 +50,9 @@ public class BankAccount {
         }
     }
 
-    private void assertSufficientFunds(Dollars amountToWithdraw) throws OverdraftException {
+    private void assertSufficientFunds(Dollars amountToWithdraw) throws InsufficientFundsException {
         if (amountToWithdraw.isGreaterThan(balance)) {
-            throw new OverdraftException();
+            throw new InsufficientFundsException();
         }
     }
 
