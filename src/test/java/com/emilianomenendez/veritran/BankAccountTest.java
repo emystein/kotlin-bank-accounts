@@ -50,7 +50,16 @@ public class BankAccountTest {
     }
 
     @Test
-    void givenABankAccountWith100USDBalanceWhenWithdrawANegativeAmountThenItShouldRejectTheWithdraw() {
+    void givenABankAccountWith100USDBalanceWhenWithdraw100USDThenBalanceShouldBe0USD() throws Exception {
+        BankAccount bankAccount = createBankAccountWith100USDBalance();
+
+        bankAccount.withdraw(new Dollars(100));
+
+        assertEquals(new Dollars(0), bankAccount.getBalance());
+    }
+
+    @Test
+    void givenABankAccountWith100USDBalanceWhenWithdrawANegativeAmountThenWithdrawShouldBeRejected() {
         BankAccount bankAccount = createBankAccountWith100USDBalance();
 
         assertThrows(IllegalArgumentException.class, () ->
@@ -60,7 +69,7 @@ public class BankAccountTest {
     }
 
     @Test
-    void givenABankAccountWith100USDBalanceWhenWithdraw200USDThenItShouldRejectTheWithdraw() {
+    void givenABankAccountWith100USDBalanceWhenWithdraw200USDThenWithdrawShouldBeRejected() {
         BankAccount bankAccount = createBankAccountWith100USDBalance();
 
         assertThrows(OverdraftException.class, () ->
