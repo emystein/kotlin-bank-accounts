@@ -6,6 +6,10 @@ public class BankAccount {
     private Customer owner;
     private Dollars balance;
 
+    public static BankAccountBuilder newAccountOwnedBy(Customer accountOwner) {
+        return new BankAccountBuilder(accountOwner);
+    }
+
     public BankAccount(Customer owner, Dollars initialBalance) {
         this.owner = owner;
         this.balance = initialBalance;
