@@ -13,6 +13,10 @@ public class Dollars {
         return amount;
     }
 
+    public boolean isPositive() {
+        return amount >= 0;
+    }
+
     public Dollars plus(Dollars amountToAdd) {
         return new Dollars(amount += amountToAdd.amount);
     }

@@ -1,5 +1,7 @@
 package com.emilianomenendez.veritran;
 
+import com.google.common.base.Preconditions;
+
 public class BankAccount {
     private Customer owner;
     private Dollars balance;
@@ -18,6 +20,8 @@ public class BankAccount {
     }
 
     public void deposit(Dollars amountToDeposit) {
+        Preconditions.checkArgument(amountToDeposit.isPositive());
+
         balance = balance.plus(amountToDeposit);
     }
 }
