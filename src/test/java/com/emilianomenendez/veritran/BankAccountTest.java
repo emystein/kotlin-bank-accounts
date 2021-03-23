@@ -23,4 +23,15 @@ public class BankAccountTest {
 
         assertEquals(new Dollars(100), createdAccount.getBalance());
     }
+
+    @Test
+    void givenABankAccountWith100USDBalanceWhenDeposit10USDThenBalanceShouldBe110USD() {
+        BankAccount bankAccount = Bank.newAccountOwnedBy(customer)
+                .withInitialBalance(new Dollars(100))
+                .build();
+
+        bankAccount.deposit(new Dollars(10));
+
+        assertEquals(new Dollars(110), bankAccount.getBalance());
+    }
 }

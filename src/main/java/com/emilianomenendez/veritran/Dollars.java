@@ -13,6 +13,10 @@ public class Dollars {
         return amount;
     }
 
+    public Dollars plus(Dollars amountToAdd) {
+        return new Dollars(amount += amountToAdd.amount);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

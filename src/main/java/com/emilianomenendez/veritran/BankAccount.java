@@ -16,4 +16,8 @@ public class BankAccount {
     public Dollars getBalance() {
         return balance;
     }
+
+    public void deposit(Dollars amountToDeposit) {
+        balance = balance.plus(amountToDeposit);
+    }
 }
