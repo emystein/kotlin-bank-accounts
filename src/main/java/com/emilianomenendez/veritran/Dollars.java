@@ -13,8 +13,8 @@ public class Dollars {
         return amount;
     }
 
-    public boolean isPositive() {
-        return amount >= 0;
+    public boolean isNegative() {
+        return amount < 0;
     }
 
     public boolean isGreaterThan(Dollars amountToCheck) {

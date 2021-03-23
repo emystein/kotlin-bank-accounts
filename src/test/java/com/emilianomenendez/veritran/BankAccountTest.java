@@ -42,7 +42,7 @@ public class BankAccountTest {
     void givenABankAccountWith100USDBalanceWhenDepositANegativeAmountThenItShouldRejectTheDeposit() {
         BankAccount bankAccount = createBankAccountFor(francisco, new Dollars(100));
 
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(NegativeAmountException.class, () ->
                 bankAccount.deposit(new Dollars(-10)));
 
         assertEquals(new Dollars(100), bankAccount.getBalance());
@@ -70,7 +70,7 @@ public class BankAccountTest {
     void givenABankAccountWith100USDBalanceWhenWithdrawANegativeAmountThenWithdrawShouldBeRejected() {
         BankAccount bankAccount = createBankAccountFor(francisco, new Dollars(100));
 
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(NegativeAmountException.class, () ->
                 bankAccount.withdraw(new Dollars(-10)));
 
         assertEquals(new Dollars(100), bankAccount.getBalance());
@@ -102,7 +102,7 @@ public class BankAccountTest {
         BankAccount debitAccount = createBankAccountFor(francisco, new Dollars(100));
         BankAccount creditAccount = createBankAccountFor(mabel, new Dollars(100));
 
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(NegativeAmountException.class, () ->
                 debitAccount.transfer(creditAccount, new Dollars(-10)));
 
         assertEquals(new Dollars(100), debitAccount.getBalance());

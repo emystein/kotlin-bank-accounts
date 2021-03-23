@@ -57,6 +57,8 @@ public class BankAccount {
     }
 
     private void assertPositive(Dollars amountToCheck) {
-        Preconditions.checkArgument(amountToCheck.isPositive());
+        if (amountToCheck.isNegative()) {
+            throw new NegativeAmountException();
+        }
     }
 }
