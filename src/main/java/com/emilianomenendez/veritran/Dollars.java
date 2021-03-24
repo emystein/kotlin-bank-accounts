@@ -26,7 +26,7 @@ public class Dollars {
     }
 
     public Dollars plus(Dollars amountToAdd) {
-        return Dollars.amount(amount += amountToAdd.amount);
+        return Dollars.amount(amount + amountToAdd.amount);
     }
 
     public Dollars minus(Dollars amountToSubtract) {
@@ -34,7 +34,7 @@ public class Dollars {
             throw new InsufficientFundsException();
         }
 
-        return Dollars.amount(amount -= amountToSubtract.amount);
+        return Dollars.amount(amount - amountToSubtract.amount);
     }
 
     @Override

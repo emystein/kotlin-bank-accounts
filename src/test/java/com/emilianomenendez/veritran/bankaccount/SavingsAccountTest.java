@@ -45,11 +45,16 @@ public class SavingsAccountTest {
 
     @Test
     void givenAnAccountWith100USDBalanceWhenDeposit10USDThenBalanceShouldBe110USD() {
-        SavingsAccount account = createSavingsAccountFor(francisco, Dollars.amount(100));
+        Dollars initialBalance = Dollars.amount(100);
 
-        account.deposit(Dollars.amount(10));
+        SavingsAccount account = createSavingsAccountFor(francisco, initialBalance);
 
-        assertTrue(account.hasBalance(Dollars.amount(110)));
+        Dollars amountToDeposit = Dollars.amount(10);
+
+        account.deposit(amountToDeposit);
+
+        Dollars plus = initialBalance.plus(amountToDeposit);
+        assertTrue(account.hasBalance(plus));
     }
 
     @Test
