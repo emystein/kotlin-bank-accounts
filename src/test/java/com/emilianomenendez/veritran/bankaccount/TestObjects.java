@@ -1,4 +1,7 @@
-package com.emilianomenendez.veritran;
+package com.emilianomenendez.veritran.bankaccount;
+
+import com.emilianomenendez.veritran.Customer;
+import com.emilianomenendez.veritran.Dollars;
 
 public class TestObjects {
     public static BankAccount createBankAccountFor(Customer accountOwner, Dollars initialBalance) {

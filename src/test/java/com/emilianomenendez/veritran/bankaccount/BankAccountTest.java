@@ -1,10 +1,14 @@
-package com.emilianomenendez.veritran;
+package com.emilianomenendez.veritran.bankaccount;
 
+import com.emilianomenendez.veritran.Customer;
+import com.emilianomenendez.veritran.Dollars;
+import com.emilianomenendez.veritran.bankaccount.transfer.SameAccountTransferException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static com.emilianomenendez.veritran.TestObjects.createBankAccountFor;
-import static org.junit.jupiter.api.Assertions.*;
+import static com.emilianomenendez.veritran.bankaccount.TestObjects.createBankAccountFor;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BankAccountTest {
     private Customer francisco;

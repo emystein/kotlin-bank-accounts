@@ -1,4 +1,8 @@
-package com.emilianomenendez.veritran;
+package com.emilianomenendez.veritran.bankaccount.transfer;
+
+import com.emilianomenendez.veritran.Dollars;
+import com.emilianomenendez.veritran.bankaccount.BankAccount;
+import com.emilianomenendez.veritran.bankaccount.InsufficientFundsException;
 
 public class BankTransfer {
     private BankAccount debitAccount;

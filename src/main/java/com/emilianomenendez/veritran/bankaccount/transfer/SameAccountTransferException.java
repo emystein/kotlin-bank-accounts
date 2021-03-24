@@ -1,4 +1,4 @@
-package com.emilianomenendez.veritran;
+package com.emilianomenendez.veritran.bankaccount.transfer;
 
 public class SameAccountTransferException extends RuntimeException {
 

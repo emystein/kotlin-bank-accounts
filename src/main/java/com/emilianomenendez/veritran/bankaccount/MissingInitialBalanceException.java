@@ -1,4 +1,4 @@
-package com.emilianomenendez.veritran;
+package com.emilianomenendez.veritran.bankaccount;
 
 public class MissingInitialBalanceException extends RuntimeException {
 }
