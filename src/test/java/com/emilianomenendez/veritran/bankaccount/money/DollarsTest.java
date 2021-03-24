@@ -6,6 +6,8 @@ import com.emilianomenendez.veritran.money.InsufficientFundsException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static com.emilianomenendez.veritran.bankaccount.money.TestObjects.*;
+
 public class DollarsTest {
     @Test
     void givenAPositiveAmountWhenCreateDollarsWithTheGivenAmountThenTheDollarsShouldBeCreated() {
@@ -21,36 +23,36 @@ public class DollarsTest {
 
     @Test
     void given100USDWhenSubtract10USDThenResultShouldBe90USD() {
-        Assertions.assertEquals(TestObjects.dollars90, TestObjects.dollars100.minus(TestObjects.dollars10));
+        Assertions.assertEquals(dollars90, dollars100.minus(dollars10));
     }
 
     @Test
     void given100USDWhenSubtract200USDThenSubtractionShouldBeRejected() {
         Assertions.assertThrows(InsufficientFundsException.class, () ->
-                TestObjects.dollars100.minus(TestObjects.dollars200));
+                dollars100.minus(dollars200));
     }
 
     @Test
     void given100USDWhenAdd10USDThenResultShouldEqualSum() {
-        Assertions.assertEquals(TestObjects.dollars110, TestObjects.dollars100.plus(TestObjects.dollars10));
+        Assertions.assertEquals(dollars110, dollars100.plus(dollars10));
     }
 
     @Test
     void given100USDWhenAdd10USDThen100USDShouldKeepOriginalAmount() {
-        TestObjects.dollars100.plus(TestObjects.dollars10);
+        dollars100.plus(dollars10);
 
-        Assertions.assertEquals(Dollars.amount(100), TestObjects.dollars100);
+        Assertions.assertEquals(Dollars.amount(100), dollars100);
     }
 
     @Test
     void given100USDWhenSubtract10USDThenResultShouldEqualSubtraction() {
-        Assertions.assertEquals(TestObjects.dollars90, TestObjects.dollars100.minus(TestObjects.dollars10));
+        Assertions.assertEquals(dollars90, dollars100.minus(dollars10));
     }
 
     @Test
     void given100USDWhenSubtract10USDThen100USDShouldKeepOriginalAmount() {
-        TestObjects.dollars100.minus(TestObjects.dollars10);
+        dollars100.minus(dollars10);
 
-        Assertions.assertEquals(Dollars.amount(100), TestObjects.dollars100);
+        Assertions.assertEquals(Dollars.amount(100), dollars100);
     }
 }

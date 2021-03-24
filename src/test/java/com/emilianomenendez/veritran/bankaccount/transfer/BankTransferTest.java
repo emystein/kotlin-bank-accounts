@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.emilianomenendez.veritran.bankaccount.SavingsAccountAssertions.*;
 import static com.emilianomenendez.veritran.bankaccount.TestObjects.createSavingsAccountFor;
+import static com.emilianomenendez.veritran.bankaccount.money.TestObjects.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BankTransferTest {
@@ -23,26 +24,26 @@ public class BankTransferTest {
 
     @Test
     void givenDebitAndCreditAccountWhenTransferThenMoneyShouldBeMovedFromDebitAccountToCreditAccount() {
-        SavingsAccount debitAccount = createSavingsAccountFor(francisco, TestObjects.dollars100);
-        SavingsAccount creditAccount = createSavingsAccountFor(mabel, TestObjects.dollars100);
+        SavingsAccount debitAccount = createSavingsAccountFor(francisco, dollars100);
+        SavingsAccount creditAccount = createSavingsAccountFor(mabel, dollars100);
 
         BankTransfer.from(debitAccount)
                 .to(creditAccount)
-                .transfer(TestObjects.dollars10);
+                .transfer(dollars10);
 
-        assertBalanceDecreasedBy(debitAccount, TestObjects.dollars10);
-        assertBalanceIncreasedBy(creditAccount, TestObjects.dollars10);
+        assertBalanceDecreasedBy(debitAccount, dollars10);
+        assertBalanceIncreasedBy(creditAccount, dollars10);
     }
 
     @Test
     void givenDebitWithInsufficientFundsWhenTransferThenMoneyShouldNotBeMoved() {
-        SavingsAccount debitAccount = createSavingsAccountFor(francisco, TestObjects.dollars100);
-        SavingsAccount creditAccount = createSavingsAccountFor(mabel, TestObjects.dollars100);
+        SavingsAccount debitAccount = createSavingsAccountFor(francisco, dollars100);
+        SavingsAccount creditAccount = createSavingsAccountFor(mabel, dollars100);
 
         assertThrows(InsufficientFundsException.class, () ->
                 BankTransfer.from(debitAccount)
                         .to(creditAccount)
-                        .transfer(TestObjects.dollars200));
+                        .transfer(dollars200));
 
         assertAccountKeepsInitialBalance(debitAccount);
         assertAccountKeepsInitialBalance(creditAccount);
@@ -50,12 +51,12 @@ public class BankTransferTest {
 
     @Test
     void givenSameDebitAndCreditAccountWhenTransferThenMoneyShouldNotBeMoved() {
-        SavingsAccount debitAccount = createSavingsAccountFor(francisco, TestObjects.dollars100);
+        SavingsAccount debitAccount = createSavingsAccountFor(francisco, dollars100);
 
         assertThrows(SameAccountTransferException.class, () ->
                 BankTransfer.from(debitAccount)
                         .to(debitAccount)
-                        .transfer(TestObjects.dollars10));
+                        .transfer(dollars10));
 
         assertAccountKeepsInitialBalance(debitAccount);
     }
