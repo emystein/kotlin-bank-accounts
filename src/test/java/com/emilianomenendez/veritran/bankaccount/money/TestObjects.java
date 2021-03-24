@@ -1,4 +1,6 @@
-package com.emilianomenendez.veritran;
+package com.emilianomenendez.veritran.bankaccount.money;
+
+import com.emilianomenendez.veritran.money.Dollars;
 
 public class TestObjects {
     public static Dollars dollars10 = Dollars.amount(10);

@@ -1,4 +1,6 @@
-package com.emilianomenendez.veritran;
+package com.emilianomenendez.veritran.money;
+
+import com.emilianomenendez.veritran.NegativeAmountException;
 
 import java.util.Objects;
 

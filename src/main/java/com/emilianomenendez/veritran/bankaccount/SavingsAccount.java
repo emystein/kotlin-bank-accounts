@@ -1,8 +1,8 @@
 package com.emilianomenendez.veritran.bankaccount;
 
 import com.emilianomenendez.veritran.Customer;
-import com.emilianomenendez.veritran.Dollars;
 import com.emilianomenendez.veritran.bankaccount.transfer.BankTransfer;
+import com.emilianomenendez.veritran.money.Dollars;
 
 public class SavingsAccount {
     private final Customer owner;

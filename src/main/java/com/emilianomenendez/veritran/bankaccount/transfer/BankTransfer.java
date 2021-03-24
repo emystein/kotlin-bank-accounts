@@ -1,7 +1,7 @@
 package com.emilianomenendez.veritran.bankaccount.transfer;
 
-import com.emilianomenendez.veritran.Dollars;
 import com.emilianomenendez.veritran.bankaccount.SavingsAccount;
+import com.emilianomenendez.veritran.money.Dollars;
 
 public class BankTransfer {
     private SavingsAccount debitAccount;

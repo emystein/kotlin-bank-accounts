@@ -1,16 +1,15 @@
 package com.emilianomenendez.veritran.bankaccount.transfer;
 
 import com.emilianomenendez.veritran.Customer;
-import com.emilianomenendez.veritran.TestObjects;
 import com.emilianomenendez.veritran.bankaccount.SavingsAccount;
-import com.emilianomenendez.veritran.InsufficientFundsException;
+import com.emilianomenendez.veritran.bankaccount.money.TestObjects;
+import com.emilianomenendez.veritran.money.InsufficientFundsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static com.emilianomenendez.veritran.bankaccount.SavingsAccountAssertions.*;
-import static com.emilianomenendez.veritran.bankaccount.SavingsAccountAssertions.assertAccountKeepsInitialBalance;
-import static com.emilianomenendez.veritran.bankaccount.TestObjects.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static com.emilianomenendez.veritran.bankaccount.TestObjects.createSavingsAccountFor;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BankTransferTest {
     private Customer francisco;
