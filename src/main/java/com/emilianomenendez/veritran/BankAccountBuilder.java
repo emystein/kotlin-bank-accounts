@@ -2,7 +2,7 @@ package com.emilianomenendez.veritran;
 
 public class BankAccountBuilder {
     private final Customer accountOwner;
-    private Dollars initialBalance = new Dollars(0);
+    private Dollars initialBalance = Dollars.withAmount(0);
 
     public BankAccountBuilder(Customer accountOwner) {
         this.accountOwner = accountOwner;

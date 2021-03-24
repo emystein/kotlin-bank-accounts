@@ -5,7 +5,11 @@ import java.util.Objects;
 public class Dollars {
     private int amount;
 
-    public Dollars(int amount) {
+    public static Dollars withAmount(int amount) {
+        return new Dollars(amount);
+    }
+
+    private Dollars(int amount) {
         this.amount = amount;
     }
 
@@ -22,11 +26,11 @@ public class Dollars {
     }
 
     public Dollars plus(Dollars amountToAdd) {
-        return new Dollars(amount += amountToAdd.amount);
+        return Dollars.withAmount(amount += amountToAdd.amount);
     }
 
     public Dollars minus(Dollars amountToSubtract) {
-        return new Dollars(amount -= amountToSubtract.amount);
+        return Dollars.withAmount(amount -= amountToSubtract.amount);
     }
 
     @Override

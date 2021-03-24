@@ -19,116 +19,116 @@ public class BankAccountTest {
     void givenACustomerWhenCreateABankAccountWithoutInitialBalanceThenItShouldHaveInitialBalance0USD() {
         BankAccount createdAccount = BankAccount.newAccountOwnedBy(francisco).build();
 
-        assertEquals(new Dollars(0), createdAccount.getBalance());
+        assertEquals(Dollars.withAmount(0), createdAccount.getBalance());
     }
 
     @Test
     void givenACustomerAndAnInitialAmountWhenCreateABankAccountThenItShouldHaveInitialBalance() {
-        BankAccount createdAccount = createBankAccountFor(francisco, new Dollars(100));
+        BankAccount createdAccount = createBankAccountFor(francisco, Dollars.withAmount(100));
 
-        assertEquals(new Dollars(100), createdAccount.getBalance());
+        assertEquals(Dollars.withAmount(100), createdAccount.getBalance());
     }
 
     @Test
     void givenABankAccountWith100USDBalanceWhenDeposit10USDThenBalanceShouldBe110USD() {
-        BankAccount bankAccount = createBankAccountFor(francisco, new Dollars(100));
+        BankAccount bankAccount = createBankAccountFor(francisco, Dollars.withAmount(100));
 
-        bankAccount.deposit(new Dollars(10));
+        bankAccount.deposit(Dollars.withAmount(10));
 
-        assertEquals(new Dollars(110), bankAccount.getBalance());
+        assertEquals(Dollars.withAmount(110), bankAccount.getBalance());
     }
 
     @Test
     void givenABankAccountWith100USDBalanceWhenDepositANegativeAmountThenItShouldRejectTheDeposit() {
-        BankAccount bankAccount = createBankAccountFor(francisco, new Dollars(100));
+        BankAccount bankAccount = createBankAccountFor(francisco, Dollars.withAmount(100));
 
         assertThrows(NegativeAmountException.class, () ->
-                bankAccount.deposit(new Dollars(-10)));
+                bankAccount.deposit(Dollars.withAmount(-10)));
 
-        assertEquals(new Dollars(100), bankAccount.getBalance());
+        assertEquals(Dollars.withAmount(100), bankAccount.getBalance());
     }
 
     @Test
     void givenABankAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() throws Exception {
-        BankAccount bankAccount = createBankAccountFor(francisco, new Dollars(100));
+        BankAccount bankAccount = createBankAccountFor(francisco, Dollars.withAmount(100));
 
-        bankAccount.withdraw(new Dollars(10));
+        bankAccount.withdraw(Dollars.withAmount(10));
 
-        assertEquals(new Dollars(90), bankAccount.getBalance());
+        assertEquals(Dollars.withAmount(90), bankAccount.getBalance());
     }
 
     @Test
     void givenABankAccountWith100USDBalanceWhenWithdraw100USDThenBalanceShouldBe0USD() throws Exception {
-        BankAccount bankAccount = createBankAccountFor(francisco, new Dollars(100));
+        BankAccount bankAccount = createBankAccountFor(francisco, Dollars.withAmount(100));
 
-        bankAccount.withdraw(new Dollars(100));
+        bankAccount.withdraw(Dollars.withAmount(100));
 
-        assertEquals(new Dollars(0), bankAccount.getBalance());
+        assertEquals(Dollars.withAmount(0), bankAccount.getBalance());
     }
 
     @Test
     void givenABankAccountWith100USDBalanceWhenWithdrawANegativeAmountThenWithdrawShouldBeRejected() {
-        BankAccount bankAccount = createBankAccountFor(francisco, new Dollars(100));
+        BankAccount bankAccount = createBankAccountFor(francisco, Dollars.withAmount(100));
 
         assertThrows(NegativeAmountException.class, () ->
-                bankAccount.withdraw(new Dollars(-10)));
+                bankAccount.withdraw(Dollars.withAmount(-10)));
 
-        assertEquals(new Dollars(100), bankAccount.getBalance());
+        assertEquals(Dollars.withAmount(100), bankAccount.getBalance());
     }
 
     @Test
     void givenABankAccountWith100USDBalanceWhenWithdraw200USDThenWithdrawShouldBeRejected() {
-        BankAccount bankAccount = createBankAccountFor(francisco, new Dollars(100));
+        BankAccount bankAccount = createBankAccountFor(francisco, Dollars.withAmount(100));
 
         assertThrows(InsufficientFundsException.class, () ->
-                bankAccount.withdraw(new Dollars(200)));
+                bankAccount.withdraw(Dollars.withAmount(200)));
 
-        assertEquals(new Dollars(100), bankAccount.getBalance());
+        assertEquals(Dollars.withAmount(100), bankAccount.getBalance());
     }
 
     @Test
     void givenABankAccountWith100USDBalanceWhenTransfer10USDToADestinationAccountThenTheDestinationAccountShouldIncreaseBalanceIn10USD() throws InsufficientFundsException, SameAccountException {
-        BankAccount debitAccount = createBankAccountFor(francisco, new Dollars(100));
-        BankAccount creditAccount = createBankAccountFor(mabel, new Dollars(100));
+        BankAccount debitAccount = createBankAccountFor(francisco, Dollars.withAmount(100));
+        BankAccount creditAccount = createBankAccountFor(mabel, Dollars.withAmount(100));
 
-        debitAccount.transfer(creditAccount, new Dollars(10));
+        debitAccount.transfer(creditAccount, Dollars.withAmount(10));
 
-        assertEquals(new Dollars(90), debitAccount.getBalance());
-        assertEquals(new Dollars(110), creditAccount.getBalance());
+        assertEquals(Dollars.withAmount(90), debitAccount.getBalance());
+        assertEquals(Dollars.withAmount(110), creditAccount.getBalance());
     }
 
     @Test
     void givenABankAccountWhenTransferNegativeAmountToADestinationAccountThenTheTransferShouldBeRejected() {
-        BankAccount debitAccount = createBankAccountFor(francisco, new Dollars(100));
-        BankAccount creditAccount = createBankAccountFor(mabel, new Dollars(100));
+        BankAccount debitAccount = createBankAccountFor(francisco, Dollars.withAmount(100));
+        BankAccount creditAccount = createBankAccountFor(mabel, Dollars.withAmount(100));
 
         assertThrows(NegativeAmountException.class, () ->
-                debitAccount.transfer(creditAccount, new Dollars(-10)));
+                debitAccount.transfer(creditAccount, Dollars.withAmount(-10)));
 
-        assertEquals(new Dollars(100), debitAccount.getBalance());
-        assertEquals(new Dollars(100), creditAccount.getBalance());
+        assertEquals(Dollars.withAmount(100), debitAccount.getBalance());
+        assertEquals(Dollars.withAmount(100), creditAccount.getBalance());
     }
 
     @Test
     void givenABankAccountWith100USDBalanceWhenTransfer110USDToADestinationAccountThenTheTransferShouldBeRejectedDueToInsufficientFunds() {
-        BankAccount debitAccount = createBankAccountFor(francisco, new Dollars(100));
-        BankAccount creditAccount = createBankAccountFor(mabel, new Dollars(100));
+        BankAccount debitAccount = createBankAccountFor(francisco, Dollars.withAmount(100));
+        BankAccount creditAccount = createBankAccountFor(mabel, Dollars.withAmount(100));
 
         assertThrows(InsufficientFundsException.class, () ->
-                debitAccount.transfer(creditAccount, new Dollars(110)));
+                debitAccount.transfer(creditAccount, Dollars.withAmount(110)));
 
-        assertEquals(new Dollars(100), debitAccount.getBalance());
-        assertEquals(new Dollars(100), creditAccount.getBalance());
+        assertEquals(Dollars.withAmount(100), debitAccount.getBalance());
+        assertEquals(Dollars.withAmount(100), creditAccount.getBalance());
     }
 
     @Test
     void givenABankAccountWhenTransferToTheSameAccountThenTheTransferShouldBeRejected() {
-        BankAccount debitAccount = createBankAccountFor(francisco, new Dollars(100));
+        BankAccount debitAccount = createBankAccountFor(francisco, Dollars.withAmount(100));
 
         assertThrows(SameAccountException.class, () ->
-                debitAccount.transfer(debitAccount, new Dollars(10)));
+                debitAccount.transfer(debitAccount, Dollars.withAmount(10)));
 
-        assertEquals(new Dollars(100), debitAccount.getBalance());
+        assertEquals(Dollars.withAmount(100), debitAccount.getBalance());
     }
 
     private BankAccount createBankAccountFor(Customer accountOwner, Dollars initialBalance) {
