@@ -36,9 +36,11 @@ public class SavingsAccountTest {
 
     @Test
     void givenACustomerAndAnInitialAmountWhenCreateAnAccountThenTheAccountShouldHaveBalance() {
-        SavingsAccount account = createSavingsAccountFor(francisco, Dollars.amount(100));
+        Dollars initialBalance = Dollars.amount(100);
 
-        assertTrue(account.hasBalance(Dollars.amount(100)));
+        SavingsAccount account = createSavingsAccountFor(francisco, initialBalance);
+
+        assertTrue(account.hasBalance(initialBalance));
     }
 
     @Test
