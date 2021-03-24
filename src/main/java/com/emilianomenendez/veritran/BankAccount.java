@@ -32,17 +32,9 @@ public class BankAccount {
     }
 
     public void transfer(BankAccount destinationAccount, Dollars amountToTransfer) throws InsufficientFundsException {
-        assertThisIsDifferentAccountThan(destinationAccount);
-
-        withdraw(amountToTransfer);
-
-        destinationAccount.deposit(amountToTransfer);
-    }
-
-    private void assertThisIsDifferentAccountThan(BankAccount accountToCompare) {
-        if (this == accountToCompare) {
-            throw new SameAccountException();
-        }
+        BankTransfer.from(this)
+                .to(destinationAccount)
+                .transfer(amountToTransfer);
     }
 
     private void assertSufficientFunds(Dollars amountToWithdraw) throws InsufficientFundsException {

@@ -2,6 +2,7 @@ package com.emilianomenendez.veritran;
 
 import org.junit.jupiter.api.Test;
 
+import static com.emilianomenendez.veritran.TestObjectFactories.createBankAccountFor;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BankAccountTest {
@@ -97,11 +98,5 @@ public class BankAccountTest {
                 debitAccount.transfer(debitAccount, Dollars.amount(10)));
 
         assertEquals(Dollars.amount(100), debitAccount.getBalance());
-    }
-
-    private BankAccount createBankAccountFor(Customer accountOwner, Dollars initialBalance) {
-        return BankAccount.newAccountOwnedBy(accountOwner)
-                .withInitialBalance(initialBalance)
-                .build();
     }
 }
