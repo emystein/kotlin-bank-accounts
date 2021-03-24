@@ -27,6 +27,13 @@ public class BankAccountTest {
     }
 
     @Test
+    void givenACustomerAndAnInitialAmountWhenCreateAnAccountThenTheAccountShouldBeOwnedByTheCustomer() {
+        BankAccount createdAccount = createBankAccountFor(francisco, Dollars.amount(100));
+
+        assertTrue(createdAccount.isOwnedBy(francisco));
+    }
+
+    @Test
     void givenACustomerAndAnInitialAmountWhenCreateAnAccountThenTheAccountShouldHaveBalance() {
         BankAccount createdAccount = createBankAccountFor(francisco, Dollars.amount(100));
 
