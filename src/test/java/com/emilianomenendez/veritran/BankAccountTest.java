@@ -20,14 +20,14 @@ public class BankAccountTest {
     void givenACustomerWhenCreateABankAccountWithoutInitialBalanceThenItShouldHaveInitialBalance0USD() {
         BankAccount createdAccount = BankAccount.newAccountOwnedBy(francisco).build();
 
-        assertEquals(Dollars.amount(0), createdAccount.getBalance());
+        assertTrue(createdAccount.hasBalance(Dollars.amount(0)));
     }
 
     @Test
     void givenACustomerAndAnInitialAmountWhenCreateABankAccountThenItShouldHaveInitialBalance() {
         BankAccount createdAccount = createBankAccountFor(francisco, Dollars.amount(100));
 
-        assertEquals(Dollars.amount(100), createdAccount.getBalance());
+        assertTrue(createdAccount.hasBalance(Dollars.amount(100)));
     }
 
     @Test
@@ -36,7 +36,7 @@ public class BankAccountTest {
 
         bankAccount.deposit(Dollars.amount(10));
 
-        assertEquals(Dollars.amount(110), bankAccount.getBalance());
+        assertTrue(bankAccount.hasBalance(Dollars.amount(110)));
     }
 
     @Test
@@ -45,7 +45,7 @@ public class BankAccountTest {
 
         bankAccount.withdraw(Dollars.amount(10));
 
-        assertEquals(Dollars.amount(90), bankAccount.getBalance());
+        assertTrue(bankAccount.hasBalance(Dollars.amount(90)));
     }
 
     @Test
@@ -54,7 +54,11 @@ public class BankAccountTest {
 
         bankAccount.withdraw(Dollars.amount(100));
 
-        assertEquals(Dollars.amount(0), bankAccount.getBalance());
+        assertBankAccountHasBalance(bankAccount, Dollars.amount(0));
+    }
+
+    private void assertBankAccountHasBalance(BankAccount bankAccount, Dollars amount) {
+        assertEquals(amount, bankAccount.getBalance());
     }
 
     @Test
@@ -64,7 +68,7 @@ public class BankAccountTest {
         assertThrows(InsufficientFundsException.class, () ->
                 bankAccount.withdraw(Dollars.amount(200)));
 
-        assertEquals(Dollars.amount(100), bankAccount.getBalance());
+        assertTrue(bankAccount.hasBalance(Dollars.amount(100)));
     }
 
     @Test
@@ -74,8 +78,8 @@ public class BankAccountTest {
 
         debitAccount.transfer(creditAccount, Dollars.amount(10));
 
-        assertEquals(Dollars.amount(90), debitAccount.getBalance());
-        assertEquals(Dollars.amount(110), creditAccount.getBalance());
+        assertTrue(debitAccount.hasBalance(Dollars.amount(90)));
+        assertTrue(creditAccount.hasBalance(Dollars.amount(110)));
     }
 
     @Test
@@ -86,8 +90,8 @@ public class BankAccountTest {
         assertThrows(InsufficientFundsException.class, () ->
                 debitAccount.transfer(creditAccount, Dollars.amount(110)));
 
-        assertEquals(Dollars.amount(100), debitAccount.getBalance());
-        assertEquals(Dollars.amount(100), creditAccount.getBalance());
+        assertTrue(debitAccount.hasBalance(Dollars.amount(100)));
+        assertTrue(creditAccount.hasBalance(Dollars.amount(100)));
     }
 
     @Test
@@ -97,6 +101,6 @@ public class BankAccountTest {
         assertThrows(SameAccountException.class, () ->
                 debitAccount.transfer(debitAccount, Dollars.amount(10)));
 
-        assertEquals(Dollars.amount(100), debitAccount.getBalance());
+        assertTrue(debitAccount.hasBalance(Dollars.amount(100)));
     }
 }

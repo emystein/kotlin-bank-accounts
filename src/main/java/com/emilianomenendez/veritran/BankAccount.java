@@ -21,6 +21,10 @@ public class BankAccount {
         return balance;
     }
 
+    public boolean hasBalance(Dollars amountToCheck) {
+        return balance.equals(amountToCheck);
+    }
+
     public void deposit(Dollars amountToDeposit) {
         balance = balance.plus(amountToDeposit);
     }
