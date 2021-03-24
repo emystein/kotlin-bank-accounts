@@ -2,7 +2,7 @@ package com.emilianomenendez.veritran;
 
 public class BankAccountBuilder {
     private final Customer accountOwner;
-    private Dollars initialBalance = Dollars.amount(0);
+    private Dollars initialBalance;
 
     public BankAccountBuilder(Customer accountOwner) {
         this.accountOwner = accountOwner;
@@ -10,10 +10,15 @@ public class BankAccountBuilder {
 
     public BankAccountBuilder withInitialBalance(Dollars initialBalance) {
         this.initialBalance = initialBalance;
+
         return this;
     }
 
     public BankAccount build() {
+        if (initialBalance == null) {
+            throw new MissingInitialBalanceException();
+        }
+
         return new BankAccount(this.accountOwner, this.initialBalance);
     }
 }

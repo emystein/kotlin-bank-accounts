@@ -10,17 +10,9 @@ public class BankAccountTest {
     private Customer mabel = Customer.named("mabel");
 
     @Test
-    void givenACustomerWhenCreateAnAccountForTheCustomerThenTheAccountShouldBeOwnedByTheCustomer() {
-        BankAccount createdAccount = BankAccount.newAccountOwnedBy(francisco).build();
-
-        assertTrue(createdAccount.isOwnedBy(francisco));
-    }
-
-    @Test
-    void givenACustomerWhenCreateAnAccountForTheCustomerThenTheAccountShouldHaveBalance0USD() {
-        BankAccount createdAccount = BankAccount.newAccountOwnedBy(francisco).build();
-
-        assertTrue(createdAccount.hasBalance(Dollars.amount(0)));
+    void givenACustomerWhenCreateAnAccountWithoutInitialBalanceThenTheAccountShouldNotBeCreated() {
+        assertThrows(MissingInitialBalanceException.class, () ->
+                BankAccount.newAccountOwnedBy(francisco).build());
     }
 
     @Test
