@@ -7,9 +7,9 @@ import com.emilianomenendez.veritran.bankaccount.transfer.SameAccountTransferExc
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static com.emilianomenendez.veritran.bankaccount.SavingsAccountAssertions.*;
 import static com.emilianomenendez.veritran.bankaccount.TestObjects.createSavingsAccountFor;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SavingsAccountTest {
     private Customer francisco;
@@ -53,26 +53,30 @@ public class SavingsAccountTest {
 
         account.deposit(amountToDeposit);
 
-        Dollars plus = initialBalance.plus(amountToDeposit);
-        assertTrue(account.hasBalance(plus));
+        assertTrue(account.hasBalance(initialBalance.plus(amountToDeposit)));
     }
 
     @Test
     void givenAnAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
-        SavingsAccount account = createSavingsAccountFor(francisco, Dollars.amount(100));
+        Dollars initialBalance = Dollars.amount(100);
 
-        account.withdraw(Dollars.amount(10));
+        SavingsAccount account = createSavingsAccountFor(francisco, initialBalance);
 
-        assertTrue(account.hasBalance(Dollars.amount(90)));
+        Dollars amountToWithdraw = Dollars.amount(10);
+
+        account.withdraw(amountToWithdraw);
+
+        assertTrue(account.hasBalance(initialBalance.minus(amountToWithdraw)));
     }
 
     @Test
     void givenAnAccountWith100USDBalanceWhenWithdraw200USDThenWithdrawalShouldBeRejected() {
         SavingsAccount account = createSavingsAccountFor(francisco, Dollars.amount(100));
 
-        assertThrows(InsufficientFundsException.class, () -> account.withdraw(Dollars.amount(200)));
+        assertThrows(InsufficientFundsException.class, () ->
+                account.withdraw(account.getBalance().plus(Dollars.amount(100))));
 
-        assertTrue(account.hasBalance(Dollars.amount(100)));
+        assertAccountKeepsInitialBalance(account);
     }
 
     @Test
@@ -80,10 +84,12 @@ public class SavingsAccountTest {
         SavingsAccount debitAccount = createSavingsAccountFor(francisco, Dollars.amount(100));
         SavingsAccount creditAccount = createSavingsAccountFor(mabel, Dollars.amount(100));
 
-        debitAccount.transfer(creditAccount, Dollars.amount(10));
+        Dollars amountToTransfer = Dollars.amount(10);
 
-        assertTrue(debitAccount.hasBalance(Dollars.amount(90)));
-        assertTrue(creditAccount.hasBalance(Dollars.amount(110)));
+        debitAccount.transfer(creditAccount, amountToTransfer);
+
+        assertBalanceDecreasedBy(debitAccount, amountToTransfer);
+        assertBalanceIncreasedBy(creditAccount, amountToTransfer);
     }
 
     @Test
@@ -92,10 +98,10 @@ public class SavingsAccountTest {
         SavingsAccount creditAccount = createSavingsAccountFor(mabel, Dollars.amount(100));
 
         assertThrows(InsufficientFundsException.class, () ->
-                debitAccount.transfer(creditAccount, Dollars.amount(110)));
+                debitAccount.transfer(creditAccount, debitAccount.getBalance().plus(Dollars.amount(100))));
 
-        assertTrue(debitAccount.hasBalance(Dollars.amount(100)));
-        assertTrue(creditAccount.hasBalance(Dollars.amount(100)));
+        assertAccountKeepsInitialBalance(debitAccount);
+        assertAccountKeepsInitialBalance(creditAccount);
     }
 
     @Test
@@ -105,6 +111,6 @@ public class SavingsAccountTest {
         assertThrows(SameAccountTransferException.class, () ->
                 debitAccount.transfer(debitAccount, Dollars.amount(10)));
 
-        assertTrue(debitAccount.hasBalance(Dollars.amount(100)));
+        assertAccountKeepsInitialBalance(debitAccount);
     }
 }
