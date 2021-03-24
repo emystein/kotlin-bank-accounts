@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static com.emilianomenendez.veritran.bankaccount.SavingsAccountAssertions.*;
-import static com.emilianomenendez.veritran.bankaccount.TestObjects.createSavingsAccountFor;
+import static com.emilianomenendez.veritran.bankaccount.TestObjects.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SavingsAccountTest {
@@ -29,14 +29,14 @@ public class SavingsAccountTest {
 
     @Test
     void givenACustomerAndAnInitialAmountWhenCreateAnAccountThenTheAccountShouldBeOwnedByTheCustomer() {
-        SavingsAccount account = createSavingsAccountFor(francisco, Dollars.amount(100));
+        SavingsAccount account = createSavingsAccountFor(francisco, com.emilianomenendez.veritran.TestObjects.dollars100);
 
         assertTrue(account.isOwnedBy(francisco));
     }
 
     @Test
     void givenACustomerAndAnInitialAmountWhenCreateAnAccountThenTheAccountShouldHaveBalance() {
-        Dollars initialBalance = Dollars.amount(100);
+        Dollars initialBalance = com.emilianomenendez.veritran.TestObjects.dollars100;
 
         SavingsAccount account = createSavingsAccountFor(francisco, initialBalance);
 
@@ -45,11 +45,11 @@ public class SavingsAccountTest {
 
     @Test
     void givenAnAccountWith100USDBalanceWhenDeposit10USDThenBalanceShouldBe110USD() {
-        Dollars initialBalance = Dollars.amount(100);
+        Dollars initialBalance = com.emilianomenendez.veritran.TestObjects.dollars100;
 
         SavingsAccount account = createSavingsAccountFor(francisco, initialBalance);
 
-        Dollars amountToDeposit = Dollars.amount(10);
+        Dollars amountToDeposit = com.emilianomenendez.veritran.TestObjects.dollars10;
 
         account.deposit(amountToDeposit);
 
@@ -58,11 +58,11 @@ public class SavingsAccountTest {
 
     @Test
     void givenAnAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
-        Dollars initialBalance = Dollars.amount(100);
+        Dollars initialBalance = com.emilianomenendez.veritran.TestObjects.dollars100;
 
         SavingsAccount account = createSavingsAccountFor(francisco, initialBalance);
 
-        Dollars amountToWithdraw = Dollars.amount(10);
+        Dollars amountToWithdraw = com.emilianomenendez.veritran.TestObjects.dollars10;
 
         account.withdraw(amountToWithdraw);
 
@@ -71,20 +71,20 @@ public class SavingsAccountTest {
 
     @Test
     void givenAnAccountWith100USDBalanceWhenWithdraw200USDThenWithdrawalShouldBeRejected() {
-        SavingsAccount account = createSavingsAccountFor(francisco, Dollars.amount(100));
+        SavingsAccount account = createSavingsAccountFor(francisco, com.emilianomenendez.veritran.TestObjects.dollars100);
 
         assertThrows(InsufficientFundsException.class, () ->
-                account.withdraw(account.getBalance().plus(Dollars.amount(100))));
+                account.withdraw(account.getBalance().plus(com.emilianomenendez.veritran.TestObjects.dollars100)));
 
         assertAccountKeepsInitialBalance(account);
     }
 
     @Test
     void givenADebitAndCreditAccountsWhenTransfer10USDThenTheMoneyShouldBeTransferred() {
-        SavingsAccount debitAccount = createSavingsAccountFor(francisco, Dollars.amount(100));
-        SavingsAccount creditAccount = createSavingsAccountFor(mabel, Dollars.amount(100));
+        SavingsAccount debitAccount = createSavingsAccountFor(francisco, com.emilianomenendez.veritran.TestObjects.dollars100);
+        SavingsAccount creditAccount = createSavingsAccountFor(mabel, com.emilianomenendez.veritran.TestObjects.dollars100);
 
-        Dollars amountToTransfer = Dollars.amount(10);
+        Dollars amountToTransfer = com.emilianomenendez.veritran.TestObjects.dollars10;
 
         debitAccount.transfer(creditAccount, amountToTransfer);
 
@@ -94,11 +94,11 @@ public class SavingsAccountTest {
 
     @Test
     void givenADebitAndCreditAccountWhenTransferInsufficientFundsThenTheMoneyShouldNotBeTransferred() {
-        SavingsAccount debitAccount = createSavingsAccountFor(francisco, Dollars.amount(100));
-        SavingsAccount creditAccount = createSavingsAccountFor(mabel, Dollars.amount(100));
+        SavingsAccount debitAccount = createSavingsAccountFor(francisco, com.emilianomenendez.veritran.TestObjects.dollars100);
+        SavingsAccount creditAccount = createSavingsAccountFor(mabel, com.emilianomenendez.veritran.TestObjects.dollars100);
 
         assertThrows(InsufficientFundsException.class, () ->
-                debitAccount.transfer(creditAccount, debitAccount.getBalance().plus(Dollars.amount(100))));
+                debitAccount.transfer(creditAccount, debitAccount.getBalance().plus(com.emilianomenendez.veritran.TestObjects.dollars100)));
 
         assertAccountKeepsInitialBalance(debitAccount);
         assertAccountKeepsInitialBalance(creditAccount);
@@ -106,10 +106,10 @@ public class SavingsAccountTest {
 
     @Test
     void givenTheSameDebitAndCreditAccountWhenTransferThenTheTransferShouldBeRejected() {
-        SavingsAccount debitAccount = createSavingsAccountFor(francisco, Dollars.amount(100));
+        SavingsAccount debitAccount = createSavingsAccountFor(francisco, com.emilianomenendez.veritran.TestObjects.dollars100);
 
         assertThrows(SameAccountTransferException.class, () ->
-                debitAccount.transfer(debitAccount, Dollars.amount(10)));
+                debitAccount.transfer(debitAccount, com.emilianomenendez.veritran.TestObjects.dollars10));
 
         assertAccountKeepsInitialBalance(debitAccount);
     }
