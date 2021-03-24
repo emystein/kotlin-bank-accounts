@@ -3,6 +3,7 @@ package com.emilianomenendez.veritran.bankaccount;
 import com.emilianomenendez.veritran.Customer;
 import com.emilianomenendez.veritran.Dollars;
 import com.emilianomenendez.veritran.InsufficientFundsException;
+import com.emilianomenendez.veritran.bankaccount.transfer.SameAccountTransferException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -77,5 +78,27 @@ public class BankAccountTest {
 
         assertTrue(debitAccount.hasBalance(Dollars.amount(90)));
         assertTrue(creditAccount.hasBalance(Dollars.amount(110)));
+    }
+
+    @Test
+    void givenADebitAndCreditAccountWhenTransferInsufficientFundsThenTheMoneyShouldNotBeTransferred() {
+        BankAccount debitAccount = createBankAccountFor(francisco, Dollars.amount(100));
+        BankAccount creditAccount = createBankAccountFor(mabel, Dollars.amount(100));
+
+        assertThrows(InsufficientFundsException.class, () ->
+                debitAccount.transfer(creditAccount, Dollars.amount(110)));
+
+        assertTrue(debitAccount.hasBalance(Dollars.amount(100)));
+        assertTrue(creditAccount.hasBalance(Dollars.amount(100)));
+    }
+
+    @Test
+    void givenTheSameDebitAndCreditAccountWhenTransferThenTheTransferShouldBeRejected() {
+        BankAccount debitAccount = createBankAccountFor(francisco, Dollars.amount(100));
+
+        assertThrows(SameAccountTransferException.class, () ->
+                debitAccount.transfer(debitAccount, Dollars.amount(10)));
+
+        assertTrue(debitAccount.hasBalance(Dollars.amount(100)));
     }
 }
