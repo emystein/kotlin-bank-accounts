@@ -39,11 +39,9 @@ public class SavingsAccountTest {
 
     @Test
     void givenACustomerAndAnInitialAmountWhenCreateAnAccountThenTheAccountShouldHaveBalance() {
-        Dollars initialBalance = dollars100;
+        SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
 
-        SavingsAccount account = createSavingsAccountFor(francisco, initialBalance);
-
-        assertTrue(account.hasBalance(initialBalance));
+        assertAccountKeepsInitialBalance(account);
     }
 
     @Test
@@ -56,7 +54,7 @@ public class SavingsAccountTest {
 
         account.deposit(amountToDeposit);
 
-        assertTrue(account.hasBalance(initialBalance.plus(amountToDeposit)));
+        assertBalanceIncreasedBy(account, amountToDeposit);
     }
 
     @Test
@@ -69,7 +67,7 @@ public class SavingsAccountTest {
 
         account.withdraw(amountToWithdraw);
 
-        assertTrue(account.hasBalance(initialBalance.minus(amountToWithdraw)));
+        assertBalanceDecreasedBy(account, amountToWithdraw);
     }
 
     @Test

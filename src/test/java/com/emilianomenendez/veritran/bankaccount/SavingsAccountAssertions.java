@@ -15,6 +15,6 @@ public class SavingsAccountAssertions {
     }
 
     public static void assertAccountKeepsInitialBalance(SavingsAccount account) {
-        assertTrue(account.hasBalance(account.getInitialBalance()));
+        assertEquals(account.getInitialBalance(), account.getBalance());
     }
 }
