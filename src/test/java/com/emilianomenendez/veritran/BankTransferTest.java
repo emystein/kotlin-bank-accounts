@@ -1,14 +1,21 @@
 package com.emilianomenendez.veritran;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static com.emilianomenendez.veritran.TestObjectFactories.createBankAccountFor;
+import static com.emilianomenendez.veritran.TestObjects.createBankAccountFor;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BankTransferTest {
-    private Customer francisco = Customer.named("francisco");
-    private Customer mabel = Customer.named("mabel");
+    private Customer francisco;
+    private Customer mabel;
+
+    @BeforeEach
+    void setUp() {
+        francisco = Customer.named("francisco");
+        mabel = Customer.named("mabel");
+    }
 
     @Test
     void givenDebitAndCreditAccountWhenTransferThenMoneyShouldBeMovedFromDebitAccountToCreditAccount() throws InsufficientFundsException {
@@ -27,7 +34,7 @@ public class BankTransferTest {
     void givenSameDebitAndCreditAccountWhenTransferThenMoneyShouldNotBeMoved() {
         BankAccount debitAccount = createBankAccountFor(francisco, Dollars.amount(100));
 
-        assertThrows(SameAccountException.class, () ->
+        assertThrows(SameAccountTransferException.class, () ->
                 BankTransfer.from(debitAccount)
                         .to(debitAccount)
                         .transfer(Dollars.amount(10)));

@@ -1,13 +1,20 @@
 package com.emilianomenendez.veritran;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static com.emilianomenendez.veritran.TestObjectFactories.createBankAccountFor;
+import static com.emilianomenendez.veritran.TestObjects.createBankAccountFor;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BankAccountTest {
-    private Customer francisco = Customer.named("francisco");
-    private Customer mabel = Customer.named("mabel");
+    private Customer francisco;
+    private Customer mabel;
+
+    @BeforeEach
+    void setUp() {
+        francisco = Customer.named("francisco");
+        mabel = Customer.named("mabel");
+    }
 
     @Test
     void givenACustomerWhenCreateAnAccountWithoutInitialBalanceThenTheAccountShouldNotBeCreated() {
@@ -51,7 +58,7 @@ public class BankAccountTest {
     }
 
     @Test
-    void givenADebitAndCreditAccountsWhenTransfer10USDThenTheMoneyShouldBeTransferred() throws InsufficientFundsException, SameAccountException {
+    void givenADebitAndCreditAccountsWhenTransfer10USDThenTheMoneyShouldBeTransferred() throws InsufficientFundsException, SameAccountTransferException {
         BankAccount debitAccount = createBankAccountFor(francisco, Dollars.amount(100));
         BankAccount creditAccount = createBankAccountFor(mabel, Dollars.amount(100));
 
@@ -77,7 +84,7 @@ public class BankAccountTest {
     void givenTheSameDebitAndCreditAccountWhenTransferThenTheTransferShouldBeRejected() {
         BankAccount debitAccount = createBankAccountFor(francisco, Dollars.amount(100));
 
-        assertThrows(SameAccountException.class, () ->
+        assertThrows(SameAccountTransferException.class, () ->
                 debitAccount.transfer(debitAccount, Dollars.amount(10)));
 
         assertTrue(debitAccount.hasBalance(Dollars.amount(100)));

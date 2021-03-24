@@ -8,8 +8,8 @@ public class BankAccountBuilder {
         this.accountOwner = accountOwner;
     }
 
-    public BankAccountBuilder withInitialBalance(Dollars initialBalance) {
-        this.initialBalance = initialBalance;
+    public BankAccountBuilder withInitialBalance(Dollars amount) {
+        this.initialBalance = amount;
 
         return this;
     }
