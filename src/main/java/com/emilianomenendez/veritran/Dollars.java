@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Dollars {
     private int amount;
 
-    public static Dollars withAmount(int amount) {
+    public static Dollars amount(int amount) {
         if (amount < 0) {
             throw new NegativeAmountException(amount);
         }
@@ -30,11 +30,11 @@ public class Dollars {
     }
 
     public Dollars plus(Dollars amountToAdd) {
-        return Dollars.withAmount(amount += amountToAdd.amount);
+        return Dollars.amount(amount += amountToAdd.amount);
     }
 
     public Dollars minus(Dollars amountToSubtract) {
-        return Dollars.withAmount(amount -= amountToSubtract.amount);
+        return Dollars.amount(amount -= amountToSubtract.amount);
     }
 
     @Override

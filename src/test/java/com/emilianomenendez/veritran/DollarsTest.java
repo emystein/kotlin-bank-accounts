@@ -8,13 +8,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class DollarsTest {
     @Test
     void givenAPositiveAmountWhenCreateDollarsWithTheGivenAmountThenTheDollarsShouldBeCreated() {
-        Dollars dollars = Dollars.withAmount(10);
+        Dollars dollars = Dollars.amount(10);
 
         assertEquals(10, dollars.getAmount());
     }
 
     @Test
     void givenANegativeAmountWhenCreateDollarsWithTheGivenAmountThenTheDollarsShouldNotBeCreated() {
-        assertThrows(NegativeAmountException.class, () ->  Dollars.withAmount(-10));
+        assertThrows(NegativeAmountException.class, () ->  Dollars.amount(-10));
     }
 }
