@@ -2,7 +2,6 @@ package com.emilianomenendez.veritran.bankaccount;
 
 import com.emilianomenendez.veritran.Customer;
 import com.emilianomenendez.veritran.Dollars;
-import com.emilianomenendez.veritran.bankaccount.transfer.SameAccountTransferException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -69,7 +68,7 @@ public class BankAccountTest {
     }
 
     @Test
-    void givenADebitAndCreditAccountsWhenTransfer10USDThenTheMoneyShouldBeTransferred() throws InsufficientFundsException, SameAccountTransferException {
+    void givenADebitAndCreditAccountsWhenTransfer10USDThenTheMoneyShouldBeTransferred() {
         BankAccount debitAccount = createBankAccountFor(francisco, Dollars.amount(100));
         BankAccount creditAccount = createBankAccountFor(mabel, Dollars.amount(100));
 
