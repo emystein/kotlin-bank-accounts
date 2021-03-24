@@ -5,7 +5,7 @@ import com.emilianomenendez.veritran.NegativeAmountException;
 import java.util.Objects;
 
 public class Dollars {
-    private int amount;
+    private final int amount;
 
     public static Dollars amount(int amount) {
         if (amount < 0) {
