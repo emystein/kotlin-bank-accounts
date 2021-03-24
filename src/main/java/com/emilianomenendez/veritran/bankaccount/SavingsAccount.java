@@ -9,7 +9,7 @@ public class SavingsAccount {
     private Dollars initialBalance;
     private Dollars balance;
 
-    public static SavingsAccountBuilder newAccountOwnedBy(Customer owner) {
+    public static SavingsAccountBuilder ownedBy(Customer owner) {
         return new SavingsAccountBuilder(owner);
     }
 

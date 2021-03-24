@@ -25,12 +25,6 @@ public class SavingsAccountTest {
     }
 
     @Test
-    void givenACustomerWhenCreateAnAccountWithoutInitialBalanceThenTheAccountShouldNotBeCreated() {
-        assertThrows(MissingInitialBalanceException.class, () ->
-                SavingsAccount.newAccountOwnedBy(francisco).build());
-    }
-
-    @Test
     void givenACustomerAndAnInitialAmountWhenCreateAnAccountThenTheAccountShouldBeOwnedByTheCustomer() {
         SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
 
