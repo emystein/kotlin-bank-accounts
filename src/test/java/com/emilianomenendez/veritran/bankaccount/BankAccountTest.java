@@ -50,7 +50,7 @@ public class BankAccountTest {
     }
 
     @Test
-    void givenAnAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() throws Exception {
+    void givenAnAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
         BankAccount bankAccount = createBankAccountFor(francisco, Dollars.amount(100));
 
         bankAccount.withdraw(Dollars.amount(10));
@@ -77,27 +77,5 @@ public class BankAccountTest {
 
         assertTrue(debitAccount.hasBalance(Dollars.amount(90)));
         assertTrue(creditAccount.hasBalance(Dollars.amount(110)));
-    }
-
-    @Test
-    void givenADebitAndCreditAccountWhenTransferInsufficientFundsThenTheMoneyShouldNotBeTransferred() {
-        BankAccount debitAccount = createBankAccountFor(francisco, Dollars.amount(100));
-        BankAccount creditAccount = createBankAccountFor(mabel, Dollars.amount(100));
-
-        assertThrows(InsufficientFundsException.class, () ->
-                debitAccount.transfer(creditAccount, Dollars.amount(110)));
-
-        assertTrue(debitAccount.hasBalance(Dollars.amount(100)));
-        assertTrue(creditAccount.hasBalance(Dollars.amount(100)));
-    }
-
-    @Test
-    void givenTheSameDebitAndCreditAccountWhenTransferThenTheTransferShouldBeRejected() {
-        BankAccount debitAccount = createBankAccountFor(francisco, Dollars.amount(100));
-
-        assertThrows(SameAccountTransferException.class, () ->
-                debitAccount.transfer(debitAccount, Dollars.amount(10)));
-
-        assertTrue(debitAccount.hasBalance(Dollars.amount(100)));
     }
 }

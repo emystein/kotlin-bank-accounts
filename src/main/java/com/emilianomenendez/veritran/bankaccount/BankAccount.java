@@ -5,11 +5,11 @@ import com.emilianomenendez.veritran.Dollars;
 import com.emilianomenendez.veritran.bankaccount.transfer.BankTransfer;
 
 public class BankAccount {
-    private Customer owner;
+    private final Customer owner;
     private Dollars balance;
 
-    public static BankAccountBuilder newAccountOwnedBy(Customer accountOwner) {
-        return new BankAccountBuilder(accountOwner);
+    public static BankAccountBuilder newAccountOwnedBy(Customer owner) {
+        return new BankAccountBuilder(owner);
     }
 
     public BankAccount(Customer owner, Dollars initialBalance) {
@@ -18,7 +18,7 @@ public class BankAccount {
     }
 
     public boolean isOwnedBy(Customer customer) {
-        return this.owner == customer;
+        return owner.equals(customer);
     }
 
     public Dollars getBalance() {
@@ -33,13 +33,13 @@ public class BankAccount {
         balance = balance.plus(amountToDeposit);
     }
 
-    public void withdraw(Dollars amountToWithdraw) throws InsufficientFundsException {
+    public void withdraw(Dollars amountToWithdraw) {
         assertSufficientFunds(amountToWithdraw);
 
         balance = balance.minus(amountToWithdraw);
     }
 
-    public void transfer(BankAccount destinationAccount, Dollars amountToTransfer) throws InsufficientFundsException {
+    public void transfer(BankAccount destinationAccount, Dollars amountToTransfer) {
         BankTransfer.from(this)
                 .to(destinationAccount)
                 .transfer(amountToTransfer);

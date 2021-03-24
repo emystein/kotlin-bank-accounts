@@ -2,7 +2,6 @@ package com.emilianomenendez.veritran.bankaccount.transfer;
 
 import com.emilianomenendez.veritran.Dollars;
 import com.emilianomenendez.veritran.bankaccount.BankAccount;
-import com.emilianomenendez.veritran.bankaccount.InsufficientFundsException;
 
 public class BankTransfer {
     private BankAccount debitAccount;
@@ -17,7 +16,7 @@ public class BankTransfer {
         this.creditAccount = creditAccount;
     }
 
-    public void transfer(Dollars amountToTransfer) throws InsufficientFundsException {
+    public void transfer(Dollars amountToTransfer) {
         assertAccountsAreDifferent();
 
         debitAccount.withdraw(amountToTransfer);

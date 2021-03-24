@@ -1,5 +1,5 @@
 package com.emilianomenendez.veritran.bankaccount;
 
-public class InsufficientFundsException extends Exception {
+public class InsufficientFundsException extends RuntimeException {
 
 }

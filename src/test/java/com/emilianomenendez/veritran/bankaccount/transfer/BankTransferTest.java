@@ -8,8 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static com.emilianomenendez.veritran.bankaccount.TestObjects.createBankAccountFor;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BankTransferTest {
     private Customer francisco;
@@ -22,7 +21,7 @@ public class BankTransferTest {
     }
 
     @Test
-    void givenDebitAndCreditAccountWhenTransferThenMoneyShouldBeMovedFromDebitAccountToCreditAccount() throws InsufficientFundsException {
+    void givenDebitAndCreditAccountWhenTransferThenMoneyShouldBeMovedFromDebitAccountToCreditAccount() {
         BankAccount debitAccount = createBankAccountFor(francisco, Dollars.amount(100));
         BankAccount creditAccount = createBankAccountFor(mabel, Dollars.amount(100));
 
@@ -30,8 +29,22 @@ public class BankTransferTest {
                 .to(creditAccount)
                 .transfer(Dollars.amount(10));
 
-        assertEquals(Dollars.amount(90), debitAccount.getBalance());
-        assertEquals(Dollars.amount(110), creditAccount.getBalance());
+        assertTrue(debitAccount.hasBalance(Dollars.amount(90)));
+        assertTrue(creditAccount.hasBalance(Dollars.amount(110)));
+    }
+
+    @Test
+    void givenDebitWithInsufficientFundsWhenTransferThenMoneyShouldNotBeMoved() {
+        BankAccount debitAccount = createBankAccountFor(francisco, Dollars.amount(100));
+        BankAccount creditAccount = createBankAccountFor(mabel, Dollars.amount(100));
+
+        assertThrows(InsufficientFundsException.class, () ->
+                BankTransfer.from(debitAccount)
+                        .to(creditAccount)
+                        .transfer(Dollars.amount(200)));
+
+        assertTrue(debitAccount.hasBalance(Dollars.amount(100)));
+        assertTrue(creditAccount.hasBalance(Dollars.amount(100)));
     }
 
     @Test
@@ -43,6 +56,6 @@ public class BankTransferTest {
                         .to(debitAccount)
                         .transfer(Dollars.amount(10)));
 
-        assertEquals(Dollars.amount(100), debitAccount.getBalance());
+        assertTrue(debitAccount.hasBalance(Dollars.amount(100)));
     }
 }
