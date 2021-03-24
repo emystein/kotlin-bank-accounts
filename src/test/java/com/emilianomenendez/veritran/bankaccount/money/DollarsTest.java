@@ -22,18 +22,7 @@ public class DollarsTest {
     }
 
     @Test
-    void given100USDWhenSubtract10USDThenResultShouldBe90USD() {
-        Assertions.assertEquals(dollars90, dollars100.minus(dollars10));
-    }
-
-    @Test
-    void given100USDWhenSubtract200USDThenSubtractionShouldBeRejected() {
-        Assertions.assertThrows(InsufficientFundsException.class, () ->
-                dollars100.minus(dollars200));
-    }
-
-    @Test
-    void given100USDWhenAdd10USDThenResultShouldEqualSum() {
+    void given100USDWhenAdd10USDThenResultShould110USD() {
         Assertions.assertEquals(dollars110, dollars100.plus(dollars10));
     }
 
@@ -45,8 +34,14 @@ public class DollarsTest {
     }
 
     @Test
-    void given100USDWhenSubtract10USDThenResultShouldEqualSubtraction() {
+    void given100USDWhenSubtract10USDThenResultShouldBe90USD() {
         Assertions.assertEquals(dollars90, dollars100.minus(dollars10));
+    }
+
+    @Test
+    void given100USDWhenSubtract200USDThenSubtractionShouldBeRejected() {
+        Assertions.assertThrows(InsufficientFundsException.class, () ->
+                dollars100.minus(dollars200));
     }
 
     @Test
