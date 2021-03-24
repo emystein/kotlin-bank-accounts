@@ -6,6 +6,10 @@ public class Dollars {
     private int amount;
 
     public static Dollars withAmount(int amount) {
+        if (amount < 0) {
+            throw new NegativeAmountException(amount);
+        }
+
         return new Dollars(amount);
     }
 

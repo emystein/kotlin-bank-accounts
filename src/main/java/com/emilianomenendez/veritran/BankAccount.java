@@ -1,7 +1,5 @@
 package com.emilianomenendez.veritran;
 
-import com.google.common.base.Preconditions;
-
 public class BankAccount {
     private Customer owner;
     private Dollars balance;
@@ -24,13 +22,10 @@ public class BankAccount {
     }
 
     public void deposit(Dollars amountToDeposit) {
-        assertPositive(amountToDeposit);
-
         balance = balance.plus(amountToDeposit);
     }
 
     public void withdraw(Dollars amountToWithdraw) throws InsufficientFundsException {
-        assertPositive(amountToWithdraw);
         assertSufficientFunds(amountToWithdraw);
 
         balance = balance.minus(amountToWithdraw);
@@ -53,12 +48,6 @@ public class BankAccount {
     private void assertSufficientFunds(Dollars amountToWithdraw) throws InsufficientFundsException {
         if (amountToWithdraw.isGreaterThan(balance)) {
             throw new InsufficientFundsException();
-        }
-    }
-
-    private void assertPositive(Dollars amountToCheck) {
-        if (amountToCheck.isNegative()) {
-            throw new NegativeAmountException();
         }
     }
 }

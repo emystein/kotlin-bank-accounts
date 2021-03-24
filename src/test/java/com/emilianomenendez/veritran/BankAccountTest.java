@@ -39,16 +39,6 @@ public class BankAccountTest {
     }
 
     @Test
-    void givenABankAccountWith100USDBalanceWhenDepositANegativeAmountThenItShouldRejectTheDeposit() {
-        BankAccount bankAccount = createBankAccountFor(francisco, Dollars.withAmount(100));
-
-        assertThrows(NegativeAmountException.class, () ->
-                bankAccount.deposit(Dollars.withAmount(-10)));
-
-        assertEquals(Dollars.withAmount(100), bankAccount.getBalance());
-    }
-
-    @Test
     void givenABankAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() throws Exception {
         BankAccount bankAccount = createBankAccountFor(francisco, Dollars.withAmount(100));
 
@@ -64,16 +54,6 @@ public class BankAccountTest {
         bankAccount.withdraw(Dollars.withAmount(100));
 
         assertEquals(Dollars.withAmount(0), bankAccount.getBalance());
-    }
-
-    @Test
-    void givenABankAccountWith100USDBalanceWhenWithdrawANegativeAmountThenWithdrawShouldBeRejected() {
-        BankAccount bankAccount = createBankAccountFor(francisco, Dollars.withAmount(100));
-
-        assertThrows(NegativeAmountException.class, () ->
-                bankAccount.withdraw(Dollars.withAmount(-10)));
-
-        assertEquals(Dollars.withAmount(100), bankAccount.getBalance());
     }
 
     @Test
@@ -95,18 +75,6 @@ public class BankAccountTest {
 
         assertEquals(Dollars.withAmount(90), debitAccount.getBalance());
         assertEquals(Dollars.withAmount(110), creditAccount.getBalance());
-    }
-
-    @Test
-    void givenABankAccountWhenTransferNegativeAmountToADestinationAccountThenTheTransferShouldBeRejected() {
-        BankAccount debitAccount = createBankAccountFor(francisco, Dollars.withAmount(100));
-        BankAccount creditAccount = createBankAccountFor(mabel, Dollars.withAmount(100));
-
-        assertThrows(NegativeAmountException.class, () ->
-                debitAccount.transfer(creditAccount, Dollars.withAmount(-10)));
-
-        assertEquals(Dollars.withAmount(100), debitAccount.getBalance());
-        assertEquals(Dollars.withAmount(100), creditAccount.getBalance());
     }
 
     @Test
