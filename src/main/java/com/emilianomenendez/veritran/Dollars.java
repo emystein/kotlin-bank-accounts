@@ -21,12 +21,8 @@ public class Dollars {
         return amount;
     }
 
-    public boolean isNegative() {
-        return amount < 0;
-    }
-
-    public boolean isGreaterThan(Dollars otherAmount) {
-        return amount > otherAmount.amount;
+    public boolean isLessThan(Dollars other) {
+        return amount < other.amount;
     }
 
     public Dollars plus(Dollars amountToAdd) {

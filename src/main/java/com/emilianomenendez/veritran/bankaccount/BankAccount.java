@@ -46,7 +46,7 @@ public class BankAccount {
     }
 
     private void assertSufficientFunds(Dollars amountToWithdraw) throws InsufficientFundsException {
-        if (amountToWithdraw.isGreaterThan(balance)) {
+        if (balance.isLessThan(amountToWithdraw)) {
             throw new InsufficientFundsException();
         }
     }
