@@ -22,7 +22,7 @@ public class BankTransfer {
     }
 
     private void assertAccountsAreDifferent() {
-        if (debitAccount == creditAccount) {
+        if (debitAccount.equals(creditAccount)) {
             throw new SameAccountException();
         }
     }
