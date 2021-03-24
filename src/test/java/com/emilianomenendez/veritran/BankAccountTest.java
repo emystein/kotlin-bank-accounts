@@ -49,19 +49,6 @@ public class BankAccountTest {
     }
 
     @Test
-    void givenABankAccountWith100USDBalanceWhenWithdraw100USDThenBalanceShouldBe0USD() throws Exception {
-        BankAccount bankAccount = createBankAccountFor(francisco, Dollars.amount(100));
-
-        bankAccount.withdraw(Dollars.amount(100));
-
-        assertBankAccountHasBalance(bankAccount, Dollars.amount(0));
-    }
-
-    private void assertBankAccountHasBalance(BankAccount bankAccount, Dollars amount) {
-        assertEquals(amount, bankAccount.getBalance());
-    }
-
-    @Test
     void givenABankAccountWith100USDBalanceWhenWithdraw200USDThenWithdrawShouldBeRejected() {
         BankAccount bankAccount = createBankAccountFor(francisco, Dollars.amount(100));
 
