@@ -30,6 +30,10 @@ public class Dollars {
     }
 
     public Dollars minus(Dollars amountToSubtract) {
+        if (this.isLessThan(amountToSubtract)) {
+            throw new InsufficientFundsException();
+        }
+
         return Dollars.amount(amount -= amountToSubtract.amount);
     }
 

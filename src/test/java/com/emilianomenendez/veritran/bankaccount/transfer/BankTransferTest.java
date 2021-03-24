@@ -3,7 +3,7 @@ package com.emilianomenendez.veritran.bankaccount.transfer;
 import com.emilianomenendez.veritran.Customer;
 import com.emilianomenendez.veritran.Dollars;
 import com.emilianomenendez.veritran.bankaccount.BankAccount;
-import com.emilianomenendez.veritran.bankaccount.InsufficientFundsException;
+import com.emilianomenendez.veritran.InsufficientFundsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

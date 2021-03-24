@@ -34,8 +34,6 @@ public class BankAccount {
     }
 
     public void withdraw(Dollars amountToWithdraw) {
-        assertSufficientFunds(amountToWithdraw);
-
         balance = balance.minus(amountToWithdraw);
     }
 
@@ -43,11 +41,5 @@ public class BankAccount {
         BankTransfer.from(this)
                 .to(destinationAccount)
                 .transfer(amountToTransfer);
-    }
-
-    private void assertSufficientFunds(Dollars amountToWithdraw) throws InsufficientFundsException {
-        if (balance.isLessThan(amountToWithdraw)) {
-            throw new InsufficientFundsException();
-        }
     }
 }

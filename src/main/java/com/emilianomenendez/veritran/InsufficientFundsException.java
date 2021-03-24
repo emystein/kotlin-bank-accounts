@@ -1,4 +1,4 @@
-package com.emilianomenendez.veritran.bankaccount;
+package com.emilianomenendez.veritran;
 
 public class InsufficientFundsException extends RuntimeException {
 
