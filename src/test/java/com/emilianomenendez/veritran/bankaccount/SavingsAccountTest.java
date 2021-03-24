@@ -46,9 +46,7 @@ public class SavingsAccountTest {
 
     @Test
     void givenAnAccountWith100USDBalanceWhenDeposit10USDThenBalanceShouldBe110USD() {
-        Dollars initialBalance = dollars100;
-
-        SavingsAccount account = createSavingsAccountFor(francisco, initialBalance);
+        SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
 
         Dollars amountToDeposit = dollars10;
 
@@ -59,9 +57,7 @@ public class SavingsAccountTest {
 
     @Test
     void givenAnAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
-        Dollars initialBalance = dollars100;
-
-        SavingsAccount account = createSavingsAccountFor(francisco, initialBalance);
+        SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
 
         Dollars amountToWithdraw = dollars10;
 
