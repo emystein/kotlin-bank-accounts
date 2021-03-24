@@ -4,15 +4,15 @@ import com.emilianomenendez.veritran.Customer;
 import com.emilianomenendez.veritran.Dollars;
 import com.emilianomenendez.veritran.bankaccount.transfer.BankTransfer;
 
-public class BankAccount {
+public class SavingsAccount {
     private final Customer owner;
     private Dollars balance;
 
-    public static BankAccountBuilder newAccountOwnedBy(Customer owner) {
-        return new BankAccountBuilder(owner);
+    public static SavingsAccountBuilder newAccountOwnedBy(Customer owner) {
+        return new SavingsAccountBuilder(owner);
     }
 
-    public BankAccount(Customer owner, Dollars initialBalance) {
+    public SavingsAccount(Customer owner, Dollars initialBalance) {
         this.owner = owner;
         this.balance = initialBalance;
     }
@@ -37,9 +37,9 @@ public class BankAccount {
         balance = balance.minus(amountToWithdraw);
     }
 
-    public void transfer(BankAccount destinationAccount, Dollars amountToTransfer) {
+    public void transfer(SavingsAccount creditAccount, Dollars amountToTransfer) {
         BankTransfer.from(this)
-                .to(destinationAccount)
+                .to(creditAccount)
                 .transfer(amountToTransfer);
     }
 }

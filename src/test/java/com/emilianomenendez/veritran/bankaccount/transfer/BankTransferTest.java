@@ -2,12 +2,12 @@ package com.emilianomenendez.veritran.bankaccount.transfer;
 
 import com.emilianomenendez.veritran.Customer;
 import com.emilianomenendez.veritran.Dollars;
-import com.emilianomenendez.veritran.bankaccount.BankAccount;
+import com.emilianomenendez.veritran.bankaccount.SavingsAccount;
 import com.emilianomenendez.veritran.InsufficientFundsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static com.emilianomenendez.veritran.bankaccount.TestObjects.createBankAccountFor;
+import static com.emilianomenendez.veritran.bankaccount.TestObjects.createSavingsAccountFor;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BankTransferTest {
@@ -22,8 +22,8 @@ public class BankTransferTest {
 
     @Test
     void givenDebitAndCreditAccountWhenTransferThenMoneyShouldBeMovedFromDebitAccountToCreditAccount() {
-        BankAccount debitAccount = createBankAccountFor(francisco, Dollars.amount(100));
-        BankAccount creditAccount = createBankAccountFor(mabel, Dollars.amount(100));
+        SavingsAccount debitAccount = createSavingsAccountFor(francisco, Dollars.amount(100));
+        SavingsAccount creditAccount = createSavingsAccountFor(mabel, Dollars.amount(100));
 
         BankTransfer.from(debitAccount)
                 .to(creditAccount)
@@ -35,8 +35,8 @@ public class BankTransferTest {
 
     @Test
     void givenDebitWithInsufficientFundsWhenTransferThenMoneyShouldNotBeMoved() {
-        BankAccount debitAccount = createBankAccountFor(francisco, Dollars.amount(100));
-        BankAccount creditAccount = createBankAccountFor(mabel, Dollars.amount(100));
+        SavingsAccount debitAccount = createSavingsAccountFor(francisco, Dollars.amount(100));
+        SavingsAccount creditAccount = createSavingsAccountFor(mabel, Dollars.amount(100));
 
         assertThrows(InsufficientFundsException.class, () ->
                 BankTransfer.from(debitAccount)
@@ -49,7 +49,7 @@ public class BankTransferTest {
 
     @Test
     void givenSameDebitAndCreditAccountWhenTransferThenMoneyShouldNotBeMoved() {
-        BankAccount debitAccount = createBankAccountFor(francisco, Dollars.amount(100));
+        SavingsAccount debitAccount = createSavingsAccountFor(francisco, Dollars.amount(100));
 
         assertThrows(SameAccountTransferException.class, () ->
                 BankTransfer.from(debitAccount)

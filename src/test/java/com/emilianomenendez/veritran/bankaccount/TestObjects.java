@@ -4,8 +4,8 @@ import com.emilianomenendez.veritran.Customer;
 import com.emilianomenendez.veritran.Dollars;
 
 public class TestObjects {
-    public static BankAccount createBankAccountFor(Customer accountOwner, Dollars initialBalance) {
-        return BankAccount.newAccountOwnedBy(accountOwner)
+    public static SavingsAccount createSavingsAccountFor(Customer accountOwner, Dollars initialBalance) {
+        return SavingsAccount.newAccountOwnedBy(accountOwner)
                 .withInitialBalance(initialBalance)
                 .build();
     }

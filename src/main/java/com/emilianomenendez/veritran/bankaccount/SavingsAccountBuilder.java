@@ -3,25 +3,25 @@ package com.emilianomenendez.veritran.bankaccount;
 import com.emilianomenendez.veritran.Customer;
 import com.emilianomenendez.veritran.Dollars;
 
-public class BankAccountBuilder {
+public class SavingsAccountBuilder {
     private final Customer accountOwner;
     private Dollars initialBalance;
 
-    public BankAccountBuilder(Customer accountOwner) {
+    public SavingsAccountBuilder(Customer accountOwner) {
         this.accountOwner = accountOwner;
     }
 
-    public BankAccountBuilder withInitialBalance(Dollars amount) {
+    public SavingsAccountBuilder withInitialBalance(Dollars amount) {
         this.initialBalance = amount;
 
         return this;
     }
 
-    public BankAccount build() {
+    public SavingsAccount build() {
         if (initialBalance == null) {
             throw new MissingInitialBalanceException();
         }
 
-        return new BankAccount(this.accountOwner, this.initialBalance);
+        return new SavingsAccount(this.accountOwner, this.initialBalance);
     }
 }
