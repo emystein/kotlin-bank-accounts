@@ -1,7 +1,6 @@
 package com.emilianomenendez.veritran.bankaccount;
 
 import com.emilianomenendez.veritran.Customer;
-import com.emilianomenendez.veritran.bankaccount.transfer.SameAccountTransferException;
 import com.emilianomenendez.veritran.money.Dollars;
 import com.emilianomenendez.veritran.money.InsufficientFundsException;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +9,8 @@ import org.junit.jupiter.api.Test;
 import static com.emilianomenendez.veritran.bankaccount.SavingsAccountAssertions.*;
 import static com.emilianomenendez.veritran.bankaccount.TestObjects.createCheckingAccountFor;
 import static com.emilianomenendez.veritran.bankaccount.money.TestObjects.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CheckingAccountTest {
     private Customer francisco;
@@ -25,34 +25,8 @@ public class CheckingAccountTest {
     }
 
     @Test
-    void givenACustomerAndAnInitialAmountWhenCreateAnAccountThenTheAccountShouldBeOwnedByTheCustomer() {
-        BankAccount account = createCheckingAccountFor(francisco, dollars100, limitMinus100Dollars);
-
-        assertTrue(account.isOwnedBy(francisco));
-    }
-
-    @Test
-    void givenACustomerAndAnInitialAmountWhenCreateAnAccountThenTheAccountShouldHaveBalance() {
-        BankAccount account = createCheckingAccountFor(francisco, dollars100, limitMinus100Dollars);
-
-        assertAccountKeepsInitialBalance(account);
-    }
-
-    @Test
-    void givenAnAccountWith100USDBalanceWhenDeposit10USDThenBalanceShouldBe110USD() {
-        CheckingAccount account = createCheckingAccountFor(francisco, dollars100, limitMinus100Dollars);
-
-        Dollars amountToDeposit = dollars10;
-
-        account.deposit(amountToDeposit);
-
-        assertBalanceIncreasedBy(account, amountToDeposit);
-    }
-
-
-    @Test
     void givenACheckingAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
-        CheckingAccount account = createCheckingAccountFor(francisco, dollars100, limitMinus100Dollars);
+        BankAccount account = createCheckingAccountFor(francisco, dollars100, limitMinus100Dollars);
 
         Dollars amountToWithdraw = dollars10;
 
@@ -63,7 +37,7 @@ public class CheckingAccountTest {
 
     @Test
     void givenACheckingAccountWith100USDBalanceWhenWithdraw110USDThenBalanceShouldBeMinus10USD() {
-        CheckingAccount account = createCheckingAccountFor(francisco, dollars100, limitMinus100Dollars);
+        BankAccount account = createCheckingAccountFor(francisco, dollars100, limitMinus100Dollars);
 
         Dollars amountToWithdraw = dollars110;
 
@@ -75,7 +49,7 @@ public class CheckingAccountTest {
 
     @Test
     void givenAnAccountWith100USDBalanceWhenWithdraw300USDThenWithdrawalShouldBeRejected() {
-        CheckingAccount account = createCheckingAccountFor(francisco, dollars100, limitMinus100Dollars);
+        BankAccount account = createCheckingAccountFor(francisco, dollars100, limitMinus100Dollars);
 
         assertThrows(InsufficientFundsException.class, () ->
                 account.withdraw(dollars300));
@@ -85,9 +59,9 @@ public class CheckingAccountTest {
 
 
     @Test
-    void givenADebitAndCreditAccountsWhenTransfer10USDThenTheMoneyShouldBeTransferred() {
-        CheckingAccount debitAccount = createCheckingAccountFor(francisco, dollars100, limitMinus100Dollars);
-        CheckingAccount creditAccount = createCheckingAccountFor(mabel, dollars100, limitMinus100Dollars);
+    void givenADebitWith100USDBalanceWhenTransfer10USDThenTheMoneyShouldBeTransferred() {
+        BankAccount debitAccount = createCheckingAccountFor(francisco, dollars100, limitMinus100Dollars);
+        BankAccount creditAccount = createCheckingAccountFor(mabel, dollars100, limitMinus100Dollars);
 
         Dollars amountToTransfer = dollars10;
 
@@ -98,11 +72,11 @@ public class CheckingAccountTest {
     }
 
     @Test
-    void givenADebitAndCreditAccountWhenTransferInsufficientFundsThenTheMoneyShouldBeTransferred() {
-        CheckingAccount debitAccount = createCheckingAccountFor(francisco, dollars100, limitMinus100Dollars);
-        CheckingAccount creditAccount = createCheckingAccountFor(mabel, dollars100, limitMinus100Dollars);
+    void givenADebitWith100USDBalanceAndWithdrawLimitMinus100USDWhenTransfer110USDThenTheMoneyShouldBeTransferred() {
+        BankAccount debitAccount = createCheckingAccountFor(francisco, dollars100, limitMinus100Dollars);
+        BankAccount creditAccount = createCheckingAccountFor(mabel, dollars100, limitMinus100Dollars);
 
-        Dollars amountToTransfer = dollars200;
+        Dollars amountToTransfer = dollars110;
 
         debitAccount.transfer(creditAccount, amountToTransfer);
 
@@ -111,12 +85,15 @@ public class CheckingAccountTest {
     }
 
     @Test
-    void givenTheSameDebitAndCreditAccountWhenTransferThenTheTransferShouldBeRejected() {
-        CheckingAccount debitAccount = createCheckingAccountFor(francisco, dollars100, limitMinus100Dollars);
+    void givenADebitWith100USDBalanceAndWithdrawLimitMinus100USDWhenTransfer300USDThenTheMoneyShouldNotBeTransferred() {
+        BankAccount debitAccount = createCheckingAccountFor(francisco, dollars100, limitMinus100Dollars);
+        BankAccount creditAccount = createCheckingAccountFor(mabel, dollars100, limitMinus100Dollars);
 
-        assertThrows(SameAccountTransferException.class, () ->
-                debitAccount.transfer(debitAccount, dollars10));
+        Dollars amountToTransfer = dollars300;
+
+        assertThrows(InsufficientFundsException.class, () -> debitAccount.transfer(creditAccount, amountToTransfer));
 
         assertAccountKeepsInitialBalance(debitAccount);
+        assertAccountKeepsInitialBalance(creditAccount);
     }
 }

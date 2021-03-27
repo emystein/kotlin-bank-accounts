@@ -5,12 +5,26 @@ import com.emilianomenendez.veritran.money.Dollars;
 
 public class SavingsAccountBuilder {
     private final Customer accountOwner;
+    private Dollars initialBalance;
+    private WithdrawLimit withdrawLimit = new ZeroLowerLimit();
 
     public SavingsAccountBuilder(Customer accountOwner) {
         this.accountOwner = accountOwner;
     }
 
-    public SavingsAccount withInitialBalance(Dollars initialBalance) {
-        return new SavingsAccount(this.accountOwner, initialBalance);
+    public SavingsAccountBuilder withInitialBalance(Dollars initialBalance) {
+        this.initialBalance = initialBalance;
+
+        return this;
+    }
+
+    public SavingsAccountBuilder withWithdrawLimit(WithdrawLimit withdrawLimit) {
+        this.withdrawLimit = withdrawLimit;
+
+        return this;
+    }
+
+    public SavingsAccount build() {
+        return new SavingsAccount(accountOwner, withdrawLimit, initialBalance);
     }
 }

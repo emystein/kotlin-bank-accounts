@@ -5,11 +5,17 @@ import com.emilianomenendez.veritran.money.Dollars;
 
 public class TestObjects {
     public static SavingsAccount createSavingsAccountFor(Customer accountOwner, Dollars initialBalance) {
-        return SavingsAccount.ownedBy(accountOwner).withInitialBalance(initialBalance);
+        return SavingsAccount.ownedBy(accountOwner)
+                .withInitialBalance(initialBalance)
+                .build();
     }
 
-    public static CheckingAccount createCheckingAccountFor(Customer accountOwner,
-                                                           Dollars initialBalance, WithdrawLimit withdrawLimit) {
-        return new CheckingAccount(accountOwner, initialBalance, withdrawLimit);
+    public static BankAccount createCheckingAccountFor(Customer accountOwner,
+                                                       Dollars initialBalance,
+                                                       WithdrawLimit withdrawLimit) {
+        return SavingsAccount.ownedBy(accountOwner)
+                .withInitialBalance(initialBalance)
+                .withWithdrawLimit(withdrawLimit)
+                .build();
     }
 }

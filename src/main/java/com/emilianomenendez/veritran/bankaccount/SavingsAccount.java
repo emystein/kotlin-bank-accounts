@@ -6,19 +6,19 @@ import com.emilianomenendez.veritran.money.Dollars;
 
 public class SavingsAccount implements BankAccount {
     private final Customer owner;
+    private final WithdrawLimit withdrawLimit;
     private Balance initialBalance;
     private Balance balance;
-    private WithdrawLimit withdrawLimit;
 
     public static SavingsAccountBuilder ownedBy(Customer owner) {
         return new SavingsAccountBuilder(owner);
     }
 
-    public SavingsAccount(Customer owner, Dollars initialBalance) {
+    public SavingsAccount(Customer owner, WithdrawLimit withdrawLimit, Dollars initialBalance) {
         this.owner = owner;
+        this.withdrawLimit = withdrawLimit;
         this.initialBalance = Balance.create(initialBalance);
         this.balance = this.initialBalance;
-        this.withdrawLimit = new ZeroLowerLimit();
     }
 
     public boolean isOwnedBy(Customer customer) {
