@@ -4,7 +4,7 @@ import com.emilianomenendez.veritran.NegativeAmountException;
 
 import java.util.Objects;
 
-public class Dollars {
+public class Dollars implements Number {
     private final int amount;
 
     public static Dollars amount(int amount) {
@@ -19,24 +19,25 @@ public class Dollars {
         this.amount = amount;
     }
 
+    @Override
     public int getAmount() {
         return amount;
     }
 
-    public boolean isLessThan(Dollars other) {
-        return amount < other.amount;
+    public boolean isLessThan(Number other) {
+        return amount < other.getAmount();
     }
 
-    public Dollars plus(Dollars amountToAdd) {
-        return Dollars.amount(amount + amountToAdd.amount);
+    public Number plus(Number amountToAdd) {
+        return Dollars.amount(amount + amountToAdd.getAmount());
     }
 
-    public Dollars minus(Dollars amountToSubtract) {
+    public Number minus(Number amountToSubtract) {
         if (this.isLessThan(amountToSubtract)) {
             throw new InsufficientFundsException();
         }
 
-        return Dollars.amount(amount - amountToSubtract.amount);
+        return Dollars.amount(amount - amountToSubtract.getAmount());
     }
 
     @Override

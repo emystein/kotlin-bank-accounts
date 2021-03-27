@@ -3,6 +3,7 @@ package com.emilianomenendez.veritran.bankaccount.money;
 import com.emilianomenendez.veritran.NegativeAmountException;
 import com.emilianomenendez.veritran.money.Dollars;
 import com.emilianomenendez.veritran.money.InsufficientFundsException;
+import com.emilianomenendez.veritran.money.Number;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ import static com.emilianomenendez.veritran.bankaccount.money.TestObjects.*;
 public class DollarsTest {
     @Test
     void givenAPositiveAmountWhenCreateDollarsWithTheGivenAmountThenTheDollarsShouldBeCreated() {
-        Dollars dollars = Dollars.amount(10);
+        Number dollars = Dollars.amount(10);
 
         Assertions.assertEquals(10, dollars.getAmount());
     }

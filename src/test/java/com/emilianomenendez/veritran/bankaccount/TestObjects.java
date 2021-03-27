@@ -7,4 +7,8 @@ public class TestObjects {
     public static SavingsAccount createSavingsAccountFor(Customer accountOwner, Dollars initialBalance) {
         return SavingsAccount.ownedBy(accountOwner).withInitialBalance(initialBalance);
     }
+
+    public static CheckingAccount createCheckingAccountFor(Customer accountOwner, Dollars initialBalance) {
+        return new CheckingAccount(accountOwner, initialBalance);
+    }
 }

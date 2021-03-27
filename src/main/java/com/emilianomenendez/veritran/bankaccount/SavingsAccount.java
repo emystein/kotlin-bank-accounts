@@ -3,11 +3,12 @@ package com.emilianomenendez.veritran.bankaccount;
 import com.emilianomenendez.veritran.Customer;
 import com.emilianomenendez.veritran.bankaccount.transfer.BankTransfer;
 import com.emilianomenendez.veritran.money.Dollars;
+import com.emilianomenendez.veritran.money.InsufficientFundsException;
 
-public class SavingsAccount {
+public class SavingsAccount implements BankAccount {
     private final Customer owner;
-    private Dollars initialBalance;
-    private Dollars balance;
+    private Balance initialBalance;
+    private Balance balance;
 
     public static SavingsAccountBuilder ownedBy(Customer owner) {
         return new SavingsAccountBuilder(owner);
@@ -15,19 +16,21 @@ public class SavingsAccount {
 
     public SavingsAccount(Customer owner, Dollars initialBalance) {
         this.owner = owner;
-        this.initialBalance = initialBalance;
-        this.balance = initialBalance;
+        this.initialBalance = Balance.create(initialBalance);
+        this.balance = this.initialBalance;
     }
 
     public boolean isOwnedBy(Customer customer) {
         return owner.equals(customer);
     }
 
-    public Dollars getInitialBalance() {
+    @Override
+    public Balance getInitialBalance() {
         return initialBalance;
     }
 
-    public Dollars getBalance() {
+    @Override
+    public Balance getBalance() {
         return balance;
     }
 
@@ -36,6 +39,10 @@ public class SavingsAccount {
     }
 
     public void withdraw(Dollars amountToWithdraw) {
+        if (balance.isLessThan(amountToWithdraw)) {
+            throw new InsufficientFundsException();
+        }
+
         balance = balance.minus(amountToWithdraw);
     }
 

@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.emilianomenendez.veritran.bankaccount.SavingsAccountAssertions.*;
 import static com.emilianomenendez.veritran.bankaccount.TestObjects.createSavingsAccountFor;
-import static com.emilianomenendez.veritran.bankaccount.money.TestObjects.dollars10;
-import static com.emilianomenendez.veritran.bankaccount.money.TestObjects.dollars100;
+import static com.emilianomenendez.veritran.bankaccount.money.TestObjects.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -33,7 +32,7 @@ public class SavingsAccountTest {
 
     @Test
     void givenACustomerAndAnInitialAmountWhenCreateAnAccountThenTheAccountShouldHaveBalance() {
-        SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
+        BankAccount account = createSavingsAccountFor(francisco, dollars100);
 
         assertAccountKeepsInitialBalance(account);
     }
@@ -65,7 +64,7 @@ public class SavingsAccountTest {
         SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
 
         assertThrows(InsufficientFundsException.class, () ->
-                account.withdraw(account.getBalance().plus(dollars100)));
+                account.withdraw(dollars200));
 
         assertAccountKeepsInitialBalance(account);
     }
@@ -89,7 +88,7 @@ public class SavingsAccountTest {
         SavingsAccount creditAccount = createSavingsAccountFor(mabel, dollars100);
 
         assertThrows(InsufficientFundsException.class, () ->
-                debitAccount.transfer(creditAccount, debitAccount.getBalance().plus(dollars100)));
+                debitAccount.transfer(creditAccount, dollars200));
 
         assertAccountKeepsInitialBalance(debitAccount);
         assertAccountKeepsInitialBalance(creditAccount);

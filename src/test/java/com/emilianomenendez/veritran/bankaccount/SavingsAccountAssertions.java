@@ -5,15 +5,15 @@ import com.emilianomenendez.veritran.money.Dollars;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SavingsAccountAssertions {
-    public static void assertBalanceIncreasedBy(SavingsAccount account, Dollars amount) {
+    public static void assertBalanceIncreasedBy(BankAccount account, Dollars amount) {
         assertEquals(account.getInitialBalance().plus(amount), account.getBalance());
     }
 
-    public static void assertBalanceDecreasedBy(SavingsAccount account, Dollars amount) {
+    public static void assertBalanceDecreasedBy(BankAccount account, Dollars amount) {
         assertEquals(account.getInitialBalance().minus(amount), account.getBalance());
     }
 
-    public static void assertAccountKeepsInitialBalance(SavingsAccount account) {
+    public static void assertAccountKeepsInitialBalance(BankAccount account) {
         assertEquals(account.getInitialBalance(), account.getBalance());
     }
 }
