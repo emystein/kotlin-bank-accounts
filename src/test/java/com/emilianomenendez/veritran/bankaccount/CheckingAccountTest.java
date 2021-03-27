@@ -1,6 +1,7 @@
 package com.emilianomenendez.veritran.bankaccount;
 
 import com.emilianomenendez.veritran.Customer;
+import com.emilianomenendez.veritran.bankaccount.withdraw.NumberLowerLimit;
 import com.emilianomenendez.veritran.money.Dollars;
 import com.emilianomenendez.veritran.money.InsufficientFundsException;
 import org.junit.jupiter.api.BeforeEach;

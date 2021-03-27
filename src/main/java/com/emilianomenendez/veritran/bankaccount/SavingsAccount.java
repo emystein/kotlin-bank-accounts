@@ -2,6 +2,8 @@ package com.emilianomenendez.veritran.bankaccount;
 
 import com.emilianomenendez.veritran.Customer;
 import com.emilianomenendez.veritran.bankaccount.transfer.BankTransfer;
+import com.emilianomenendez.veritran.bankaccount.withdraw.Withdraw;
+import com.emilianomenendez.veritran.bankaccount.withdraw.WithdrawLimit;
 import com.emilianomenendez.veritran.money.Dollars;
 
 public class SavingsAccount implements BankAccount {
@@ -18,11 +20,16 @@ public class SavingsAccount implements BankAccount {
         this.owner = owner;
         this.withdrawLimit = withdrawLimit;
         this.initialBalance = Balance.create(initialBalance);
-        this.balance = this.initialBalance;
+        this.balance = Balance.create(initialBalance);
     }
 
     public boolean isOwnedBy(Customer customer) {
         return owner.equals(customer);
+    }
+
+    @Override
+    public WithdrawLimit getWithdrawLimit() {
+        return withdrawLimit;
     }
 
     @Override
@@ -42,7 +49,7 @@ public class SavingsAccount implements BankAccount {
 
     @Override
     public void withdraw(Dollars amountToWithdraw) {
-        balance = Withdraw.from(this).limitedBy(withdrawLimit).amount(amountToWithdraw);
+        balance = Withdraw.from(this).amount(amountToWithdraw);
     }
 
     @Override
