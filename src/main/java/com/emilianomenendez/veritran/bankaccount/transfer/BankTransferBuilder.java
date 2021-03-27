@@ -1,15 +1,15 @@
 package com.emilianomenendez.veritran.bankaccount.transfer;
 
-import com.emilianomenendez.veritran.bankaccount.SavingsAccount;
+import com.emilianomenendez.veritran.bankaccount.BankAccount;
 
 public class BankTransferBuilder {
-    private SavingsAccount debitAccount;
+    private BankAccount debitAccount;
 
-    public BankTransferBuilder(SavingsAccount debitAccount) {
+    public BankTransferBuilder(BankAccount debitAccount) {
         this.debitAccount = debitAccount;
     }
 
-    public BankTransfer to(SavingsAccount creditAccount) {
+    public BankTransfer to(BankAccount creditAccount) {
         return new BankTransfer(debitAccount, creditAccount);
     }
 }

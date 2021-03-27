@@ -1,5 +1,6 @@
 package com.emilianomenendez.veritran.bankaccount;
 
+import com.emilianomenendez.veritran.money.Dollars;
 import com.emilianomenendez.veritran.money.Number;
 
 import java.util.Objects;
@@ -18,6 +19,14 @@ public class Balance implements Number {
         } else {
             return new Balance("-", amount);
         }
+    }
+
+    public static Number positive(Dollars amount) {
+        return new Balance("+", amount.getAmount());
+    }
+
+    public static Number negative(Dollars amount) {
+        return new Balance("-", -amount.getAmount());
     }
 
     private Balance(String sign, int amount) {

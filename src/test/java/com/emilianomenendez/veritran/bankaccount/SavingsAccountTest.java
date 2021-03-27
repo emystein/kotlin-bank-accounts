@@ -25,7 +25,7 @@ public class SavingsAccountTest {
 
     @Test
     void givenACustomerAndAnInitialAmountWhenCreateAnAccountThenTheAccountShouldBeOwnedByTheCustomer() {
-        SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
+        BankAccount account = createSavingsAccountFor(francisco, dollars100);
 
         assertTrue(account.isOwnedBy(francisco));
     }
