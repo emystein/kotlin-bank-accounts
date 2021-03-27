@@ -17,9 +17,7 @@ public class Withdraw {
     }
 
     public Balance amount(Dollars amountToWithdraw) {
-        WithdrawLimit limit = debitAccount.getWithdrawLimit();
-
-        if (limit.reached(debitAccount.getBalance(), amountToWithdraw)) {
+        if (!debitAccount.acceptsWithdrawAmount(amountToWithdraw)) {
             throw new InsufficientFundsException();
         }
 

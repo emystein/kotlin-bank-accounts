@@ -28,11 +28,6 @@ public class SavingsAccount implements BankAccount {
     }
 
     @Override
-    public WithdrawLimit getWithdrawLimit() {
-        return withdrawLimit;
-    }
-
-    @Override
     public Balance getInitialBalance() {
         return initialBalance;
     }
@@ -45,6 +40,11 @@ public class SavingsAccount implements BankAccount {
     @Override
     public void deposit(Dollars amountToDeposit) {
         balance = balance.plus(amountToDeposit);
+    }
+
+    @Override
+    public boolean acceptsWithdrawAmount(Dollars amountToWithdraw) {
+        return !withdrawLimit.reached(balance, amountToWithdraw);
     }
 
     @Override
