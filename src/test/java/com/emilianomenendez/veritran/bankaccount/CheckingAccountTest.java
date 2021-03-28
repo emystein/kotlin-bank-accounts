@@ -1,7 +1,6 @@
 package com.emilianomenendez.veritran.bankaccount;
 
 import com.emilianomenendez.veritran.Customer;
-import com.emilianomenendez.veritran.bankaccount.withdraw.NumberLowerLimit;
 import com.emilianomenendez.veritran.money.Dollars;
 import com.emilianomenendez.veritran.money.InsufficientFundsException;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,18 +15,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class CheckingAccountTest {
     private Customer francisco;
     private Customer mabel;
-    private NumberLowerLimit limitMinus100Dollars;
 
     @BeforeEach
     void setUp() {
         francisco = Customer.named("francisco");
         mabel = Customer.named("mabel");
-        limitMinus100Dollars = new NumberLowerLimit(Balance.negative(Dollars.amount(100)));
     }
 
     @Test
     void givenACheckingAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
-        BankAccount account = createCheckingAccountFor(francisco, dollars100, limitMinus100Dollars);
+        BankAccount account = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
 
         Dollars amountToWithdraw = dollars10;
 
@@ -38,7 +35,7 @@ public class CheckingAccountTest {
 
     @Test
     void givenACheckingAccountWith100USDBalanceWhenWithdraw110USDThenBalanceShouldBeMinus10USD() {
-        BankAccount account = createCheckingAccountFor(francisco, dollars100, limitMinus100Dollars);
+        BankAccount account = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
 
         Dollars amountToWithdraw = dollars110;
 
@@ -50,7 +47,7 @@ public class CheckingAccountTest {
 
     @Test
     void givenAnAccountWith100USDBalanceWhenWithdraw300USDThenWithdrawalShouldBeRejected() {
-        BankAccount account = createCheckingAccountFor(francisco, dollars100, limitMinus100Dollars);
+        BankAccount account = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
 
         assertThrows(InsufficientFundsException.class, () ->
                 account.withdraw(dollars300));
@@ -61,8 +58,8 @@ public class CheckingAccountTest {
 
     @Test
     void givenADebitWith100USDBalanceWhenTransfer10USDThenTheMoneyShouldBeTransferred() {
-        BankAccount debitAccount = createCheckingAccountFor(francisco, dollars100, limitMinus100Dollars);
-        BankAccount creditAccount = createCheckingAccountFor(mabel, dollars100, limitMinus100Dollars);
+        BankAccount debitAccount = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
+        BankAccount creditAccount = createCheckingAccountFor(mabel, dollars100, TestObjects.minus100DollarsLimit);
 
         Dollars amountToTransfer = dollars10;
 
@@ -74,8 +71,8 @@ public class CheckingAccountTest {
 
     @Test
     void givenADebitWith100USDBalanceAndWithdrawLimitMinus100USDWhenTransfer110USDThenTheMoneyShouldBeTransferred() {
-        BankAccount debitAccount = createCheckingAccountFor(francisco, dollars100, limitMinus100Dollars);
-        BankAccount creditAccount = createCheckingAccountFor(mabel, dollars100, limitMinus100Dollars);
+        BankAccount debitAccount = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
+        BankAccount creditAccount = createCheckingAccountFor(mabel, dollars100, TestObjects.minus100DollarsLimit);
 
         Dollars amountToTransfer = dollars110;
 
@@ -87,8 +84,8 @@ public class CheckingAccountTest {
 
     @Test
     void givenADebitWith100USDBalanceAndWithdrawLimitMinus100USDWhenTransfer300USDThenTheMoneyShouldNotBeTransferred() {
-        BankAccount debitAccount = createCheckingAccountFor(francisco, dollars100, limitMinus100Dollars);
-        BankAccount creditAccount = createCheckingAccountFor(mabel, dollars100, limitMinus100Dollars);
+        BankAccount debitAccount = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
+        BankAccount creditAccount = createCheckingAccountFor(mabel, dollars100, TestObjects.minus100DollarsLimit);
 
         Dollars amountToTransfer = dollars300;
 

@@ -2,13 +2,14 @@ package com.emilianomenendez.veritran.bankaccount;
 
 import com.emilianomenendez.veritran.Customer;
 import com.emilianomenendez.veritran.bankaccount.transfer.BankTransfer;
-import com.emilianomenendez.veritran.bankaccount.withdraw.Withdraw;
-import com.emilianomenendez.veritran.bankaccount.withdraw.WithdrawLimit;
+import com.emilianomenendez.veritran.bankaccount.withdrawal.Withdrawal;
+import com.emilianomenendez.veritran.bankaccount.withdrawal.WithdrawalLimit;
 import com.emilianomenendez.veritran.money.Dollars;
+import com.emilianomenendez.veritran.money.InsufficientFundsException;
 
 public class SavingsAccount implements BankAccount {
     private final Customer owner;
-    private final WithdrawLimit withdrawLimit;
+    private final WithdrawalLimit withdrawalLimit;
     private Balance initialBalance;
     private Balance balance;
 
@@ -16,9 +17,9 @@ public class SavingsAccount implements BankAccount {
         return new SavingsAccountBuilder(owner);
     }
 
-    public SavingsAccount(Customer owner, WithdrawLimit withdrawLimit, Dollars initialBalance) {
+    public SavingsAccount(Customer owner, WithdrawalLimit withdrawalLimit, Dollars initialBalance) {
         this.owner = owner;
-        this.withdrawLimit = withdrawLimit;
+        this.withdrawalLimit = withdrawalLimit;
         this.initialBalance = Balance.create(initialBalance);
         this.balance = Balance.create(initialBalance);
     }
@@ -43,13 +44,13 @@ public class SavingsAccount implements BankAccount {
     }
 
     @Override
-    public boolean acceptsWithdrawAmount(Dollars amountToWithdraw) {
-        return !withdrawLimit.reached(balance, amountToWithdraw);
+    public boolean sufficientFundsForWithdraw(Dollars amountToWithdraw) {
+        return !withdrawalLimit.reached(balance, amountToWithdraw);
     }
 
     @Override
     public void withdraw(Dollars amountToWithdraw) {
-        balance = Withdraw.from(this).amount(amountToWithdraw);
+        balance = Withdrawal.from(this).amount(amountToWithdraw);
     }
 
     @Override
