@@ -11,7 +11,7 @@ public class LowerLimit implements WithdrawalLimit {
     }
 
     @Override
-    public boolean reached(Number availableFunds, Dollars amountToWithdraw) {
-        return availableFunds.minus(amountToWithdraw).isLessThan(limit);
+    public boolean supports(Dollars amountToWithdraw, Number availableFunds) {
+        return availableFunds.minus(amountToWithdraw).isGreaterThanOrEqual(limit);
     }
 }

@@ -12,7 +12,7 @@ public interface BankAccount {
 
     void deposit(Dollars amountToDeposit);
 
-    boolean sufficientFundsForWithdraw(Dollars amountToWithdraw);
+    boolean hasSufficientFundsForWithdraw(Dollars amountToWithdraw);
 
     void withdraw(Dollars amountToWithdraw);
 

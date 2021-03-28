@@ -3,7 +3,9 @@ package com.emilianomenendez.veritran.money;
 public interface Number {
     int getAmount();
 
-    boolean isLessThan(Number amountToWithdraw);
+    boolean isGreaterThanOrEqual(Number other);
+
+    boolean isLessThan(Number other);
 
     Number plus(Number other);
 

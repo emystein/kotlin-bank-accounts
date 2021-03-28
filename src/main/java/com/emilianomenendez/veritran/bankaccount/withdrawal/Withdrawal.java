@@ -17,7 +17,7 @@ public class Withdrawal {
     }
 
     public Balance amount(Dollars amountToWithdraw) {
-        if (!debitAccount.sufficientFundsForWithdraw(amountToWithdraw)) {
+        if (!debitAccount.hasSufficientFundsForWithdraw(amountToWithdraw)) {
             throw new InsufficientFundsException();
         }
 

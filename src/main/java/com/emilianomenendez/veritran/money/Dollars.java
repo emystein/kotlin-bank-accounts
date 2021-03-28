@@ -24,6 +24,12 @@ public class Dollars implements Number {
         return amount;
     }
 
+    @Override
+    public boolean isGreaterThanOrEqual(Number other) {
+        return amount >= other.getAmount();
+    }
+
+    @Override
     public boolean isLessThan(Number other) {
         return amount < other.getAmount();
     }

@@ -1,7 +1,5 @@
 package com.emilianomenendez.veritran.bankaccount;
 
-import com.emilianomenendez.veritran.bankaccount.withdrawal.CurrentFundsLimit;
-import com.emilianomenendez.veritran.bankaccount.withdrawal.WithdrawalLimit;
 import com.emilianomenendez.veritran.money.Dollars;
 import com.emilianomenendez.veritran.money.Number;
 
@@ -39,6 +37,11 @@ public class Balance implements Number {
     @Override
     public int getAmount() {
         return amount;
+    }
+
+    @Override
+    public boolean isGreaterThanOrEqual(Number other) {
+        return amount >= other.getAmount();
     }
 
     @Override

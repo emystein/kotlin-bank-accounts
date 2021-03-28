@@ -4,5 +4,5 @@ import com.emilianomenendez.veritran.money.Dollars;
 import com.emilianomenendez.veritran.money.Number;
 
 public interface WithdrawalLimit {
-    boolean reached(Number availableFunds, Dollars amountToWithdraw);
+    boolean supports(Dollars amountToWithdraw, Number availableFunds);
 }

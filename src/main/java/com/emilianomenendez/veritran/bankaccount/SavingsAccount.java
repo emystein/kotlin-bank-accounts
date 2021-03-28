@@ -5,7 +5,6 @@ import com.emilianomenendez.veritran.bankaccount.transfer.BankTransfer;
 import com.emilianomenendez.veritran.bankaccount.withdrawal.Withdrawal;
 import com.emilianomenendez.veritran.bankaccount.withdrawal.WithdrawalLimit;
 import com.emilianomenendez.veritran.money.Dollars;
-import com.emilianomenendez.veritran.money.InsufficientFundsException;
 
 public class SavingsAccount implements BankAccount {
     private final Customer owner;
@@ -44,8 +43,8 @@ public class SavingsAccount implements BankAccount {
     }
 
     @Override
-    public boolean sufficientFundsForWithdraw(Dollars amountToWithdraw) {
-        return !withdrawalLimit.reached(balance, amountToWithdraw);
+    public boolean hasSufficientFundsForWithdraw(Dollars amountToWithdraw) {
+        return withdrawalLimit.supports(amountToWithdraw, balance);
     }
 
     @Override
