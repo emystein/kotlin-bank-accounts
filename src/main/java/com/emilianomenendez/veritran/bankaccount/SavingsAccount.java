@@ -43,13 +43,15 @@ public class SavingsAccount implements BankAccount {
     }
 
     @Override
-    public boolean hasSufficientFundsForWithdraw(Dollars amountToWithdraw) {
-        return withdrawalLimit.supports(amountToWithdraw, balance);
+    public boolean withdrawalLimitAccepts(Withdrawal withdrawal) {
+        return withdrawalLimit.accepts(withdrawal);
     }
 
     @Override
     public void withdraw(Dollars amountToWithdraw) {
-        balance = Withdrawal.from(this).amount(amountToWithdraw);
+        balance = Withdrawal.from(this)
+                .amount(amountToWithdraw)
+                .execute();
     }
 
     @Override

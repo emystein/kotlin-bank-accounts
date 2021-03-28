@@ -1,6 +1,7 @@
 package com.emilianomenendez.veritran.bankaccount;
 
 import com.emilianomenendez.veritran.Customer;
+import com.emilianomenendez.veritran.bankaccount.withdrawal.Withdrawal;
 import com.emilianomenendez.veritran.money.Dollars;
 
 public interface BankAccount {
@@ -12,7 +13,7 @@ public interface BankAccount {
 
     void deposit(Dollars amountToDeposit);
 
-    boolean hasSufficientFundsForWithdraw(Dollars amountToWithdraw);
+    boolean withdrawalLimitAccepts(Withdrawal withdrawal);
 
     void withdraw(Dollars amountToWithdraw);
 
