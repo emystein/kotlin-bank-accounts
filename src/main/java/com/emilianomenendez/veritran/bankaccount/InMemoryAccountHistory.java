@@ -1,9 +1,10 @@
 package com.emilianomenendez.veritran.bankaccount;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 public class InMemoryAccountHistory implements AccountHistory {
     private List<AccountMovement> history = new ArrayList<>();
@@ -20,8 +21,11 @@ public class InMemoryAccountHistory implements AccountHistory {
 
     @Override
     public boolean containsInOrder(AccountMovement... movements) {
-        List<Integer> indices = Stream.of(movements).map(movement -> history.indexOf(movement)).sorted().collect(Collectors.toList());
-        List<Integer> sortedIndices = Stream.of(movements).map(movement -> history.indexOf(movement)).collect(Collectors.toList());
-        return indices.equals(sortedIndices);
+        List<AccountMovement> indexedMovements = Arrays.asList(movements);
+
+        return history.stream()
+                .filter(movement -> indexedMovements.contains(movement))
+                .collect(toList())
+                .equals(indexedMovements);
     }
 }
