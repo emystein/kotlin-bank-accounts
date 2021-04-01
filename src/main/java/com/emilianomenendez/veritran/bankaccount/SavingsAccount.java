@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 public class SavingsAccount implements BankAccount {
     private final Customer owner;
     private final WithdrawalLimit withdrawalLimit;
-    private Money initialBalance;
-    private Money balance;
+    private Balance initialBalance;
+    private Balance balance;
     private AccountHistory history;
 
     public static SavingsAccountBuilder ownedBy(Customer owner) {
@@ -33,16 +33,17 @@ public class SavingsAccount implements BankAccount {
     }
 
     @Override
-    public Money getInitialBalance() {
+    public Balance getInitialBalance() {
         return initialBalance;
     }
 
     @Override
-    public Money getBalance() {
+    public Balance getBalance() {
         return balance;
     }
 
     @Override
+    // TODO allow to deposit only positive amounts
     public AccountMovement deposit(Dollars amountToDeposit) {
         balance = balance.plus(amountToDeposit);
 
@@ -57,6 +58,7 @@ public class SavingsAccount implements BankAccount {
     }
 
     @Override
+    // TODO allow to withdraw only positive amounts
     public AccountMovement withdraw(Dollars amountToWithdraw) {
         balance = Withdrawal.from(this)
                 .amount(amountToWithdraw)

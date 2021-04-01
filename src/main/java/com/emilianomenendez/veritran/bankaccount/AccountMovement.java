@@ -6,9 +6,14 @@ import java.time.LocalDateTime;
 
 public class AccountMovement {
     private final LocalDateTime dateTime;
-    private final Money amount;
+    private final Balance amount;
 
     public AccountMovement(LocalDateTime dateTime, Money amount) {
+        this.dateTime = dateTime;
+        this.amount = Balance.create(amount);
+    }
+
+    public AccountMovement(LocalDateTime dateTime, Balance amount) {
         this.dateTime = dateTime;
         this.amount = amount;
     }
@@ -21,7 +26,7 @@ public class AccountMovement {
         return dateTime;
     }
 
-    public Money getAmount() {
+    public Balance getAmount() {
         return amount;
     }
 }

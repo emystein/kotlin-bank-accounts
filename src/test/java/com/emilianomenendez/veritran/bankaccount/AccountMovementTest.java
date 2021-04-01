@@ -17,6 +17,6 @@ class AccountMovementTest {
 
         assertEquals(dateTime, movement.getDateTime());
         assertEquals(dollars10.getCurrency(), movement.getCurrency());
-        assertEquals(dollars10, movement.getAmount());
+        assertEquals(Balance.create(dollars10), movement.getAmount());
     }
 }

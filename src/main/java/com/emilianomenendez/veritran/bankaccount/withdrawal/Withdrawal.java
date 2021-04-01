@@ -1,5 +1,6 @@
 package com.emilianomenendez.veritran.bankaccount.withdrawal;
 
+import com.emilianomenendez.veritran.bankaccount.Balance;
 import com.emilianomenendez.veritran.bankaccount.BankAccount;
 import com.emilianomenendez.veritran.money.InsufficientFundsException;
 import com.emilianomenendez.veritran.money.Money;
@@ -25,11 +26,11 @@ public class Withdrawal {
         return amount;
     }
 
-    public Money previewBalanceAfter() {
+    public Balance previewBalanceAfter() {
         return getDebitAccount().getBalance().minus(amount);
     }
 
-    public Money execute() {
+    public Balance execute() {
         if (!debitAccount.withdrawalLimitAccepts(this)) {
             throw new InsufficientFundsException();
         }

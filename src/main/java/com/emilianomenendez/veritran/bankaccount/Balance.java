@@ -4,7 +4,7 @@ import com.emilianomenendez.veritran.money.Money;
 
 import java.util.Objects;
 
-public abstract class Balance implements Money {
+public abstract class Balance {
     private final String currency;
     private final int amount;
 
@@ -43,21 +43,23 @@ public abstract class Balance implements Money {
         return amount;
     }
 
-    @Override
     public boolean isGreaterThanOrEqual(Money other) {
         return amount >= other.getAmount();
     }
 
-    @Override
-    public boolean isLessThan(Money other) {
+    public boolean isGreaterThanOrEqual(Balance other) {
+        return getAmount() >= other.getAmount();
+    }
+
+    public boolean isLessThan(Balance other) {
         return amount < other.getAmount();
     }
 
-    public Money plus(Money other) {
+    public Balance plus(Money other) {
         return create(this.currency, this.amount + other.getAmount());
     }
 
-    public Money minus(Money other) {
+    public Balance minus(Money other) {
         return create(this.currency, this.amount - other.getAmount());
     }
 

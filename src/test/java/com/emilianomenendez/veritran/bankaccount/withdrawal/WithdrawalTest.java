@@ -26,7 +26,7 @@ public class WithdrawalTest {
     void givenSavingsAccountWith100USDBalanceWhenExecute10USDWithdrawalThenItShouldCalculateNewBalance() {
         SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
 
-        Money balanceAfter = Withdrawal.from(account).amount(dollars10).execute();
+        Balance balanceAfter = Withdrawal.from(account).amount(dollars10).execute();
 
         assertEquals(Balance.create(dollars90), balanceAfter);
     }
