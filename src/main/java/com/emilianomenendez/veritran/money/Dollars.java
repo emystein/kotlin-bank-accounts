@@ -4,7 +4,7 @@ import com.emilianomenendez.veritran.NegativeAmountException;
 
 import java.util.Objects;
 
-public class Dollars implements Number {
+public class Dollars implements Money {
     private final int amount;
 
     public static Dollars amount(int amount) {
@@ -19,17 +19,18 @@ public class Dollars implements Number {
         this.amount = amount;
     }
 
-    @Override
+    public String getCurrency() {
+        return "USD";
+    }
+
     public int getAmount() {
         return amount;
     }
 
-    @Override
     public boolean isGreaterThanOrEqual(Number other) {
         return amount >= other.getAmount();
     }
 
-    @Override
     public boolean isLessThan(Number other) {
         return amount < other.getAmount();
     }
@@ -46,7 +47,6 @@ public class Dollars implements Number {
         return Dollars.amount(amount - amountToSubtract.getAmount());
     }
 
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -54,7 +54,6 @@ public class Dollars implements Number {
         return amount == dollars.amount;
     }
 
-    @Override
     public int hashCode() {
         return Objects.hash(amount);
     }

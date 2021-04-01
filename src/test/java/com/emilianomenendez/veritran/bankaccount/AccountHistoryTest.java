@@ -1,16 +1,19 @@
 package com.emilianomenendez.veritran.bankaccount;
 
 import com.emilianomenendez.veritran.money.Dollars;
+import com.emilianomenendez.veritran.money.Number;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static com.emilianomenendez.veritran.bankaccount.money.TestObjects.dollars10;
+import static com.emilianomenendez.veritran.bankaccount.money.TestObjects.dollars20;
 import static java.time.LocalDateTime.now;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AccountHistoryTest {
     private AccountHistory history;
-    private AccountMovement movement1 = new AccountMovement(now(), Dollars.amount(10));
-    private AccountMovement movement2 = new AccountMovement(now(), Dollars.amount(20));
+    private AccountMovement movement1 = new AccountMovement(now(), dollars10.getCurrency(), dollars10);
+    private AccountMovement movement2 = new AccountMovement(now(), dollars20.getCurrency(), dollars20);
 
     @BeforeEach
     void setUp() {

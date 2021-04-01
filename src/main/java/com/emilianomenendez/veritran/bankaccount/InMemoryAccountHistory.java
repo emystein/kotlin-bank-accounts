@@ -3,6 +3,7 @@ package com.emilianomenendez.veritran.bankaccount;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -21,8 +22,12 @@ public class InMemoryAccountHistory implements AccountHistory {
         List<AccountMovement> indexedMovements = Arrays.asList(movements);
 
         return history.stream()
-                .filter(movement -> indexedMovements.contains(movement))
+                .filter(indexedMovements::contains)
                 .collect(toList())
                 .equals(indexedMovements);
+    }
+
+    public Stream<AccountMovement> allMovements() {
+        return history.stream();
     }
 }
