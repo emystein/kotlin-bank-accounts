@@ -9,17 +9,14 @@ import static java.util.stream.Collectors.toList;
 public class InMemoryAccountHistory implements AccountHistory {
     private List<AccountMovement> history = new ArrayList<>();
 
-    @Override
     public void add(AccountMovement movement) {
         history.add(movement);
     }
 
-    @Override
     public boolean contains(AccountMovement movement) {
         return history.contains(movement);
     }
 
-    @Override
     public boolean containsInOrder(AccountMovement... movements) {
         List<AccountMovement> indexedMovements = Arrays.asList(movements);
 
