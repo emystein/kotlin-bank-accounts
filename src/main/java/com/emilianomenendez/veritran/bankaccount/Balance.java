@@ -1,37 +1,45 @@
 package com.emilianomenendez.veritran.bankaccount;
 
 import com.emilianomenendez.veritran.money.Dollars;
+import com.emilianomenendez.veritran.money.Money;
 import com.emilianomenendez.veritran.money.Number;
 
 import java.util.Objects;
 
-public class Balance implements Number {
+public class Balance implements Money {
+    private final String currency;
     private final String sign;
     private final int amount;
 
-    public static Balance create(Number initialBalance) {
-        return Balance.create(initialBalance.getAmount());
+    public static Balance create(Money initialBalance) {
+        return Balance.create(initialBalance.getCurrency(), initialBalance.getAmount());
     }
 
-    private static Balance create(int amount) {
+    private static Balance create(String currency, int amount) {
         if (amount >= 0) {
-            return new Balance("+", amount);
+            return new Balance(currency, "+", amount);
         } else {
-            return new Balance("-", amount);
+            return new Balance(currency, "-", amount);
         }
     }
 
-    public static Number positive(Dollars amount) {
-        return new Balance("+", amount.getAmount());
+    public static Money positive(Dollars amount) {
+        return new Balance(amount.getCurrency(), "+", amount.getAmount());
     }
 
-    public static Number negative(Dollars amount) {
-        return new Balance("-", -amount.getAmount());
+    public static Money negative(Dollars amount) {
+        return new Balance(amount.getCurrency(), "-", -amount.getAmount());
     }
 
-    private Balance(String sign, int amount) {
+    private Balance(String currency, String sign, int amount) {
+        this.currency = currency;
         this.sign = sign;
         this.amount = amount;
+    }
+
+    @Override
+    public String getCurrency() {
+        return currency;
     }
 
     @Override
@@ -51,12 +59,12 @@ public class Balance implements Number {
 
     @Override
     public Balance plus(Number other) {
-        return create(this.amount + other.getAmount());
+        return create(this.currency, this.amount + other.getAmount());
     }
 
     @Override
     public Balance minus(Number other) {
-        return create(this.amount - other.getAmount());
+        return create(this.currency, this.amount - other.getAmount());
     }
 
     @Override

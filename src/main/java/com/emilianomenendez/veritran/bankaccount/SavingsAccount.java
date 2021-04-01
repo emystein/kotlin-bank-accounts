@@ -45,7 +45,7 @@ public class SavingsAccount implements BankAccount {
     public AccountMovement deposit(Dollars amountToDeposit) {
         balance = balance.plus(amountToDeposit);
 
-        AccountMovement movement = new AccountMovement(LocalDateTime.now(), amountToDeposit.getCurrency(), amountToDeposit);
+        AccountMovement movement = new AccountMovement(LocalDateTime.now(), amountToDeposit);
         history.add(movement);
         return movement;
     }
@@ -61,7 +61,7 @@ public class SavingsAccount implements BankAccount {
                 .amount(amountToWithdraw)
                 .execute();
 
-        AccountMovement movement = new AccountMovement(LocalDateTime.now(), amountToWithdraw.getCurrency(), Balance.negative(amountToWithdraw));
+        AccountMovement movement = new AccountMovement(LocalDateTime.now(), Balance.negative(amountToWithdraw));
         history.add(movement);
         return movement;
     }

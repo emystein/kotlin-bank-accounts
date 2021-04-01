@@ -12,8 +12,9 @@ import static com.emilianomenendez.veritran.bankaccount.money.TestObjects.*;
 public class DollarsTest {
     @Test
     void givenAPositiveAmountWhenCreateDollarsWithTheGivenAmountThenTheDollarsShouldBeCreated() {
-        Number dollars = Dollars.amount(10);
+        Dollars dollars = Dollars.amount(10);
 
+        Assertions.assertEquals("USD", dollars.getCurrency());
         Assertions.assertEquals(10, dollars.getAmount());
     }
 
