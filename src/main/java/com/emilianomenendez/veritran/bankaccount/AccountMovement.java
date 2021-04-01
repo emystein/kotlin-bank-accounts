@@ -1,6 +1,5 @@
 package com.emilianomenendez.veritran.bankaccount;
 
-import com.emilianomenendez.veritran.money.Dollars;
 import com.emilianomenendez.veritran.money.Money;
 import com.emilianomenendez.veritran.money.Number;
 

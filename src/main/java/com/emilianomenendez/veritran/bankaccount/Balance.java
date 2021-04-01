@@ -1,14 +1,12 @@
 package com.emilianomenendez.veritran.bankaccount;
 
-import com.emilianomenendez.veritran.money.Dollars;
 import com.emilianomenendez.veritran.money.Money;
 import com.emilianomenendez.veritran.money.Number;
 
 import java.util.Objects;
 
-public class Balance implements Money {
+public abstract class Balance implements SignedMoney {
     private final String currency;
-    private final String sign;
     private final int amount;
 
     public static Balance create(Money initialBalance) {
@@ -17,25 +15,26 @@ public class Balance implements Money {
 
     private static Balance create(String currency, int amount) {
         if (amount >= 0) {
-            return new Balance(currency, "+", amount);
+            return new PositiveBalance(currency, amount);
         } else {
-            return new Balance(currency, "-", amount);
+            return new NegativeBalance(currency, amount);
         }
     }
 
-    public static Money positive(Dollars amount) {
-        return new Balance(amount.getCurrency(), "+", amount.getAmount());
+    public static Balance positive(Money amount) {
+        return new PositiveBalance(amount.getCurrency(), amount.getAmount());
     }
 
-    public static Money negative(Dollars amount) {
-        return new Balance(amount.getCurrency(), "-", -amount.getAmount());
+    public static Balance negative(Money amount) {
+        return new NegativeBalance(amount.getCurrency(), amount.getAmount());
     }
 
-    private Balance(String currency, String sign, int amount) {
+    public Balance(String currency, int amount) {
         this.currency = currency;
-        this.sign = sign;
         this.amount = amount;
     }
+
+    public abstract String getSign();
 
     @Override
     public String getCurrency() {
@@ -72,11 +71,11 @@ public class Balance implements Money {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Balance balance = (Balance) o;
-        return amount == balance.amount && sign.equals(balance.sign);
+        return amount == balance.amount && getSign().equals(balance.getSign());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(sign, amount);
+        return Objects.hash(getSign(), amount);
     }
 }

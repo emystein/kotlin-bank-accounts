@@ -3,7 +3,6 @@ package com.emilianomenendez.veritran.bankaccount.money;
 import com.emilianomenendez.veritran.NegativeAmountException;
 import com.emilianomenendez.veritran.money.Dollars;
 import com.emilianomenendez.veritran.money.InsufficientFundsException;
-import com.emilianomenendez.veritran.money.Number;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
