@@ -48,29 +48,6 @@ public class SavingsAccountTest {
     }
 
     @Test
-    void givenAnAccountWith100USDBalanceWhenDeposit10USDThenTheAccountHistoryShouldContainTheDeposit() {
-        SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
-
-        Dollars amountToDeposit = dollars10;
-
-        AccountMovement movement = account.deposit(amountToDeposit);
-
-        assertTrue(account.historyContains(movement));
-    }
-
-    @Test
-    void givenAnAccountWith100USDBalanceWhenDeposit10USDAnd20USDThenTheAccountHistoryShouldContainTheDepositsInOrder() {
-        SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
-
-        Dollars amountToDeposit = dollars10;
-
-        AccountMovement movement1 = account.deposit(amountToDeposit);
-        AccountMovement movement2 = account.deposit(amountToDeposit);
-
-        assertTrue(account.historyContainsInOrder(movement1, movement2));
-    }
-
-    @Test
     void givenAnAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
         SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
 
@@ -89,17 +66,6 @@ public class SavingsAccountTest {
                 account.withdraw(dollars200));
 
         assertAccountKeepsInitialBalance(account);
-    }
-
-    @Test
-    void givenAnAccountWith100USDBalanceWhenWithdraw10USDThenTheAccountHistoryShouldContainTheWithdrawal() {
-        SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
-
-        Dollars amountToDeposit = dollars10;
-
-        AccountMovement movement = account.withdraw(amountToDeposit);
-
-        assertTrue(account.historyContains(movement));
     }
 
     @Test
