@@ -10,8 +10,7 @@ import org.junit.jupiter.api.Test;
 import static com.emilianomenendez.veritran.bankaccount.SavingsAccountAssertions.*;
 import static com.emilianomenendez.veritran.bankaccount.TestObjects.createSavingsAccountFor;
 import static com.emilianomenendez.veritran.bankaccount.money.TestObjects.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SavingsAccountTest {
     private Customer francisco;
@@ -49,6 +48,29 @@ public class SavingsAccountTest {
     }
 
     @Test
+    void givenAnAccountWith100USDBalanceWhenDeposit10USDThenTheAccountHistoryShouldContainTheDeposit() {
+        SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
+
+        Dollars amountToDeposit = dollars10;
+
+        AccountMovement movement = account.deposit(amountToDeposit);
+
+        assertTrue(account.historyContains(movement));
+    }
+
+    @Test
+    void givenAnAccountWith100USDBalanceWhenDeposit10USDAnd20USDThenTheAccountHistoryShouldContainTheDepositsInOrder() {
+        SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
+
+        Dollars amountToDeposit = dollars10;
+
+        AccountMovement movement1 = account.deposit(amountToDeposit);
+        AccountMovement movement2 = account.deposit(amountToDeposit);
+
+        assertTrue(account.historyContainsInOrder(movement1, movement2));
+    }
+
+    @Test
     void givenAnAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
         SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
 
@@ -68,6 +90,29 @@ public class SavingsAccountTest {
 
         assertAccountKeepsInitialBalance(account);
     }
+
+    @Test
+    void givenAnAccountWith100USDBalanceWhenWithdraw10USDThenTheAccountHistoryShouldContainTheWithdrawal() {
+        SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
+
+        Dollars amountToDeposit = dollars10;
+
+        AccountMovement movement = account.withdraw(amountToDeposit);
+
+        assertTrue(account.historyContains(movement));
+    }
+
+    @Test
+    void givenAWithdrawalWhenGetItsAmountThenTheAmountShouldBeNegative() {
+        SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
+
+        Dollars amountToDeposit = dollars10;
+
+        AccountMovement movement = account.withdraw(amountToDeposit);
+
+        assertEquals(Balance.negative(amountToDeposit), movement.getAmount());
+    }
+
 
     @Test
     void givenADebitAndCreditAccountsWhenTransfer10USDThenTheMoneyShouldBeTransferred() {
