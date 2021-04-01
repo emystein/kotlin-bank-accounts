@@ -1,20 +1,18 @@
 package com.emilianomenendez.veritran.bankaccount.withdrawal;
 
-import com.emilianomenendez.veritran.bankaccount.Balance;
 import com.emilianomenendez.veritran.bankaccount.BankAccount;
-import com.emilianomenendez.veritran.money.Dollars;
 import com.emilianomenendez.veritran.money.InsufficientFundsException;
-import com.emilianomenendez.veritran.money.Number;
+import com.emilianomenendez.veritran.money.Money;
 
 public class Withdrawal {
     private final BankAccount debitAccount;
-    private final Dollars amount;
+    private final Money amount;
 
     public static WithdrawalBuilder from(BankAccount debitAccount) {
         return new WithdrawalBuilder(debitAccount);
     }
 
-    public Withdrawal(BankAccount debitAccount, Dollars amount) {
+    public Withdrawal(BankAccount debitAccount, Money amount) {
         this.debitAccount = debitAccount;
         this.amount = amount;
     }
@@ -23,15 +21,15 @@ public class Withdrawal {
         return debitAccount;
     }
 
-    public Dollars getAmount() {
+    public Money getAmount() {
         return amount;
     }
 
-    public Number previewBalanceAfter() {
+    public Money previewBalanceAfter() {
         return getDebitAccount().getBalance().minus(amount);
     }
 
-    public Balance execute() {
+    public Money execute() {
         if (!debitAccount.withdrawalLimitAccepts(this)) {
             throw new InsufficientFundsException();
         }

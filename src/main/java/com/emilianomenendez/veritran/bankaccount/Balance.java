@@ -1,11 +1,10 @@
 package com.emilianomenendez.veritran.bankaccount;
 
 import com.emilianomenendez.veritran.money.Money;
-import com.emilianomenendez.veritran.money.Number;
 
 import java.util.Objects;
 
-public abstract class Balance implements SignedMoney {
+public abstract class Balance implements Money {
     private final String currency;
     private final int amount;
 
@@ -36,37 +35,32 @@ public abstract class Balance implements SignedMoney {
 
     public abstract String getSign();
 
-    @Override
     public String getCurrency() {
         return currency;
     }
 
-    @Override
     public int getAmount() {
         return amount;
     }
 
     @Override
-    public boolean isGreaterThanOrEqual(Number other) {
+    public boolean isGreaterThanOrEqual(Money other) {
         return amount >= other.getAmount();
     }
 
     @Override
-    public boolean isLessThan(Number other) {
+    public boolean isLessThan(Money other) {
         return amount < other.getAmount();
     }
 
-    @Override
-    public Balance plus(Number other) {
+    public Money plus(Money other) {
         return create(this.currency, this.amount + other.getAmount());
     }
 
-    @Override
-    public Balance minus(Number other) {
+    public Money minus(Money other) {
         return create(this.currency, this.amount - other.getAmount());
     }
 
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -74,7 +68,6 @@ public abstract class Balance implements SignedMoney {
         return amount == balance.amount && getSign().equals(balance.getSign());
     }
 
-    @Override
     public int hashCode() {
         return Objects.hash(getSign(), amount);
     }

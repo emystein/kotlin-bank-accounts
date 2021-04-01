@@ -5,21 +5,22 @@ import com.emilianomenendez.veritran.bankaccount.transfer.BankTransfer;
 import com.emilianomenendez.veritran.bankaccount.withdrawal.Withdrawal;
 import com.emilianomenendez.veritran.bankaccount.withdrawal.WithdrawalLimit;
 import com.emilianomenendez.veritran.money.Dollars;
+import com.emilianomenendez.veritran.money.Money;
 
 import java.time.LocalDateTime;
 
 public class SavingsAccount implements BankAccount {
     private final Customer owner;
     private final WithdrawalLimit withdrawalLimit;
-    private Balance initialBalance;
-    private Balance balance;
+    private Money initialBalance;
+    private Money balance;
     private AccountHistory history;
 
     public static SavingsAccountBuilder ownedBy(Customer owner) {
         return new SavingsAccountBuilder(owner);
     }
 
-    public SavingsAccount(Customer owner, WithdrawalLimit withdrawalLimit, Dollars initialBalance, AccountHistory history) {
+    public SavingsAccount(Customer owner, WithdrawalLimit withdrawalLimit, Money initialBalance, AccountHistory history) {
         this.owner = owner;
         this.withdrawalLimit = withdrawalLimit;
         this.initialBalance = Balance.create(initialBalance);
@@ -32,12 +33,12 @@ public class SavingsAccount implements BankAccount {
     }
 
     @Override
-    public Balance getInitialBalance() {
+    public Money getInitialBalance() {
         return initialBalance;
     }
 
     @Override
-    public Balance getBalance() {
+    public Money getBalance() {
         return balance;
     }
 

@@ -27,19 +27,19 @@ public class Dollars implements Money {
         return amount;
     }
 
-    public boolean isGreaterThanOrEqual(Number other) {
+    public boolean isGreaterThanOrEqual(Money other) {
         return amount >= other.getAmount();
     }
 
-    public boolean isLessThan(Number other) {
+    public boolean isLessThan(Money other) {
         return amount < other.getAmount();
     }
 
-    public Number plus(Number amountToAdd) {
+    public Money plus(Money amountToAdd) {
         return Dollars.amount(amount + amountToAdd.getAmount());
     }
 
-    public Number minus(Number amountToSubtract) {
+    public Money minus(Money amountToSubtract) {
         if (this.isLessThan(amountToSubtract)) {
             throw new InsufficientFundsException();
         }

@@ -1,16 +1,14 @@
 package com.emilianomenendez.veritran.bankaccount.withdrawal;
 
-import com.emilianomenendez.veritran.money.Number;
-
 public class LowerLimit implements WithdrawalLimit {
-    private final Number limit;
+    private final int limit;
 
-    public LowerLimit(Number limit) {
+    public LowerLimit(int limit) {
         this.limit = limit;
     }
 
     @Override
     public boolean accepts(Withdrawal withdrawal) {
-        return withdrawal.previewBalanceAfter().isGreaterThanOrEqual(limit);
+        return withdrawal.previewBalanceAfter().getAmount() >= limit;
     }
 }
