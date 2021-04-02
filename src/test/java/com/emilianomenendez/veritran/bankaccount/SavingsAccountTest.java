@@ -3,7 +3,6 @@ package com.emilianomenendez.veritran.bankaccount;
 import com.emilianomenendez.veritran.Customer;
 import com.emilianomenendez.veritran.bankaccount.transfer.SameAccountTransferException;
 import com.emilianomenendez.veritran.money.InsufficientFundsException;
-import com.emilianomenendez.veritran.money.PositiveAmount;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,23 +23,23 @@ public class SavingsAccountTest {
 
     @Test
     void givenACustomerAndAnInitialAmountWhenCreateAnAccountThenTheAccountShouldBeOwnedByTheCustomer() {
-        BankAccount account = createSavingsAccountFor(francisco, dollars100);
+        var account = createSavingsAccountFor(francisco, dollars100);
 
         assertTrue(account.isOwnedBy(francisco));
     }
 
     @Test
     void givenACustomerAndAnInitialAmountWhenCreateAnAccountThenTheAccountShouldHaveBalance() {
-        BankAccount account = createSavingsAccountFor(francisco, dollars100);
+        var account = createSavingsAccountFor(francisco, dollars100);
 
         assertAccountKeepsInitialBalance(account);
     }
 
     @Test
     void givenAnAccountWith100USDBalanceWhenDeposit10USDThenBalanceShouldBe110USD() {
-        SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
+        var account = createSavingsAccountFor(francisco, dollars100);
 
-        PositiveAmount amountToDeposit = dollars10;
+        var amountToDeposit = dollars10;
 
         account.deposit(amountToDeposit);
 
@@ -49,9 +48,9 @@ public class SavingsAccountTest {
 
     @Test
     void givenAnAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
-        SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
+        var account = createSavingsAccountFor(francisco, dollars100);
 
-        PositiveAmount amountToWithdraw = dollars10;
+        var amountToWithdraw = dollars10;
 
         account.withdraw(amountToWithdraw);
 
@@ -60,7 +59,7 @@ public class SavingsAccountTest {
 
     @Test
     void givenAnAccountWith100USDBalanceWhenWithdraw200USDThenWithdrawalShouldBeRejected() {
-        SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
+        var account = createSavingsAccountFor(francisco, dollars100);
 
         assertThrows(InsufficientFundsException.class, () ->
                 account.withdraw(dollars200));
@@ -70,9 +69,9 @@ public class SavingsAccountTest {
 
     @Test
     void givenAWithdrawalWhenGetItsAmountThenTheAmountShouldBeNegative() {
-        SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
+        var account = createSavingsAccountFor(francisco, dollars100);
 
-        PositiveAmount amountToDeposit = dollars10;
+        var amountToDeposit = dollars10;
 
         AccountMovement movement = account.withdraw(amountToDeposit);
 
@@ -82,10 +81,10 @@ public class SavingsAccountTest {
 
     @Test
     void givenADebitAndCreditAccountsWhenTransfer10USDThenTheMoneyShouldBeTransferred() {
-        SavingsAccount debitAccount = createSavingsAccountFor(francisco, dollars100);
-        SavingsAccount creditAccount = createSavingsAccountFor(mabel, dollars100);
+        var debitAccount = createSavingsAccountFor(francisco, dollars100);
+        var creditAccount = createSavingsAccountFor(mabel, dollars100);
 
-        PositiveAmount amountToTransfer = dollars10;
+        var amountToTransfer = dollars10;
 
         debitAccount.transfer(creditAccount, amountToTransfer);
 
@@ -95,8 +94,8 @@ public class SavingsAccountTest {
 
     @Test
     void givenADebitAndCreditAccountWhenTransferInsufficientFundsThenTheMoneyShouldNotBeTransferred() {
-        SavingsAccount debitAccount = createSavingsAccountFor(francisco, dollars100);
-        SavingsAccount creditAccount = createSavingsAccountFor(mabel, dollars100);
+        var debitAccount = createSavingsAccountFor(francisco, dollars100);
+        var creditAccount = createSavingsAccountFor(mabel, dollars100);
 
         assertThrows(InsufficientFundsException.class, () ->
                 debitAccount.transfer(creditAccount, dollars200));
@@ -107,7 +106,7 @@ public class SavingsAccountTest {
 
     @Test
     void givenTheSameDebitAndCreditAccountWhenTransferThenTheTransferShouldBeRejected() {
-        SavingsAccount debitAccount = createSavingsAccountFor(francisco, dollars100);
+        var debitAccount = createSavingsAccountFor(francisco, dollars100);
 
         assertThrows(SameAccountTransferException.class, () ->
                 debitAccount.transfer(debitAccount, dollars10));

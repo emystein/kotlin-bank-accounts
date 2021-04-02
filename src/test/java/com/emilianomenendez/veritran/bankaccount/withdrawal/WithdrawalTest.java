@@ -2,7 +2,6 @@ package com.emilianomenendez.veritran.bankaccount.withdrawal;
 
 import com.emilianomenendez.veritran.Customer;
 import com.emilianomenendez.veritran.bankaccount.Balance;
-import com.emilianomenendez.veritran.bankaccount.SavingsAccount;
 import com.emilianomenendez.veritran.money.InsufficientFundsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,16 +21,16 @@ public class WithdrawalTest {
 
     @Test
     void givenSavingsAccountWith100USDBalanceWhenExecute10USDWithdrawalThenItShouldCalculateNewBalance() {
-        SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
+        var account = createSavingsAccountFor(francisco, dollars100);
 
-        Balance balanceAfter = Withdrawal.from(account).amount(dollars10).execute();
+        var balanceAfter = Withdrawal.from(account).amount(dollars10).execute();
 
         assertEquals(Balance.create(dollars90), balanceAfter);
     }
 
     @Test
     void givenSavingsAccountWith100USDBalanceWhenCreate200USDWithdrawalThenItShouldBeRejected() {
-        SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
+        var account = createSavingsAccountFor(francisco, dollars100);
 
         assertThrows(InsufficientFundsException.class, () -> Withdrawal.from(account).amount(dollars200).execute());
     }

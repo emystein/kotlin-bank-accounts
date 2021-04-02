@@ -2,7 +2,6 @@ package com.emilianomenendez.veritran.bankaccount;
 
 import com.emilianomenendez.veritran.Customer;
 import com.emilianomenendez.veritran.money.InsufficientFundsException;
-import com.emilianomenendez.veritran.money.PositiveAmount;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,9 +23,9 @@ public class CheckingAccountTest {
 
     @Test
     void givenACheckingAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
-        BankAccount account = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
+        var account = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
 
-        PositiveAmount amountToWithdraw = dollars10;
+        var amountToWithdraw = dollars10;
 
         account.withdraw(amountToWithdraw);
 
@@ -35,9 +34,9 @@ public class CheckingAccountTest {
 
     @Test
     void givenACheckingAccountWith100USDBalanceWhenWithdraw110USDThenBalanceShouldBeMinus10USD() {
-        BankAccount account = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
+        var account = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
 
-        PositiveAmount amountToWithdraw = dollars110;
+        var amountToWithdraw = dollars110;
 
         account.withdraw(amountToWithdraw);
 
@@ -47,7 +46,7 @@ public class CheckingAccountTest {
 
     @Test
     void givenAnAccountWith100USDBalanceWhenWithdraw300USDThenWithdrawalShouldBeRejected() {
-        BankAccount account = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
+        var account = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
 
         assertThrows(InsufficientFundsException.class, () ->
                 account.withdraw(dollars300));
@@ -58,10 +57,10 @@ public class CheckingAccountTest {
 
     @Test
     void givenADebitWith100USDBalanceWhenTransfer10USDThenTheMoneyShouldBeTransferred() {
-        BankAccount debitAccount = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
-        BankAccount creditAccount = createCheckingAccountFor(mabel, dollars100, TestObjects.minus100DollarsLimit);
+        var debitAccount = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
+        var creditAccount = createCheckingAccountFor(mabel, dollars100, TestObjects.minus100DollarsLimit);
 
-        PositiveAmount amountToTransfer = dollars10;
+        var amountToTransfer = dollars10;
 
         debitAccount.transfer(creditAccount, amountToTransfer);
 
@@ -71,10 +70,10 @@ public class CheckingAccountTest {
 
     @Test
     void givenADebitWith100USDBalanceAndWithdrawLimitMinus100USDWhenTransfer110USDThenTheMoneyShouldBeTransferred() {
-        BankAccount debitAccount = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
-        BankAccount creditAccount = createCheckingAccountFor(mabel, dollars100, TestObjects.minus100DollarsLimit);
+        var debitAccount = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
+        var creditAccount = createCheckingAccountFor(mabel, dollars100, TestObjects.minus100DollarsLimit);
 
-        PositiveAmount amountToTransfer = dollars110;
+        var amountToTransfer = dollars110;
 
         debitAccount.transfer(creditAccount, amountToTransfer);
 
@@ -84,10 +83,10 @@ public class CheckingAccountTest {
 
     @Test
     void givenADebitWith100USDBalanceAndWithdrawLimitMinus100USDWhenTransfer300USDThenTheMoneyShouldNotBeTransferred() {
-        BankAccount debitAccount = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
-        BankAccount creditAccount = createCheckingAccountFor(mabel, dollars100, TestObjects.minus100DollarsLimit);
+        var debitAccount = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
+        var creditAccount = createCheckingAccountFor(mabel, dollars100, TestObjects.minus100DollarsLimit);
 
-        PositiveAmount amountToTransfer = dollars300;
+        var amountToTransfer = dollars300;
 
         assertThrows(InsufficientFundsException.class, () -> debitAccount.transfer(creditAccount, amountToTransfer));
 

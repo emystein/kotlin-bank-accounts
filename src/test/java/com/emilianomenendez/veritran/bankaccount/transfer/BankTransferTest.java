@@ -1,7 +1,6 @@
 package com.emilianomenendez.veritran.bankaccount.transfer;
 
 import com.emilianomenendez.veritran.Customer;
-import com.emilianomenendez.veritran.bankaccount.SavingsAccount;
 import com.emilianomenendez.veritran.money.InsufficientFundsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,8 +22,8 @@ public class BankTransferTest {
 
     @Test
     void givenDebitAndCreditAccountWhenTransferThenMoneyShouldBeMovedFromDebitAccountToCreditAccount() {
-        SavingsAccount debitAccount = createSavingsAccountFor(francisco, dollars100);
-        SavingsAccount creditAccount = createSavingsAccountFor(mabel, dollars100);
+        var debitAccount = createSavingsAccountFor(francisco, dollars100);
+        var creditAccount = createSavingsAccountFor(mabel, dollars100);
 
         BankTransfer.from(debitAccount)
                 .to(creditAccount)
@@ -36,8 +35,8 @@ public class BankTransferTest {
 
     @Test
     void givenDebitWithInsufficientFundsWhenTransferThenMoneyShouldNotBeMoved() {
-        SavingsAccount debitAccount = createSavingsAccountFor(francisco, dollars100);
-        SavingsAccount creditAccount = createSavingsAccountFor(mabel, dollars100);
+        var debitAccount = createSavingsAccountFor(francisco, dollars100);
+        var creditAccount = createSavingsAccountFor(mabel, dollars100);
 
         assertThrows(InsufficientFundsException.class, () ->
                 BankTransfer.from(debitAccount)
@@ -50,7 +49,7 @@ public class BankTransferTest {
 
     @Test
     void givenSameDebitAndCreditAccountWhenTransferThenMoneyShouldNotBeMoved() {
-        SavingsAccount debitAccount = createSavingsAccountFor(francisco, dollars100);
+        var debitAccount = createSavingsAccountFor(francisco, dollars100);
 
         assertThrows(SameAccountTransferException.class, () ->
                 BankTransfer.from(debitAccount)

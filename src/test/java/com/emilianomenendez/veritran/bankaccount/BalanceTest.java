@@ -12,7 +12,7 @@ class BalanceTest {
 
     @Test
     void positiveBalanceShouldIncludePositiveSignAndCurrencyAndAmount() {
-        PositiveBalance balance = new PositiveBalance("USD", 10);
+        var balance = new PositiveBalance("USD", 10);
 
         assertEquals("+", balance.getSign());
         assertEquals("USD", balance.getCurrency());
@@ -21,7 +21,7 @@ class BalanceTest {
 
     @Test
     void negativeBalanceShouldIncludeNegativeSignAndCurrencyAndAmount() {
-        NegativeBalance balance = new NegativeBalance("USD", 10);
+        var balance = new NegativeBalance("USD", 10);
 
         assertEquals("-", balance.getSign());
         assertEquals("USD", balance.getCurrency());
@@ -30,32 +30,32 @@ class BalanceTest {
 
     @Test
     void PositiveBalance100UsdShouldBeGreaterThanPositiveBalance10USD() {
-        PositiveBalance balance100 = new PositiveBalance("USD", 100);
-        PositiveBalance balance10 = new PositiveBalance("USD", 10);
+        var balance100 = new PositiveBalance("USD", 100);
+        var balance10 = new PositiveBalance("USD", 10);
 
         assertTrue(balance100.isGreaterThanOrEqual(balance10));
     }
 
     @Test
     void PositiveBalance100UsdShouldBeGreaterThanNegativeBalance10USD() {
-        PositiveBalance balance100 = new PositiveBalance("USD", 100);
-        NegativeBalance balanceMinus10 = new NegativeBalance("USD", 10);
+        var balance100 = new PositiveBalance("USD", 100);
+        var balanceMinus10 = new NegativeBalance("USD", 10);
 
         assertTrue(balance100.isGreaterThanOrEqual(balanceMinus10));
     }
 
     @Test
     void NegativeBalance10UsdShouldBeLowerThanPositiveBalance10USD() {
-        NegativeBalance balanceMinus10 = new NegativeBalance("USD", 10);
-        PositiveBalance balance10 = new PositiveBalance("USD", 10);
+        var balanceMinus10 = new NegativeBalance("USD", 10);
+        var balance10 = new PositiveBalance("USD", 10);
 
         assertTrue(balanceMinus10.isLessThan(balance10));
     }
 
     @Test
     void NegativeBalance100UsdShouldBeLowerThanNegativeBalance10USD() {
-        NegativeBalance balanceMinus100 = new NegativeBalance("USD", 100);
-        NegativeBalance balanceMinus10 = new NegativeBalance("USD", 10);
+        var balanceMinus100 = new NegativeBalance("USD", 100);
+        var balanceMinus10 = new NegativeBalance("USD", 10);
 
         assertTrue(balanceMinus100.isLessThan(balanceMinus10));
     }
