@@ -1,7 +1,7 @@
 package com.emilianomenendez.veritran.bankaccount.transfer;
 
 import com.emilianomenendez.veritran.bankaccount.BankAccount;
-import com.emilianomenendez.veritran.money.Dollars;
+import com.emilianomenendez.veritran.money.PositiveAmount;
 
 public class BankTransfer {
     private BankAccount debitAccount;
@@ -16,7 +16,7 @@ public class BankTransfer {
         this.creditAccount = creditAccount;
     }
 
-    public void transfer(Dollars amountToTransfer) {
+    public void transfer(PositiveAmount amountToTransfer) {
         assertAccountsAreDifferent();
 
         debitAccount.withdraw(amountToTransfer);

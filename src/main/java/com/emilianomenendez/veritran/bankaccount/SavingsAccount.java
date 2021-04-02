@@ -4,8 +4,8 @@ import com.emilianomenendez.veritran.Customer;
 import com.emilianomenendez.veritran.bankaccount.transfer.BankTransfer;
 import com.emilianomenendez.veritran.bankaccount.withdrawal.Withdrawal;
 import com.emilianomenendez.veritran.bankaccount.withdrawal.WithdrawalLimit;
-import com.emilianomenendez.veritran.money.Dollars;
 import com.emilianomenendez.veritran.money.Money;
+import com.emilianomenendez.veritran.money.PositiveAmount;
 
 import java.time.LocalDateTime;
 
@@ -43,8 +43,7 @@ public class SavingsAccount implements BankAccount {
     }
 
     @Override
-    // TODO allow to deposit only positive amounts
-    public AccountMovement deposit(Dollars amountToDeposit) {
+    public AccountMovement deposit(PositiveAmount amountToDeposit) {
         balance = balance.plus(amountToDeposit);
 
         AccountMovement movement = new AccountMovement(LocalDateTime.now(), amountToDeposit);
@@ -58,8 +57,7 @@ public class SavingsAccount implements BankAccount {
     }
 
     @Override
-    // TODO allow to withdraw only positive amounts
-    public AccountMovement withdraw(Dollars amountToWithdraw) {
+    public AccountMovement withdraw(PositiveAmount amountToWithdraw) {
         balance = Withdrawal.from(this)
                 .amount(amountToWithdraw)
                 .execute();
@@ -70,7 +68,7 @@ public class SavingsAccount implements BankAccount {
     }
 
     @Override
-    public void transfer(BankAccount creditAccount, Dollars amountToTransfer) {
+    public void transfer(BankAccount creditAccount, PositiveAmount amountToTransfer) {
         BankTransfer.from(this)
                 .to(creditAccount)
                 .transfer(amountToTransfer);

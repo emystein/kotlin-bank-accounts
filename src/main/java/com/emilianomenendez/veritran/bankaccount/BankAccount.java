@@ -2,7 +2,7 @@ package com.emilianomenendez.veritran.bankaccount;
 
 import com.emilianomenendez.veritran.Customer;
 import com.emilianomenendez.veritran.bankaccount.withdrawal.Withdrawal;
-import com.emilianomenendez.veritran.money.Dollars;
+import com.emilianomenendez.veritran.money.PositiveAmount;
 
 public interface BankAccount {
     boolean isOwnedBy(Customer owner);
@@ -11,11 +11,11 @@ public interface BankAccount {
 
     Balance getBalance();
 
-    AccountMovement deposit(Dollars amountToDeposit);
+    AccountMovement deposit(PositiveAmount amountToDeposit);
 
     boolean withdrawalLimitAccepts(Withdrawal withdrawal);
 
-    AccountMovement withdraw(Dollars amountToWithdraw);
+    AccountMovement withdraw(PositiveAmount amountToWithdraw);
 
-    void transfer(BankAccount creditAccount, Dollars amountToTransfer);
+    void transfer(BankAccount creditAccount, PositiveAmount amountToTransfer);
 }

@@ -2,8 +2,8 @@ package com.emilianomenendez.veritran.bankaccount;
 
 import com.emilianomenendez.veritran.Customer;
 import com.emilianomenendez.veritran.bankaccount.transfer.SameAccountTransferException;
-import com.emilianomenendez.veritran.money.Dollars;
 import com.emilianomenendez.veritran.money.InsufficientFundsException;
+import com.emilianomenendez.veritran.money.PositiveAmount;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +40,7 @@ public class SavingsAccountTest {
     void givenAnAccountWith100USDBalanceWhenDeposit10USDThenBalanceShouldBe110USD() {
         SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
 
-        Dollars amountToDeposit = dollars10;
+        PositiveAmount amountToDeposit = dollars10;
 
         account.deposit(amountToDeposit);
 
@@ -51,7 +51,7 @@ public class SavingsAccountTest {
     void givenAnAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
         SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
 
-        Dollars amountToWithdraw = dollars10;
+        PositiveAmount amountToWithdraw = dollars10;
 
         account.withdraw(amountToWithdraw);
 
@@ -72,7 +72,7 @@ public class SavingsAccountTest {
     void givenAWithdrawalWhenGetItsAmountThenTheAmountShouldBeNegative() {
         SavingsAccount account = createSavingsAccountFor(francisco, dollars100);
 
-        Dollars amountToDeposit = dollars10;
+        PositiveAmount amountToDeposit = dollars10;
 
         AccountMovement movement = account.withdraw(amountToDeposit);
 
@@ -85,7 +85,7 @@ public class SavingsAccountTest {
         SavingsAccount debitAccount = createSavingsAccountFor(francisco, dollars100);
         SavingsAccount creditAccount = createSavingsAccountFor(mabel, dollars100);
 
-        Dollars amountToTransfer = dollars10;
+        PositiveAmount amountToTransfer = dollars10;
 
         debitAccount.transfer(creditAccount, amountToTransfer);
 

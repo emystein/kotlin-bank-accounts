@@ -1,15 +1,54 @@
 package com.emilianomenendez.veritran.money;
 
-public interface Money {
-    String getCurrency();
+import java.util.Objects;
 
-    int getAmount();
+public class Money {
+    private final String currency;
+    private final int amount;
 
-    boolean isGreaterThanOrEqual(Money other);
+    public Money(String currency, int amount) {
+        this.currency = currency;
+        this.amount = amount;
+    }
 
-    boolean isLessThan(Money other);
+    public String getCurrency() {
+        return this.currency;
+    }
 
-    Money plus(Money other);
+    public int getAmount() {
+        return amount;
+    }
 
-    Money minus(Money other);
+    public boolean isGreaterThanOrEqual(Money other) {
+        return amount >= other.getAmount();
+    }
+
+    public boolean isLessThan(Money other) {
+        return amount < other.getAmount();
+    }
+
+    public Money plus(Money amountToAdd) {
+        return new Money(currency, amount + amountToAdd.getAmount());
+    }
+
+    public Money minus(Money amountToSubtract) {
+        if (this.isLessThan(amountToSubtract)) {
+            throw new InsufficientFundsException();
+        }
+
+        return new Money(currency, amount - amountToSubtract.getAmount());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Money)) return false;
+        Money money = (Money) o;
+        return amount == money.amount && currency.equals(money.currency);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(currency, amount);
+    }
 }

@@ -1,7 +1,7 @@
 package com.emilianomenendez.veritran.bankaccount.withdrawal;
 
 import com.emilianomenendez.veritran.bankaccount.BankAccount;
-import com.emilianomenendez.veritran.money.Dollars;
+import com.emilianomenendez.veritran.money.PositiveAmount;
 
 public class WithdrawalBuilder {
     private final BankAccount debitAccount;
@@ -10,7 +10,7 @@ public class WithdrawalBuilder {
         this.debitAccount = debitAccount;
     }
 
-    public Withdrawal amount(Dollars amountToWithdraw) {
+    public Withdrawal amount(PositiveAmount amountToWithdraw) {
         return new Withdrawal(this.debitAccount, amountToWithdraw);
     }
 }

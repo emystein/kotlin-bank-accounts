@@ -1,15 +1,15 @@
 package com.emilianomenendez.veritran.bankaccount;
 
-import com.emilianomenendez.veritran.money.Dollars;
+import com.emilianomenendez.veritran.money.Money;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SavingsAccountAssertions {
-    public static void assertBalanceIncreasedBy(BankAccount account, Dollars amount) {
+    public static void assertBalanceIncreasedBy(BankAccount account, Money amount) {
         assertEquals(account.getInitialBalance().plus(amount), account.getBalance());
     }
 
-    public static void assertBalanceDecreasedBy(BankAccount account, Dollars amount) {
+    public static void assertBalanceDecreasedBy(BankAccount account, Money amount) {
         assertEquals(account.getInitialBalance().minus(amount), account.getBalance());
     }
 

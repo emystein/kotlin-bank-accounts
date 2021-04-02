@@ -1,8 +1,8 @@
 package com.emilianomenendez.veritran.bankaccount;
 
 import com.emilianomenendez.veritran.Customer;
-import com.emilianomenendez.veritran.money.Dollars;
 import com.emilianomenendez.veritran.money.InsufficientFundsException;
+import com.emilianomenendez.veritran.money.PositiveAmount;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +26,7 @@ public class CheckingAccountTest {
     void givenACheckingAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
         BankAccount account = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
 
-        Dollars amountToWithdraw = dollars10;
+        PositiveAmount amountToWithdraw = dollars10;
 
         account.withdraw(amountToWithdraw);
 
@@ -37,7 +37,7 @@ public class CheckingAccountTest {
     void givenACheckingAccountWith100USDBalanceWhenWithdraw110USDThenBalanceShouldBeMinus10USD() {
         BankAccount account = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
 
-        Dollars amountToWithdraw = dollars110;
+        PositiveAmount amountToWithdraw = dollars110;
 
         account.withdraw(amountToWithdraw);
 
@@ -61,7 +61,7 @@ public class CheckingAccountTest {
         BankAccount debitAccount = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
         BankAccount creditAccount = createCheckingAccountFor(mabel, dollars100, TestObjects.minus100DollarsLimit);
 
-        Dollars amountToTransfer = dollars10;
+        PositiveAmount amountToTransfer = dollars10;
 
         debitAccount.transfer(creditAccount, amountToTransfer);
 
@@ -74,7 +74,7 @@ public class CheckingAccountTest {
         BankAccount debitAccount = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
         BankAccount creditAccount = createCheckingAccountFor(mabel, dollars100, TestObjects.minus100DollarsLimit);
 
-        Dollars amountToTransfer = dollars110;
+        PositiveAmount amountToTransfer = dollars110;
 
         debitAccount.transfer(creditAccount, amountToTransfer);
 
@@ -87,7 +87,7 @@ public class CheckingAccountTest {
         BankAccount debitAccount = createCheckingAccountFor(francisco, dollars100, TestObjects.minus100DollarsLimit);
         BankAccount creditAccount = createCheckingAccountFor(mabel, dollars100, TestObjects.minus100DollarsLimit);
 
-        Dollars amountToTransfer = dollars300;
+        PositiveAmount amountToTransfer = dollars300;
 
         assertThrows(InsufficientFundsException.class, () -> debitAccount.transfer(creditAccount, amountToTransfer));
 

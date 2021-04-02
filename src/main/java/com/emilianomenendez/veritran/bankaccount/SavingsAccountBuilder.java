@@ -3,18 +3,18 @@ package com.emilianomenendez.veritran.bankaccount;
 import com.emilianomenendez.veritran.Customer;
 import com.emilianomenendez.veritran.bankaccount.withdrawal.CurrentFundsLimit;
 import com.emilianomenendez.veritran.bankaccount.withdrawal.WithdrawalLimit;
-import com.emilianomenendez.veritran.money.Dollars;
+import com.emilianomenendez.veritran.money.Money;
 
 public class SavingsAccountBuilder {
     private final Customer accountOwner;
-    private Dollars initialBalance;
+    private Money initialBalance;
     private WithdrawalLimit withdrawalLimit = new CurrentFundsLimit();
 
     public SavingsAccountBuilder(Customer accountOwner) {
         this.accountOwner = accountOwner;
     }
 
-    public SavingsAccountBuilder withInitialBalance(Dollars initialBalance) {
+    public SavingsAccountBuilder withInitialBalance(Money initialBalance) {
         this.initialBalance = initialBalance;
 
         return this;
