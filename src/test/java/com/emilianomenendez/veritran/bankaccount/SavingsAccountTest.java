@@ -13,104 +13,78 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SavingsAccountTest {
     private Customer francisco;
+    private BankAccount franciscosAccount;
     private Customer mabel;
+    private BankAccount mabelsAccount;
 
     @BeforeEach
     void setUp() {
         francisco = Customer.named("francisco");
+        franciscosAccount = createSavingsAccountFor(francisco, dollars100);
         mabel = Customer.named("mabel");
+        mabelsAccount = createSavingsAccountFor(mabel, dollars100);
     }
 
     @Test
     void givenACustomerAndAnInitialAmountWhenCreateAnAccountThenTheAccountShouldBeOwnedByTheCustomer() {
-        var account = createSavingsAccountFor(francisco, dollars100);
-
-        assertTrue(account.isOwnedBy(francisco));
+        assertTrue(franciscosAccount.isOwnedBy(francisco));
     }
 
     @Test
     void givenACustomerAndAnInitialAmountWhenCreateAnAccountThenTheAccountShouldHaveBalance() {
-        var account = createSavingsAccountFor(francisco, dollars100);
-
-        assertAccountKeepsInitialBalance(account);
+        assertAccountKeepsInitialBalance(franciscosAccount);
     }
 
     @Test
     void givenAnAccountWith100USDBalanceWhenDeposit10USDThenBalanceShouldBe110USD() {
-        var account = createSavingsAccountFor(francisco, dollars100);
+        franciscosAccount.deposit(dollars10);
 
-        var amountToDeposit = dollars10;
-
-        account.deposit(amountToDeposit);
-
-        assertBalanceIncreasedBy(account, amountToDeposit);
+        assertBalanceIncreasedBy(franciscosAccount, dollars10);
     }
 
     @Test
     void givenAnAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
-        var account = createSavingsAccountFor(francisco, dollars100);
+        franciscosAccount.withdraw(dollars10);
 
-        var amountToWithdraw = dollars10;
-
-        account.withdraw(amountToWithdraw);
-
-        assertBalanceDecreasedBy(account, amountToWithdraw);
+        assertBalanceDecreasedBy(franciscosAccount, dollars10);
     }
 
     @Test
     void givenAnAccountWith100USDBalanceWhenWithdraw200USDThenWithdrawalShouldBeRejected() {
-        var account = createSavingsAccountFor(francisco, dollars100);
+        assertThrows(InsufficientFundsException.class, () -> franciscosAccount.withdraw(dollars200));
 
-        assertThrows(InsufficientFundsException.class, () ->
-                account.withdraw(dollars200));
-
-        assertAccountKeepsInitialBalance(account);
+        assertAccountKeepsInitialBalance(franciscosAccount);
     }
 
     @Test
     void givenAWithdrawalWhenGetItsAmountThenTheAmountShouldBeNegative() {
-        var account = createSavingsAccountFor(francisco, dollars100);
+        AccountMovement movement = franciscosAccount.withdraw(dollars10);
 
-        var amountToDeposit = dollars10;
-
-        AccountMovement movement = account.withdraw(amountToDeposit);
-
-        assertEquals(Balance.negative(amountToDeposit), movement.getAmount());
+        assertEquals(Balance.negative(dollars10), movement.getAmount());
     }
 
 
     @Test
     void givenADebitAndCreditAccountsWhenTransfer10USDThenTheMoneyShouldBeTransferred() {
-        var debitAccount = createSavingsAccountFor(francisco, dollars100);
-        var creditAccount = createSavingsAccountFor(mabel, dollars100);
+        franciscosAccount.transfer(mabelsAccount, dollars10);
 
-        var amountToTransfer = dollars10;
-
-        debitAccount.transfer(creditAccount, amountToTransfer);
-
-        assertBalanceDecreasedBy(debitAccount, amountToTransfer);
-        assertBalanceIncreasedBy(creditAccount, amountToTransfer);
+        assertAmountMovedFromTo(franciscosAccount, mabelsAccount, dollars10);
     }
 
     @Test
     void givenADebitAndCreditAccountWhenTransferInsufficientFundsThenTheMoneyShouldNotBeTransferred() {
-        var debitAccount = createSavingsAccountFor(francisco, dollars100);
-        var creditAccount = createSavingsAccountFor(mabel, dollars100);
-
         assertThrows(InsufficientFundsException.class, () ->
-                debitAccount.transfer(creditAccount, dollars200));
+                franciscosAccount.transfer(mabelsAccount, dollars200));
 
-        assertAccountKeepsInitialBalance(debitAccount);
-        assertAccountKeepsInitialBalance(creditAccount);
+        assertAccountKeepsInitialBalance(franciscosAccount);
+        assertAccountKeepsInitialBalance(mabelsAccount);
     }
 
     @Test
     void givenTheSameDebitAndCreditAccountWhenTransferThenTheTransferShouldBeRejected() {
-        var debitAccount = createSavingsAccountFor(francisco, dollars100);
-
         assertThrows(SameAccountTransferException.class, () ->
-                debitAccount.transfer(debitAccount, dollars10));
+                franciscosAccount.transfer(franciscosAccount, dollars10));
 
-        assertAccountKeepsInitialBalance(debitAccount);
+        assertAccountKeepsInitialBalance(franciscosAccount);
     }
 }

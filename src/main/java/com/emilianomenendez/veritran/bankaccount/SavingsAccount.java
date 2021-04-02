@@ -5,7 +5,6 @@ import com.emilianomenendez.veritran.bankaccount.transfer.BankTransfer;
 import com.emilianomenendez.veritran.bankaccount.withdrawal.Withdrawal;
 import com.emilianomenendez.veritran.bankaccount.withdrawal.WithdrawalLimit;
 import com.emilianomenendez.veritran.money.Money;
-import com.emilianomenendez.veritran.money.Money;
 
 import java.time.LocalDateTime;
 

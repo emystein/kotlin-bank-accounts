@@ -1,7 +1,6 @@
 package com.emilianomenendez.veritran.bankaccount;
 
 import com.emilianomenendez.veritran.Customer;
-import com.emilianomenendez.veritran.money.Dollars;
 import com.emilianomenendez.veritran.money.InsufficientFundsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,77 +14,58 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CheckingAccountTest {
     private Customer francisco;
+    private BankAccount franciscosAccount;
     private Customer mabel;
+    private BankAccount mabelsAccount;
 
     @BeforeEach
     void setUp() {
         francisco = Customer.named("francisco");
+        franciscosAccount = createCheckingAccountFor(francisco, dollars100, minus100DollarsLimit);
         mabel = Customer.named("mabel");
+        mabelsAccount = createCheckingAccountFor(mabel, dollars100, minus100DollarsLimit);
     }
 
     @Test
     void givenACheckingAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
-        var account = createCheckingAccountFor(francisco, dollars100, minus100DollarsLimit);
+        franciscosAccount.withdraw(dollars10);
 
-        account.withdraw(dollars10);
-
-        assertBalanceDecreasedBy(account, dollars10);
+        assertBalanceDecreasedBy(franciscosAccount, dollars10);
     }
 
     @Test
     void givenACheckingAccountWith100USDBalanceWhenWithdraw110USDThenBalanceShouldBeMinus10USD() {
-        var account = createCheckingAccountFor(francisco, dollars100, minus100DollarsLimit);
+        franciscosAccount.withdraw(dollars110);
 
-        account.withdraw(dollars110);
-
-        assertBalanceDecreasedBy(account, dollars110);
-        assertEquals(Balance.negative(dollars10), account.getBalance());
+        assertEquals(Balance.negative(dollars10), franciscosAccount.getBalance());
     }
 
     @Test
     void givenAnAccountWith100USDBalanceWhenWithdraw300USDThenWithdrawalShouldBeRejected() {
-        var account = createCheckingAccountFor(francisco, dollars100, minus100DollarsLimit);
+        assertThrows(InsufficientFundsException.class, () -> franciscosAccount.withdraw(dollars300));
 
-        assertThrows(InsufficientFundsException.class, () -> account.withdraw(dollars300));
-
-        assertAccountKeepsInitialBalance(account);
+        assertAccountKeepsInitialBalance(franciscosAccount);
     }
 
 
     @Test
     void givenADebitWith100USDBalanceWhenTransfer10USDThenTheMoneyShouldBeTransferred() {
-        var debitAccount = createCheckingAccountFor(francisco, dollars100, minus100DollarsLimit);
-        var creditAccount = createCheckingAccountFor(mabel, dollars100, minus100DollarsLimit);
+        franciscosAccount.transfer(mabelsAccount, dollars10);
 
-        var amountToTransfer = dollars10;
-
-        debitAccount.transfer(creditAccount, amountToTransfer);
-
-        assertBalanceDecreasedBy(debitAccount, amountToTransfer);
-        assertBalanceIncreasedBy(creditAccount, amountToTransfer);
+        assertAmountMovedFromTo(franciscosAccount, mabelsAccount, dollars10);
     }
 
     @Test
     void givenADebitWith100USDBalanceAndWithdrawLimitMinus100USDWhenTransfer110USDThenTheMoneyShouldBeTransferred() {
-        var debitAccount = createCheckingAccountFor(francisco, dollars100, minus100DollarsLimit);
-        var creditAccount = createCheckingAccountFor(mabel, dollars100, minus100DollarsLimit);
+        franciscosAccount.transfer(mabelsAccount, dollars110);
 
-        var amountToTransfer = dollars110;
-
-        debitAccount.transfer(creditAccount, amountToTransfer);
-
-        assertBalanceDecreasedBy(debitAccount, amountToTransfer);
-        assertBalanceIncreasedBy(creditAccount, amountToTransfer);
+        assertAmountMovedFromTo(franciscosAccount, mabelsAccount, dollars110);
     }
 
     @Test
     void givenADebitWith100USDBalanceAndWithdrawLimitMinus100USDWhenTransfer300USDThenTheMoneyShouldNotBeTransferred() {
-        var debitAccount = createCheckingAccountFor(francisco, dollars100, minus100DollarsLimit);
-        var creditAccount = createCheckingAccountFor(mabel, dollars100, minus100DollarsLimit);
+        assertThrows(InsufficientFundsException.class, () -> franciscosAccount.transfer(mabelsAccount, dollars300));
 
-        assertThrows(InsufficientFundsException.class, () -> debitAccount.transfer(creditAccount, dollars300));
-
-        assertAccountKeepsInitialBalance(debitAccount);
-        assertAccountKeepsInitialBalance(creditAccount);
+        assertAccountsKeepsInitialBalance(franciscosAccount, mabelsAccount);
     }
 }
