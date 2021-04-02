@@ -1,11 +1,11 @@
 package com.emilianomenendez.veritran.bankaccount;
 
 import com.emilianomenendez.veritran.money.Money;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
-import java.util.Objects;
-
 @Getter
+@EqualsAndHashCode
 public abstract class Balance {
     private final String currency;
     private final int amount;
@@ -35,8 +35,6 @@ public abstract class Balance {
         this.amount = amount;
     }
 
-    public abstract String getSign();
-
     public boolean isGreaterThanOrEqual(Money other) {
         return amount >= other.getAmount();
     }
@@ -55,16 +53,5 @@ public abstract class Balance {
 
     public Balance minus(Money other) {
         return create(this.currency, this.amount - other.getAmount());
-    }
-
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Balance balance = (Balance) o;
-        return amount == balance.amount && getSign().equals(balance.getSign());
-    }
-
-    public int hashCode() {
-        return Objects.hash(getSign(), amount);
     }
 }

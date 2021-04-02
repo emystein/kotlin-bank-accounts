@@ -14,7 +14,6 @@ class BalanceTest {
     void positiveBalanceShouldIncludePositiveSignAndCurrencyAndAmount() {
         var balance = new PositiveBalance("USD", 10);
 
-        assertEquals("+", balance.getSign());
         assertEquals("USD", balance.getCurrency());
         assertEquals(10, balance.getAmount());
     }
@@ -23,7 +22,6 @@ class BalanceTest {
     void negativeBalanceShouldIncludeNegativeSignAndCurrencyAndAmount() {
         var balance = new NegativeBalance("USD", 10);
 
-        assertEquals("-", balance.getSign());
         assertEquals("USD", balance.getCurrency());
         assertEquals(-10, balance.getAmount());
     }

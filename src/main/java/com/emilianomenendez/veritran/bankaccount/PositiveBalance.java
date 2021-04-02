@@ -8,8 +8,4 @@ public class PositiveBalance extends Balance {
             throw new IllegalArgumentException();
         }
     }
-
-    public String getSign() {
-        return "+";
-    }
 }
