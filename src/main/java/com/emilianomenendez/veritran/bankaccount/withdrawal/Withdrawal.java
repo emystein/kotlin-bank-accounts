@@ -18,7 +18,7 @@ public class Withdrawal {
     }
 
     public Balance previewBalanceAfter() {
-        return getDebitAccount().getBalance().minus(amount);
+        return debitAccount.getBalance().minus(amount);
     }
 
     public Balance execute() {

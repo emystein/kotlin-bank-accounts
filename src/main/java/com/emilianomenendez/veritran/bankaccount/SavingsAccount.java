@@ -32,17 +32,14 @@ public class SavingsAccount implements BankAccount {
         return owner.equals(customer);
     }
 
-    @Override
     public Balance getInitialBalance() {
         return initialBalance;
     }
 
-    @Override
     public Balance getBalance() {
         return balance;
     }
 
-    @Override
     public AccountMovement deposit(PositiveAmount amountToDeposit) {
         balance = balance.plus(amountToDeposit);
 
@@ -51,12 +48,10 @@ public class SavingsAccount implements BankAccount {
         return movement;
     }
 
-    @Override
     public boolean withdrawalLimitAccepts(Withdrawal withdrawal) {
         return withdrawalLimit.accepts(withdrawal);
     }
 
-    @Override
     public AccountMovement withdraw(PositiveAmount amountToWithdraw) {
         balance = Withdrawal.from(this)
                 .amount(amountToWithdraw)
@@ -67,7 +62,6 @@ public class SavingsAccount implements BankAccount {
         return movement;
     }
 
-    @Override
     public void transfer(BankAccount creditAccount, PositiveAmount amountToTransfer) {
         BankTransfer.from(this)
                 .to(creditAccount)
