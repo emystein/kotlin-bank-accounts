@@ -4,26 +4,17 @@ import com.emilianomenendez.veritran.bankaccount.Balance;
 import com.emilianomenendez.veritran.bankaccount.BankAccount;
 import com.emilianomenendez.veritran.money.InsufficientFundsException;
 import com.emilianomenendez.veritran.money.Money;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
+@Getter
 public class Withdrawal {
     private final BankAccount debitAccount;
     private final Money amount;
 
     public static WithdrawalBuilder from(BankAccount debitAccount) {
         return new WithdrawalBuilder(debitAccount);
-    }
-
-    public Withdrawal(BankAccount debitAccount, Money amount) {
-        this.debitAccount = debitAccount;
-        this.amount = amount;
-    }
-
-    public BankAccount getDebitAccount() {
-        return debitAccount;
-    }
-
-    public Money getAmount() {
-        return amount;
     }
 
     public Balance previewBalanceAfter() {

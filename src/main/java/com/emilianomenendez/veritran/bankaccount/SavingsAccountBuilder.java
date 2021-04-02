@@ -4,15 +4,13 @@ import com.emilianomenendez.veritran.Customer;
 import com.emilianomenendez.veritran.bankaccount.withdrawal.CurrentFundsLimit;
 import com.emilianomenendez.veritran.bankaccount.withdrawal.WithdrawalLimit;
 import com.emilianomenendez.veritran.money.Money;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class SavingsAccountBuilder {
     private final Customer accountOwner;
     private Money initialBalance;
     private WithdrawalLimit withdrawalLimit = new CurrentFundsLimit();
-
-    public SavingsAccountBuilder(Customer accountOwner) {
-        this.accountOwner = accountOwner;
-    }
 
     public SavingsAccountBuilder withInitialBalance(Money initialBalance) {
         this.initialBalance = initialBalance;

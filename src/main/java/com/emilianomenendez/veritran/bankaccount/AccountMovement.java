@@ -1,9 +1,13 @@
 package com.emilianomenendez.veritran.bankaccount;
 
 import com.emilianomenendez.veritran.money.Money;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@RequiredArgsConstructor
+@Getter
 public class AccountMovement {
     private final LocalDateTime dateTime;
     private final Balance amount;
@@ -13,20 +17,7 @@ public class AccountMovement {
         this.amount = Balance.create(amount);
     }
 
-    public AccountMovement(LocalDateTime dateTime, Balance amount) {
-        this.dateTime = dateTime;
-        this.amount = amount;
-    }
-
     public String getCurrency() {
         return amount.getCurrency();
-    }
-
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public Balance getAmount() {
-        return amount;
     }
 }

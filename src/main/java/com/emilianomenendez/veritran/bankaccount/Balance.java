@@ -1,9 +1,11 @@
 package com.emilianomenendez.veritran.bankaccount;
 
 import com.emilianomenendez.veritran.money.Money;
+import lombok.Getter;
 
 import java.util.Objects;
 
+@Getter
 public abstract class Balance {
     private final String currency;
     private final int amount;
@@ -34,14 +36,6 @@ public abstract class Balance {
     }
 
     public abstract String getSign();
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
 
     public boolean isGreaterThanOrEqual(Money other) {
         return amount >= other.getAmount();

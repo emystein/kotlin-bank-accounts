@@ -2,18 +2,15 @@ package com.emilianomenendez.veritran.bankaccount.transfer;
 
 import com.emilianomenendez.veritran.bankaccount.BankAccount;
 import com.emilianomenendez.veritran.money.PositiveAmount;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class BankTransfer {
-    private BankAccount debitAccount;
-    private BankAccount creditAccount;
+    private final BankAccount debitAccount;
+    private final BankAccount creditAccount;
 
     public static BankTransferBuilder from(BankAccount debitAccount) {
         return new BankTransferBuilder(debitAccount);
-    }
-
-    public BankTransfer(BankAccount debitAccount, BankAccount creditAccount) {
-        this.debitAccount = debitAccount;
-        this.creditAccount = creditAccount;
     }
 
     public void transfer(PositiveAmount amountToTransfer) {

@@ -1,23 +1,15 @@
 package com.emilianomenendez.veritran.money;
 
-import java.util.Objects;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
+@Getter
+@EqualsAndHashCode
 public class Money {
     private final String currency;
     private final int amount;
-
-    public Money(String currency, int amount) {
-        this.currency = currency;
-        this.amount = amount;
-    }
-
-    public String getCurrency() {
-        return this.currency;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
 
     public boolean isGreaterThanOrEqual(Money other) {
         return amount >= other.getAmount();
@@ -37,18 +29,5 @@ public class Money {
         }
 
         return new Money(currency, amount - amountToSubtract.getAmount());
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Money)) return false;
-        Money money = (Money) o;
-        return amount == money.amount && currency.equals(money.currency);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(currency, amount);
     }
 }
