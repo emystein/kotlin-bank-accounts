@@ -1,6 +1,6 @@
 package com.emilianomenendez.veritran.money;
 
-public class Dollars extends PositiveAmount {
+public class Dollars extends Money {
     public static Dollars amount(int amount) {
         return new Dollars(amount);
     }

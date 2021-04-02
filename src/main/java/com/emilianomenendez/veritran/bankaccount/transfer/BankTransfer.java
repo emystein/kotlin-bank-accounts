@@ -1,7 +1,7 @@
 package com.emilianomenendez.veritran.bankaccount.transfer;
 
 import com.emilianomenendez.veritran.bankaccount.BankAccount;
-import com.emilianomenendez.veritran.money.PositiveAmount;
+import com.emilianomenendez.veritran.money.Money;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -13,7 +13,7 @@ public class BankTransfer {
         return new BankTransferBuilder(debitAccount);
     }
 
-    public void transfer(PositiveAmount amountToTransfer) {
+    public void transfer(Money amountToTransfer) {
         assertAccountsAreDifferent();
 
         debitAccount.withdraw(amountToTransfer);

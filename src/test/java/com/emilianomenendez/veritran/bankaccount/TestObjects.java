@@ -14,7 +14,7 @@ public class TestObjects {
     public static AccountMovement movement1 = new AccountMovement(now(), dollars10);
     public static AccountMovement movement2 = new AccountMovement(now(), dollars20);
 
-    public static SavingsAccount createSavingsAccountFor(Customer accountOwner, Money initialBalance) {
+    public static BankAccount createSavingsAccountFor(Customer accountOwner, Money initialBalance) {
         return SavingsAccount.ownedBy(accountOwner)
                 .initialBalance(initialBalance)
                 .build();
