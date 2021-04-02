@@ -11,20 +11,21 @@ public class SavingsAccountBuilder {
     private final Customer accountOwner;
     private Money initialBalance;
     private WithdrawalLimit withdrawalLimit = new CurrentFundsLimit();
+    private InMemoryAccountHistory accountHistory = new InMemoryAccountHistory();
 
-    public SavingsAccountBuilder withInitialBalance(Money initialBalance) {
+    public SavingsAccountBuilder initialBalance(Money initialBalance) {
         this.initialBalance = initialBalance;
 
         return this;
     }
 
-    public SavingsAccountBuilder withWithdrawLimit(WithdrawalLimit withdrawalLimit) {
+    public SavingsAccountBuilder withdrawalLimit(WithdrawalLimit withdrawalLimit) {
         this.withdrawalLimit = withdrawalLimit;
 
         return this;
     }
 
     public SavingsAccount build() {
-        return new SavingsAccount(accountOwner, withdrawalLimit, initialBalance, new InMemoryAccountHistory());
+        return new SavingsAccount(accountOwner, withdrawalLimit, initialBalance, accountHistory);
     }
 }

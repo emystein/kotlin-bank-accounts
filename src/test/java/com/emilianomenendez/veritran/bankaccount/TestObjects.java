@@ -17,7 +17,7 @@ public class TestObjects {
 
     public static SavingsAccount createSavingsAccountFor(Customer accountOwner, Money initialBalance) {
         return SavingsAccount.ownedBy(accountOwner)
-                .withInitialBalance(initialBalance)
+                .initialBalance(initialBalance)
                 .build();
     }
 
@@ -25,8 +25,8 @@ public class TestObjects {
                                                        Money initialBalance,
                                                        WithdrawalLimit withdrawalLimit) {
         return SavingsAccount.ownedBy(accountOwner)
-                .withInitialBalance(initialBalance)
-                .withWithdrawLimit(withdrawalLimit)
+                .initialBalance(initialBalance)
+                .withdrawalLimit(withdrawalLimit)
                 .build();
     }
 }
