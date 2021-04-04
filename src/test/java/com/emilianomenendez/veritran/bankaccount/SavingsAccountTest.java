@@ -65,9 +65,16 @@ public class SavingsAccountTest {
 
     @Test
     void givenADebitAndCreditAccountsWhenTransfer10USDThenTheMoneyShouldBeTransferred() {
-        franciscosAccount.transfer(mabelsAccount, dollars10);
+        var transactionRecord = franciscosAccount.transfer(mabelsAccount, dollars10);
 
         assertAmountMovedFromTo(franciscosAccount, mabelsAccount, dollars10);
+    }
+
+    @Test
+    void givenADebitAndCreditAccountsWhenTransfer10USDThenTheTransactionRecordShouldStoreTheCreditBalance() {
+        var transactionRecord = franciscosAccount.transfer(mabelsAccount, dollars10);
+
+        assertEquals(Balance.positive(dollars10), transactionRecord.getAmount());
     }
 
     @Test

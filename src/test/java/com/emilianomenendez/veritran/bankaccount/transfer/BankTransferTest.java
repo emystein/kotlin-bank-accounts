@@ -27,7 +27,8 @@ public class BankTransferTest {
 
         BankTransfer.from(debitAccount)
                 .to(creditAccount)
-                .transfer(dollars10);
+                .amount(dollars10)
+                .execute();
 
         assertBalanceDecreasedBy(debitAccount, dollars10);
         assertBalanceIncreasedBy(creditAccount, dollars10);
@@ -41,7 +42,8 @@ public class BankTransferTest {
         assertThrows(InsufficientFundsException.class, () ->
                 BankTransfer.from(debitAccount)
                         .to(creditAccount)
-                        .transfer(dollars200));
+                        .amount(dollars200)
+                        .execute());
 
         assertAccountKeepsInitialBalance(debitAccount);
         assertAccountKeepsInitialBalance(creditAccount);
@@ -54,7 +56,8 @@ public class BankTransferTest {
         assertThrows(SameAccountTransferException.class, () ->
                 BankTransfer.from(debitAccount)
                         .to(debitAccount)
-                        .transfer(dollars10));
+                        .amount(dollars10)
+                        .execute());
 
         assertAccountKeepsInitialBalance(debitAccount);
     }

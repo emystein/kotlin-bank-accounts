@@ -2,14 +2,18 @@ package com.emilianomenendez.veritran.bankaccount.withdrawal;
 
 import com.emilianomenendez.veritran.bankaccount.Balance;
 import com.emilianomenendez.veritran.bankaccount.BankAccount;
+import com.emilianomenendez.veritran.bankaccount.Transaction;
+import com.emilianomenendez.veritran.bankaccount.TransactionRecord;
 import com.emilianomenendez.veritran.money.InsufficientFundsException;
 import com.emilianomenendez.veritran.money.Money;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import static java.time.LocalDateTime.now;
+
 @RequiredArgsConstructor
 @Getter
-public class Withdrawal {
+public class Withdrawal implements Transaction {
     private final BankAccount debitAccount;
     private final Money amount;
 
@@ -21,11 +25,12 @@ public class Withdrawal {
         return debitAccount.getBalance().minus(amount);
     }
 
-    public Balance execute() {
+    @Override
+    public TransactionRecord execute() {
         if (!debitAccount.withdrawalLimitAccepts(this)) {
             throw new InsufficientFundsException();
         }
 
-        return debitAccount.getBalance().minus(amount);
+        return new TransactionRecord(now(), Balance.negative(amount));
     }
 }

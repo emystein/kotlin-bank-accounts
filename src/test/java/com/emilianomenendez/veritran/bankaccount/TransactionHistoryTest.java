@@ -16,14 +16,14 @@ public class TransactionHistoryTest {
     }
 
     @Test
-    void givenAnAccountMovementWhenAddTheAccountMovementToTheAccountHistoryThenTheAccountHistoryShouldContainTheAccountMovement() {
+    void givenATransactionRecordWhenAddItToTransactionHistoryThenItShouldContainTheTransactionRecord() {
         history.add(transactionRecord1);
 
         assertTrue(history.contains(transactionRecord1));
     }
 
     @Test
-    void givenAccountMovement1AndAccountMovement2WhenAddTheAccountMovementsToTheAccountHistoryThenTheAccountHistoryShouldContainTheAccountMovementsInOrderOfAddition() {
+    void givenTwoTransactionRecordsWhenAddThemToTransactionHistoryThenItShouldContainThemInOrderOfAddition() {
         history.add(transactionRecord1);
         history.add(transactionRecord2);
 

@@ -52,18 +52,21 @@ public class SavingsAccount implements BankAccount {
     }
 
     public TransactionRecord withdraw(Money amountToWithdraw) {
-        balance = Withdrawal.from(this)
+        var transactionRecord = Withdrawal.from(this)
                 .amount(amountToWithdraw)
                 .execute();
 
-        var transactionRecord = new TransactionRecord(LocalDateTime.now(), Balance.negative(amountToWithdraw));
+        balance = balance.minus(amountToWithdraw);
+
         history.add(transactionRecord);
+
         return transactionRecord;
     }
 
-    public void transfer(BankAccount creditAccount, Money amountToTransfer) {
-        BankTransfer.from(this)
+    public TransactionRecord transfer(BankAccount creditAccount, Money amountToTransfer) {
+        return BankTransfer.from(this)
                 .to(creditAccount)
-                .transfer(amountToTransfer);
+                .amount(amountToTransfer)
+                .execute();
     }
 }

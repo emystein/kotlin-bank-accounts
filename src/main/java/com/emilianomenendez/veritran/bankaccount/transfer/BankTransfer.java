@@ -1,24 +1,29 @@
 package com.emilianomenendez.veritran.bankaccount.transfer;
 
 import com.emilianomenendez.veritran.bankaccount.BankAccount;
+import com.emilianomenendez.veritran.bankaccount.Transaction;
+import com.emilianomenendez.veritran.bankaccount.TransactionRecord;
 import com.emilianomenendez.veritran.money.Money;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class BankTransfer {
+@Getter
+public class BankTransfer implements Transaction {
     private final BankAccount debitAccount;
     private final BankAccount creditAccount;
+    private final Money amount;
 
     public static BankTransferBuilder from(BankAccount debitAccount) {
         return new BankTransferBuilder(debitAccount);
     }
 
-    public void transfer(Money amountToTransfer) {
+    public TransactionRecord execute() {
         assertAccountsAreDifferent();
 
-        debitAccount.withdraw(amountToTransfer);
+        debitAccount.withdraw(amount);
 
-        creditAccount.deposit(amountToTransfer);
+        return creditAccount.deposit(amount);
     }
 
     private void assertAccountsAreDifferent() {

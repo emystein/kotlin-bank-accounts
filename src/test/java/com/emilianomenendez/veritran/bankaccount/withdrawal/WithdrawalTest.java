@@ -23,9 +23,9 @@ public class WithdrawalTest {
     void givenSavingsAccountWith100USDBalanceWhenExecute10USDWithdrawalThenItShouldCalculateNewBalance() {
         var account = createSavingsAccountFor(francisco, dollars100);
 
-        var balanceAfter = Withdrawal.from(account).amount(dollars10).execute();
+        var transactionRecord = Withdrawal.from(account).amount(dollars10).execute();
 
-        assertEquals(Balance.create(dollars90), balanceAfter);
+        assertEquals(Balance.negative(dollars10), transactionRecord.getAmount());
     }
 
     @Test

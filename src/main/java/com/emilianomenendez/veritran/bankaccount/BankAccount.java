@@ -17,5 +17,5 @@ public interface BankAccount {
 
     TransactionRecord withdraw(Money amountToWithdraw);
 
-    void transfer(BankAccount creditAccount, Money amountToTransfer);
+    TransactionRecord transfer(BankAccount creditAccount, Money amountToTransfer);
 }
