@@ -1,6 +1,8 @@
 package com.emilianomenendez.veritran.bankaccount;
 
 public interface TransactionHistory {
+    int total();
+
     TransactionRecord first();
 
     void add(TransactionRecord record);
@@ -9,9 +11,7 @@ public interface TransactionHistory {
 
     boolean containsInOrder(TransactionRecord... records);
 
-    int totalTransactions();
-
     Balance sum();
 
-    Balance sumBeforeLastTransaction();
+    Balance sumBeforeLast();
 }

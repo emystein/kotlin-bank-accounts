@@ -39,7 +39,7 @@ public class SavingsAccount implements BankAccount {
     }
 
     public Balance getPreviousBalance() {
-        return transactionHistory.sumBeforeLastTransaction();
+        return transactionHistory.sumBeforeLast();
     }
 
     public TransactionRecord deposit(Money amountToDeposit) {

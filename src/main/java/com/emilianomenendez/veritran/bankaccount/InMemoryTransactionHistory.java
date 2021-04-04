@@ -12,6 +12,10 @@ import static java.util.stream.Collectors.toList;
 public class InMemoryTransactionHistory implements TransactionHistory {
     private List<TransactionRecord> history = new ArrayList<>();
 
+    public int total() {
+        return history.size();
+    }
+
     public TransactionRecord first() {
         return history.get(0);
     }
@@ -33,16 +37,12 @@ public class InMemoryTransactionHistory implements TransactionHistory {
                 .equals(indexedMovements);
     }
 
-    public int totalTransactions() {
-        return history.size();
-    }
-
     public Balance sum() {
-        return sum(totalTransactions());
+        return sum(total());
     }
 
-    public Balance sumBeforeLastTransaction() {
-        return sum(totalTransactions() - 1);
+    public Balance sumBeforeLast() {
+        return sum(total() - 1);
     }
 
     private Balance sum(int numberOfTransactions) {
@@ -51,7 +51,7 @@ public class InMemoryTransactionHistory implements TransactionHistory {
                 .reduce(Balance.positive(Dollars.amount(0)), Balance::sum);
     }
 
-    public Stream<TransactionRecord> entries(int numberOfEntries) {
+    private Stream<TransactionRecord> entries(int numberOfEntries) {
         return history.stream().limit(numberOfEntries);
     }
 }
