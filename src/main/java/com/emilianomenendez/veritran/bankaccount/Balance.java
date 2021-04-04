@@ -43,10 +43,6 @@ public abstract class Balance {
         return getAmount() >= other.getAmount();
     }
 
-    public boolean isLessThan(Balance other) {
-        return amount < other.getAmount();
-    }
-
     public Balance plus(Money other) {
         return create(this.currency, this.amount + other.getAmount());
     }

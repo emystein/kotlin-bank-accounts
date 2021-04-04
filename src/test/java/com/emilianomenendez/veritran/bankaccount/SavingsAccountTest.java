@@ -63,7 +63,6 @@ public class SavingsAccountTest {
         assertEquals(Balance.negative(dollars10), movement.getAmount());
     }
 
-
     @Test
     void givenADebitAndCreditAccountsWhenTransfer10USDThenTheMoneyShouldBeTransferred() {
         franciscosAccount.transfer(mabelsAccount, dollars10);
