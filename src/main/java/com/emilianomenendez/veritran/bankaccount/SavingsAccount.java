@@ -13,13 +13,13 @@ public class SavingsAccount implements BankAccount {
     private final WithdrawalLimit withdrawalLimit;
     private Balance initialBalance;
     private Balance balance;
-    private AccountHistory history;
+    private TransactionHistory history;
 
     public static SavingsAccountBuilder ownedBy(Customer owner) {
         return new SavingsAccountBuilder(owner);
     }
 
-    public SavingsAccount(Customer owner, WithdrawalLimit withdrawalLimit, Money initialBalance, AccountHistory history) {
+    public SavingsAccount(Customer owner, WithdrawalLimit withdrawalLimit, Money initialBalance, TransactionHistory history) {
         this.owner = owner;
         this.withdrawalLimit = withdrawalLimit;
         this.initialBalance = Balance.create(initialBalance);
@@ -39,26 +39,26 @@ public class SavingsAccount implements BankAccount {
         return balance;
     }
 
-    public AccountMovement deposit(Money amountToDeposit) {
+    public TransactionRecord deposit(Money amountToDeposit) {
         balance = balance.plus(amountToDeposit);
 
-        AccountMovement movement = new AccountMovement(LocalDateTime.now(), amountToDeposit);
-        history.add(movement);
-        return movement;
+        var transactionRecord = new TransactionRecord(LocalDateTime.now(), amountToDeposit);
+        history.add(transactionRecord);
+        return transactionRecord;
     }
 
     public boolean withdrawalLimitAccepts(Withdrawal withdrawal) {
         return withdrawalLimit.accepts(withdrawal);
     }
 
-    public AccountMovement withdraw(Money amountToWithdraw) {
+    public TransactionRecord withdraw(Money amountToWithdraw) {
         balance = Withdrawal.from(this)
                 .amount(amountToWithdraw)
                 .execute();
 
-        AccountMovement movement = new AccountMovement(LocalDateTime.now(), Balance.negative(amountToWithdraw));
-        history.add(movement);
-        return movement;
+        var transactionRecord = new TransactionRecord(LocalDateTime.now(), Balance.negative(amountToWithdraw));
+        history.add(transactionRecord);
+        return transactionRecord;
     }
 
     public void transfer(BankAccount creditAccount, Money amountToTransfer) {

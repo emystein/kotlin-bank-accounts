@@ -11,7 +11,7 @@ public class SavingsAccountBuilder {
     private final Customer accountOwner;
     private Money initialBalance;
     private WithdrawalLimit withdrawalLimit = new CurrentFundsLimit();
-    private InMemoryAccountHistory accountHistory = new InMemoryAccountHistory();
+    private InMemoryTransactionHistory accountHistory = new InMemoryTransactionHistory();
 
     public SavingsAccountBuilder initialBalance(Money initialBalance) {
         this.initialBalance = initialBalance;

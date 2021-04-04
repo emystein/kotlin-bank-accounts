@@ -8,11 +8,11 @@ import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @Getter
-public class AccountMovement {
+public class TransactionRecord {
     private final LocalDateTime dateTime;
     private final Balance amount;
 
-    public AccountMovement(LocalDateTime dateTime, Money amount) {
+    public TransactionRecord(LocalDateTime dateTime, Money amount) {
         this.dateTime = dateTime;
         this.amount = Balance.create(amount);
     }

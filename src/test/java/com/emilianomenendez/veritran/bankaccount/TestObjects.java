@@ -11,8 +11,8 @@ import static java.time.LocalDateTime.now;
 public class TestObjects {
     public static LowerLimit minus100DollarsLimit = new LowerLimit(Balance.negative(dollars100));
 
-    public static AccountMovement movement1 = new AccountMovement(now(), dollars10);
-    public static AccountMovement movement2 = new AccountMovement(now(), dollars20);
+    public static TransactionRecord transactionRecord1 = new TransactionRecord(now(), dollars10);
+    public static TransactionRecord transactionRecord2 = new TransactionRecord(now(), dollars20);
 
     public static BankAccount createSavingsAccountFor(Customer accountOwner, Money initialBalance) {
         return SavingsAccount.ownedBy(accountOwner)

@@ -11,11 +11,11 @@ public interface BankAccount {
 
     Balance getBalance();
 
-    AccountMovement deposit(Money amountToDeposit);
+    TransactionRecord deposit(Money amountToDeposit);
 
     boolean withdrawalLimitAccepts(Withdrawal withdrawal);
 
-    AccountMovement withdraw(Money amountToWithdraw);
+    TransactionRecord withdraw(Money amountToWithdraw);
 
     void transfer(BankAccount creditAccount, Money amountToTransfer);
 }

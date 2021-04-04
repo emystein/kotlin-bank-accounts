@@ -58,7 +58,7 @@ public class SavingsAccountTest {
 
     @Test
     void givenAWithdrawalWhenGetItsAmountThenTheAmountShouldBeNegative() {
-        AccountMovement movement = franciscosAccount.withdraw(dollars10);
+        TransactionRecord movement = franciscosAccount.withdraw(dollars10);
 
         assertEquals(Balance.negative(dollars10), movement.getAmount());
     }
