@@ -13,11 +13,11 @@ public class SavingsAccountAssertions {
     }
 
     public static void assertBalanceIncreasedBy(BankAccount account, Money amount) {
-        assertEquals(account.getInitialBalance().plus(amount), account.getBalance());
+        assertEquals(account.getPreviousBalance().plus(amount), account.getBalance());
     }
 
     public static void assertBalanceDecreasedBy(BankAccount account, Money amount) {
-        assertEquals(account.getInitialBalance().minus(amount), account.getBalance());
+        assertEquals(account.getPreviousBalance().minus(amount), account.getBalance());
     }
 
     public static void assertAccountKeepsInitialBalance(BankAccount account) {

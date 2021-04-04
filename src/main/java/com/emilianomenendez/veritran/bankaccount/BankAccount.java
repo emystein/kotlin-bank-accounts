@@ -9,6 +9,8 @@ public interface BankAccount {
 
     Balance getInitialBalance();
 
+    Balance getPreviousBalance();
+
     Balance getBalance();
 
     TransactionRecord deposit(Money amountToDeposit);
@@ -18,4 +20,6 @@ public interface BankAccount {
     TransactionRecord withdraw(Money amountToWithdraw);
 
     TransactionRecord transfer(BankAccount creditAccount, Money amountToTransfer);
+
+    TransactionHistory getTransactionHistory();
 }

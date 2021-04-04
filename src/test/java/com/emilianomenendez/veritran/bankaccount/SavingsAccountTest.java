@@ -36,10 +36,24 @@ public class SavingsAccountTest {
     }
 
     @Test
+    void givenAnAccountWith100USDBalanceWhenDeposit10USDThenPreviousBalanceShouldBeInitialBalance() {
+        franciscosAccount.deposit(dollars10);
+
+        assertEquals(Balance.create(dollars100), franciscosAccount.getPreviousBalance());
+    }
+
+    @Test
     void givenAnAccountWith100USDBalanceWhenDeposit10USDThenBalanceShouldBe110USD() {
         franciscosAccount.deposit(dollars10);
 
         assertBalanceIncreasedBy(franciscosAccount, dollars10);
+    }
+
+    @Test
+    void givenAnAccountWhenDepositThenTransactionHistoryShouldContainTheTransactionRecord() {
+        var transactionRecord = franciscosAccount.deposit(dollars10);
+
+        assertTrue(franciscosAccount.getTransactionHistory().contains(transactionRecord));
     }
 
     @Test
@@ -58,14 +72,21 @@ public class SavingsAccountTest {
 
     @Test
     void givenAWithdrawalWhenGetItsAmountThenTheAmountShouldBeNegative() {
-        TransactionRecord movement = franciscosAccount.withdraw(dollars10);
+        TransactionRecord transactionRecord = franciscosAccount.withdraw(dollars10);
 
-        assertEquals(Balance.negative(dollars10), movement.getAmount());
+        assertEquals(Balance.negative(dollars10), transactionRecord.getAmount());
+    }
+
+    @Test
+    void givenAnAccountWhenWithdrawThenTransactionHistoryShouldContainTheTransactionRecord() {
+        var transactionRecord = franciscosAccount.withdraw(dollars10);
+
+        assertTrue(franciscosAccount.getTransactionHistory().contains(transactionRecord));
     }
 
     @Test
     void givenADebitAndCreditAccountsWhenTransfer10USDThenTheMoneyShouldBeTransferred() {
-        var transactionRecord = franciscosAccount.transfer(mabelsAccount, dollars10);
+        franciscosAccount.transfer(mabelsAccount, dollars10);
 
         assertAmountMovedFromTo(franciscosAccount, mabelsAccount, dollars10);
     }
@@ -75,6 +96,13 @@ public class SavingsAccountTest {
         var transactionRecord = franciscosAccount.transfer(mabelsAccount, dollars10);
 
         assertEquals(Balance.positive(dollars10), transactionRecord.getAmount());
+    }
+
+    @Test
+    void givenADebitAndCreditAccountsWhenTransfer10USDThenTheTransactionHistoryShouldContainTheTransactionRecord() {
+        var transactionRecord = franciscosAccount.transfer(mabelsAccount, dollars10);
+
+        assertTrue(mabelsAccount.getTransactionHistory().contains(transactionRecord));
     }
 
     @Test

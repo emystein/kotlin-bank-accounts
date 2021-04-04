@@ -5,26 +5,25 @@ import com.emilianomenendez.veritran.bankaccount.transfer.BankTransfer;
 import com.emilianomenendez.veritran.bankaccount.withdrawal.Withdrawal;
 import com.emilianomenendez.veritran.bankaccount.withdrawal.WithdrawalLimit;
 import com.emilianomenendez.veritran.money.Money;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+@Getter
 public class SavingsAccount implements BankAccount {
     private final Customer owner;
     private final WithdrawalLimit withdrawalLimit;
-    private Balance initialBalance;
-    private Balance balance;
-    private TransactionHistory history;
+    private final TransactionHistory transactionHistory;
 
     public static SavingsAccountBuilder ownedBy(Customer owner) {
         return new SavingsAccountBuilder(owner);
     }
 
-    public SavingsAccount(Customer owner, WithdrawalLimit withdrawalLimit, Money initialBalance, TransactionHistory history) {
+    public SavingsAccount(Customer owner, WithdrawalLimit withdrawalLimit, Money initialBalance, TransactionHistory transactionHistory) {
         this.owner = owner;
         this.withdrawalLimit = withdrawalLimit;
-        this.initialBalance = Balance.create(initialBalance);
-        this.balance = Balance.create(initialBalance);
-        this.history = history;
+        this.transactionHistory = transactionHistory;
+        this.transactionHistory.add(new TransactionRecord(LocalDateTime.now(), initialBalance));
     }
 
     public boolean isOwnedBy(Customer customer) {
@@ -32,19 +31,19 @@ public class SavingsAccount implements BankAccount {
     }
 
     public Balance getInitialBalance() {
-        return initialBalance;
+        return transactionHistory.first().getAmount();
     }
 
     public Balance getBalance() {
-        return balance;
+        return transactionHistory.sum();
+    }
+
+    public Balance getPreviousBalance() {
+        return transactionHistory.sumBeforeLastTransaction();
     }
 
     public TransactionRecord deposit(Money amountToDeposit) {
-        balance = balance.plus(amountToDeposit);
-
-        var transactionRecord = new TransactionRecord(LocalDateTime.now(), amountToDeposit);
-        history.add(transactionRecord);
-        return transactionRecord;
+        return Deposit.to(this).amount(amountToDeposit).execute();
     }
 
     public boolean withdrawalLimitAccepts(Withdrawal withdrawal) {
@@ -52,15 +51,7 @@ public class SavingsAccount implements BankAccount {
     }
 
     public TransactionRecord withdraw(Money amountToWithdraw) {
-        var transactionRecord = Withdrawal.from(this)
-                .amount(amountToWithdraw)
-                .execute();
-
-        balance = balance.minus(amountToWithdraw);
-
-        history.add(transactionRecord);
-
-        return transactionRecord;
+        return Withdrawal.from(this).amount(amountToWithdraw).execute();
     }
 
     public TransactionRecord transfer(BankAccount creditAccount, Money amountToTransfer) {

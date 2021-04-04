@@ -35,6 +35,10 @@ public abstract class Balance {
         this.amount = amount;
     }
 
+    public static Balance sum(Balance balance1, Balance balance2) {
+        return Balance.create(balance1.currency, balance1.getAmount() + balance2.getAmount());
+    }
+
     public boolean isGreaterThanOrEqual(Money other) {
         return amount >= other.getAmount();
     }

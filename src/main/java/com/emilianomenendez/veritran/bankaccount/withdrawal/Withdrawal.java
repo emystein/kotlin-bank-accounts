@@ -31,6 +31,10 @@ public class Withdrawal implements Transaction {
             throw new InsufficientFundsException();
         }
 
-        return new TransactionRecord(now(), Balance.negative(amount));
+        var transactionRecord = new TransactionRecord(now(), Balance.negative(amount));
+
+        debitAccount.getTransactionHistory().add(transactionRecord);
+
+        return transactionRecord;
     }
 }

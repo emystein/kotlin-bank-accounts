@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.emilianomenendez.veritran.bankaccount.SavingsAccountAssertions.*;
 import static com.emilianomenendez.veritran.bankaccount.TestObjects.createCheckingAccountFor;
-import static com.emilianomenendez.veritran.bankaccount.TestObjects.minus100DollarsLimit;
+import static com.emilianomenendez.veritran.bankaccount.TestObjects.minusDollars100Limit;
 import static com.emilianomenendez.veritran.bankaccount.money.TestObjects.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -21,9 +21,9 @@ public class CheckingAccountTest {
     @BeforeEach
     void setUp() {
         francisco = Customer.named("francisco");
-        franciscosAccount = createCheckingAccountFor(francisco, dollars100, minus100DollarsLimit);
+        franciscosAccount = createCheckingAccountFor(francisco, dollars100, minusDollars100Limit);
         mabel = Customer.named("mabel");
-        mabelsAccount = createCheckingAccountFor(mabel, dollars100, minus100DollarsLimit);
+        mabelsAccount = createCheckingAccountFor(mabel, dollars100, minusDollars100Limit);
     }
 
     @Test
