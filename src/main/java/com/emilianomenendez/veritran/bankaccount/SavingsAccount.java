@@ -31,7 +31,7 @@ public class SavingsAccount implements BankAccount {
     }
 
     public Balance getInitialBalance() {
-        return transactionHistory.first().getAmount();
+        return transactionHistory.first().get().getAmount();
     }
 
     public Balance getBalance() {

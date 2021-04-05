@@ -9,9 +9,9 @@ public interface BankAccount {
 
     Balance getInitialBalance();
 
-    Balance getPreviousBalance();
-
     Balance getBalance();
+
+    Balance getPreviousBalance();
 
     TransactionRecord deposit(Money amountToDeposit);
 

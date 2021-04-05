@@ -5,6 +5,7 @@ import com.emilianomenendez.veritran.money.Dollars;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
@@ -16,8 +17,8 @@ public class InMemoryTransactionHistory implements TransactionHistory {
         return history.size();
     }
 
-    public TransactionRecord first() {
-        return history.get(0);
+    public Optional<TransactionRecord> first() {
+        return history.stream().findFirst();
     }
 
     public void add(TransactionRecord record) {

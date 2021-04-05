@@ -4,6 +4,8 @@ import com.emilianomenendez.veritran.money.Dollars;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static com.emilianomenendez.veritran.bankaccount.TestObjects.*;
 import static com.emilianomenendez.veritran.bankaccount.money.TestObjects.dollars10;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,6 +17,11 @@ public class TransactionHistoryTest {
     @BeforeEach
     void setUp() {
         history = new InMemoryTransactionHistory();
+    }
+
+    @Test
+    void givenTransactionHistoryInitialStateWhenGetFirstElementThenItShouldBeNone() {
+        assertEquals(Optional.empty(), history.first());
     }
 
     @Test

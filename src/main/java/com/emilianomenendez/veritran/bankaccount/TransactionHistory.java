@@ -1,9 +1,11 @@
 package com.emilianomenendez.veritran.bankaccount;
 
+import java.util.Optional;
+
 public interface TransactionHistory {
     int total();
 
-    TransactionRecord first();
+    Optional<TransactionRecord> first();
 
     void add(TransactionRecord record);
 
