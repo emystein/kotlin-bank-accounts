@@ -5,7 +5,6 @@ import com.emilianomenendez.veritran.bankaccount.withdrawal.Withdrawal;
 import com.emilianomenendez.veritran.money.Money;
 
 public interface BankAccount {
-    boolean isOwnedBy(Customer owner);
 
     String getCurrency();
 

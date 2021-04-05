@@ -25,10 +25,6 @@ public class SavingsAccount implements BankAccount {
         this.transactionHistory = transactionHistory;
     }
 
-    public boolean isOwnedBy(Customer customer) {
-        return owner.equals(customer);
-    }
-
     public Balance getInitialBalance() {
         return transactionHistory.first()
                 .map(TransactionRecord::getBalance)

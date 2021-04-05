@@ -22,8 +22,7 @@ public class Withdrawal implements Transaction {
     }
 
     public Balance previewBalanceAfter() {
-        return debitAccount.getBalance()
-                .minus(amount);
+        return debitAccount.getBalance().minus(amount);
     }
 
     @Override

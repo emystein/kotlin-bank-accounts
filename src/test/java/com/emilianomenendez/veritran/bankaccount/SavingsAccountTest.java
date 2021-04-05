@@ -29,13 +29,9 @@ public class SavingsAccountTest {
     void givenAnInitialStateWhenCreateABankAccountThenItShouldHaveBasicInformationSet() {
         var account = SavingsAccount.ownedBy(francisco).currency("ARS").build();
 
+        assertEquals(francisco, account.getOwner());
         assertEquals("ARS", account.getCurrency());
         assertEquals(Balance.zero("ARS"), account.getBalance());
-    }
-
-    @Test
-    void givenACustomerAndAnInitialAmountWhenCreateAnAccountThenTheAccountShouldBeOwnedByTheCustomer() {
-        assertTrue(franciscosAccount.isOwnedBy(francisco));
     }
 
     @Test
