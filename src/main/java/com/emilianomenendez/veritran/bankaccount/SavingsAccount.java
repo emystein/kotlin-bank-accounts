@@ -54,10 +54,7 @@ public class SavingsAccount implements BankAccount {
     }
 
     public TransactionRecord transfer(BankAccount creditAccount, Money amountToTransfer) {
-        return BankTransfer.from(this)
-                .to(creditAccount)
-                .amount(amountToTransfer)
-                .execute();
+        return BankTransfer.from(this).to(creditAccount).amount(amountToTransfer).execute();
     }
 
     public void addTransactionRecord(TransactionRecord transactionRecord) {
