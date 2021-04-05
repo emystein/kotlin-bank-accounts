@@ -34,7 +34,7 @@ public class Withdrawal implements Transaction {
 
         var transactionRecord = new TransactionRecord(now(), Balance.negative(amount));
 
-        debitAccount.getTransactionHistory().add(transactionRecord);
+        debitAccount.addTransactionRecord(transactionRecord);
 
         return transactionRecord;
     }

@@ -63,4 +63,8 @@ public class SavingsAccount implements BankAccount {
                 .amount(amountToTransfer)
                 .execute();
     }
+
+    public void addTransactionRecord(TransactionRecord transactionRecord) {
+        transactionHistory.add(transactionRecord);
+    }
 }

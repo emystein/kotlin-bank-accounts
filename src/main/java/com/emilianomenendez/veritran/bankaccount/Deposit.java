@@ -20,7 +20,7 @@ public class Deposit implements Transaction {
     public TransactionRecord execute() {
         var transactionRecord = new TransactionRecord(now(), amount);
 
-        creditAccount.getTransactionHistory().add(transactionRecord);
+        creditAccount.addTransactionRecord(transactionRecord);
 
         return transactionRecord;
     }

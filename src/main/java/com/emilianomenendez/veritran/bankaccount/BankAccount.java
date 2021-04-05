@@ -24,4 +24,6 @@ public interface BankAccount {
     TransactionRecord transfer(BankAccount creditAccount, Money amountToTransfer);
 
     TransactionHistory getTransactionHistory();
+
+    void addTransactionRecord(TransactionRecord transactionRecord);
 }
