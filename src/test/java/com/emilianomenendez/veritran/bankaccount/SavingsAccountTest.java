@@ -6,6 +6,8 @@ import com.emilianomenendez.veritran.money.InsufficientFundsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static com.emilianomenendez.veritran.bankaccount.SavingsAccountAssertions.*;
 import static com.emilianomenendez.veritran.bankaccount.TestObjects.createSavingsAccountFor;
 import static com.emilianomenendez.veritran.bankaccount.money.TestObjects.*;
@@ -23,6 +25,14 @@ public class SavingsAccountTest {
         franciscosAccount = createSavingsAccountFor(francisco, dollars100);
         mabel = Customer.named("mabel");
         mabelsAccount = createSavingsAccountFor(mabel, dollars100);
+    }
+
+    @Test
+    void givenAnInitialStateWhenCreateABankAccountThenItShouldHaveBasicInformationSet() {
+        var account = SavingsAccount.ownedBy(francisco).currency("ARS").build();
+
+        assertEquals("ARS", account.getCurrency());
+        assertEquals(Balance.zero("ARS"), account.getBalance());
     }
 
     @Test

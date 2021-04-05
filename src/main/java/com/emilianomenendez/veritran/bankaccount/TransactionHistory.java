@@ -13,7 +13,7 @@ public interface TransactionHistory {
 
     boolean containsInOrder(TransactionRecord... records);
 
-    Balance sum();
+    Optional<Balance> sum();
 
-    Balance sumBeforeLast();
+    Optional<Balance> sumBeforeLast();
 }

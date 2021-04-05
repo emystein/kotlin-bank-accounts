@@ -9,9 +9,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SavingsAccountBuilder {
     private final Customer accountOwner;
+    private String currency = "USD";
     private Money initialBalance;
     private WithdrawalLimit withdrawalLimit = new CurrentFundsLimit();
-    private InMemoryTransactionHistory accountHistory = new InMemoryTransactionHistory();
+
+    public SavingsAccountBuilder currency(String currency) {
+        this.currency = currency;
+
+        return this;
+    }
 
     public SavingsAccountBuilder initialBalance(Money initialBalance) {
         this.initialBalance = initialBalance;
@@ -26,8 +32,14 @@ public class SavingsAccountBuilder {
     }
 
     public SavingsAccount build() {
-        var account = new SavingsAccount(accountOwner, withdrawalLimit, accountHistory);
-        account.deposit(initialBalance);
+        var accountHistory = new InMemoryTransactionHistory();
+
+        var account = new SavingsAccount(accountOwner, currency, withdrawalLimit, accountHistory);
+
+        if (initialBalance != null) {
+            account.deposit(initialBalance);
+        }
+
         return account;
     }
 }

@@ -7,9 +7,12 @@ import com.emilianomenendez.veritran.bankaccount.withdrawal.WithdrawalLimit;
 import com.emilianomenendez.veritran.money.Money;
 import lombok.Getter;
 
+import java.util.Optional;
+
 @Getter
 public class SavingsAccount implements BankAccount {
     private final Customer owner;
+    private final String currency;
     private final WithdrawalLimit withdrawalLimit;
     private final TransactionHistory transactionHistory;
 
@@ -17,8 +20,9 @@ public class SavingsAccount implements BankAccount {
         return new SavingsAccountBuilder(owner);
     }
 
-    public SavingsAccount(Customer owner, WithdrawalLimit withdrawalLimit, TransactionHistory transactionHistory) {
+    public SavingsAccount(Customer owner, String currency, WithdrawalLimit withdrawalLimit, TransactionHistory transactionHistory) {
         this.owner = owner;
+        this.currency = currency;
         this.withdrawalLimit = withdrawalLimit;
         this.transactionHistory = transactionHistory;
     }
@@ -28,15 +32,19 @@ public class SavingsAccount implements BankAccount {
     }
 
     public Balance getInitialBalance() {
-        return transactionHistory.first().get().getAmount();
+        return transactionHistory.first()
+                .map(TransactionRecord::getAmount)
+                .orElse(Balance.zero(currency));
     }
 
     public Balance getBalance() {
-        return transactionHistory.sum();
+        return transactionHistory.sum()
+                .orElse(Balance.zero(currency));
     }
 
     public Balance getPreviousBalance() {
-        return transactionHistory.sumBeforeLast();
+        return transactionHistory.sumBeforeLast()
+                .orElse(Balance.zero(currency));
     }
 
     public TransactionRecord deposit(Money amountToDeposit) {

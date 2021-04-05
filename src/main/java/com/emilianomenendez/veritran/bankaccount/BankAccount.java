@@ -7,6 +7,8 @@ import com.emilianomenendez.veritran.money.Money;
 public interface BankAccount {
     boolean isOwnedBy(Customer owner);
 
+    String getCurrency();
+
     Balance getInitialBalance();
 
     Balance getBalance();

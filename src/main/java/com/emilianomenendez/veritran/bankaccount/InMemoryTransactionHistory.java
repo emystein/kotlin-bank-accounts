@@ -1,7 +1,5 @@
 package com.emilianomenendez.veritran.bankaccount;
 
-import com.emilianomenendez.veritran.money.Dollars;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,18 +36,18 @@ public class InMemoryTransactionHistory implements TransactionHistory {
                 .equals(indexedMovements);
     }
 
-    public Balance sum() {
+    public Optional<Balance> sum() {
         return sum(total());
     }
 
-    public Balance sumBeforeLast() {
+    public Optional<Balance> sumBeforeLast() {
         return sum(total() - 1);
     }
 
-    private Balance sum(int numberOfTransactions) {
+    private Optional<Balance> sum(int numberOfTransactions) {
         return entries(numberOfTransactions)
                 .map(TransactionRecord::getAmount)
-                .reduce(Balance.positive(Dollars.amount(0)), Balance::sum);
+                .reduce(Balance::plus);
     }
 
     private Stream<TransactionRecord> entries(int numberOfEntries) {

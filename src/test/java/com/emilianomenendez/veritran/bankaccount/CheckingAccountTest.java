@@ -5,6 +5,8 @@ import com.emilianomenendez.veritran.money.InsufficientFundsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static com.emilianomenendez.veritran.bankaccount.SavingsAccountAssertions.*;
 import static com.emilianomenendez.veritran.bankaccount.TestObjects.createCheckingAccountFor;
 import static com.emilianomenendez.veritran.bankaccount.TestObjects.minusDollars100Limit;
