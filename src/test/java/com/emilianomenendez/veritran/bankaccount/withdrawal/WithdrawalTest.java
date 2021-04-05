@@ -25,7 +25,7 @@ public class WithdrawalTest {
 
         var transactionRecord = Withdrawal.from(account).amount(dollars10).execute();
 
-        assertEquals(Balance.negative(dollars10), transactionRecord.getAmount());
+        assertEquals(Balance.negative(dollars10), transactionRecord.getBalance());
     }
 
     @Test

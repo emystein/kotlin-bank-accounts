@@ -7,8 +7,6 @@ import com.emilianomenendez.veritran.bankaccount.withdrawal.WithdrawalLimit;
 import com.emilianomenendez.veritran.money.Money;
 import lombok.Getter;
 
-import java.util.Optional;
-
 @Getter
 public class SavingsAccount implements BankAccount {
     private final Customer owner;
@@ -33,7 +31,7 @@ public class SavingsAccount implements BankAccount {
 
     public Balance getInitialBalance() {
         return transactionHistory.first()
-                .map(TransactionRecord::getAmount)
+                .map(TransactionRecord::getBalance)
                 .orElse(Balance.zero(currency));
     }
 

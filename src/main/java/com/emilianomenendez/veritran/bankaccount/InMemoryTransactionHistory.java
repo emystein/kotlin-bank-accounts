@@ -46,7 +46,7 @@ public class InMemoryTransactionHistory implements TransactionHistory {
 
     private Optional<Balance> sum(int numberOfTransactions) {
         return entries(numberOfTransactions)
-                .map(TransactionRecord::getAmount)
+                .map(TransactionRecord::getBalance)
                 .reduce(Balance::plus);
     }
 

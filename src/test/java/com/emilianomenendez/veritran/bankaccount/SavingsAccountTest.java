@@ -6,8 +6,6 @@ import com.emilianomenendez.veritran.money.InsufficientFundsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
 import static com.emilianomenendez.veritran.bankaccount.SavingsAccountAssertions.*;
 import static com.emilianomenendez.veritran.bankaccount.TestObjects.createSavingsAccountFor;
 import static com.emilianomenendez.veritran.bankaccount.money.TestObjects.*;
@@ -84,7 +82,7 @@ public class SavingsAccountTest {
     void givenAWithdrawalWhenGetItsAmountThenTheAmountShouldBeNegative() {
         TransactionRecord transactionRecord = franciscosAccount.withdraw(dollars10);
 
-        assertEquals(Balance.negative(dollars10), transactionRecord.getAmount());
+        assertEquals(Balance.negative(dollars10), transactionRecord.getBalance());
     }
 
     @Test
@@ -105,7 +103,7 @@ public class SavingsAccountTest {
     void givenADebitAndCreditAccountsWhenTransfer10USDThenTheTransactionRecordShouldStoreTheCreditBalance() {
         var transactionRecord = franciscosAccount.transfer(mabelsAccount, dollars10);
 
-        assertEquals(Balance.positive(dollars10), transactionRecord.getAmount());
+        assertEquals(Balance.positive(dollars10), transactionRecord.getBalance());
     }
 
     @Test
