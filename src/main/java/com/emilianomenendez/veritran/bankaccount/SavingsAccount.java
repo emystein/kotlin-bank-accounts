@@ -7,8 +7,6 @@ import com.emilianomenendez.veritran.bankaccount.withdrawal.WithdrawalLimit;
 import com.emilianomenendez.veritran.money.Money;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
-
 @Getter
 public class SavingsAccount implements BankAccount {
     private final Customer owner;
@@ -19,11 +17,10 @@ public class SavingsAccount implements BankAccount {
         return new SavingsAccountBuilder(owner);
     }
 
-    public SavingsAccount(Customer owner, WithdrawalLimit withdrawalLimit, Money initialBalance, TransactionHistory transactionHistory) {
+    public SavingsAccount(Customer owner, WithdrawalLimit withdrawalLimit, TransactionHistory transactionHistory) {
         this.owner = owner;
         this.withdrawalLimit = withdrawalLimit;
         this.transactionHistory = transactionHistory;
-        this.transactionHistory.add(new TransactionRecord(LocalDateTime.now(), initialBalance));
     }
 
     public boolean isOwnedBy(Customer customer) {

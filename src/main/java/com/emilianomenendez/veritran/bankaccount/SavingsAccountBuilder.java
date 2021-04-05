@@ -26,6 +26,8 @@ public class SavingsAccountBuilder {
     }
 
     public SavingsAccount build() {
-        return new SavingsAccount(accountOwner, withdrawalLimit, initialBalance, accountHistory);
+        var account = new SavingsAccount(accountOwner, withdrawalLimit, accountHistory);
+        account.deposit(initialBalance);
+        return account;
     }
 }
