@@ -17,17 +17,22 @@ public class TestObjects {
     public static TransactionRecord minusDollars20Record = new TransactionRecord(now(), Balance.negative(dollars20));
 
     public static BankAccount createSavingsAccountFor(Customer accountOwner, Money initialBalance) {
-        return SavingsAccount.ownedBy(accountOwner)
-                .initialBalance(initialBalance)
-                .build();
+        var account = SavingsAccount.ownedBy(accountOwner).build();
+
+        account.deposit(initialBalance);
+
+        return account;
     }
 
     public static BankAccount createCheckingAccountFor(Customer accountOwner,
                                                        Money initialBalance,
                                                        WithdrawalLimit withdrawalLimit) {
-        return SavingsAccount.ownedBy(accountOwner)
-                .initialBalance(initialBalance)
+        var account = SavingsAccount.ownedBy(accountOwner)
                 .withdrawalLimit(withdrawalLimit)
                 .build();
+
+        account.deposit(initialBalance);
+
+        return account;
     }
 }
