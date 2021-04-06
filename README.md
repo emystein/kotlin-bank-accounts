@@ -89,3 +89,27 @@ From now on, users will be able to transfer money from their account to the
 account of another user. Add this feature. First write a user story for it.
 Write the scenarios for the main case, but also write scenarios for border
 cases, such as: can one transfer money one doesn't have? There may be others.
+
+### Iteration 8: Add the account statement feature
+Users have been using the system for a while now, but they are lacking a way to view all operations that have happened in their account. Add the account statement feature. Remember: it is not necessary to print to the console or send the statement
+data anywhere.
+You can follow this user story:
+```gherkin
+Feature: Obtain the account statement
+As a client of the bank
+I want to obtain the statement of my account
+In order to review all operations that have occurred in it
+Scenario: An existing client obtains the statement of his account
+Given an existing client with id “francisco”
+Given an existing client with id “pedro”
+Given francisco first deposited 100 USD in his account
+Given francisco then withdrew 20 USD from his account
+Given francisco then transferred 50 USD from his account to pedro's account
+Given francisco then deposited 10 USD in his account
+When he obtains the statement of his account
+Then the balance contains four lines, in the following order
+1. deposit, 100 USD, balance: 100 USD
+2. withdrawal, 20 USD, balance: 80 USD
+3. transfer to pedro, 50 USD, balance: 30 USD
+4. deposit, 10 USD, balance: 40 USD
+```
