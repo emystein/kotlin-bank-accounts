@@ -12,19 +12,16 @@ public class Deposit implements Transaction {
     private final BankAccount creditAccount;
     private final Money amount;
 
-    public static DepositBuilder to(BankAccount bankAccount) {
-        return new DepositBuilder(bankAccount);
+    public static DepositBuilder to(BankAccount creditAccount) {
+        return new DepositBuilder(creditAccount);
     }
 
+    @RequiredArgsConstructor
     public static class DepositBuilder {
-        private final BankAccount targetAccount;
-
-        public DepositBuilder(BankAccount targetAccount) {
-            this.targetAccount = targetAccount;
-        }
+        private final BankAccount creditAccount;
 
         public Deposit amount(Money amountToDeposit) {
-            return new Deposit(targetAccount, amountToDeposit);
+            return new Deposit(creditAccount, amountToDeposit);
         }
     }
 
