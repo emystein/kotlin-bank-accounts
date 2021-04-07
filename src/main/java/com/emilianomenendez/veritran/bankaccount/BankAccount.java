@@ -1,6 +1,5 @@
 package com.emilianomenendez.veritran.bankaccount;
 
-import com.emilianomenendez.veritran.Customer;
 import com.emilianomenendez.veritran.bankaccount.withdrawal.Withdrawal;
 import com.emilianomenendez.veritran.money.Money;
 
@@ -25,4 +24,6 @@ public interface BankAccount {
     TransactionHistory getTransactionHistory();
 
     void addTransactionRecord(TransactionRecord transactionRecord);
+
+    BalanceTimeline getBalanceTimeline();
 }

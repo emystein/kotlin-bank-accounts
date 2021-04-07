@@ -11,6 +11,10 @@ import static java.util.stream.Collectors.toList;
 public class InMemoryTransactionHistory implements TransactionHistory {
     private List<TransactionRecord> history = new ArrayList<>();
 
+    public boolean isEmpty() {
+        return history.isEmpty();
+    }
+
     public int total() {
         return history.size();
     }

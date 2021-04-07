@@ -13,6 +13,7 @@ public class SavingsAccount implements BankAccount {
     private final String currency;
     private final WithdrawalLimit withdrawalLimit;
     private final TransactionHistory transactionHistory;
+    private final BalanceTimeline balanceTimeline;
 
     public static SavingsAccountBuilder ownedBy(Customer owner) {
         return new SavingsAccountBuilder(owner);
@@ -23,22 +24,19 @@ public class SavingsAccount implements BankAccount {
         this.currency = currency;
         this.withdrawalLimit = withdrawalLimit;
         this.transactionHistory = transactionHistory;
+        this.balanceTimeline = new BalanceTimeline(currency, transactionHistory);
     }
 
     public Balance getInitialBalance() {
-        return transactionHistory.first()
-                .map(TransactionRecord::getBalance)
-                .orElse(Balance.zero(currency));
+        return balanceTimeline.initialSnapshot();
     }
 
     public Balance getBalance() {
-        return transactionHistory.sum()
-                .orElse(Balance.zero(currency));
+        return balanceTimeline.currentSnapshot();
     }
 
     public Balance getPreviousBalance() {
-        return transactionHistory.sumBeforeLast()
-                .orElse(Balance.zero(currency));
+        return balanceTimeline.previousSnapshot();
     }
 
     public TransactionRecord deposit(Money amountToDeposit) {

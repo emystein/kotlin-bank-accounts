@@ -3,6 +3,8 @@ package com.emilianomenendez.veritran.bankaccount;
 import java.util.Optional;
 
 public interface TransactionHistory {
+    boolean isEmpty();
+
     int total();
 
     Optional<TransactionRecord> first();
