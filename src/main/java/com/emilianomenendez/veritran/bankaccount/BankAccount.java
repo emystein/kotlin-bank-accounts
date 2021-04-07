@@ -15,8 +15,6 @@ public interface BankAccount {
 
     TransactionRecord deposit(Money amountToDeposit);
 
-    boolean withdrawalLimitAccepts(Withdrawal withdrawal);
-
     TransactionRecord withdraw(Money amountToWithdraw);
 
     TransactionRecord transfer(BankAccount creditAccount, Money amountToTransfer);

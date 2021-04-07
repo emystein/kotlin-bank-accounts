@@ -16,6 +16,7 @@ import static java.time.LocalDateTime.now;
 public class Withdrawal implements Transaction {
     private final BankAccount debitAccount;
     private final Money amount;
+    private final WithdrawalLimit withdrawalLimit;
 
     public static WithdrawalBuilder from(BankAccount debitAccount) {
         return new WithdrawalBuilder(debitAccount);
@@ -27,7 +28,7 @@ public class Withdrawal implements Transaction {
 
     @Override
     public TransactionRecord execute() {
-        if (!debitAccount.withdrawalLimitAccepts(this)) {
+        if (!withdrawalLimit.accepts(this)) {
             throw new InsufficientFundsException();
         }
 

@@ -7,8 +7,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WithdrawalBuilder {
     private final BankAccount debitAccount;
+    private WithdrawalLimit withdrawalLimit = new CurrentFundsLimit();
+
+    public WithdrawalBuilder limit(WithdrawalLimit aWithdrawalLimit) {
+        withdrawalLimit = aWithdrawalLimit;
+
+        return this;
+    }
 
     public Withdrawal amount(Money amountToWithdraw) {
-        return new Withdrawal(this.debitAccount, amountToWithdraw);
+        return new Withdrawal(debitAccount, amountToWithdraw, withdrawalLimit);
     }
 }

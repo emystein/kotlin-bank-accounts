@@ -40,19 +40,23 @@ public class SavingsAccount implements BankAccount {
     }
 
     public TransactionRecord deposit(Money amountToDeposit) {
-        return Deposit.to(this).amount(amountToDeposit).execute();
-    }
-
-    public boolean withdrawalLimitAccepts(Withdrawal withdrawal) {
-        return withdrawalLimit.accepts(withdrawal);
+        return Deposit.to(this)
+                .amount(amountToDeposit)
+                .execute();
     }
 
     public TransactionRecord withdraw(Money amountToWithdraw) {
-        return Withdrawal.from(this).amount(amountToWithdraw).execute();
+        return Withdrawal.from(this)
+                .limit(withdrawalLimit)
+                .amount(amountToWithdraw)
+                .execute();
     }
 
     public TransactionRecord transfer(BankAccount creditAccount, Money amountToTransfer) {
-        return BankTransfer.from(this).to(creditAccount).amount(amountToTransfer).execute();
+        return BankTransfer.from(this)
+                .to(creditAccount)
+                .amount(amountToTransfer)
+                .execute();
     }
 
     public void addTransactionRecord(TransactionRecord transactionRecord) {
