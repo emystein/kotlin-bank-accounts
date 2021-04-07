@@ -16,6 +16,18 @@ public class Deposit implements Transaction {
         return new DepositBuilder(bankAccount);
     }
 
+    public static class DepositBuilder {
+        private final BankAccount targetAccount;
+
+        public DepositBuilder(BankAccount targetAccount) {
+            this.targetAccount = targetAccount;
+        }
+
+        public Deposit amount(Money amountToDeposit) {
+            return new Deposit(targetAccount, amountToDeposit);
+        }
+    }
+
     @Override
     public TransactionRecord execute() {
         var transactionRecord = new TransactionRecord(now(), amount);

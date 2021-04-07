@@ -18,6 +18,22 @@ public class BankTransfer implements Transaction {
         return new BankTransferBuilder(debitAccount);
     }
 
+    @RequiredArgsConstructor
+    public static class BankTransferBuilder {
+        private final BankAccount debitAccount;
+        private BankAccount creditAccount;
+
+        public BankTransferBuilder to(BankAccount creditAccount) {
+            this.creditAccount = creditAccount;
+
+            return this;
+        }
+
+        public BankTransfer amount(Money amountToTransfer) {
+            return new BankTransfer(debitAccount, creditAccount, amountToTransfer);
+        }
+    }
+
     public TransactionRecord execute() {
         assertAccountsAreDifferent();
 
