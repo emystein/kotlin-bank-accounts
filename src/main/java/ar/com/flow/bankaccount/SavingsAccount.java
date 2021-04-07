@@ -2,10 +2,12 @@ package ar.com.flow.bankaccount;
 
 import ar.com.flow.Customer;
 import ar.com.flow.bankaccount.transfer.BankTransfer;
+import ar.com.flow.bankaccount.withdrawal.CurrentFundsLimit;
 import ar.com.flow.bankaccount.withdrawal.Withdrawal;
-import ar.com.flow.money.Money;
 import ar.com.flow.bankaccount.withdrawal.WithdrawalLimit;
+import ar.com.flow.money.Money;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
 public class SavingsAccount implements BankAccount {
@@ -17,6 +19,28 @@ public class SavingsAccount implements BankAccount {
 
     public static SavingsAccountBuilder ownedBy(Customer owner) {
         return new SavingsAccountBuilder(owner);
+    }
+
+    @RequiredArgsConstructor
+    public static class SavingsAccountBuilder {
+        private final Customer accountOwner;
+        private String currency = "USD";
+        private WithdrawalLimit withdrawalLimit = new CurrentFundsLimit();
+
+        public SavingsAccountBuilder currency(String currency) {
+            this.currency = currency;
+            return this;
+        }
+
+        public SavingsAccountBuilder withdrawalLimit(WithdrawalLimit withdrawalLimit) {
+            this.withdrawalLimit = withdrawalLimit;
+            return this;
+        }
+
+        public SavingsAccount build() {
+            var accountHistory = new InMemoryTransactionHistory();
+            return new SavingsAccount(accountOwner, currency, withdrawalLimit, accountHistory);
+        }
     }
 
     public SavingsAccount(Customer owner, String currency, WithdrawalLimit withdrawalLimit, TransactionHistory transactionHistory) {

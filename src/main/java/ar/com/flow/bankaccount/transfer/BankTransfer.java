@@ -25,7 +25,6 @@ public class BankTransfer implements Transaction {
 
         public BankTransferBuilder to(BankAccount creditAccount) {
             this.creditAccount = creditAccount;
-
             return this;
         }
 
