@@ -1,5 +1,6 @@
-package ar.com.flow.bankaccount;
+package ar.com.flow.bankaccount.transaction;
 
+import ar.com.flow.bankaccount.balance.Balance;
 import ar.com.flow.money.Money;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

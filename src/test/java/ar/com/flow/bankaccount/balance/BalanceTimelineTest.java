@@ -1,6 +1,8 @@
-package ar.com.flow.bankaccount;
+package ar.com.flow.bankaccount.balance;
 
 import ar.com.flow.Customer;
+import ar.com.flow.bankaccount.BankAccount;
+import ar.com.flow.bankaccount.TestObjects;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

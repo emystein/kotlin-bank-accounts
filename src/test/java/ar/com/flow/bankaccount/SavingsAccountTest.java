@@ -1,7 +1,9 @@
 package ar.com.flow.bankaccount;
 
 import ar.com.flow.Customer;
-import ar.com.flow.bankaccount.transfer.SameAccountTransferException;
+import ar.com.flow.bankaccount.balance.Balance;
+import ar.com.flow.bankaccount.transaction.TransactionReason;
+import ar.com.flow.bankaccount.transaction.transfer.SameAccountException;
 import ar.com.flow.money.InsufficientFundsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -99,7 +101,7 @@ public class SavingsAccountTest {
 
     @Test
     void givenTheSameDebitAndCreditAccountWhenTransferThenTheTransferShouldBeRejected() {
-        assertThrows(SameAccountTransferException.class, () ->
+        assertThrows(SameAccountException.class, () ->
                 franciscosAccount.transfer(franciscosAccount, dollars10));
 
         assertAccountKeepsInitialBalance(franciscosAccount);

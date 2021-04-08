@@ -1,4 +1,4 @@
-package ar.com.flow.bankaccount;
+package ar.com.flow.bankaccount.balance;
 
 public class PositiveBalance extends Balance {
     public PositiveBalance(String currency, int amount) {

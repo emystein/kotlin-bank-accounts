@@ -1,10 +1,13 @@
 package ar.com.flow.bankaccount;
 
 import ar.com.flow.Customer;
-import ar.com.flow.bankaccount.transfer.BankTransfer;
-import ar.com.flow.bankaccount.withdrawal.CurrentFundsLimit;
-import ar.com.flow.bankaccount.withdrawal.Withdrawal;
-import ar.com.flow.bankaccount.withdrawal.WithdrawalLimit;
+import ar.com.flow.bankaccount.balance.Balance;
+import ar.com.flow.bankaccount.balance.BalanceTimeline;
+import ar.com.flow.bankaccount.transaction.TransactionRecord;
+import ar.com.flow.bankaccount.transaction.transfer.Transfer;
+import ar.com.flow.bankaccount.transaction.withdrawal.CurrentFundsLimit;
+import ar.com.flow.bankaccount.transaction.withdrawal.Withdrawal;
+import ar.com.flow.bankaccount.transaction.withdrawal.WithdrawalLimit;
 import ar.com.flow.money.Money;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -77,7 +80,7 @@ public class SavingsAccount implements BankAccount {
     }
 
     public void transfer(BankAccount creditAccount, Money amountToTransfer) {
-        BankTransfer.from(this)
+        Transfer.from(this)
                 .to(creditAccount)
                 .amount(amountToTransfer)
                 .execute();

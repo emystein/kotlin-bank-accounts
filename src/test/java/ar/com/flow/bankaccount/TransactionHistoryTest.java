@@ -1,5 +1,6 @@
 package ar.com.flow.bankaccount;
 
+import ar.com.flow.bankaccount.balance.Balance;
 import ar.com.flow.money.Dollars;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

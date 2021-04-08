@@ -1,5 +1,8 @@
 package ar.com.flow.bankaccount;
 
+import ar.com.flow.bankaccount.balance.Balance;
+import ar.com.flow.bankaccount.transaction.TransactionRecord;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

@@ -1,7 +1,7 @@
-package ar.com.flow.bankaccount.transfer;
+package ar.com.flow.bankaccount.transaction.transfer;
 
 import ar.com.flow.bankaccount.BankAccount;
-import ar.com.flow.bankaccount.Preconditions;
+import ar.com.flow.bankaccount.transaction.Preconditions;
 
 public class DifferentAccounts implements Preconditions {
     private final BankAccount debitAccount;
@@ -14,7 +14,7 @@ public class DifferentAccounts implements Preconditions {
 
     public void check() {
         if (debitAccount.equals(creditAccount)) {
-            throw new SameAccountTransferException();
+            throw new SameAccountException();
         }
     }
 }

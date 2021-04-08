@@ -1,13 +1,13 @@
-package ar.com.flow.bankaccount.transfer;
+package ar.com.flow.bankaccount.transaction.transfer;
 
 import ar.com.flow.bankaccount.BankAccount;
 import ar.com.flow.bankaccount.Deposit;
-import ar.com.flow.bankaccount.TransactionAlgorithm;
-import ar.com.flow.bankaccount.TransactionReason;
-import ar.com.flow.bankaccount.withdrawal.Withdrawal;
+import ar.com.flow.bankaccount.transaction.Algorithm;
+import ar.com.flow.bankaccount.transaction.TransactionReason;
+import ar.com.flow.bankaccount.transaction.withdrawal.Withdrawal;
 import ar.com.flow.money.Money;
 
-public class TransferFunds implements TransactionAlgorithm {
+public class TransferFunds implements Algorithm {
     private final BankAccount debitAccount;
     private final BankAccount creditAccount;
     private final Money amount;

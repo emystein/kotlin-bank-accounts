@@ -1,13 +1,13 @@
-package ar.com.flow.bankaccount.transfer;
+package ar.com.flow.bankaccount.transaction.transfer;
 
-import ar.com.flow.bankaccount.Balance;
 import ar.com.flow.bankaccount.BankAccount;
-import ar.com.flow.bankaccount.Transaction;
-import ar.com.flow.bankaccount.TransactionReason;
+import ar.com.flow.bankaccount.balance.Balance;
+import ar.com.flow.bankaccount.transaction.Transaction;
+import ar.com.flow.bankaccount.transaction.TransactionReason;
 import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
 
-public class BankTransfer {
+public class Transfer {
     public static BankTransferBuilder from(BankAccount debitAccount) {
         return new BankTransferBuilder(debitAccount);
     }

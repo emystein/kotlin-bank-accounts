@@ -1,5 +1,7 @@
-package ar.com.flow.bankaccount;
+package ar.com.flow.bankaccount.balance;
 
+import ar.com.flow.bankaccount.TransactionHistory;
+import ar.com.flow.bankaccount.transaction.TransactionRecord;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

@@ -1,5 +1,10 @@
 package ar.com.flow.bankaccount;
 
+import ar.com.flow.bankaccount.balance.Balance;
+import ar.com.flow.bankaccount.transaction.DoNothing;
+import ar.com.flow.bankaccount.transaction.NoPreconditions;
+import ar.com.flow.bankaccount.transaction.Transaction;
+import ar.com.flow.bankaccount.transaction.TransactionReason;
 import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
 

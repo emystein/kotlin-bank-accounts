@@ -1,5 +1,7 @@
-package ar.com.flow.bankaccount;
+package ar.com.flow.bankaccount.transaction;
 
+import ar.com.flow.bankaccount.BankAccount;
+import ar.com.flow.bankaccount.balance.Balance;
 import lombok.RequiredArgsConstructor;
 
 import static java.time.LocalDateTime.now;
@@ -8,7 +10,7 @@ import static java.time.LocalDateTime.now;
 public class Transaction {
     private final BankAccount account;
     private final Preconditions preconditions;
-    private final TransactionAlgorithm algorithm;
+    private final Algorithm algorithm;
     private final TransactionReason reason;
     private final Balance amount;
 

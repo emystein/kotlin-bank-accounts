@@ -1,7 +1,7 @@
-package ar.com.flow.bankaccount.withdrawal;
+package ar.com.flow.bankaccount.transaction.withdrawal;
 
-import ar.com.flow.bankaccount.Balance;
 import ar.com.flow.bankaccount.BankAccount;
+import ar.com.flow.bankaccount.balance.Balance;
 import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
 

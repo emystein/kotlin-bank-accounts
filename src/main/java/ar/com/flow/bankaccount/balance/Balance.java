@@ -1,4 +1,4 @@
-package ar.com.flow.bankaccount;
+package ar.com.flow.bankaccount.balance;
 
 import ar.com.flow.money.Money;
 import lombok.Getter;
