@@ -2,8 +2,8 @@ package ar.com.flow.bankaccount;
 
 import ar.com.flow.Customer;
 import ar.com.flow.bankaccount.withdrawal.LowerLimit;
-import ar.com.flow.money.Money;
 import ar.com.flow.bankaccount.withdrawal.WithdrawalLimit;
+import ar.com.flow.money.Money;
 
 import static ar.com.flow.money.TestObjects.*;
 import static java.time.LocalDateTime.now;
