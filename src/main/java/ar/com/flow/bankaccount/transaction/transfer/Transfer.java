@@ -23,11 +23,13 @@ public class Transfer {
         }
 
         public Transaction amount(Money amountToTransfer) {
-            return new Transaction(creditAccount,
-                    new DifferentAccounts(debitAccount, creditAccount),
-                    new TransferFunds(debitAccount, creditAccount, amountToTransfer),
-                    TransactionReason.Transfer,
-                    Balance.positive(amountToTransfer));
+            return Transaction.builder()
+                    .reason(TransactionReason.Transfer)
+                    .account(creditAccount)
+                    .amount(Balance.positive(amountToTransfer))
+                    .preconditions(new DifferentAccounts(debitAccount, creditAccount))
+                    .algorithm(new TransferFunds(debitAccount, creditAccount, amountToTransfer))
+                    .build();
         }
     }
 }

@@ -1,8 +1,6 @@
 package ar.com.flow.bankaccount;
 
 import ar.com.flow.bankaccount.balance.Balance;
-import ar.com.flow.bankaccount.transaction.DoNothing;
-import ar.com.flow.bankaccount.transaction.NoPreconditions;
 import ar.com.flow.bankaccount.transaction.Transaction;
 import ar.com.flow.bankaccount.transaction.TransactionReason;
 import ar.com.flow.money.Money;
@@ -24,11 +22,11 @@ public class Deposit {
         }
 
         public Transaction amount(Money amountToDeposit) {
-            return new Transaction(creditAccount,
-                    new NoPreconditions(),
-                    new DoNothing(),
-                    reason,
-                    Balance.positive(amountToDeposit));
+            return Transaction.builder()
+                    .reason(reason)
+                    .account(creditAccount)
+                    .amount(Balance.positive(amountToDeposit))
+                    .build();
         }
     }
 }

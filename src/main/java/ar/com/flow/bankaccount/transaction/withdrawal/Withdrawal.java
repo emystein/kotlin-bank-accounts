@@ -2,7 +2,6 @@ package ar.com.flow.bankaccount.transaction.withdrawal;
 
 import ar.com.flow.bankaccount.BankAccount;
 import ar.com.flow.bankaccount.balance.Balance;
-import ar.com.flow.bankaccount.transaction.DoNothing;
 import ar.com.flow.bankaccount.transaction.Transaction;
 import ar.com.flow.bankaccount.transaction.TransactionReason;
 import ar.com.flow.money.Money;
@@ -31,11 +30,12 @@ public class Withdrawal {
         }
 
         public Transaction amount(Money amountToWithdraw) {
-            return new Transaction(debitAccount,
-                    new SufficientFunds(debitAccount, amountToWithdraw, withdrawalLimit),
-                    new DoNothing(),
-                    reason,
-                    Balance.negative(amountToWithdraw));
+            return Transaction.builder()
+                    .reason(reason)
+                    .account(debitAccount)
+                    .amount(Balance.negative(amountToWithdraw))
+                    .preconditions(new SufficientFunds(debitAccount, amountToWithdraw, withdrawalLimit))
+                    .build();
         }
     }
 }
