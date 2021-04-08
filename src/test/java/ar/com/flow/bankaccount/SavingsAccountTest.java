@@ -8,19 +8,19 @@ import org.junit.jupiter.api.Test;
 
 import static ar.com.flow.bankaccount.SavingsAccountAssertions.*;
 import static ar.com.flow.money.TestObjects.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SavingsAccountTest {
     private Customer francisco;
     private BankAccount franciscosAccount;
-    private Customer mabel;
     private BankAccount mabelsAccount;
 
     @BeforeEach
     void setUp() {
         francisco = Customer.named("francisco");
         franciscosAccount = TestObjects.createSavingsAccountFor(francisco, dollars100);
-        mabel = Customer.named("mabel");
+        var mabel = Customer.named("mabel");
         mabelsAccount = TestObjects.createSavingsAccountFor(mabel, dollars100);
     }
 
