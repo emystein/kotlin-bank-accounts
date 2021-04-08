@@ -9,11 +9,6 @@ import lombok.RequiredArgsConstructor;
 public class LowerLimit implements WithdrawalLimit {
     private final Balance limit;
 
-    public boolean accepts(Withdrawal withdrawal) {
-        return withdrawal.previewBalanceAfter().isGreaterThanOrEqual(limit);
-    }
-
-    @Override
     public boolean accepts(BankAccount account, Money amount) {
         var previewBalanceAfter = account.getBalance().minus(amount);
 

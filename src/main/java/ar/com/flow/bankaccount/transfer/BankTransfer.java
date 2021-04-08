@@ -1,26 +1,19 @@
 package ar.com.flow.bankaccount.transfer;
 
-import ar.com.flow.bankaccount.*;
-import ar.com.flow.bankaccount.withdrawal.Withdrawal;
+import ar.com.flow.bankaccount.Balance;
+import ar.com.flow.bankaccount.BankAccount;
+import ar.com.flow.bankaccount.BaseTransaction;
+import ar.com.flow.bankaccount.TransactionReason;
 import ar.com.flow.money.Money;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import static java.time.LocalDateTime.now;
-
-@Getter
 public class BankTransfer extends BaseTransaction {
-    private final BankAccount debitAccount;
-    private final BankAccount creditAccount;
-    private final Money amount;
-
     public BankTransfer(BankAccount debitAccount, BankAccount creditAccount, Money amount) {
-        super(new DifferentAccounts(debitAccount, creditAccount),
-              new TransferFunds(debitAccount, creditAccount, amount));
-
-        this.debitAccount = debitAccount;
-        this.creditAccount = creditAccount;
-        this.amount = amount;
+        super(creditAccount,
+                new DifferentAccounts(debitAccount, creditAccount),
+                new TransferFunds(debitAccount, creditAccount, amount),
+                TransactionReason.TransferCredit,
+                Balance.positive(amount));
     }
 
     public static BankTransferBuilder from(BankAccount debitAccount) {
@@ -40,13 +33,5 @@ public class BankTransfer extends BaseTransaction {
         public BankTransfer amount(Money amountToTransfer) {
             return new BankTransfer(debitAccount, creditAccount, amountToTransfer);
         }
-    }
-
-    public BankAccount account() {
-        return creditAccount;
-    }
-
-    public TransactionRecord transactionRecord() {
-        return new TransactionRecord(now(), TransactionReason.TransferCredit, Balance.positive(amount));
     }
 }

@@ -1,23 +1,18 @@
 package ar.com.flow.bankaccount;
 
-import ar.com.flow.money.Money;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import static java.time.LocalDateTime.now;
 
+@RequiredArgsConstructor
+@Getter
 public abstract class BaseTransaction implements Transaction {
+    private final BankAccount account;
     private final Preconditions preconditions;
     private final TransactionAlgorithm algorithm;
-
-    public abstract BankAccount account();
-
-    public abstract Money getAmount();
-
-    public abstract TransactionRecord transactionRecord();
-
-    public BaseTransaction(Preconditions preconditions, TransactionAlgorithm algorithm) {
-        this.preconditions = preconditions;
-        this.algorithm = algorithm;
-    }
+    private final TransactionReason reason;
+    private final Balance amount;
 
     public TransactionRecord execute() {
         preconditions.check();
@@ -28,14 +23,10 @@ public abstract class BaseTransaction implements Transaction {
     }
 
     public TransactionRecord recordTransaction() {
-        TransactionRecord record = transactionRecord();
+        TransactionRecord record = new TransactionRecord(now(), reason, amount);
 
-        account().addTransactionRecord(record);
+        account.addTransactionRecord(record);
 
         return record;
-    }
-
-    public TransactionRecord transactionRecord(TransactionReason reason, Balance balance) {
-        return new TransactionRecord(now(), reason, balance);
     }
 }
