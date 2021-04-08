@@ -3,7 +3,7 @@ package ar.com.flow.bankaccount;
 import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
 
-public class Deposit extends BaseTransaction {
+public class Deposit extends Transaction {
     public Deposit(TransactionReason reason, BankAccount creditAccount, Money amount) {
         super(creditAccount, new NoPreconditions(), new DoNothing(), reason, Balance.positive(amount));
     }

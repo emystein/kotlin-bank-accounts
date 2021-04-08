@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import static java.time.LocalDateTime.now;
 
 @RequiredArgsConstructor
-public abstract class BaseTransaction {
+public abstract class Transaction {
     private final BankAccount account;
     private final Preconditions preconditions;
     private final TransactionAlgorithm algorithm;

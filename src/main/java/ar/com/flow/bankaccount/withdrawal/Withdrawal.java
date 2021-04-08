@@ -4,7 +4,7 @@ import ar.com.flow.bankaccount.*;
 import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
 
-public class Withdrawal extends BaseTransaction {
+public class Withdrawal extends Transaction {
     public Withdrawal(TransactionReason reason, BankAccount debitAccount, Money amount, WithdrawalLimit withdrawalLimit) {
         super(debitAccount,
                 new SuffificientFunds(debitAccount, amount, withdrawalLimit),
