@@ -4,15 +4,7 @@ import ar.com.flow.bankaccount.*;
 import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
 
-public class Withdrawal extends Transaction {
-    public Withdrawal(TransactionReason reason, BankAccount debitAccount, Money amount, WithdrawalLimit withdrawalLimit) {
-        super(debitAccount,
-                new SuffificientFunds(debitAccount, amount, withdrawalLimit),
-                new DoNothing(),
-                reason,
-                Balance.negative(amount));
-    }
-
+public class Withdrawal {
     public static WithdrawalBuilder from(BankAccount debitAccount) {
         return new WithdrawalBuilder(debitAccount);
     }
@@ -34,8 +26,12 @@ public class Withdrawal extends Transaction {
             return this;
         }
 
-        public Withdrawal amount(Money amountToWithdraw) {
-            return new Withdrawal(reason, debitAccount, amountToWithdraw, withdrawalLimit);
+        public Transaction amount(Money amountToWithdraw) {
+            return new Transaction(debitAccount,
+                    new SuffificientFunds(debitAccount, amountToWithdraw, withdrawalLimit),
+                    new DoNothing(),
+                    reason,
+                    Balance.negative(amountToWithdraw));
         }
     }
 }

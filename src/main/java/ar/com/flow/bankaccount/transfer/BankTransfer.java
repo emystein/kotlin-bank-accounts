@@ -7,15 +7,7 @@ import ar.com.flow.bankaccount.TransactionReason;
 import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
 
-public class BankTransfer extends Transaction {
-    public BankTransfer(BankAccount debitAccount, BankAccount creditAccount, Money amount) {
-        super(creditAccount,
-                new DifferentAccounts(debitAccount, creditAccount),
-                new TransferFunds(debitAccount, creditAccount, amount),
-                TransactionReason.TransferCredit,
-                Balance.positive(amount));
-    }
-
+public class BankTransfer {
     public static BankTransferBuilder from(BankAccount debitAccount) {
         return new BankTransferBuilder(debitAccount);
     }
@@ -30,8 +22,12 @@ public class BankTransfer extends Transaction {
             return this;
         }
 
-        public BankTransfer amount(Money amountToTransfer) {
-            return new BankTransfer(debitAccount, creditAccount, amountToTransfer);
+        public Transaction amount(Money amountToTransfer) {
+            return new Transaction(creditAccount,
+                    new DifferentAccounts(debitAccount, creditAccount),
+                    new TransferFunds(debitAccount, creditAccount, amountToTransfer),
+                    TransactionReason.TransferCredit,
+                    Balance.positive(amountToTransfer));
         }
     }
 }
