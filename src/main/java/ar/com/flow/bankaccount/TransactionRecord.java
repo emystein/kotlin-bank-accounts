@@ -10,10 +10,12 @@ import java.time.LocalDateTime;
 @Getter
 public class TransactionRecord {
     private final LocalDateTime dateTime;
+    private final TransactionReason reason;
     private final Balance balance;
 
-    public TransactionRecord(LocalDateTime dateTime, Money amount) {
+    public TransactionRecord(LocalDateTime dateTime, TransactionReason reason, Money amount) {
         this.dateTime = dateTime;
+        this.reason = reason;
         this.balance = Balance.create(amount);
     }
 }

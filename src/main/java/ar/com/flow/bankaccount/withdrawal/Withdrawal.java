@@ -1,22 +1,26 @@
 package ar.com.flow.bankaccount.withdrawal;
 
-import ar.com.flow.bankaccount.Balance;
-import ar.com.flow.bankaccount.BankAccount;
-import ar.com.flow.bankaccount.Transaction;
-import ar.com.flow.bankaccount.TransactionRecord;
+import ar.com.flow.bankaccount.*;
 import ar.com.flow.money.InsufficientFundsException;
 import ar.com.flow.money.Money;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import static java.time.LocalDateTime.now;
-
-@RequiredArgsConstructor
 @Getter
-public class Withdrawal implements Transaction {
+public class Withdrawal extends BaseTransaction {
+    private final TransactionReason reason;
     private final BankAccount debitAccount;
     private final Money amount;
     private final WithdrawalLimit withdrawalLimit;
+
+    public Withdrawal(TransactionReason reason, BankAccount debitAccount, Money amount, WithdrawalLimit withdrawalLimit) {
+        super(new SuffificientFunds(debitAccount, amount, withdrawalLimit));
+
+        this.reason = reason;
+        this.debitAccount = debitAccount;
+        this.amount = amount;
+        this.withdrawalLimit = withdrawalLimit;
+    }
 
     public static WithdrawalBuilder from(BankAccount debitAccount) {
         return new WithdrawalBuilder(debitAccount);
@@ -24,6 +28,7 @@ public class Withdrawal implements Transaction {
 
     @RequiredArgsConstructor
     public static class WithdrawalBuilder {
+        private TransactionReason reason = TransactionReason.Withdrawal;
         private final BankAccount debitAccount;
         private WithdrawalLimit withdrawalLimit = new CurrentFundsLimit();
 
@@ -33,8 +38,13 @@ public class Withdrawal implements Transaction {
             return this;
         }
 
+        public WithdrawalBuilder reason(TransactionReason aReason) {
+            reason = aReason;
+            return this;
+        }
+
         public Withdrawal amount(Money amountToWithdraw) {
-            return new Withdrawal(debitAccount, amountToWithdraw, withdrawalLimit);
+            return new Withdrawal(reason, debitAccount, amountToWithdraw, withdrawalLimit);
         }
     }
 
@@ -42,16 +52,16 @@ public class Withdrawal implements Transaction {
         return debitAccount.getBalance().minus(amount);
     }
 
+    public BankAccount account() {
+        return debitAccount;
+    }
+
     @Override
-    public TransactionRecord execute() {
-        if (!withdrawalLimit.accepts(this)) {
-            throw new InsufficientFundsException();
-        }
+    public void executeSpecific() {
+        // empty
+    }
 
-        var transactionRecord = new TransactionRecord(now(), Balance.negative(amount));
-
-        debitAccount.addTransactionRecord(transactionRecord);
-
-        return transactionRecord;
+    public TransactionRecord transactionRecord() {
+        return transactionRecord(reason, Balance.negative(amount));
     }
 }

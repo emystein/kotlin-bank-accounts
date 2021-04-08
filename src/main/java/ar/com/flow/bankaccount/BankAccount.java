@@ -1,5 +1,6 @@
 package ar.com.flow.bankaccount;
 
+import ar.com.flow.bankaccount.withdrawal.WithdrawalLimit;
 import ar.com.flow.money.Money;
 
 public interface BankAccount {
@@ -13,6 +14,8 @@ public interface BankAccount {
     Balance getPreviousBalance();
 
     TransactionRecord deposit(Money amountToDeposit);
+
+    WithdrawalLimit getWithdrawalLimit();
 
     TransactionRecord withdraw(Money amountToWithdraw);
 

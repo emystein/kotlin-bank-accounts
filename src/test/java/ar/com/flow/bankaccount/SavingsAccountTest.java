@@ -92,6 +92,16 @@ public class SavingsAccountTest {
         franciscosAccount.transfer(mabelsAccount, dollars10);
 
         assertAmountMovedFromTo(franciscosAccount, mabelsAccount, dollars10);
+
+        var maybeDebitRecordFound = franciscosAccount.getTransactionHistory().stream()
+                .filter(r -> r.getReason().equals(TransactionReason.TransferDebit))
+                .findFirst();
+        assertTrue(maybeDebitRecordFound.isPresent());
+
+        var maybeCreditRecordFound = mabelsAccount.getTransactionHistory().stream()
+                .filter(r -> r.getReason().equals(TransactionReason.TransferCredit))
+                .findFirst();
+        assertTrue(maybeCreditRecordFound.isPresent());
     }
 
     @Test
@@ -99,13 +109,6 @@ public class SavingsAccountTest {
         var transactionRecord = franciscosAccount.transfer(mabelsAccount, dollars10);
 
         assertEquals(Balance.positive(dollars10), transactionRecord.getBalance());
-    }
-
-    @Test
-    void givenADebitAndCreditAccountsWhenTransfer10USDThenTheTransactionHistoryShouldContainTheTransactionRecord() {
-        var transactionRecord = franciscosAccount.transfer(mabelsAccount, dollars10);
-
-        assertTrue(mabelsAccount.getTransactionHistory().contains(transactionRecord));
     }
 
     @Test

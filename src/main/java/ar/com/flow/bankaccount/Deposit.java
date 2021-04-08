@@ -4,13 +4,19 @@ import ar.com.flow.money.Money;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import static java.time.LocalDateTime.now;
-
-@RequiredArgsConstructor
 @Getter
-public class Deposit implements Transaction {
+public class Deposit extends BaseTransaction {
+    private final TransactionReason reason;
     private final BankAccount creditAccount;
     private final Money amount;
+
+    public Deposit(TransactionReason reason, BankAccount creditAccount, Money amount) {
+        super(new NoPreconditions());
+
+        this.reason = reason;
+        this.creditAccount = creditAccount;
+        this.amount = amount;
+    }
 
     public static DepositBuilder to(BankAccount creditAccount) {
         return new DepositBuilder(creditAccount);
@@ -18,19 +24,32 @@ public class Deposit implements Transaction {
 
     @RequiredArgsConstructor
     public static class DepositBuilder {
+        private TransactionReason reason = TransactionReason.Deposit;
         private final BankAccount creditAccount;
 
+        public DepositBuilder reason(TransactionReason aReason) {
+            reason = aReason;
+            return this;
+        }
+
         public Deposit amount(Money amountToDeposit) {
-            return new Deposit(creditAccount, amountToDeposit);
+            return new Deposit(reason, creditAccount, amountToDeposit);
         }
     }
 
-    @Override
-    public TransactionRecord execute() {
-        var transactionRecord = new TransactionRecord(now(), amount);
+    public BankAccount account() {
+        return creditAccount;
+    }
 
-        creditAccount.addTransactionRecord(transactionRecord);
+    public void checkPreconditions() {
+        // empty
+    }
 
-        return transactionRecord;
+    public void executeSpecific() {
+        // empty
+    }
+
+    public TransactionRecord transactionRecord() {
+        return transactionRecord(reason, Balance.positive(amount));
     }
 }

@@ -11,10 +11,10 @@ import static java.time.LocalDateTime.now;
 public class TestObjects {
     public static LowerLimit minusDollars100Limit = new LowerLimit(Balance.negative(dollars100));
 
-    public static TransactionRecord dollars10Record = new TransactionRecord(now(), dollars10);
-    public static TransactionRecord dollars20Record = new TransactionRecord(now(), dollars20);
+    public static TransactionRecord dollars10Record = new TransactionRecord(now(), TransactionReason.Deposit, dollars10);
+    public static TransactionRecord dollars20Record = new TransactionRecord(now(), TransactionReason.Deposit, dollars20);
 
-    public static TransactionRecord minusDollars20Record = new TransactionRecord(now(), Balance.negative(dollars20));
+    public static TransactionRecord minusDollars20Record = new TransactionRecord(now(), TransactionReason.Withdrawal, Balance.negative(dollars20));
 
     public static BankAccount createSavingsAccountFor(Customer accountOwner, Money initialBalance) {
         var account = SavingsAccount.ownedBy(accountOwner).build();

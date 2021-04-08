@@ -1,18 +1,26 @@
 package ar.com.flow.bankaccount.transfer;
 
-import ar.com.flow.bankaccount.BankAccount;
-import ar.com.flow.bankaccount.Transaction;
-import ar.com.flow.bankaccount.TransactionRecord;
+import ar.com.flow.bankaccount.*;
+import ar.com.flow.bankaccount.withdrawal.Withdrawal;
 import ar.com.flow.money.Money;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
+import static java.time.LocalDateTime.now;
+
 @Getter
-public class BankTransfer implements Transaction {
+public class BankTransfer extends BaseTransaction {
     private final BankAccount debitAccount;
     private final BankAccount creditAccount;
     private final Money amount;
+
+    public BankTransfer(BankAccount debitAccount, BankAccount creditAccount, Money amount) {
+        super(new DifferentAccounts(debitAccount, creditAccount));
+
+        this.debitAccount = debitAccount;
+        this.creditAccount = creditAccount;
+        this.amount = amount;
+    }
 
     public static BankTransferBuilder from(BankAccount debitAccount) {
         return new BankTransferBuilder(debitAccount);
@@ -33,17 +41,24 @@ public class BankTransfer implements Transaction {
         }
     }
 
-    public TransactionRecord execute() {
-        assertAccountsAreDifferent();
-
-        debitAccount.withdraw(amount);
-
-        return creditAccount.deposit(amount);
+    public BankAccount account() {
+        return creditAccount;
     }
 
-    private void assertAccountsAreDifferent() {
-        if (debitAccount.equals(creditAccount)) {
-            throw new SameAccountTransferException();
-        }
+    public void executeSpecific() {
+        Withdrawal.from(debitAccount)
+                .reason(TransactionReason.TransferDebit)
+                .limit(debitAccount.getWithdrawalLimit())
+                .amount(amount)
+                .execute();
+
+        Deposit.to(creditAccount)
+                .reason(TransactionReason.TransferCredit)
+                .amount(amount)
+                .execute();
+    }
+
+    public TransactionRecord transactionRecord() {
+        return new TransactionRecord(now(), TransactionReason.TransferCredit, Balance.positive(amount));
     }
 }
