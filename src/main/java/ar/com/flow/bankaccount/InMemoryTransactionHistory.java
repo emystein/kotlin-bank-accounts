@@ -23,6 +23,10 @@ public class InMemoryTransactionHistory implements TransactionHistory {
         return history.stream().findFirst();
     }
 
+    public Optional<TransactionRecord> last() {
+        return history.stream().reduce((first, second) -> second);
+    }
+
     public void add(TransactionRecord record) {
         history.add(record);
     }
@@ -46,10 +50,6 @@ public class InMemoryTransactionHistory implements TransactionHistory {
 
     public Optional<Balance> sumBeforeLast() {
         return sum(total() - 1);
-    }
-
-    public Stream<TransactionRecord> stream() {
-        return history.stream();
     }
 
     private Optional<Balance> sum(int numberOfTransactions) {

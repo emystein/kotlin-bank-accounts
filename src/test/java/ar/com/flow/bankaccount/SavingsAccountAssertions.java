@@ -3,8 +3,10 @@ package ar.com.flow.bankaccount;
 import ar.com.flow.money.Money;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SavingsAccountAssertions {
     public static void assertAmountMovedFromTo(BankAccount debitAccount, BankAccount creditAccount, Money amountToTransfer) {
@@ -26,5 +28,11 @@ public class SavingsAccountAssertions {
 
     public static void assertAccountsKeepsInitialBalance(BankAccount... accounts) {
         Arrays.stream(accounts).forEach(SavingsAccountAssertions::assertAccountKeepsInitialBalance);
+    }
+
+    public static void assertTransactionRecord(Optional<TransactionRecord> record, TransactionReason expectedReason, Balance expectedBalance) {
+        assertTrue(record.isPresent());
+        assertEquals(expectedReason, record.get().getReason());
+        assertEquals(expectedBalance, record.get().getBalance());
     }
 }

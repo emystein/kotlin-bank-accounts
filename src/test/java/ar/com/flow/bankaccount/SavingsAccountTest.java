@@ -70,11 +70,9 @@ public class SavingsAccountTest {
     void givenAnAccountWhenWithdrawThenTransactionHistoryShouldContainTheTransactionRecord() {
         franciscosAccount.withdraw(dollars10);
 
-        var maybeDebitRecordFound = franciscosAccount.getTransactionHistory().stream()
-                .filter(r -> r.getReason().equals(TransactionReason.Withdrawal))
-                .findFirst();
+        var debitRecord = franciscosAccount.getTransactionHistory().last();
 
-        assertTrue(maybeDebitRecordFound.isPresent());
+        assertTransactionRecord(debitRecord, TransactionReason.Withdrawal, Balance.negative(dollars10));
     }
 
     @Test
@@ -83,15 +81,11 @@ public class SavingsAccountTest {
 
         assertAmountMovedFromTo(franciscosAccount, mabelsAccount, dollars10);
 
-        var maybeDebitRecordFound = franciscosAccount.getTransactionHistory().stream()
-                .filter(r -> r.getReason().equals(TransactionReason.TransferDebit))
-                .findFirst();
-        assertTrue(maybeDebitRecordFound.isPresent());
+        var debitRecord = franciscosAccount.getTransactionHistory().last();
+        assertTransactionRecord(debitRecord, TransactionReason.TransferDebit, Balance.negative(dollars10));
 
-        var maybeCreditRecordFound = mabelsAccount.getTransactionHistory().stream()
-                .filter(r -> r.getReason().equals(TransactionReason.TransferCredit))
-                .findFirst();
-        assertTrue(maybeCreditRecordFound.isPresent());
+        var creditRecord = mabelsAccount.getTransactionHistory().last();
+        assertTransactionRecord(creditRecord, TransactionReason.TransferCredit, Balance.positive(dollars10));
     }
 
     @Test

@@ -1,7 +1,6 @@
 package ar.com.flow.bankaccount;
 
 import java.util.Optional;
-import java.util.stream.Stream;
 
 public interface TransactionHistory {
     boolean isEmpty();
@@ -9,6 +8,8 @@ public interface TransactionHistory {
     int total();
 
     Optional<TransactionRecord> first();
+
+    Optional<TransactionRecord> last();
 
     void add(TransactionRecord record);
 
@@ -19,6 +20,4 @@ public interface TransactionHistory {
     Optional<Balance> sum();
 
     Optional<Balance> sumBeforeLast();
-
-    Stream<TransactionRecord> stream();
 }
