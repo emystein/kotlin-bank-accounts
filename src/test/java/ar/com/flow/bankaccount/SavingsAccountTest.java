@@ -53,13 +53,6 @@ public class SavingsAccountTest {
     }
 
     @Test
-    void givenAnAccountWhenDepositThenTransactionHistoryShouldContainTheTransactionRecord() {
-        var transactionRecord = franciscosAccount.deposit(dollars10);
-
-        assertTrue(franciscosAccount.getTransactionHistory().contains(transactionRecord));
-    }
-
-    @Test
     void givenAnAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
         franciscosAccount.withdraw(dollars10);
 
@@ -74,17 +67,14 @@ public class SavingsAccountTest {
     }
 
     @Test
-    void givenAWithdrawalWhenGetItsAmountThenTheAmountShouldBeNegative() {
-        TransactionRecord transactionRecord = franciscosAccount.withdraw(dollars10);
-
-        assertEquals(Balance.negative(dollars10), transactionRecord.getBalance());
-    }
-
-    @Test
     void givenAnAccountWhenWithdrawThenTransactionHistoryShouldContainTheTransactionRecord() {
-        var transactionRecord = franciscosAccount.withdraw(dollars10);
+        franciscosAccount.withdraw(dollars10);
 
-        assertTrue(franciscosAccount.getTransactionHistory().contains(transactionRecord));
+        var maybeDebitRecordFound = franciscosAccount.getTransactionHistory().stream()
+                .filter(r -> r.getReason().equals(TransactionReason.Withdrawal))
+                .findFirst();
+
+        assertTrue(maybeDebitRecordFound.isPresent());
     }
 
     @Test
@@ -102,13 +92,6 @@ public class SavingsAccountTest {
                 .filter(r -> r.getReason().equals(TransactionReason.TransferCredit))
                 .findFirst();
         assertTrue(maybeCreditRecordFound.isPresent());
-    }
-
-    @Test
-    void givenADebitAndCreditAccountsWhenTransfer10USDThenTheTransactionRecordShouldStoreTheCreditBalance() {
-        var transactionRecord = franciscosAccount.transfer(mabelsAccount, dollars10);
-
-        assertEquals(Balance.positive(dollars10), transactionRecord.getBalance());
     }
 
     @Test

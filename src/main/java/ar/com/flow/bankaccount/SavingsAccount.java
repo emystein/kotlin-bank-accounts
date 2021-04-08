@@ -63,21 +63,21 @@ public class SavingsAccount implements BankAccount {
         return balanceTimeline.previousSnapshot();
     }
 
-    public TransactionRecord deposit(Money amountToDeposit) {
-        return Deposit.to(this)
+    public void deposit(Money amountToDeposit) {
+        Deposit.to(this)
                 .amount(amountToDeposit)
                 .execute();
     }
 
-    public TransactionRecord withdraw(Money amountToWithdraw) {
-        return Withdrawal.from(this)
+    public void withdraw(Money amountToWithdraw) {
+        Withdrawal.from(this)
                 .limit(withdrawalLimit)
                 .amount(amountToWithdraw)
                 .execute();
     }
 
-    public TransactionRecord transfer(BankAccount creditAccount, Money amountToTransfer) {
-        return BankTransfer.from(this)
+    public void transfer(BankAccount creditAccount, Money amountToTransfer) {
+        BankTransfer.from(this)
                 .to(creditAccount)
                 .amount(amountToTransfer)
                 .execute();

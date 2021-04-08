@@ -13,13 +13,13 @@ public interface BankAccount {
 
     Balance getPreviousBalance();
 
-    TransactionRecord deposit(Money amountToDeposit);
+    void deposit(Money amountToDeposit);
 
     WithdrawalLimit getWithdrawalLimit();
 
-    TransactionRecord withdraw(Money amountToWithdraw);
+    void withdraw(Money amountToWithdraw);
 
-    TransactionRecord transfer(BankAccount creditAccount, Money amountToTransfer);
+    void transfer(BankAccount creditAccount, Money amountToTransfer);
 
     TransactionHistory getTransactionHistory();
 
