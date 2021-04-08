@@ -11,7 +11,7 @@ public class Deposit extends BaseTransaction {
     private final Money amount;
 
     public Deposit(TransactionReason reason, BankAccount creditAccount, Money amount) {
-        super(new NoPreconditions());
+        super(new NoPreconditions(), new DoNothing());
 
         this.reason = reason;
         this.creditAccount = creditAccount;
@@ -39,14 +39,6 @@ public class Deposit extends BaseTransaction {
 
     public BankAccount account() {
         return creditAccount;
-    }
-
-    public void checkPreconditions() {
-        // empty
-    }
-
-    public void executeSpecific() {
-        // empty
     }
 
     public TransactionRecord transactionRecord() {

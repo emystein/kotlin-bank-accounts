@@ -14,7 +14,7 @@ public class Withdrawal extends BaseTransaction {
     private final WithdrawalLimit withdrawalLimit;
 
     public Withdrawal(TransactionReason reason, BankAccount debitAccount, Money amount, WithdrawalLimit withdrawalLimit) {
-        super(new SuffificientFunds(debitAccount, amount, withdrawalLimit));
+        super(new SuffificientFunds(debitAccount, amount, withdrawalLimit), new DoNothing());
 
         this.reason = reason;
         this.debitAccount = debitAccount;
@@ -54,11 +54,6 @@ public class Withdrawal extends BaseTransaction {
 
     public BankAccount account() {
         return debitAccount;
-    }
-
-    @Override
-    public void executeSpecific() {
-        // empty
     }
 
     public TransactionRecord transactionRecord() {

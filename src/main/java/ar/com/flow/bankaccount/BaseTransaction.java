@@ -6,24 +6,23 @@ import static java.time.LocalDateTime.now;
 
 public abstract class BaseTransaction implements Transaction {
     private final Preconditions preconditions;
+    private final TransactionAlgorithm algorithm;
 
     public abstract BankAccount account();
 
     public abstract Money getAmount();
 
-    public abstract void executeSpecific();
-
     public abstract TransactionRecord transactionRecord();
 
-
-    public BaseTransaction(Preconditions preconditions) {
+    public BaseTransaction(Preconditions preconditions, TransactionAlgorithm algorithm) {
         this.preconditions = preconditions;
+        this.algorithm = algorithm;
     }
 
     public TransactionRecord execute() {
         preconditions.check();
 
-        executeSpecific();
+        algorithm.execute();
 
         return recordTransaction();
     }

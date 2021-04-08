@@ -15,7 +15,8 @@ public class BankTransfer extends BaseTransaction {
     private final Money amount;
 
     public BankTransfer(BankAccount debitAccount, BankAccount creditAccount, Money amount) {
-        super(new DifferentAccounts(debitAccount, creditAccount));
+        super(new DifferentAccounts(debitAccount, creditAccount),
+              new TransferFunds(debitAccount, creditAccount, amount));
 
         this.debitAccount = debitAccount;
         this.creditAccount = creditAccount;
@@ -43,19 +44,6 @@ public class BankTransfer extends BaseTransaction {
 
     public BankAccount account() {
         return creditAccount;
-    }
-
-    public void executeSpecific() {
-        Withdrawal.from(debitAccount)
-                .reason(TransactionReason.TransferDebit)
-                .limit(debitAccount.getWithdrawalLimit())
-                .amount(amount)
-                .execute();
-
-        Deposit.to(creditAccount)
-                .reason(TransactionReason.TransferCredit)
-                .amount(amount)
-                .execute();
     }
 
     public TransactionRecord transactionRecord() {
