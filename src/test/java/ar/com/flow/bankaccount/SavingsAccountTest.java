@@ -84,10 +84,10 @@ public class SavingsAccountTest {
         assertAmountMovedFromTo(franciscosAccount, mabelsAccount, dollars10);
 
         var debitRecord = franciscosAccount.getTransactionHistory().last();
-        assertTransactionRecord(debitRecord, TransactionReason.TransferDebit, Balance.negative(dollars10));
+        assertTransactionRecord(debitRecord, TransactionReason.Transfer, Balance.negative(dollars10));
 
         var creditRecord = mabelsAccount.getTransactionHistory().last();
-        assertTransactionRecord(creditRecord, TransactionReason.TransferCredit, Balance.positive(dollars10));
+        assertTransactionRecord(creditRecord, TransactionReason.Transfer, Balance.positive(dollars10));
     }
 
     @Test

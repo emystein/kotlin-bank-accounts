@@ -21,13 +21,13 @@ public class TransferFunds implements Algorithm {
     @Override
     public void execute() {
         Withdrawal.from(debitAccount)
-                .reason(TransactionReason.TransferDebit)
+                .reason(TransactionReason.Transfer)
                 .limit(debitAccount.getWithdrawalLimit())
                 .amount(amount)
                 .execute();
 
         Deposit.to(creditAccount)
-                .reason(TransactionReason.TransferCredit)
+                .reason(TransactionReason.Transfer)
                 .amount(amount)
                 .execute();
     }

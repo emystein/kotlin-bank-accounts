@@ -26,7 +26,7 @@ public class Transfer {
             return new Transaction(creditAccount,
                     new DifferentAccounts(debitAccount, creditAccount),
                     new TransferFunds(debitAccount, creditAccount, amountToTransfer),
-                    TransactionReason.TransferCredit,
+                    TransactionReason.Transfer,
                     Balance.positive(amountToTransfer));
         }
     }
