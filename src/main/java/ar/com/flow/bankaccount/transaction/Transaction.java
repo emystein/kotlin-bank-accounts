@@ -4,15 +4,11 @@ import ar.com.flow.bankaccount.BankAccount;
 import ar.com.flow.bankaccount.balance.Balance;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.RequiredArgsConstructor;
 
-import static java.time.LocalDateTime.now;
-
-@RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Transaction {
-    private final TransactionReason reason;
+    private final Action action;
     private final BankAccount account;
     private final Balance amount;
     @Builder.Default
@@ -25,6 +21,6 @@ public class Transaction {
 
         algorithm.execute();
 
-        account.addTransactionRecord(new TransactionRecord(now(), reason, amount));
+        account.addTransactionRecord(TransactionRecord.now(action, amount));
     }
 }

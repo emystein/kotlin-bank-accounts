@@ -14,10 +14,6 @@ import static java.util.stream.Collectors.toList;
 public class InMemoryTransactionHistory implements TransactionHistory {
     private List<TransactionRecord> history = new ArrayList<>();
 
-    public boolean isEmpty() {
-        return history.isEmpty();
-    }
-
     public int total() {
         return history.size();
     }
@@ -47,12 +43,16 @@ public class InMemoryTransactionHistory implements TransactionHistory {
                 .equals(indexedMovements);
     }
 
-    public Optional<Balance> sum() {
+    public Optional<Balance> getCurrentBalance() {
         return sum(total());
     }
 
-    public Optional<Balance> sumBeforeLast() {
+    public Optional<Balance> getPreviousBalance() {
         return sum(total() - 1);
+    }
+
+    public Optional<Balance> getInitialBalance() {
+        return first().map(TransactionRecord::getBalance);
     }
 
     private Optional<Balance> sum(int numberOfTransactions) {
@@ -62,6 +62,10 @@ public class InMemoryTransactionHistory implements TransactionHistory {
     }
 
     private Stream<TransactionRecord> entries(int numberOfEntries) {
-        return history.stream().limit(numberOfEntries);
+        if (!history.isEmpty()) {
+            return history.stream().limit(numberOfEntries);
+        } else {
+            return Stream.empty();
+        }
     }
 }

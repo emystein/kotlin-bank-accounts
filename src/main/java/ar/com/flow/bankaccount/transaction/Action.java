@@ -1,6 +1,6 @@
 package ar.com.flow.bankaccount.transaction;
 
-public enum TransactionReason {
+public enum Action {
     Withdrawal,
     Deposit,
     Transfer

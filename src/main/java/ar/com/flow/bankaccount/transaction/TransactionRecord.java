@@ -11,12 +11,14 @@ import java.time.LocalDateTime;
 @Getter
 public class TransactionRecord {
     private final LocalDateTime dateTime;
-    private final TransactionReason reason;
+    private final Action action;
     private final Balance balance;
 
-    public TransactionRecord(LocalDateTime dateTime, TransactionReason reason, Money amount) {
-        this.dateTime = dateTime;
-        this.reason = reason;
-        this.balance = Balance.create(amount);
+    public TransactionRecord(LocalDateTime dateTime, Action action, Money amount) {
+        this(dateTime, action, Balance.create(amount));
+    }
+
+    public static TransactionRecord now(Action action, Balance amount) {
+        return new TransactionRecord(LocalDateTime.now(), action, amount);
     }
 }

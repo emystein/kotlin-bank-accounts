@@ -1,7 +1,7 @@
 package ar.com.flow.bankaccount;
 
 import ar.com.flow.bankaccount.balance.Balance;
-import ar.com.flow.bankaccount.transaction.TransactionReason;
+import ar.com.flow.bankaccount.transaction.Action;
 import ar.com.flow.bankaccount.transaction.TransactionRecord;
 import ar.com.flow.money.Money;
 
@@ -33,9 +33,9 @@ public class SavingsAccountAssertions {
         Arrays.stream(accounts).forEach(SavingsAccountAssertions::assertAccountKeepsInitialBalance);
     }
 
-    public static void assertTransactionRecord(Optional<TransactionRecord> record, TransactionReason expectedReason, Balance expectedBalance) {
+    public static void assertTransactionRecord(Optional<TransactionRecord> record, Action expectedReason, Balance expectedBalance) {
         assertTrue(record.isPresent());
-        assertEquals(expectedReason, record.get().getReason());
+        assertEquals(expectedReason, record.get().getAction());
         assertEquals(expectedBalance, record.get().getBalance());
     }
 }

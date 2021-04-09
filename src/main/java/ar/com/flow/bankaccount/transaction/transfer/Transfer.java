@@ -3,7 +3,7 @@ package ar.com.flow.bankaccount.transaction.transfer;
 import ar.com.flow.bankaccount.BankAccount;
 import ar.com.flow.bankaccount.balance.Balance;
 import ar.com.flow.bankaccount.transaction.Transaction;
-import ar.com.flow.bankaccount.transaction.TransactionReason;
+import ar.com.flow.bankaccount.transaction.Action;
 import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +24,7 @@ public class Transfer {
 
         public Transaction amount(Money amountToTransfer) {
             return Transaction.builder()
-                    .reason(TransactionReason.Transfer)
+                    .action(Action.Transfer)
                     .account(creditAccount)
                     .amount(Balance.positive(amountToTransfer))
                     .preconditions(new DifferentAccounts(debitAccount, creditAccount))

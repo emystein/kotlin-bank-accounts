@@ -2,7 +2,7 @@ package ar.com.flow.bankaccount;
 
 import ar.com.flow.Customer;
 import ar.com.flow.bankaccount.balance.Balance;
-import ar.com.flow.bankaccount.transaction.TransactionReason;
+import ar.com.flow.bankaccount.transaction.Action;
 import ar.com.flow.bankaccount.transaction.TransactionRecord;
 import ar.com.flow.bankaccount.transaction.withdrawal.LowerLimit;
 import ar.com.flow.bankaccount.transaction.withdrawal.WithdrawalLimit;
@@ -14,13 +14,13 @@ import static java.time.LocalDateTime.now;
 public class TestObjects {
     public static LowerLimit minusDollars100Limit = new LowerLimit(Balance.negative(dollars100));
 
-    public static TransactionRecord dollars10Record = new TransactionRecord(now(), TransactionReason.Deposit, dollars10);
-    public static TransactionRecord dollars20Record = new TransactionRecord(now(), TransactionReason.Deposit, dollars20);
+    public static TransactionRecord dollars10Record = new TransactionRecord(now(), Action.Deposit, dollars10);
+    public static TransactionRecord dollars20Record = new TransactionRecord(now(), Action.Deposit, dollars20);
 
-    public static TransactionRecord minusDollars20Record = new TransactionRecord(now(), TransactionReason.Withdrawal, Balance.negative(dollars20));
+    public static TransactionRecord minusDollars20Record = new TransactionRecord(now(), Action.Withdrawal, Balance.negative(dollars20));
 
     public static BankAccount createSavingsAccountFor(Customer accountOwner, Money initialBalance) {
-        var account = SavingsAccount.ownedBy(accountOwner).build();
+        var account = SavingsAccount.builder().owner(accountOwner).currency("USD").build();
 
         account.deposit(initialBalance);
 
@@ -30,7 +30,9 @@ public class TestObjects {
     public static BankAccount createCheckingAccountFor(Customer accountOwner,
                                                        Money initialBalance,
                                                        WithdrawalLimit withdrawalLimit) {
-        var account = SavingsAccount.ownedBy(accountOwner)
+        var account = SavingsAccount.builder()
+                .owner(accountOwner)
+                .currency("USD")
                 .withdrawalLimit(withdrawalLimit)
                 .build();
 

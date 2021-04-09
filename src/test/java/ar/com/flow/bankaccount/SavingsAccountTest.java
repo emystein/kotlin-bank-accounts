@@ -2,7 +2,7 @@ package ar.com.flow.bankaccount;
 
 import ar.com.flow.Customer;
 import ar.com.flow.bankaccount.balance.Balance;
-import ar.com.flow.bankaccount.transaction.TransactionReason;
+import ar.com.flow.bankaccount.transaction.Action;
 import ar.com.flow.bankaccount.transaction.transfer.SameAccountException;
 import ar.com.flow.money.InsufficientFundsException;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +28,7 @@ public class SavingsAccountTest {
 
     @Test
     void givenAnInitialStateWhenCreateABankAccountThenItShouldHaveBasicInformationSet() {
-        var account = SavingsAccount.ownedBy(francisco).currency("ARS").build();
+        var account = SavingsAccount.builder().owner(francisco).currency("ARS").build();
 
         assertEquals(francisco, account.getOwner());
         assertEquals("ARS", account.getCurrency());
@@ -38,13 +38,6 @@ public class SavingsAccountTest {
     @Test
     void givenACustomerAndAnInitialAmountWhenCreateAnAccountThenTheAccountShouldHaveBalance() {
         assertAccountKeepsInitialBalance(franciscosAccount);
-    }
-
-    @Test
-    void givenAnAccountWith100USDBalanceWhenDeposit10USDThenPreviousBalanceShouldBeInitialBalance() {
-        franciscosAccount.deposit(dollars10);
-
-        assertEquals(Balance.create(dollars100), franciscosAccount.getPreviousBalance());
     }
 
     @Test
@@ -72,9 +65,9 @@ public class SavingsAccountTest {
     void givenAnAccountWhenWithdrawThenTransactionHistoryShouldContainTheTransactionRecord() {
         franciscosAccount.withdraw(dollars10);
 
-        var debitRecord = franciscosAccount.getTransactionHistory().last();
+        var record = franciscosAccount.getTransactionHistory().last();
 
-        assertTransactionRecord(debitRecord, TransactionReason.Withdrawal, Balance.negative(dollars10));
+        assertTransactionRecord(record, Action.Withdrawal, Balance.negative(dollars10));
     }
 
     @Test
@@ -84,10 +77,10 @@ public class SavingsAccountTest {
         assertAmountMovedFromTo(franciscosAccount, mabelsAccount, dollars10);
 
         var debitRecord = franciscosAccount.getTransactionHistory().last();
-        assertTransactionRecord(debitRecord, TransactionReason.Transfer, Balance.negative(dollars10));
+        assertTransactionRecord(debitRecord, Action.Transfer, Balance.negative(dollars10));
 
         var creditRecord = mabelsAccount.getTransactionHistory().last();
-        assertTransactionRecord(creditRecord, TransactionReason.Transfer, Balance.positive(dollars10));
+        assertTransactionRecord(creditRecord, Action.Transfer, Balance.positive(dollars10));
     }
 
     @Test

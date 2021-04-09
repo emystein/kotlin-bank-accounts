@@ -3,7 +3,7 @@ package ar.com.flow.bankaccount.transaction.transfer;
 import ar.com.flow.bankaccount.BankAccount;
 import ar.com.flow.bankaccount.Deposit;
 import ar.com.flow.bankaccount.transaction.Algorithm;
-import ar.com.flow.bankaccount.transaction.TransactionReason;
+import ar.com.flow.bankaccount.transaction.Action;
 import ar.com.flow.bankaccount.transaction.withdrawal.Withdrawal;
 import ar.com.flow.money.Money;
 
@@ -21,13 +21,13 @@ public class TransferFunds implements Algorithm {
     @Override
     public void execute() {
         Withdrawal.from(debitAccount)
-                .reason(TransactionReason.Transfer)
+                .reason(Action.Transfer)
                 .limit(debitAccount.getWithdrawalLimit())
                 .amount(amount)
                 .execute();
 
         Deposit.to(creditAccount)
-                .reason(TransactionReason.Transfer)
+                .reason(Action.Transfer)
                 .amount(amount)
                 .execute();
     }

@@ -6,8 +6,6 @@ import ar.com.flow.bankaccount.transaction.TransactionRecord;
 import java.util.Optional;
 
 public interface TransactionHistory {
-    boolean isEmpty();
-
     int total();
 
     Optional<TransactionRecord> first();
@@ -20,7 +18,9 @@ public interface TransactionHistory {
 
     boolean containsInOrder(TransactionRecord... records);
 
-    Optional<Balance> sum();
+    Optional<Balance> getCurrentBalance();
 
-    Optional<Balance> sumBeforeLast();
+    Optional<Balance> getPreviousBalance();
+
+    Optional<Balance> getInitialBalance();
 }

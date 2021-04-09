@@ -3,7 +3,7 @@ package ar.com.flow.bankaccount.transaction.withdrawal;
 import ar.com.flow.bankaccount.BankAccount;
 import ar.com.flow.bankaccount.balance.Balance;
 import ar.com.flow.bankaccount.transaction.Transaction;
-import ar.com.flow.bankaccount.transaction.TransactionReason;
+import ar.com.flow.bankaccount.transaction.Action;
 import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
 
@@ -14,7 +14,7 @@ public class Withdrawal {
 
     @RequiredArgsConstructor
     public static class WithdrawalBuilder {
-        private TransactionReason reason = TransactionReason.Withdrawal;
+        private Action reason = Action.Withdrawal;
         private final BankAccount debitAccount;
         private WithdrawalLimit withdrawalLimit = new CurrentFundsLimit();
 
@@ -24,14 +24,14 @@ public class Withdrawal {
             return this;
         }
 
-        public WithdrawalBuilder reason(TransactionReason aReason) {
+        public WithdrawalBuilder reason(Action aReason) {
             reason = aReason;
             return this;
         }
 
         public Transaction amount(Money amountToWithdraw) {
             return Transaction.builder()
-                    .reason(reason)
+                    .action(reason)
                     .account(debitAccount)
                     .amount(Balance.negative(amountToWithdraw))
                     .preconditions(new SufficientFunds(debitAccount, amountToWithdraw, withdrawalLimit))

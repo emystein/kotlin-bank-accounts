@@ -27,7 +27,9 @@ public class TransactionHistoryTest {
 
     @Test
     void givenTransactionHistoryInitialStateWhenGetSumThenItShouldReturnEmpty() {
-        assertEquals(Optional.empty(), history.sum());
+        assertEquals(Optional.empty(), history.getInitialBalance());
+        assertEquals(Optional.empty(), history.getCurrentBalance());
+        assertEquals(Optional.empty(), history.getPreviousBalance());
     }
 
     @Test
@@ -50,7 +52,9 @@ public class TransactionHistoryTest {
         history.add(dollars10Record);
         history.add(dollars20Record);
 
-        assertEquals(Optional.of(Balance.positive(Dollars.amount(30))), history.sum());
+        assertEquals(Optional.of(Balance.positive(Dollars.amount(10))), history.getInitialBalance());
+        assertEquals(Optional.of(Balance.positive(Dollars.amount(30))), history.getCurrentBalance());
+        assertEquals(Optional.of(Balance.positive(Dollars.amount(10))), history.getPreviousBalance());
     }
 
     @Test
@@ -58,6 +62,6 @@ public class TransactionHistoryTest {
         history.add(dollars10Record);
         history.add(minusDollars20Record);
 
-        assertEquals(Optional.of(Balance.negative(dollars10)), history.sum());
+        assertEquals(Optional.of(Balance.negative(dollars10)), history.getCurrentBalance());
     }
 }
