@@ -2,6 +2,7 @@ package ar.com.flow.bankaccount;
 
 import ar.com.flow.Customer;
 import ar.com.flow.bankaccount.balance.Balance;
+import ar.com.flow.bankaccount.transaction.Deposit;
 import ar.com.flow.bankaccount.transaction.TransactionRecord;
 import ar.com.flow.bankaccount.transaction.transfer.Transfer;
 import ar.com.flow.bankaccount.transaction.withdrawal.CurrentFundsLimit;
@@ -46,6 +47,7 @@ public class SavingsAccount implements BankAccount {
         Withdrawal.from(this)
                 .limit(withdrawalLimit)
                 .amount(amountToWithdraw)
+                .build()
                 .execute();
     }
 

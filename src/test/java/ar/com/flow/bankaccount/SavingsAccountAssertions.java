@@ -36,6 +36,6 @@ public class SavingsAccountAssertions {
     public static void assertTransactionRecord(Optional<TransactionRecord> record, Action expectedReason, Balance expectedBalance) {
         assertTrue(record.isPresent());
         assertEquals(expectedReason, record.get().getAction());
-        assertEquals(expectedBalance, record.get().getBalance());
+        assertEquals(expectedBalance, record.get().getAmount());
     }
 }

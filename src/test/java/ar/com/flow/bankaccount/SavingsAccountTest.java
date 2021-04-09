@@ -10,8 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import static ar.com.flow.bankaccount.SavingsAccountAssertions.*;
 import static ar.com.flow.money.TestObjects.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SavingsAccountTest {
     private Customer francisco;
@@ -78,6 +77,8 @@ public class SavingsAccountTest {
 
         var debitRecord = franciscosAccount.getStatement().last();
         assertTransactionRecord(debitRecord, Action.Transfer, Balance.negative(dollars10));
+        assertTrue(debitRecord.get().getCreditAccount().isPresent());
+        assertEquals(mabelsAccount, debitRecord.get().getCreditAccount().get());
 
         var creditRecord = mabelsAccount.getStatement().last();
         assertTransactionRecord(creditRecord, Action.Transfer, Balance.positive(dollars10));

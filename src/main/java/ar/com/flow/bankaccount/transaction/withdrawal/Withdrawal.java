@@ -1,11 +1,14 @@
 package ar.com.flow.bankaccount.transaction.withdrawal;
 
 import ar.com.flow.bankaccount.BankAccount;
-import ar.com.flow.bankaccount.balance.Balance;
-import ar.com.flow.bankaccount.transaction.Transaction;
+import ar.com.flow.bankaccount.transaction.ConcreteRecorder;
+import ar.com.flow.bankaccount.transaction.Recorder;
+import ar.com.flow.bankaccount.transaction.SingleAccountTransaction;
 import ar.com.flow.bankaccount.transaction.Action;
 import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Optional;
 
 public class Withdrawal {
     public static WithdrawalBuilder from(BankAccount debitAccount) {
@@ -14,9 +17,11 @@ public class Withdrawal {
 
     @RequiredArgsConstructor
     public static class WithdrawalBuilder {
-        private Action reason = Action.Withdrawal;
         private final BankAccount debitAccount;
+        private Optional<BankAccount> creditAccount = Optional.empty();
         private WithdrawalLimit withdrawalLimit = new CurrentFundsLimit();
+        private Recorder recorder = new ConcreteRecorder();
+        private Money amountToWithdraw;
 
         public WithdrawalBuilder limit(WithdrawalLimit aWithdrawalLimit) {
             withdrawalLimit = aWithdrawalLimit;
@@ -24,17 +29,24 @@ public class Withdrawal {
             return this;
         }
 
-        public WithdrawalBuilder reason(Action aReason) {
-            reason = aReason;
+        public WithdrawalBuilder recorder(Recorder recorder) {
+            this.recorder = recorder;
             return this;
         }
 
-        public Transaction amount(Money amountToWithdraw) {
-            return Transaction.builder()
-                    .action(reason)
+        public WithdrawalBuilder amount(Money amountToWithdraw) {
+            this.amountToWithdraw = amountToWithdraw;
+            return this;
+        }
+
+        public SingleAccountTransaction build() {
+            return SingleAccountTransaction.builder()
+                    .action(Action.Withdrawal)
                     .account(debitAccount)
-                    .amount(Balance.negative(amountToWithdraw))
+                    .amount(amountToWithdraw)
+                    .algorithm(new WithdrawalAlgorithm())
                     .preconditions(new SufficientFunds(debitAccount, amountToWithdraw, withdrawalLimit))
+                    .recorder(recorder)
                     .build();
         }
     }

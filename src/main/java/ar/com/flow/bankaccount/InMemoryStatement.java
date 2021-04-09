@@ -52,12 +52,12 @@ public class InMemoryStatement implements Statement {
     }
 
     public Optional<Balance> getInitialBalance() {
-        return first().map(TransactionRecord::getBalance);
+        return first().map(TransactionRecord::getAmount);
     }
 
     private Optional<Balance> sum(int numberOfTransactions) {
         return entries(numberOfTransactions)
-                .map(TransactionRecord::getBalance)
+                .map(TransactionRecord::getAmount)
                 .reduce(Balance::plus);
     }
 
