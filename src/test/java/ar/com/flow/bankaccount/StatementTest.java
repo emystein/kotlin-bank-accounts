@@ -12,12 +12,12 @@ import static ar.com.flow.money.TestObjects.dollars10;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TransactionHistoryTest {
-    private TransactionHistory history;
+public class StatementTest {
+    private Statement history;
 
     @BeforeEach
     void setUp() {
-        history = new InMemoryTransactionHistory();
+        history = new InMemoryStatement();
     }
 
     @Test

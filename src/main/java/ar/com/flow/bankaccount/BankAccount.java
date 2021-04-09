@@ -22,7 +22,7 @@ public interface BankAccount {
 
     void transfer(BankAccount creditAccount, Money amountToTransfer);
 
-    TransactionHistory getTransactionHistory();
-
     void addTransactionRecord(TransactionRecord transactionRecord);
+
+    Statement getStatement();
 }

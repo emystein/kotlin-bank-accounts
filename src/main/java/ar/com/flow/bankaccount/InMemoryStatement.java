@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
-public class InMemoryTransactionHistory implements TransactionHistory {
+public class InMemoryStatement implements Statement {
     private List<TransactionRecord> history = new ArrayList<>();
 
     public int total() {

@@ -65,7 +65,7 @@ public class SavingsAccountTest {
     void givenAnAccountWhenWithdrawThenTransactionHistoryShouldContainTheTransactionRecord() {
         franciscosAccount.withdraw(dollars10);
 
-        var record = franciscosAccount.getTransactionHistory().last();
+        var record = franciscosAccount.getStatement().last();
 
         assertTransactionRecord(record, Action.Withdrawal, Balance.negative(dollars10));
     }
@@ -76,10 +76,10 @@ public class SavingsAccountTest {
 
         assertAmountMovedFromTo(franciscosAccount, mabelsAccount, dollars10);
 
-        var debitRecord = franciscosAccount.getTransactionHistory().last();
+        var debitRecord = franciscosAccount.getStatement().last();
         assertTransactionRecord(debitRecord, Action.Transfer, Balance.negative(dollars10));
 
-        var creditRecord = mabelsAccount.getTransactionHistory().last();
+        var creditRecord = mabelsAccount.getStatement().last();
         assertTransactionRecord(creditRecord, Action.Transfer, Balance.positive(dollars10));
     }
 

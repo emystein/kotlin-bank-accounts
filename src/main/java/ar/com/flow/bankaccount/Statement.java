@@ -5,7 +5,7 @@ import ar.com.flow.bankaccount.transaction.TransactionRecord;
 
 import java.util.Optional;
 
-public interface TransactionHistory {
+public interface Statement {
     int total();
 
     Optional<TransactionRecord> first();

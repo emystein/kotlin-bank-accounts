@@ -19,20 +19,20 @@ public class SavingsAccount implements BankAccount {
     @Builder.Default
     private WithdrawalLimit withdrawalLimit = new CurrentFundsLimit();
     @Builder.Default
-    private TransactionHistory transactionHistory = new InMemoryTransactionHistory();
+    private Statement statement = new InMemoryStatement();
 
     public Balance getInitialBalance() {
-        return transactionHistory.getInitialBalance()
+        return statement.getInitialBalance()
                 .orElse(Balance.zero(getCurrency()));
     }
 
     public Balance getBalance() {
-        return transactionHistory.getCurrentBalance()
+        return statement.getCurrentBalance()
                 .orElse(Balance.zero(getCurrency()));
     }
 
     public Balance getPreviousBalance() {
-        return transactionHistory.getPreviousBalance()
+        return statement.getPreviousBalance()
                 .orElse(Balance.zero(getCurrency()));
     }
 
@@ -57,6 +57,6 @@ public class SavingsAccount implements BankAccount {
     }
 
     public void addTransactionRecord(TransactionRecord transactionRecord) {
-        transactionHistory.add(transactionRecord);
+        statement.add(transactionRecord);
     }
 }
