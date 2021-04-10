@@ -1,8 +1,14 @@
 package ar.com.flow.bankaccount.transaction.transfer;
 
 import ar.com.flow.bankaccount.BankAccount;
+import ar.com.flow.bankaccount.transaction.Algorithm;
+import ar.com.flow.bankaccount.transaction.CompositeTransaction;
+import ar.com.flow.bankaccount.transaction.Transaction;
 import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class Transfer {
     public static BankTransferBuilder from(BankAccount debitAccount) {
@@ -19,12 +25,15 @@ public class Transfer {
             return this;
         }
 
-        public TransferTransaction amount(Money amountToTransfer) {
-            return TransferTransaction.builder()
-                    .debitAccount(debitAccount)
-                    .creditAccount(creditAccount)
-                    .amount(amountToTransfer)
+        public Transaction amount(Money amountToTransfer) {
+            Collection<Algorithm> steps = new ArrayList<>();
+            steps.add(new Debit(debitAccount, creditAccount));
+            steps.add(new Credit(creditAccount));
+
+            return CompositeTransaction.builder()
                     .preconditions(new DifferentAccounts(debitAccount, creditAccount))
+                    .steps(steps)
+                    .amount(amountToTransfer)
                     .build();
         }
     }

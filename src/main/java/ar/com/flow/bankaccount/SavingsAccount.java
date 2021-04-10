@@ -45,7 +45,6 @@ public class SavingsAccount implements BankAccount {
 
     public void withdraw(Money amountToWithdraw) {
         Withdrawal.from(this)
-                .limit(withdrawalLimit)
                 .amount(amountToWithdraw)
                 .build()
                 .execute();

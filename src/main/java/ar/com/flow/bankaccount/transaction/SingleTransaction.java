@@ -7,7 +7,7 @@ import lombok.Builder;
 
 @AllArgsConstructor
 @Builder
-public class SingleAccountTransaction implements Transaction {
+public class SingleTransaction implements Transaction {
     private final Action action;
     private final BankAccount account;
     private final Money amount;
@@ -15,13 +15,13 @@ public class SingleAccountTransaction implements Transaction {
     @Builder.Default
     private Preconditions preconditions = new NoPreconditions();
     @Builder.Default
-    private Recorder recorder = new ConcreteRecorder();
+    private TransactionLog transactionLog = new OnTransactionLog();
 
     public void execute() {
         preconditions.check();
 
         var record = algorithm.execute(amount);
 
-        recorder.add(record, account);
+        transactionLog.add(record, account);
     }
 }

@@ -10,10 +10,10 @@ public class SufficientFunds implements Preconditions {
     private final Money amount;
     private final WithdrawalLimit withdrawalLimit;
 
-    public SufficientFunds(BankAccount account, Money amount, WithdrawalLimit withdrawalLimit) {
+    public SufficientFunds(BankAccount account, Money amount) {
         this.account = account;
         this.amount = amount;
-        this.withdrawalLimit = withdrawalLimit;
+        this.withdrawalLimit = account.getWithdrawalLimit();
     }
 
     public void check() {
