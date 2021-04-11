@@ -10,10 +10,11 @@ import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @Getter
-public class DepositAlgorithm implements Algorithm {
+public class Credit implements Algorithm {
     private final BankAccount account;
+    private final Action action;
 
     public TransactionRecord execute(Money amount) {
-        return new TransactionRecord(LocalDateTime.now(), Action.Deposit, Balance.positive(amount));
+        return new TransactionRecord(LocalDateTime.now(), action, Balance.positive(amount));
     }
 }

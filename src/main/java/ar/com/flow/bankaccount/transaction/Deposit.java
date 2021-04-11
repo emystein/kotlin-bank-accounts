@@ -4,6 +4,8 @@ import ar.com.flow.bankaccount.BankAccount;
 import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
+
 public class Deposit {
     public static DepositBuilder to(BankAccount creditAccount) {
         return new DepositBuilder(creditAccount);
@@ -14,11 +16,12 @@ public class Deposit {
         private final BankAccount creditAccount;
 
         public Transaction amount(Money amountToDeposit) {
-            return SingleTransaction.builder()
-                    .account(creditAccount)
+            var steps = new ArrayList<Step>();
+            steps.add(new Step(new Credit(creditAccount, Action.Deposit), creditAccount));
+
+            return Transaction.builder()
                     .amount(amountToDeposit)
-                    .algorithm(new DepositAlgorithm(creditAccount))
-                    .transactionLog(new OnTransactionLog(creditAccount))
+                    .steps(steps)
                     .build();
         }
     }

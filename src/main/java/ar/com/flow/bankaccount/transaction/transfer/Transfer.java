@@ -2,6 +2,7 @@ package ar.com.flow.bankaccount.transaction.transfer;
 
 import ar.com.flow.bankaccount.BankAccount;
 import ar.com.flow.bankaccount.transaction.*;
+import ar.com.flow.bankaccount.transaction.withdrawal.SufficientFunds;
 import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
 
@@ -24,12 +25,16 @@ public class Transfer {
         }
 
         public Transaction amount(Money amountToTransfer) {
-            Collection<Step> steps = new ArrayList<>();
-            steps.add(new Step(new Debit(debitAccount, creditAccount), new OnTransactionLog(debitAccount)));
-            steps.add(new Step(new Credit(creditAccount), new OnTransactionLog(creditAccount)));
+            var preconditions = new CompositePreconditions();
+            preconditions.add(new SufficientFunds(debitAccount, amountToTransfer));
+            preconditions.add(new DifferentAccounts(debitAccount, creditAccount));
 
-            return CompositeTransaction.builder()
-                    .preconditions(new DifferentAccounts(debitAccount, creditAccount))
+            Collection<Step> steps = new ArrayList<>();
+            steps.add(new Step(new Debit(debitAccount, creditAccount), debitAccount));
+            steps.add(new Step(new Credit(creditAccount, Action.Transfer), creditAccount));
+
+            return Transaction.builder()
+                    .preconditions(preconditions)
                     .steps(steps)
                     .amount(amountToTransfer)
                     .build();
