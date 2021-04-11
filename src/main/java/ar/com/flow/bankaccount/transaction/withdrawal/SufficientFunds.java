@@ -1,11 +1,11 @@
 package ar.com.flow.bankaccount.transaction.withdrawal;
 
 import ar.com.flow.bankaccount.BankAccount;
-import ar.com.flow.bankaccount.transaction.Preconditions;
+import ar.com.flow.bankaccount.transaction.Precondition;
 import ar.com.flow.money.InsufficientFundsException;
 import ar.com.flow.money.Money;
 
-public class SufficientFunds implements Preconditions {
+public class SufficientFunds implements Precondition {
     private final BankAccount account;
     private final Money amount;
     private final WithdrawalLimit withdrawalLimit;

@@ -18,11 +18,11 @@ public class Transaction {
     }
 
     public static class TransactionBuilder {
-        private List<Preconditions> preconditions = new ArrayList<>();
+        private Collection<Precondition> preconditions = new ArrayList<>();
         private List<Step> steps = new ArrayList<>();
         private Money amount;
 
-        public TransactionBuilder precondition(Preconditions precondition) {
+        public TransactionBuilder precondition(Precondition precondition) {
             preconditions.add(precondition);
             return this;
         }
@@ -38,7 +38,7 @@ public class Transaction {
         }
 
         public Transaction build() {
-            return new Transaction(new CompositePreconditions(preconditions), steps, amount);
+            return new Transaction(new Preconditions(preconditions), steps, amount);
         }
     }
 

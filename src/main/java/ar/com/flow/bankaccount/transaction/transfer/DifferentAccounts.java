@@ -1,9 +1,9 @@
 package ar.com.flow.bankaccount.transaction.transfer;
 
 import ar.com.flow.bankaccount.BankAccount;
-import ar.com.flow.bankaccount.transaction.Preconditions;
+import ar.com.flow.bankaccount.transaction.Precondition;
 
-public class DifferentAccounts implements Preconditions {
+public class DifferentAccounts implements Precondition {
     private final BankAccount debitAccount;
     private final BankAccount creditAccount;
 
