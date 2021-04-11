@@ -8,8 +8,6 @@ import ar.com.flow.bankaccount.transaction.Transaction;
 import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
-
 public class Withdrawal {
     public static WithdrawalBuilder from(BankAccount debitAccount) {
         return new WithdrawalBuilder(debitAccount);
@@ -26,13 +24,10 @@ public class Withdrawal {
         }
 
         public Transaction build() {
-            var steps = new ArrayList<Step>();
-            steps.add(new Step(new Debit(debitAccount, Action.Withdrawal), debitAccount));
-
             return Transaction.builder()
                     .amount(amountToWithdraw)
-                    .preconditions(new SufficientFunds(debitAccount, amountToWithdraw))
-                    .steps(steps)
+                    .precondition(new SufficientFunds(debitAccount, amountToWithdraw))
+                    .step(new Step(new Debit(debitAccount, Action.Withdrawal), debitAccount))
                     .build();
         }
     }

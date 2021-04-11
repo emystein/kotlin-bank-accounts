@@ -1,14 +1,12 @@
 package ar.com.flow.bankaccount.transaction;
 
-import java.util.ArrayList;
+import lombok.RequiredArgsConstructor;
+
 import java.util.Collection;
 
+@RequiredArgsConstructor
 public class CompositePreconditions implements Preconditions {
-    private final Collection<Preconditions> preconditions = new ArrayList<>();
-
-    public void add(Preconditions preconditions) {
-        this.preconditions.add(preconditions);
-    }
+    private final Collection<Preconditions> preconditions;
 
     public void check() {
         for (Preconditions precondition : preconditions) {
