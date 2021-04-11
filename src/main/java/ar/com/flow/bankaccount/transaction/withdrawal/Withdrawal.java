@@ -6,17 +6,19 @@ import ar.com.flow.bankaccount.transaction.Debit;
 import ar.com.flow.bankaccount.transaction.Step;
 import ar.com.flow.bankaccount.transaction.Transaction;
 import ar.com.flow.money.Money;
-import lombok.RequiredArgsConstructor;
 
 public class Withdrawal {
     public static WithdrawalBuilder from(BankAccount debitAccount) {
         return new WithdrawalBuilder(debitAccount);
     }
 
-    @RequiredArgsConstructor
     public static class WithdrawalBuilder {
         private final BankAccount debitAccount;
         private Money amountToWithdraw;
+
+        public WithdrawalBuilder(BankAccount debitAccount) {
+            this.debitAccount = debitAccount;
+        }
 
         public WithdrawalBuilder amount(Money amountToWithdraw) {
             this.amountToWithdraw = amountToWithdraw;
