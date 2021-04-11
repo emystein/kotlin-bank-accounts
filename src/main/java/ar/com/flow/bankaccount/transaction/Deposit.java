@@ -13,11 +13,12 @@ public class Deposit {
     public static class DepositBuilder {
         private final BankAccount creditAccount;
 
-        public SingleTransaction amount(Money amountToDeposit) {
+        public Transaction amount(Money amountToDeposit) {
             return SingleTransaction.builder()
                     .account(creditAccount)
                     .amount(amountToDeposit)
                     .algorithm(new DepositAlgorithm(creditAccount))
+                    .transactionLog(new OnTransactionLog(creditAccount))
                     .build();
         }
     }

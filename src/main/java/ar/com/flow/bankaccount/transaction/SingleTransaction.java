@@ -14,14 +14,13 @@ public class SingleTransaction implements Transaction {
     private final Algorithm algorithm;
     @Builder.Default
     private Preconditions preconditions = new NoPreconditions();
-    @Builder.Default
-    private TransactionLog transactionLog = new OnTransactionLog();
+    private final TransactionLog transactionLog;
 
     public void execute() {
         preconditions.check();
 
         var record = algorithm.execute(amount);
 
-        transactionLog.add(record, account);
+        transactionLog.add(record);
     }
 }

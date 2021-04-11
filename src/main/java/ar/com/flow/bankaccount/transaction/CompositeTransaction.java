@@ -11,15 +11,15 @@ import java.util.Collection;
 public class CompositeTransaction implements Transaction {
     @Builder.Default
     private Preconditions preconditions = new NoPreconditions();
-    private final Collection<Algorithm> steps;
+    private final Collection<Step> steps;
     private final Money amount;
 
     public void execute() {
         preconditions.check();
 
-        for (Algorithm step : steps) {
+        for (Step step : steps) {
             var record = step.execute(amount);
-            step.getAccount().addTransactionRecord(record);
+            step.log(record);
         }
     }
 }

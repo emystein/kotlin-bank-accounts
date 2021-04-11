@@ -16,14 +16,14 @@ public class Withdrawal {
     public static class WithdrawalBuilder {
         private final BankAccount debitAccount;
         private Money amountToWithdraw;
-        private TransactionLog transactionLog = new OnTransactionLog();
+        private TransactionLog transactionLog;
 
         public WithdrawalBuilder amount(Money amountToWithdraw) {
             this.amountToWithdraw = amountToWithdraw;
             return this;
         }
 
-        public WithdrawalBuilder recorder(TransactionLog transactionLog) {
+        public WithdrawalBuilder transactionLog(TransactionLog transactionLog) {
             this.transactionLog = transactionLog;
             return this;
         }
@@ -34,7 +34,7 @@ public class Withdrawal {
                     .amount(amountToWithdraw)
                     .algorithm(new WithdrawalAlgorithm(debitAccount))
                     .preconditions(new SufficientFunds(debitAccount, amountToWithdraw))
-                    .transactionLog(transactionLog)
+                    .transactionLog(new OnTransactionLog(debitAccount))
                     .build();
         }
     }

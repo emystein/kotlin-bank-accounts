@@ -21,7 +21,7 @@ public class Debit implements Algorithm {
     public TransactionRecord execute(Money amount) {
         Withdrawal.from(account)
                 .amount(amount)
-                .recorder(new OffTransactionLog())
+                .transactionLog(new OffTransactionLog())
                 .build()
                 .execute();
 
