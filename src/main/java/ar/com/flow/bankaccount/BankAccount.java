@@ -16,8 +16,6 @@ public interface BankAccount {
 
     void deposit(Money amountToDeposit);
 
-    WithdrawalLimit getWithdrawalLimit();
-
     void withdraw(Money amountToWithdraw);
 
     void transfer(BankAccount creditAccount, Money amountToTransfer);
@@ -25,4 +23,6 @@ public interface BankAccount {
     void addTransactionRecord(TransactionRecord transactionRecord);
 
     Statement getStatement();
+
+    boolean withdrawalLimitSupports(Money amount);
 }

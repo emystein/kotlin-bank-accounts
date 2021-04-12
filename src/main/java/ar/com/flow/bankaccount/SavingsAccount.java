@@ -37,6 +37,10 @@ public class SavingsAccount implements BankAccount {
                 .orElse(Balance.zero(getCurrency()));
     }
 
+    public boolean withdrawalLimitSupports(Money amount) {
+        return withdrawalLimit.accepts(this, amount);
+    }
+
     public void deposit(Money amountToDeposit) {
         Deposit.to(this)
                 .amount(amountToDeposit)
@@ -46,7 +50,6 @@ public class SavingsAccount implements BankAccount {
     public void withdraw(Money amountToWithdraw) {
         Withdrawal.from(this)
                 .amount(amountToWithdraw)
-                .build()
                 .execute();
     }
 

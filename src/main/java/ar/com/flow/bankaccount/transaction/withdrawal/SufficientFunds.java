@@ -4,20 +4,15 @@ import ar.com.flow.bankaccount.BankAccount;
 import ar.com.flow.bankaccount.transaction.Precondition;
 import ar.com.flow.money.InsufficientFundsException;
 import ar.com.flow.money.Money;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class SufficientFunds implements Precondition {
     private final BankAccount account;
     private final Money amount;
-    private final WithdrawalLimit withdrawalLimit;
-
-    public SufficientFunds(BankAccount account, Money amount) {
-        this.account = account;
-        this.amount = amount;
-        this.withdrawalLimit = account.getWithdrawalLimit();
-    }
 
     public void check() {
-        if (!withdrawalLimit.accepts(account, amount)) {
+        if (!account.withdrawalLimitSupports(amount)) {
             throw new InsufficientFundsException();
         }
     }

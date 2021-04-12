@@ -14,18 +14,12 @@ public class Withdrawal {
 
     public static class WithdrawalBuilder {
         private final BankAccount debitAccount;
-        private Money amountToWithdraw;
 
         public WithdrawalBuilder(BankAccount debitAccount) {
             this.debitAccount = debitAccount;
         }
 
-        public WithdrawalBuilder amount(Money amountToWithdraw) {
-            this.amountToWithdraw = amountToWithdraw;
-            return this;
-        }
-
-        public Transaction build() {
+        public Transaction amount(Money amountToWithdraw) {
             return Transaction.builder()
                     .amount(amountToWithdraw)
                     .precondition(new SufficientFunds(debitAccount, amountToWithdraw))

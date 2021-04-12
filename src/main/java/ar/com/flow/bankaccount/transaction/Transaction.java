@@ -3,9 +3,7 @@ package ar.com.flow.bankaccount.transaction;
 import ar.com.flow.money.Money;
 import lombok.AllArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @AllArgsConstructor
 public class Transaction {
@@ -15,31 +13,6 @@ public class Transaction {
 
     public static TransactionBuilder builder() {
         return new TransactionBuilder();
-    }
-
-    public static class TransactionBuilder {
-        private Collection<Precondition> preconditions = new ArrayList<>();
-        private List<Step> steps = new ArrayList<>();
-        private Money amount;
-
-        public TransactionBuilder precondition(Precondition precondition) {
-            preconditions.add(precondition);
-            return this;
-        }
-
-        public TransactionBuilder step(Step step) {
-            steps.add(step);
-            return this;
-        }
-
-        public TransactionBuilder amount(Money amount) {
-            this.amount = amount;
-            return this;
-        }
-
-        public Transaction build() {
-            return new Transaction(new Preconditions(preconditions), steps, amount);
-        }
     }
 
     public void execute() {
