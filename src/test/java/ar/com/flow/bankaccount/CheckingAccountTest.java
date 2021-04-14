@@ -32,7 +32,7 @@ public class CheckingAccountTest {
     void givenACheckingAccountWith100USDBalanceWhenWithdraw110USDThenBalanceShouldBeMinus10USD() {
         franciscosAccount.withdraw(dollars110);
 
-        assertEquals(Balance.negative(dollars10), franciscosAccount.getBalance());
+        assertThat(franciscosAccount).hasNegativeBalance(dollars10);
     }
 
     @Test

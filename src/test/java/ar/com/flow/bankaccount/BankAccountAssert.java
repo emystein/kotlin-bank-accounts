@@ -1,5 +1,6 @@
 package ar.com.flow.bankaccount;
 
+import ar.com.flow.bankaccount.balance.Balance;
 import ar.com.flow.money.Money;
 import org.assertj.core.api.AbstractAssert;
 
@@ -30,6 +31,12 @@ public class BankAccountAssert extends AbstractAssert<BankAccountAssert, BankAcc
 
     public BankAccountAssert decreasedFunds(Money amount) {
         assertEquals(actual.getPreviousBalance().minus(amount), actual.getBalance());
+
+        return this;
+    }
+
+    public BankAccountAssert hasNegativeBalance(Money amount) {
+        assertEquals(Balance.negative(amount), actual.getBalance());
 
         return this;
     }
