@@ -1,6 +1,5 @@
 package ar.com.flow.bankaccount;
 
-import ar.com.flow.bankaccount.balance.Balance;
 import ar.com.flow.money.InsufficientFundsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import static ar.com.flow.bankaccount.BankAccountAssert.assertThat;
 import static ar.com.flow.bankaccount.TestObjects.*;
 import static ar.com.flow.money.TestObjects.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CheckingAccountTest {
@@ -22,29 +20,28 @@ public class CheckingAccountTest {
     }
 
     @Test
-    void givenACheckingAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
+    void withdrawalDecrementsFunds() {
         franciscosAccount.withdraw(dollars10);
 
         assertThat(franciscosAccount).decreasedFunds(dollars10);
     }
 
     @Test
-    void givenACheckingAccountWith100USDBalanceWhenWithdraw110USDThenBalanceShouldBeMinus10USD() {
+    void withdrawAmountGreaterThanPositiveBalanceAndAboveWithdrawalLimit() {
         franciscosAccount.withdraw(dollars110);
 
         assertThat(franciscosAccount).hasNegativeBalance(dollars10);
     }
 
     @Test
-    void givenAnAccountWith100USDBalanceWhenWithdraw300USDThenWithdrawalShouldBeRejected() {
+    void withdrawalAmountCanNotExceedWithdrawalLimit() {
         assertThrows(InsufficientFundsException.class, () -> franciscosAccount.withdraw(dollars300));
 
         assertThat(franciscosAccount).keepsInitialBalance();
     }
 
-
     @Test
-    void givenADebitWith100USDBalanceWhenTransfer10USDThenTheMoneyShouldBeTransferred() {
+    void transferAmountLessThanAvailableFunds() {
         franciscosAccount.transfer(mabelsAccount, dollars10);
 
         assertThat(franciscosAccount).decreasedFunds(dollars10);
@@ -52,7 +49,7 @@ public class CheckingAccountTest {
     }
 
     @Test
-    void givenADebitWith100USDBalanceAndWithdrawLimitMinus100USDWhenTransfer110USDThenTheMoneyShouldBeTransferred() {
+    void transferAmountGreaterThanPositiveBalanceAndAboveWithdrawalLimit() {
         franciscosAccount.transfer(mabelsAccount, dollars110);
 
         assertThat(franciscosAccount).decreasedFunds(dollars110);
@@ -60,7 +57,7 @@ public class CheckingAccountTest {
     }
 
     @Test
-    void givenADebitWith100USDBalanceAndWithdrawLimitMinus100USDWhenTransfer300USDThenTheMoneyShouldNotBeTransferred() {
+    void transferAmountCanNotExceedWithdrawalLimit() {
         assertThrows(InsufficientFundsException.class, () -> franciscosAccount.transfer(mabelsAccount, dollars300));
 
         assertThat(franciscosAccount).keepsInitialBalance();

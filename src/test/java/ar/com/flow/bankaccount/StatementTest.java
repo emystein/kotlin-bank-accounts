@@ -13,55 +13,51 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StatementTest {
-    private Statement history;
+    private Statement statement;
 
     @BeforeEach
     void setUp() {
-        history = new InMemoryStatement();
+        statement = new InMemoryStatement();
     }
 
     @Test
-    void givenTransactionHistoryInitialStateWhenGetFirstElementThenItShouldBeNone() {
-        assertEquals(Optional.empty(), history.first());
+    void newStatementIsEmpty() {
+        assertEquals(Optional.empty(), statement.first());
+        assertEquals(Optional.empty(), statement.getInitialBalance());
+        assertEquals(Optional.empty(), statement.getCurrentBalance());
+        assertEquals(Optional.empty(), statement.getPreviousBalance());
     }
 
     @Test
-    void givenTransactionHistoryInitialStateWhenGetSumThenItShouldReturnEmpty() {
-        assertEquals(Optional.empty(), history.getInitialBalance());
-        assertEquals(Optional.empty(), history.getCurrentBalance());
-        assertEquals(Optional.empty(), history.getPreviousBalance());
+    void statementContainsTransactionRecordAdded() {
+        statement.add(dollars10Record);
+
+        assertTrue(statement.contains(dollars10Record));
     }
 
     @Test
-    void givenATransactionRecordWhenAddItToTransactionHistoryThenItShouldContainTheTransactionRecord() {
-        history.add(dollars10Record);
+    void statementStoresTransactionRecordsInOrderOfAddition() {
+        statement.add(dollars10Record);
+        statement.add(dollars20Record);
 
-        assertTrue(history.contains(dollars10Record));
+        assertTrue(statement.containsInOrder(dollars10Record, dollars20Record));
     }
 
     @Test
-    void givenTwoTransactionRecordsWhenAddThemToTransactionHistoryThenItShouldContainThemInOrderOfAddition() {
-        history.add(dollars10Record);
-        history.add(dollars20Record);
+    void statementUpdatesBalance() {
+        statement.add(dollars10Record);
+        statement.add(dollars20Record);
 
-        assertTrue(history.containsInOrder(dollars10Record, dollars20Record));
+        assertEquals(Optional.of(Balance.positive(Dollars.amount(10))), statement.getInitialBalance());
+        assertEquals(Optional.of(Balance.positive(Dollars.amount(30))), statement.getCurrentBalance());
+        assertEquals(Optional.of(Balance.positive(Dollars.amount(10))), statement.getPreviousBalance());
     }
 
     @Test
-    void givenAUSD10CreditAndAUSD20CreditWhenAddThemToTransactionHistoryThenTransactionHistorySumShouldBeUSD30() {
-        history.add(dollars10Record);
-        history.add(dollars20Record);
+    void balanceSumsUpCreditAndDebitTransactionRecords() {
+        statement.add(dollars10Record);
+        statement.add(minusDollars20Record);
 
-        assertEquals(Optional.of(Balance.positive(Dollars.amount(10))), history.getInitialBalance());
-        assertEquals(Optional.of(Balance.positive(Dollars.amount(30))), history.getCurrentBalance());
-        assertEquals(Optional.of(Balance.positive(Dollars.amount(10))), history.getPreviousBalance());
-    }
-
-    @Test
-    void givenAUSD10CreditAndAUSD20DebitWhenAddThemToTransactionHistoryThenTransactionHistorySumShouldBeMinusUSD10() {
-        history.add(dollars10Record);
-        history.add(minusDollars20Record);
-
-        assertEquals(Optional.of(Balance.negative(dollars10)), history.getCurrentBalance());
+        assertEquals(Optional.of(Balance.negative(dollars10)), statement.getCurrentBalance());
     }
 }

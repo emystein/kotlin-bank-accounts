@@ -1,6 +1,5 @@
 package ar.com.flow.bankaccount;
 
-import ar.com.flow.Customer;
 import ar.com.flow.bankaccount.balance.Balance;
 import ar.com.flow.bankaccount.transaction.Action;
 import ar.com.flow.bankaccount.transaction.transfer.SameAccountException;
@@ -26,7 +25,7 @@ public class SavingsAccountTest {
     }
 
     @Test
-    void givenAnInitialStateWhenCreateABankAccountThenItShouldHaveBasicInformationSet() {
+    void createdAccountHasBasicInformation() {
         var account = SavingsAccount.builder().owner(francisco).currency("ARS").build();
 
         assertEquals(francisco, account.getOwner());
@@ -35,28 +34,28 @@ public class SavingsAccountTest {
     }
 
     @Test
-    void givenAnAccountWith100USDBalanceWhenDeposit10USDThenBalanceShouldBe110USD() {
+    void depositIncrementsFunds() {
         franciscosAccount.deposit(dollars10);
 
         assertThat(franciscosAccount).increasedFunds(dollars10);
     }
 
     @Test
-    void givenAnAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
+    void withdrawalDecrementsFunds() {
         franciscosAccount.withdraw(dollars10);
 
         assertThat(franciscosAccount).decreasedFunds(dollars10);
     }
 
     @Test
-    void givenAnAccountWith100USDBalanceWhenWithdraw200USDThenWithdrawalShouldBeRejected() {
+    void canNotWithdrawAmountGreaterThanAvailableFunds() {
         assertThrows(InsufficientFundsException.class, () -> franciscosAccount.withdraw(dollars200));
 
         assertThat(franciscosAccount).keepsInitialBalance();
     }
 
     @Test
-    void givenAnAccountWhenWithdrawThenTransactionHistoryShouldContainTheTransactionRecord() {
+    void withdrawalAddsTransactionRecordToStatement() {
         franciscosAccount.withdraw(dollars10);
 
         assertThat(franciscosAccount.getStatement().last())
@@ -66,7 +65,7 @@ public class SavingsAccountTest {
     }
 
     @Test
-    void givenADebitAndCreditAccountsWhenTransfer10USDThenTheMoneyShouldBeTransferred() {
+    void transferAmountLessThanAvailableFunds() {
         franciscosAccount.transfer(mabelsAccount, dollars10);
 
         assertThat(franciscosAccount).decreasedFunds(dollars10);
@@ -86,7 +85,7 @@ public class SavingsAccountTest {
     }
 
     @Test
-    void givenADebitAndCreditAccountWhenTransferInsufficientFundsThenTheMoneyShouldNotBeTransferred() {
+    void canNotTransferAmountGreaterThanAvailableFunds() {
         assertThrows(InsufficientFundsException.class, () ->
                 franciscosAccount.transfer(mabelsAccount, dollars200));
 
@@ -95,7 +94,7 @@ public class SavingsAccountTest {
     }
 
     @Test
-    void givenTheSameDebitAndCreditAccountWhenTransferThenTheTransferShouldBeRejected() {
+    void canNotTransferToSelf() {
         assertThrows(SameAccountException.class, () ->
                 franciscosAccount.transfer(franciscosAccount, dollars10));
 
