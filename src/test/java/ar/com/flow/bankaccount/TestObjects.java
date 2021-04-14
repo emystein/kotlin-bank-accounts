@@ -12,6 +12,9 @@ import static ar.com.flow.money.TestObjects.*;
 import static java.time.LocalDateTime.now;
 
 public class TestObjects {
+    public static Customer francisco = Customer.named("francisco");
+    public static Customer mabel = Customer.named("mabel");
+
     public static LowerLimit minusDollars100Limit = new LowerLimit(Balance.negative(dollars100));
 
     public static TransactionRecord dollars10Record = new TransactionRecord(now(), Action.Deposit, dollars10);

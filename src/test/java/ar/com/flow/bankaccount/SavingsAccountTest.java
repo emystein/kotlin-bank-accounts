@@ -10,21 +10,19 @@ import org.junit.jupiter.api.Test;
 
 import static ar.com.flow.bankaccount.BankAccountAssert.assertThat;
 import static ar.com.flow.bankaccount.OptionalTransactionRecordAssert.assertThat;
+import static ar.com.flow.bankaccount.TestObjects.*;
 import static ar.com.flow.money.TestObjects.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SavingsAccountTest {
-    private Customer francisco;
     private BankAccount franciscosAccount;
     private BankAccount mabelsAccount;
 
     @BeforeEach
     void setUp() {
-        francisco = Customer.named("francisco");
-        franciscosAccount = TestObjects.createSavingsAccountFor(francisco, dollars100);
-        var mabel = Customer.named("mabel");
-        mabelsAccount = TestObjects.createSavingsAccountFor(mabel, dollars100);
+        franciscosAccount = createSavingsAccountFor(francisco, dollars100);
+        mabelsAccount = createSavingsAccountFor(mabel, dollars100);
     }
 
     @Test
