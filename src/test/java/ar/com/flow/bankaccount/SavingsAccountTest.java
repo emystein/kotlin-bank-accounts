@@ -8,9 +8,11 @@ import ar.com.flow.money.InsufficientFundsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static ar.com.flow.bankaccount.SavingsAccountAssertions.*;
+import static ar.com.flow.bankaccount.BankAccountAssert.assertThat;
+import static ar.com.flow.bankaccount.OptionalTransactionRecordAssert.assertThat;
 import static ar.com.flow.money.TestObjects.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SavingsAccountTest {
     private Customer francisco;
@@ -35,53 +37,54 @@ public class SavingsAccountTest {
     }
 
     @Test
-    void givenACustomerAndAnInitialAmountWhenCreateAnAccountThenTheAccountShouldHaveBalance() {
-        assertAccountKeepsInitialBalance(franciscosAccount);
-    }
-
-    @Test
     void givenAnAccountWith100USDBalanceWhenDeposit10USDThenBalanceShouldBe110USD() {
         franciscosAccount.deposit(dollars10);
 
-        assertBalanceIncreasedBy(franciscosAccount, dollars10);
+        assertThat(franciscosAccount).balanceIncreasedBy(dollars10);
     }
 
     @Test
     void givenAnAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
         franciscosAccount.withdraw(dollars10);
 
-        assertBalanceDecreasedBy(franciscosAccount, dollars10);
+        assertThat(franciscosAccount).balanceDecreasedBy(dollars10);
     }
 
     @Test
     void givenAnAccountWith100USDBalanceWhenWithdraw200USDThenWithdrawalShouldBeRejected() {
         assertThrows(InsufficientFundsException.class, () -> franciscosAccount.withdraw(dollars200));
 
-        assertAccountKeepsInitialBalance(franciscosAccount);
+        assertThat(franciscosAccount).keepsInitialBalance();
     }
 
     @Test
     void givenAnAccountWhenWithdrawThenTransactionHistoryShouldContainTheTransactionRecord() {
         franciscosAccount.withdraw(dollars10);
 
-        var record = franciscosAccount.getStatement().last();
-
-        assertTransactionRecord(record, Action.Withdrawal, Balance.negative(dollars10));
+        assertThat(franciscosAccount.getStatement().last())
+                .isPresent()
+                .hasAction(Action.Withdrawal)
+                .hasBalance(Balance.negative(dollars10));
     }
 
     @Test
     void givenADebitAndCreditAccountsWhenTransfer10USDThenTheMoneyShouldBeTransferred() {
         franciscosAccount.transfer(mabelsAccount, dollars10);
 
-        assertAmountMovedFromTo(franciscosAccount, mabelsAccount, dollars10);
+        assertThat(franciscosAccount).balanceDecreasedBy(dollars10);
 
-        var debitRecord = franciscosAccount.getStatement().last();
-        assertTransactionRecord(debitRecord, Action.Transfer, Balance.negative(dollars10));
-        assertTrue(debitRecord.get().getCreditAccount().isPresent());
-        assertEquals(mabelsAccount, debitRecord.get().getCreditAccount().get());
+        assertThat(mabelsAccount).balanceIncreasedBy(dollars10);
 
-        var creditRecord = mabelsAccount.getStatement().last();
-        assertTransactionRecord(creditRecord, Action.Transfer, Balance.positive(dollars10));
+        assertThat(franciscosAccount.getStatement().last())
+                .isPresent()
+                .hasAction(Action.Transfer)
+                .hasBalance(Balance.negative(dollars10))
+                .hasCreditAccount(mabelsAccount);
+
+        assertThat(mabelsAccount.getStatement().last())
+                .isPresent()
+                .hasAction(Action.Transfer)
+                .hasBalance(Balance.positive(dollars10));
     }
 
     @Test
@@ -89,8 +92,8 @@ public class SavingsAccountTest {
         assertThrows(InsufficientFundsException.class, () ->
                 franciscosAccount.transfer(mabelsAccount, dollars200));
 
-        assertAccountKeepsInitialBalance(franciscosAccount);
-        assertAccountKeepsInitialBalance(mabelsAccount);
+        assertThat(franciscosAccount).keepsInitialBalance();
+        assertThat(mabelsAccount).keepsInitialBalance();
     }
 
     @Test
@@ -98,6 +101,6 @@ public class SavingsAccountTest {
         assertThrows(SameAccountException.class, () ->
                 franciscosAccount.transfer(franciscosAccount, dollars10));
 
-        assertAccountKeepsInitialBalance(franciscosAccount);
+        assertThat(franciscosAccount).keepsInitialBalance();
     }
 }
