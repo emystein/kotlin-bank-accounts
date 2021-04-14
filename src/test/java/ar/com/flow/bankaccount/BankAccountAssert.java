@@ -22,13 +22,13 @@ public class BankAccountAssert extends AbstractAssert<BankAccountAssert, BankAcc
         return this;
     }
 
-    public BankAccountAssert balanceIncreasedBy(Money amount) {
+    public BankAccountAssert increasedFunds(Money amount) {
         assertEquals(actual.getPreviousBalance().plus(amount), actual.getBalance());
 
         return this;
     }
 
-    public BankAccountAssert balanceDecreasedBy(Money amount) {
+    public BankAccountAssert decreasedFunds(Money amount) {
         assertEquals(actual.getPreviousBalance().minus(amount), actual.getBalance());
 
         return this;

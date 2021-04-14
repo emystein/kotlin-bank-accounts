@@ -40,14 +40,14 @@ public class SavingsAccountTest {
     void givenAnAccountWith100USDBalanceWhenDeposit10USDThenBalanceShouldBe110USD() {
         franciscosAccount.deposit(dollars10);
 
-        assertThat(franciscosAccount).balanceIncreasedBy(dollars10);
+        assertThat(franciscosAccount).increasedFunds(dollars10);
     }
 
     @Test
     void givenAnAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
         franciscosAccount.withdraw(dollars10);
 
-        assertThat(franciscosAccount).balanceDecreasedBy(dollars10);
+        assertThat(franciscosAccount).decreasedFunds(dollars10);
     }
 
     @Test
@@ -71,9 +71,9 @@ public class SavingsAccountTest {
     void givenADebitAndCreditAccountsWhenTransfer10USDThenTheMoneyShouldBeTransferred() {
         franciscosAccount.transfer(mabelsAccount, dollars10);
 
-        assertThat(franciscosAccount).balanceDecreasedBy(dollars10);
+        assertThat(franciscosAccount).decreasedFunds(dollars10);
 
-        assertThat(mabelsAccount).balanceIncreasedBy(dollars10);
+        assertThat(mabelsAccount).increasedFunds(dollars10);
 
         assertThat(franciscosAccount.getStatement().last())
                 .isPresent()

@@ -31,7 +31,7 @@ public class CheckingAccountTest {
     void givenACheckingAccountWith100USDBalanceWhenWithdraw10USDThenBalanceShouldBe90USD() {
         franciscosAccount.withdraw(dollars10);
 
-        assertThat(franciscosAccount).balanceDecreasedBy(dollars10);
+        assertThat(franciscosAccount).decreasedFunds(dollars10);
     }
 
     @Test
@@ -53,16 +53,16 @@ public class CheckingAccountTest {
     void givenADebitWith100USDBalanceWhenTransfer10USDThenTheMoneyShouldBeTransferred() {
         franciscosAccount.transfer(mabelsAccount, dollars10);
 
-        assertThat(franciscosAccount).balanceDecreasedBy(dollars10);
-        assertThat(mabelsAccount).balanceIncreasedBy(dollars10);
+        assertThat(franciscosAccount).decreasedFunds(dollars10);
+        assertThat(mabelsAccount).increasedFunds(dollars10);
     }
 
     @Test
     void givenADebitWith100USDBalanceAndWithdrawLimitMinus100USDWhenTransfer110USDThenTheMoneyShouldBeTransferred() {
         franciscosAccount.transfer(mabelsAccount, dollars110);
 
-        assertThat(franciscosAccount).balanceDecreasedBy(dollars110);
-        assertThat(mabelsAccount).balanceIncreasedBy(dollars110);
+        assertThat(franciscosAccount).decreasedFunds(dollars110);
+        assertThat(mabelsAccount).increasedFunds(dollars110);
     }
 
     @Test
