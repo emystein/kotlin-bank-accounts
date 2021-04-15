@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Getter
@@ -19,6 +18,6 @@ public class Debit implements Algorithm {
     private final BankAccount creditAccount;
 
     public TransactionRecord execute(Money amount) {
-        return new TransactionRecord(LocalDateTime.now(), Action.TransferDebit, Balance.negative(amount), Optional.of(creditAccount));
+        return new TransactionRecord(creditAccount, LocalDateTime.now(), Action.TransferDebit, Balance.negative(amount));
     }
 }

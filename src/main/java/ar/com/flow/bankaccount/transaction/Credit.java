@@ -15,6 +15,6 @@ public class Credit implements Algorithm {
     private final Action action;
 
     public TransactionRecord execute(Money amount) {
-        return new TransactionRecord(LocalDateTime.now(), action, Balance.positive(amount));
+        return new TransactionRecord(account, LocalDateTime.now(), action, Balance.positive(amount));
     }
 }

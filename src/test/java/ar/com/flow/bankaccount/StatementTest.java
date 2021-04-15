@@ -1,22 +1,34 @@
 package ar.com.flow.bankaccount;
 
 import ar.com.flow.bankaccount.balance.Balance;
+import ar.com.flow.bankaccount.transaction.Action;
+import ar.com.flow.bankaccount.transaction.TransactionRecord;
 import ar.com.flow.money.Dollars;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static ar.com.flow.bankaccount.TestObjects.*;
-import static ar.com.flow.money.TestObjects.dollars10;
+import static ar.com.flow.bankaccount.TestObjects.createSavingsAccountFor;
+import static ar.com.flow.bankaccount.TestObjects.francisco;
+import static ar.com.flow.money.TestObjects.*;
+import static java.time.LocalDateTime.now;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StatementTest {
+    private BankAccount franciscosAccount;
     private Statement statement;
+    private TransactionRecord dollars10Record;
+    private TransactionRecord dollars20Record;
+    private TransactionRecord minusDollars20Record;
 
     @BeforeEach
     void setUp() {
+        franciscosAccount = createSavingsAccountFor(francisco, dollars100);
+        dollars10Record = new TransactionRecord(franciscosAccount, now(), Action.Deposit, dollars10);
+        dollars20Record = new TransactionRecord(franciscosAccount, now(), Action.Deposit, dollars20);
+        minusDollars20Record = new TransactionRecord(franciscosAccount, now(), Action.Withdrawal, Balance.negative(dollars20));
         statement = new InMemoryStatement();
     }
 

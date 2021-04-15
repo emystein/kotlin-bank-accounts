@@ -29,7 +29,7 @@ public class TransactionRecordAssert extends AbstractAssert<TransactionRecordAss
     }
 
     public TransactionRecordAssert hasCreditAccount(BankAccount expected) {
-        assertEquals(expected, actual.getCreditAccount().get());
+        assertEquals(expected, actual.getDestinationAccount());
         return this;
     }
 

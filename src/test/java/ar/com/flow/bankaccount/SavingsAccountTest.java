@@ -1,7 +1,6 @@
 package ar.com.flow.bankaccount;
 
 import ar.com.flow.bankaccount.balance.Balance;
-import ar.com.flow.bankaccount.transaction.Action;
 import ar.com.flow.bankaccount.transaction.transfer.SameAccountException;
 import ar.com.flow.money.InsufficientFundsException;
 import org.junit.jupiter.api.BeforeEach;
