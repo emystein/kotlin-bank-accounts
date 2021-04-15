@@ -19,6 +19,6 @@ public class Debit implements Algorithm {
     private final BankAccount creditAccount;
 
     public TransactionRecord execute(Money amount) {
-        return new TransactionRecord(LocalDateTime.now(), Action.Transfer, Balance.negative(amount), Optional.of(creditAccount));
+        return new TransactionRecord(LocalDateTime.now(), Action.TransferDebit, Balance.negative(amount), Optional.of(creditAccount));
     }
 }

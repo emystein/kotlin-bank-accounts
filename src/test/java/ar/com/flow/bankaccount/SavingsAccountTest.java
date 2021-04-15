@@ -60,8 +60,8 @@ public class SavingsAccountTest {
 
         assertThat(franciscosAccount.getStatement().last())
                 .isPresent()
-                .hasAction(Action.Withdrawal)
-                .hasBalance(Balance.negative(dollars10));
+                .isWithdrawal()
+                .hasNegativeBalance(dollars10);
     }
 
     @Test
@@ -74,14 +74,14 @@ public class SavingsAccountTest {
 
         assertThat(franciscosAccount.getStatement().last())
                 .isPresent()
-                .hasAction(Action.Transfer)
-                .hasBalance(Balance.negative(dollars10))
+                .isTransferDebit()
+                .hasNegativeBalance(dollars10)
                 .hasCreditAccount(mabelsAccount);
 
         assertThat(mabelsAccount.getStatement().last())
                 .isPresent()
-                .hasAction(Action.Transfer)
-                .hasBalance(Balance.positive(dollars10));
+                .isTransferCredit()
+                .hasPositiveBalance(dollars10);
     }
 
     @Test
