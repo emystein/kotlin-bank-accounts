@@ -2,13 +2,15 @@ package ar.com.flow.bankaccount.transaction;
 
 import ar.com.flow.bankaccount.BankAccount;
 import ar.com.flow.money.Money;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public abstract class Algorithm {
-    public abstract BankAccount getAccount();
-
-    public abstract TransactionRecord record(Money amount);
+    protected final BankAccount account;
 
     void execute(Money amount) {
-        getAccount().addTransactionRecord(record(amount));
+        account.addTransactionRecord(record(amount));
     }
+
+    protected abstract TransactionRecord record(Money amount);
 }
