@@ -3,9 +3,12 @@ package ar.com.flow.bankaccount.transaction;
 import ar.com.flow.bankaccount.BankAccount;
 import ar.com.flow.money.Money;
 
-public interface Algorithm {
-    // TODO replace by moving account as field of TransactionRecord
-    BankAccount getAccount();
+public abstract class Algorithm {
+    public abstract BankAccount getAccount();
 
-    TransactionRecord execute(Money amount);
+    public abstract TransactionRecord record(Money amount);
+
+    void execute(Money amount) {
+        getAccount().addTransactionRecord(record(amount));
+    }
 }

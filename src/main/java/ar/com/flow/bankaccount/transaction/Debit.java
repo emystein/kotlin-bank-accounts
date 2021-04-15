@@ -7,11 +7,11 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public class Debit implements Algorithm {
+public class Debit extends Algorithm {
     private final BankAccount account;
     private final Action action;
 
-    public TransactionRecord execute(Money amount) {
+    public TransactionRecord record(Money amount) {
         return TransactionRecord.debit(account, action, amount);
     }
 }

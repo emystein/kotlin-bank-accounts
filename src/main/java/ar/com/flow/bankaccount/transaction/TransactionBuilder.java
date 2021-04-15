@@ -8,7 +8,7 @@ import java.util.List;
 
 public class TransactionBuilder {
     private Collection<Precondition> preconditions = new ArrayList<>();
-    private List<Step> steps = new ArrayList<>();
+    private List<Algorithm> steps = new ArrayList<>();
     private Money amount;
 
     public TransactionBuilder precondition(Precondition precondition) {
@@ -16,7 +16,7 @@ public class TransactionBuilder {
         return this;
     }
 
-    public TransactionBuilder step(Step step) {
+    public TransactionBuilder step(Algorithm step) {
         steps.add(step);
         return this;
     }

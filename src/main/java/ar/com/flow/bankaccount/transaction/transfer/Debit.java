@@ -14,11 +14,11 @@ import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @Getter
-public class Debit implements Algorithm {
+public class Debit extends Algorithm {
     private final BankAccount account;
     private final BankAccount creditAccount;
 
-    public TransactionRecord execute(Money amount) {
+    public TransactionRecord record(Money amount) {
         return new TransactionRecord(creditAccount, LocalDateTime.now(), FundsMovement.Debit, Action.Transfer, Balance.negative(amount));
     }
 }

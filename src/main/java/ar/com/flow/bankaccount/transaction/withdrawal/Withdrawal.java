@@ -3,7 +3,6 @@ package ar.com.flow.bankaccount.transaction.withdrawal;
 import ar.com.flow.bankaccount.BankAccount;
 import ar.com.flow.bankaccount.transaction.Action;
 import ar.com.flow.bankaccount.transaction.Debit;
-import ar.com.flow.bankaccount.transaction.Step;
 import ar.com.flow.bankaccount.transaction.Transaction;
 import ar.com.flow.money.Money;
 
@@ -23,7 +22,7 @@ public class Withdrawal {
             return Transaction.builder()
                     .amount(amountToWithdraw)
                     .precondition(new SufficientFunds(debitAccount, amountToWithdraw))
-                    .step(new Step(new Debit(debitAccount, Action.Withdrawal), debitAccount))
+                    .step(new Debit(debitAccount, Action.Withdrawal))
                     .build();
         }
     }

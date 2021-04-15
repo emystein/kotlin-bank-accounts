@@ -7,11 +7,11 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public class Credit implements Algorithm {
+public class Credit extends Algorithm {
     private final BankAccount account;
     private final Action action;
 
-    public TransactionRecord execute(Money amount) {
+    public TransactionRecord record(Money amount) {
         return TransactionRecord.credit(account, action, amount);
     }
 }
