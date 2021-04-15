@@ -29,7 +29,7 @@ public class Transfer {
                     .precondition(new SufficientFunds(debitAccount, amountToTransfer))
                     .precondition(new DifferentAccounts(debitAccount, creditAccount))
                     .step(new Step(new Debit(debitAccount, creditAccount), debitAccount))
-                    .step(new Step(new Credit(creditAccount, Action.TransferCredit), creditAccount))
+                    .step(new Step(new Credit(creditAccount, Action.Transfer), creditAccount))
                     .amount(amountToTransfer)
                     .build();
         }

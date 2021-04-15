@@ -2,6 +2,7 @@ package ar.com.flow.bankaccount;
 
 import ar.com.flow.bankaccount.balance.Balance;
 import ar.com.flow.bankaccount.transaction.Action;
+import ar.com.flow.bankaccount.transaction.FundsMovement;
 import ar.com.flow.bankaccount.transaction.TransactionRecord;
 import ar.com.flow.money.Money;
 import org.assertj.core.api.AbstractAssert;
@@ -16,6 +17,11 @@ public class TransactionRecordAssert extends AbstractAssert<TransactionRecordAss
 
     public TransactionRecordAssert(TransactionRecord record) {
         super(record, TransactionRecordAssert.class);
+    }
+
+    public TransactionRecordAssert hasMovement(FundsMovement expected) {
+        Assertions.assertThat(actual.getMovement()).isEqualTo(expected);
+        return this;
     }
 
     public TransactionRecordAssert hasAction(Action expected) {
@@ -33,6 +39,17 @@ public class TransactionRecordAssert extends AbstractAssert<TransactionRecordAss
         return this;
     }
 
+    public TransactionRecordAssert isDebit() {
+        hasMovement(FundsMovement.Debit);
+        return this;
+    }
+
+    public TransactionRecordAssert isCredit() {
+        hasMovement(FundsMovement.Credit);
+        return this;
+    }
+
+
     public TransactionRecordAssert isDeposit() {
         hasAction(Action.Deposit);
         return this;
@@ -43,13 +60,8 @@ public class TransactionRecordAssert extends AbstractAssert<TransactionRecordAss
         return this;
     }
 
-    public TransactionRecordAssert isTransferDebit() {
-        hasAction(Action.TransferDebit);
-        return this;
-    }
-
-    public TransactionRecordAssert isTransferCredit() {
-        hasAction(Action.TransferCredit);
+    public TransactionRecordAssert isTransfer() {
+        hasAction(Action.Transfer);
         return this;
     }
 

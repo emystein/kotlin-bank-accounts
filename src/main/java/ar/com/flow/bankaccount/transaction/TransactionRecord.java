@@ -13,10 +13,25 @@ import java.time.LocalDateTime;
 public class TransactionRecord {
     private final BankAccount destinationAccount;
     private final LocalDateTime dateTime;
+    private final FundsMovement movement;
     private final Action action;
     private final Balance amount;
 
-    public TransactionRecord(BankAccount destinationAccount, LocalDateTime dateTime, Action action, Money amount) {
-        this(destinationAccount, dateTime, action, Balance.create(amount));
+    public static TransactionRecord debit(BankAccount destinationAccount, Action action, Money amount) {
+        return new TransactionRecord(destinationAccount,
+                LocalDateTime.now(),
+                FundsMovement.Debit,
+                action,
+                Balance.negative(amount)
+        );
+    }
+
+    public static TransactionRecord credit(BankAccount destinationAccount, Action action, Money amount) {
+        return new TransactionRecord(destinationAccount,
+                LocalDateTime.now(),
+                FundsMovement.Credit,
+                action,
+                Balance.positive(amount)
+        );
     }
 }

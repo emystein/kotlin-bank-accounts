@@ -73,13 +73,15 @@ public class SavingsAccountTest {
 
         assertThat(franciscosAccount.getStatement().last())
                 .isPresent()
-                .isTransferDebit()
+                .isDebit()
+                .isTransfer()
                 .hasNegativeBalance(dollars10)
                 .hasCreditAccount(mabelsAccount);
 
         assertThat(mabelsAccount.getStatement().last())
                 .isPresent()
-                .isTransferCredit()
+                .isCredit()
+                .isTransfer()
                 .hasPositiveBalance(dollars10);
     }
 
