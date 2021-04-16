@@ -16,22 +16,29 @@ public class TransactionRecord {
     private final FundsMovement movement;
     private final Action action;
     private final Balance amount;
+    private final Balance resultBalance;
 
     public static TransactionRecord debit(BankAccount destinationAccount, Action action, Money amount) {
+        Balance balance = Balance.negative(amount);
+
         return new TransactionRecord(destinationAccount,
                 LocalDateTime.now(),
                 FundsMovement.Debit,
                 action,
-                Balance.negative(amount)
+                balance,
+                destinationAccount.getBalance().plus(balance)
         );
     }
 
     public static TransactionRecord credit(BankAccount destinationAccount, Action action, Money amount) {
+        Balance positive = Balance.positive(amount);
+
         return new TransactionRecord(destinationAccount,
                 LocalDateTime.now(),
                 FundsMovement.Credit,
                 action,
-                Balance.positive(amount)
+                positive,
+                destinationAccount.getBalance().plus(positive)
         );
     }
 }

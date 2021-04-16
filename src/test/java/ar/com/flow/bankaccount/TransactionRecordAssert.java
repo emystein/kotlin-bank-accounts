@@ -74,4 +74,9 @@ public class TransactionRecordAssert extends AbstractAssert<TransactionRecordAss
         hasBalance(Balance.negative(amount));
         return this;
     }
+
+    public TransactionRecordAssert  hasResultBalance(Balance balance) {
+        Assertions.assertThat(actual.getResultBalance()).isEqualTo(balance);
+        return this;
+    }
 }

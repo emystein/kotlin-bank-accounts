@@ -27,9 +27,9 @@ public class StatementTest {
     @BeforeEach
     void setUp() {
         franciscosAccount = createSavingsAccountFor(francisco, dollars100);
-        dollars10Record = new TransactionRecord(franciscosAccount, now(), FundsMovement.Credit, Action.Deposit, Balance.positive(dollars10));
-        dollars20Record = new TransactionRecord(franciscosAccount, now(), FundsMovement.Credit, Action.Deposit, Balance.positive(dollars20));
-        minusDollars20Record = new TransactionRecord(franciscosAccount, now(), FundsMovement.Debit, Action.Withdrawal, Balance.negative(dollars20));
+        dollars10Record = TransactionRecord.credit(franciscosAccount, Action.Deposit, dollars10);
+        dollars20Record = TransactionRecord.credit(franciscosAccount, Action.Deposit, dollars20);
+        minusDollars20Record = TransactionRecord.debit(franciscosAccount, Action.Withdrawal, dollars20);
         statement = new InMemoryStatement();
     }
 
