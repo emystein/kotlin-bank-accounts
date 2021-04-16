@@ -2,16 +2,14 @@ package ar.com.flow.bankaccount.transaction;
 
 import ar.com.flow.bankaccount.BankAccount;
 import ar.com.flow.money.Money;
+import lombok.RequiredArgsConstructor;
 
-public class Credit extends Algorithm {
+@RequiredArgsConstructor
+public class Credit implements RecordFactory {
+    private final BankAccount account;
     private final Action action;
 
-    public Credit(BankAccount account, Action action) {
-        super(account);
-        this.action = action;
-    }
-
-    protected TransactionRecord record(Money amount) {
+    public TransactionRecord record(Money amount) {
         return TransactionRecord.credit(account, action, amount);
     }
 }

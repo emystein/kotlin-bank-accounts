@@ -5,12 +5,11 @@ import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public abstract class Algorithm {
-    protected final BankAccount account;
+public class Algorithm {
+    private final BankAccount account;
+    private final RecordFactory recordFactory;
 
     void execute(Money amount) {
-        account.addTransactionRecord(record(amount));
+        account.addTransactionRecord(recordFactory.record(amount));
     }
-
-    protected abstract TransactionRecord record(Money amount);
 }
