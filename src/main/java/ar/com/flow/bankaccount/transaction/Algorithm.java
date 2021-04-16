@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Algorithm {
     private final BankAccount account;
-    private final RecordFactory recordFactory;
+    private final ProofStamper proofStamper;
 
     void execute(Money amount) {
-        account.addTransactionRecord(recordFactory.record(amount));
+        account.addTransactionRecord(proofStamper.record(amount));
     }
 }

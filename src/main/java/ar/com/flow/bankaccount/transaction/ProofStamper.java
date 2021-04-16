@@ -2,6 +2,6 @@ package ar.com.flow.bankaccount.transaction;
 
 import ar.com.flow.money.Money;
 
-public interface RecordFactory {
+public interface ProofStamper {
     TransactionRecord record(Money amount);
 }

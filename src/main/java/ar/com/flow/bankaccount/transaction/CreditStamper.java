@@ -5,11 +5,11 @@ import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class Debit implements RecordFactory {
+public class CreditStamper implements ProofStamper {
     private final BankAccount account;
     private final Action action;
 
     public TransactionRecord record(Money amount) {
-        return TransactionRecord.debit(account, action, amount);
+        return TransactionRecord.credit(account, action, amount);
     }
 }
