@@ -9,7 +9,13 @@ public class Algorithm {
     private final BankAccount account;
     private final ProofStamper proofStamper;
 
-    void execute(Money amount) {
-        account.addTransactionRecord(proofStamper.record(amount));
+    TransactionRecord execute(Money amount) {
+        TransactionRecord record = proofStamper.record(amount);
+        account.addTransactionRecord(record);
+        return record;
+    }
+
+    void undo(Money amount) {
+        account.addTransactionRecord(proofStamper.revert(amount));
     }
 }

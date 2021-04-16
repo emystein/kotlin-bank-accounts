@@ -23,6 +23,12 @@ public class BankAccountAssert extends AbstractAssert<BankAccountAssert, BankAcc
         return this;
     }
 
+    public BankAccountAssert hasPositiveBalance(Money amount) {
+        assertEquals(Balance.positive(amount), actual.getBalance());
+
+        return this;
+    }
+
     public BankAccountAssert increasedFunds(Money amount) {
         assertEquals(actual.getPreviousBalance().plus(amount), actual.getBalance());
 

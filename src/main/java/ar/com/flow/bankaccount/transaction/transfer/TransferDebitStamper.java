@@ -14,4 +14,8 @@ public class TransferDebitStamper implements ProofStamper {
     public TransactionRecord record(Money amount) {
         return TransactionRecord.debit(creditAccount, Action.Transfer, amount);
     }
+
+    public TransactionRecord revert(Money amount) {
+        return TransactionRecord.credit(creditAccount, Action.Transfer, amount);
+    }
 }

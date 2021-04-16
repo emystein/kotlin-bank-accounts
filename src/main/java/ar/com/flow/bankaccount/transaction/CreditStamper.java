@@ -12,4 +12,8 @@ public class CreditStamper implements ProofStamper {
     public TransactionRecord record(Money amount) {
         return TransactionRecord.credit(account, action, amount);
     }
+
+    public TransactionRecord revert(Money amount) {
+        return TransactionRecord.debit(account, action, amount);
+    }
 }
