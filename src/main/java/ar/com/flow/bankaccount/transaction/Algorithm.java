@@ -10,7 +10,7 @@ public class Algorithm {
     private final ReceiptPrinter receiptPrinter;
 
     Receipt execute(Money amount) {
-        Receipt receipt = receiptPrinter.receipt(amount);
+        Receipt receipt = receiptPrinter.record(amount);
         account.addTransactionRecord(receipt);
         return receipt;
     }

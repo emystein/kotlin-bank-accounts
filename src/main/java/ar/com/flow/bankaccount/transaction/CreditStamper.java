@@ -9,7 +9,7 @@ public class CreditStamper implements ReceiptPrinter {
     private final BankAccount account;
     private final Action action;
 
-    public Receipt receipt(Money amount) {
+    public Receipt record(Money amount) {
         return Receipt.credit(account, action, amount);
     }
 

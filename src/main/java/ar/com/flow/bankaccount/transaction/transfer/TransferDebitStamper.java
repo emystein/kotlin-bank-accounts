@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 public class TransferDebitStamper implements ReceiptPrinter {
     private final BankAccount creditAccount;
 
-    public Receipt receipt(Money amount) {
+    public Receipt record(Money amount) {
         return Receipt.debit(creditAccount, Action.Transfer, amount);
     }
 
