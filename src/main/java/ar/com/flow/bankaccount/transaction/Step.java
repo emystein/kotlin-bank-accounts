@@ -7,7 +7,7 @@ import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class Algorithm {
+public class Step {
     private final BankAccount account;
     private final ReceiptStamper receiptStamper;
 

@@ -19,7 +19,7 @@ public class Deposit {
         public Transaction amount(Money amountToDeposit) {
             return Transaction.builder()
                     .amount(amountToDeposit)
-                    .step(new Algorithm(creditAccount, Deposit.receipt(creditAccount)))
+                    .step(new Step(creditAccount, Deposit.receipt(creditAccount)))
                     .build();
         }
     }

@@ -2,7 +2,7 @@ package ar.com.flow.bankaccount.transaction.transfer;
 
 import ar.com.flow.bankaccount.BankAccount;
 import ar.com.flow.bankaccount.transaction.Action;
-import ar.com.flow.bankaccount.transaction.Algorithm;
+import ar.com.flow.bankaccount.transaction.Step;
 import ar.com.flow.bankaccount.transaction.receipt.CreditStamper;
 import ar.com.flow.bankaccount.transaction.receipt.DebitStamper;
 import ar.com.flow.bankaccount.transaction.Transaction;
@@ -29,8 +29,8 @@ public class Transfer {
             return Transaction.builder()
                     .precondition(new SufficientFunds(debitAccount, amountToTransfer))
                     .precondition(new DifferentAccounts(debitAccount, creditAccount))
-                    .step(new Algorithm(debitAccount, Transfer.debitReceipt(creditAccount)))
-                    .step(new Algorithm(creditAccount, Transfer.creditReceipt(creditAccount)))
+                    .step(new Step(debitAccount, Transfer.debitReceipt(creditAccount)))
+                    .step(new Step(creditAccount, Transfer.creditReceipt(creditAccount)))
                     .amount(amountToTransfer)
                     .build();
         }

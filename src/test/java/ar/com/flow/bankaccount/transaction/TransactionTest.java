@@ -15,14 +15,14 @@ import static org.mockito.Mockito.when;
 
 public class TransactionTest {
     private BankAccount debitAccount;
-    private Algorithm debit;
-    private Algorithm creditMock;
+    private Step debit;
+    private Step creditMock;
 
     @BeforeEach
     void setUp() {
         debitAccount = createSavingsAccountFor(francisco, dollars100);
-        debit = new Algorithm(debitAccount, new DebitStamper(debitAccount, Action.Transfer));
-        creditMock = mock(Algorithm.class);
+        debit = new Step(debitAccount, new DebitStamper(debitAccount, Action.Transfer));
+        creditMock = mock(Step.class);
     }
 
     @Test

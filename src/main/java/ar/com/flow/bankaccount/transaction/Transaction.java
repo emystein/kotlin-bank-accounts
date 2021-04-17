@@ -8,7 +8,7 @@ import java.util.Collection;
 @AllArgsConstructor
 public class Transaction {
     private Preconditions preconditions;
-    private final Collection<Algorithm> steps;
+    private final Collection<Step> steps;
     private final Money amount;
 
     public static TransactionBuilder builder() {
@@ -20,7 +20,7 @@ public class Transaction {
 
         var state = new TransactionState();
 
-        for (Algorithm step : steps) {
+        for (Step step : steps) {
             try {
                 step.execute(amount);
                 state.completed(step, amount);

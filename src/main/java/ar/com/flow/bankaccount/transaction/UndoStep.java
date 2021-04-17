@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class UndoStep {
-    private final Algorithm step;
+    private final Step step;
     private final Money amount;
 
     public void execute() {
