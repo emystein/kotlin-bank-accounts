@@ -7,41 +7,18 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Algorithm {
     private final BankAccount account;
-    private final ReceiptPrinter receiptPrinter;
+    private final ReceiptStamper receiptStamper;
 
     Receipt execute(Money amount) {
-        return addToAccount(amount, new PrintReceipt(receiptPrinter));
+        return register(receiptStamper.print(amount));
     }
 
     Receipt undo(Money amount) {
-        return addToAccount(amount, new ScratchReceipt(receiptPrinter));
+        return register(receiptStamper.scratch(amount));
     }
 
-    Receipt addToAccount(Money amount, PrintableReceipt printable) {
-        var receipt = printable.print(amount);
+    private Receipt register(Receipt receipt) {
         account.addReceipt(receipt);
         return receipt;
-    }
-}
-
-interface PrintableReceipt {
-    Receipt print(Money amount);
-}
-
-@RequiredArgsConstructor
-class PrintReceipt implements PrintableReceipt {
-    private final ReceiptPrinter receiptPrinter;
-
-    public Receipt print(Money amount) {
-        return receiptPrinter.print(amount);
-    }
-}
-
-@RequiredArgsConstructor
-class ScratchReceipt implements PrintableReceipt {
-    private final ReceiptPrinter receiptPrinter;
-
-    public Receipt print(Money amount) {
-        return receiptPrinter.scratch(amount);
     }
 }
