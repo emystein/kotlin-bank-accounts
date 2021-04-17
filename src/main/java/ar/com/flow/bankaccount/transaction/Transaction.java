@@ -3,9 +3,7 @@ package ar.com.flow.bankaccount.transaction;
 import ar.com.flow.money.Money;
 import lombok.AllArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @AllArgsConstructor
 public class Transaction {
@@ -24,7 +22,8 @@ public class Transaction {
 
         for (Algorithm step : steps) {
             try {
-                state.execute(step);
+                step.execute(amount);
+                state.complete(step);
             } catch (Exception e) {
                 state.rollback();
                 return;

@@ -11,16 +11,11 @@ public class TransactionState {
     private final Money amount;
     private List<Algorithm> completedSteps = new ArrayList<>();
 
-    public void addCompletedStep(Algorithm completedStep) {
+    public void complete(Algorithm completedStep) {
         completedSteps.add(completedStep);
     }
 
     public void rollback() {
         completedSteps.forEach(step -> step.undo(amount));
-    }
-
-    public void execute(Algorithm step) {
-        step.execute(this.amount);
-        addCompletedStep(step);
     }
 }
