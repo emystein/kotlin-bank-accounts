@@ -18,12 +18,12 @@ public class Transaction {
     public void execute() {
         preconditions.check();
 
-        var state = new TransactionState(amount);
+        var state = new TransactionState();
 
         for (Algorithm step : steps) {
             try {
                 step.execute(amount);
-                state.complete(step);
+                state.completed(step, amount);
             } catch (Exception e) {
                 state.rollback();
                 return;

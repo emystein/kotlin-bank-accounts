@@ -8,14 +8,13 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public class TransactionState {
-    private final Money amount;
-    private List<Algorithm> completedSteps = new ArrayList<>();
+    private List<UndoStep> undoSteps = new ArrayList<>();
 
-    public void complete(Algorithm completedStep) {
-        completedSteps.add(completedStep);
+    public void completed(Algorithm completedStep, Money amount) {
+        undoSteps.add(new UndoStep(completedStep, amount));
     }
 
     public void rollback() {
-        completedSteps.forEach(step -> step.undo(amount));
+        undoSteps.forEach(UndoStep::execute);
     }
 }

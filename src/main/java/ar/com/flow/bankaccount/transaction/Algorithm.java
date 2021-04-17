@@ -10,14 +10,38 @@ public class Algorithm {
     private final ReceiptPrinter receiptPrinter;
 
     Receipt execute(Money amount) {
-        Receipt receipt = receiptPrinter.record(amount);
-        account.addReceipt(receipt);
-        return receipt;
+        return addToAccount(amount, new PrintReceipt(receiptPrinter));
     }
 
     Receipt undo(Money amount) {
-        Receipt receipt = receiptPrinter.revert(amount);
+        return addToAccount(amount, new ScratchReceipt(receiptPrinter));
+    }
+
+    Receipt addToAccount(Money amount, PrintableReceipt printable) {
+        var receipt = printable.print(amount);
         account.addReceipt(receipt);
         return receipt;
+    }
+}
+
+interface PrintableReceipt {
+    Receipt print(Money amount);
+}
+
+@RequiredArgsConstructor
+class PrintReceipt implements PrintableReceipt {
+    private final ReceiptPrinter receiptPrinter;
+
+    public Receipt print(Money amount) {
+        return receiptPrinter.print(amount);
+    }
+}
+
+@RequiredArgsConstructor
+class ScratchReceipt implements PrintableReceipt {
+    private final ReceiptPrinter receiptPrinter;
+
+    public Receipt print(Money amount) {
+        return receiptPrinter.scratch(amount);
     }
 }

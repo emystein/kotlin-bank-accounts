@@ -9,11 +9,11 @@ public class DebitStamper implements ReceiptPrinter {
     private final BankAccount account;
     private final Action action;
 
-    public Receipt record(Money amount) {
+    public Receipt print(Money amount) {
         return Receipt.debit(account, action, amount);
     }
 
-    public Receipt revert(Money amount) {
+    public Receipt scratch(Money amount) {
         return Receipt.credit(account, action, amount);
     }
 }
