@@ -19,7 +19,7 @@ public interface BankAccount {
 
     void transfer(BankAccount creditAccount, Money amountToTransfer);
 
-    void addTransactionRecord(Receipt receipt);
+    void addReceipt(Receipt receipt);
 
     Statement getStatement();
 

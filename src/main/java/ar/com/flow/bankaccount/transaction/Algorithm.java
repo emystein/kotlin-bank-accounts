@@ -11,13 +11,13 @@ public class Algorithm {
 
     Receipt execute(Money amount) {
         Receipt receipt = receiptPrinter.record(amount);
-        account.addTransactionRecord(receipt);
+        account.addReceipt(receipt);
         return receipt;
     }
 
     Receipt undo(Money amount) {
         Receipt receipt = receiptPrinter.revert(amount);
-        account.addTransactionRecord(receipt);
+        account.addReceipt(receipt);
         return receipt;
     }
 }

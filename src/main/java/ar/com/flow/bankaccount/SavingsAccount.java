@@ -60,7 +60,7 @@ public class SavingsAccount implements BankAccount {
                 .execute();
     }
 
-    public void addTransactionRecord(Receipt receipt) {
+    public void addReceipt(Receipt receipt) {
         statement.add(receipt);
     }
 }
