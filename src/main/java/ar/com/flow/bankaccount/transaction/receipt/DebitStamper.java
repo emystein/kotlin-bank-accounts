@@ -10,14 +10,6 @@ public class DebitStamper implements ReceiptStamper {
     private final BankAccount account;
     private final Action action;
 
-    public static DebitStamper withdrawal(BankAccount account) {
-        return new DebitStamper(account, Action.Withdrawal);
-    }
-
-    public static DebitStamper transfer(BankAccount account) {
-        return new DebitStamper(account, Action.Transfer);
-    }
-
     public Receipt print(Money amount) {
         return Receipt.debit(account, action, amount);
     }

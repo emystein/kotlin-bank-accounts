@@ -19,8 +19,12 @@ public class Deposit {
         public Transaction amount(Money amountToDeposit) {
             return Transaction.builder()
                     .amount(amountToDeposit)
-                    .step(new Algorithm(creditAccount, CreditStamper.deposit(creditAccount)))
+                    .step(new Algorithm(creditAccount, Deposit.receipt(creditAccount)))
                     .build();
         }
+    }
+
+    public static CreditStamper receipt(BankAccount account) {
+        return new CreditStamper(account, Action.Deposit);
     }
 }
