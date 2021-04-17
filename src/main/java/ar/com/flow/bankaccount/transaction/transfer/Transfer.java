@@ -3,8 +3,8 @@ package ar.com.flow.bankaccount.transaction.transfer;
 import ar.com.flow.bankaccount.BankAccount;
 import ar.com.flow.bankaccount.transaction.Action;
 import ar.com.flow.bankaccount.transaction.Step;
-import ar.com.flow.bankaccount.transaction.receipt.CreditStamper;
-import ar.com.flow.bankaccount.transaction.receipt.DebitStamper;
+import ar.com.flow.bankaccount.transaction.receipt.CreditPrinter;
+import ar.com.flow.bankaccount.transaction.receipt.DebitPrinter;
 import ar.com.flow.bankaccount.transaction.Transaction;
 import ar.com.flow.bankaccount.transaction.withdrawal.SufficientFunds;
 import ar.com.flow.money.Money;
@@ -36,11 +36,11 @@ public class Transfer {
         }
     }
 
-    public static DebitStamper debitReceipt(BankAccount account) {
-        return new DebitStamper(account, Action.Transfer);
+    public static DebitPrinter debitReceipt(BankAccount account) {
+        return new DebitPrinter(account, Action.Transfer);
     }
 
-    public static CreditStamper creditReceipt(BankAccount account) {
-        return new CreditStamper(account, Action.Transfer);
+    public static CreditPrinter creditReceipt(BankAccount account) {
+        return new CreditPrinter(account, Action.Transfer);
     }
 }

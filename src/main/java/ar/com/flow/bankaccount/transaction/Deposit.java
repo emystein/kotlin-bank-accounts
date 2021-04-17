@@ -1,7 +1,7 @@
 package ar.com.flow.bankaccount.transaction;
 
 import ar.com.flow.bankaccount.BankAccount;
-import ar.com.flow.bankaccount.transaction.receipt.CreditStamper;
+import ar.com.flow.bankaccount.transaction.receipt.CreditPrinter;
 import ar.com.flow.money.Money;
 
 public class Deposit {
@@ -24,7 +24,7 @@ public class Deposit {
         }
     }
 
-    public static CreditStamper receipt(BankAccount account) {
-        return new CreditStamper(account, Action.Deposit);
+    public static CreditPrinter receipt(BankAccount account) {
+        return new CreditPrinter(account, Action.Deposit);
     }
 }

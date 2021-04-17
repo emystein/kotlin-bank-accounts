@@ -1,7 +1,7 @@
 package ar.com.flow.bankaccount.transaction;
 
 import ar.com.flow.bankaccount.BankAccount;
-import ar.com.flow.bankaccount.transaction.receipt.DebitStamper;
+import ar.com.flow.bankaccount.transaction.receipt.DebitPrinter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +21,7 @@ public class TransactionTest {
     @BeforeEach
     void setUp() {
         debitAccount = createSavingsAccountFor(francisco, dollars100);
-        debit = new Step(debitAccount, new DebitStamper(debitAccount, Action.Transfer));
+        debit = new Step(debitAccount, new DebitPrinter(debitAccount, Action.Transfer));
         creditMock = mock(Step.class);
     }
 

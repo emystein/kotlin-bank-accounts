@@ -3,9 +3,9 @@ package ar.com.flow.bankaccount.transaction.withdrawal;
 import ar.com.flow.bankaccount.BankAccount;
 import ar.com.flow.bankaccount.transaction.Action;
 import ar.com.flow.bankaccount.transaction.Step;
-import ar.com.flow.bankaccount.transaction.receipt.DebitStamper;
+import ar.com.flow.bankaccount.transaction.receipt.DebitPrinter;
 import ar.com.flow.bankaccount.transaction.Transaction;
-import ar.com.flow.bankaccount.transaction.receipt.ReceiptStamper;
+import ar.com.flow.bankaccount.transaction.receipt.ReceiptPrinter;
 import ar.com.flow.money.Money;
 
 public class Withdrawal {
@@ -29,7 +29,7 @@ public class Withdrawal {
         }
     }
 
-    public static ReceiptStamper receipt(BankAccount account) {
-        return new DebitStamper(account, Action.Withdrawal);
+    public static ReceiptPrinter receipt(BankAccount account) {
+        return new DebitPrinter(account, Action.Withdrawal);
     }
 }
