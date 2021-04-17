@@ -1,4 +1,4 @@
-package ar.com.flow.bankaccount.transaction.transfer;
+package ar.com.flow.bankaccount.transfer;
 
 public class SameAccountException extends RuntimeException {
 

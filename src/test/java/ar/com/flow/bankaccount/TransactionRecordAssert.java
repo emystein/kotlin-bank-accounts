@@ -1,8 +1,8 @@
 package ar.com.flow.bankaccount;
 
 import ar.com.flow.bankaccount.balance.Balance;
-import ar.com.flow.bankaccount.transaction.Action;
-import ar.com.flow.bankaccount.transaction.FundsMovement;
+import ar.com.flow.bankaccount.transaction.receipt.Action;
+import ar.com.flow.bankaccount.transaction.receipt.FundsMovement;
 import ar.com.flow.bankaccount.transaction.receipt.Receipt;
 import ar.com.flow.money.Money;
 import org.assertj.core.api.AbstractAssert;

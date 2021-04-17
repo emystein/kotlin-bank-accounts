@@ -1,12 +1,12 @@
-package ar.com.flow.bankaccount.transaction.transfer;
+package ar.com.flow.bankaccount;
 
-import ar.com.flow.bankaccount.BankAccount;
-import ar.com.flow.bankaccount.transaction.Action;
 import ar.com.flow.bankaccount.transaction.Step;
+import ar.com.flow.bankaccount.transaction.Transaction;
+import ar.com.flow.bankaccount.transaction.receipt.Action;
 import ar.com.flow.bankaccount.transaction.receipt.CreditPrinter;
 import ar.com.flow.bankaccount.transaction.receipt.DebitPrinter;
-import ar.com.flow.bankaccount.transaction.Transaction;
-import ar.com.flow.bankaccount.transaction.withdrawal.SufficientFunds;
+import ar.com.flow.bankaccount.transfer.DifferentAccounts;
+import ar.com.flow.bankaccount.withdrawal.SufficientFunds;
 import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
 

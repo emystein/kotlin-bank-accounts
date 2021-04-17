@@ -1,4 +1,4 @@
-package ar.com.flow.bankaccount.transaction;
+package ar.com.flow.bankaccount.transaction.receipt;
 
 public enum Action {
     Withdrawal,

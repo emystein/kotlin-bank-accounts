@@ -1,4 +1,4 @@
-package ar.com.flow.bankaccount.transaction.transfer;
+package ar.com.flow.bankaccount.transfer;
 
 import ar.com.flow.bankaccount.BankAccount;
 import ar.com.flow.bankaccount.transaction.Precondition;

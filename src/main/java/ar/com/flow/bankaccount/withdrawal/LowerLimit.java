@@ -1,4 +1,4 @@
-package ar.com.flow.bankaccount.transaction.withdrawal;
+package ar.com.flow.bankaccount.withdrawal;
 
 import ar.com.flow.bankaccount.BankAccount;
 import ar.com.flow.bankaccount.balance.Balance;

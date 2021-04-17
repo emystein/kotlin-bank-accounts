@@ -1,7 +1,7 @@
 package ar.com.flow.bankaccount;
 
 import ar.com.flow.bankaccount.balance.Balance;
-import ar.com.flow.bankaccount.transaction.Action;
+import ar.com.flow.bankaccount.transaction.receipt.Action;
 import ar.com.flow.bankaccount.transaction.receipt.Receipt;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
