@@ -20,20 +20,15 @@ public class Transaction {
     public void execute() {
         preconditions.check();
 
-        var finishedSteps = new ArrayList<Algorithm>();
+        var state = new TransactionState(amount);
 
         for (Algorithm step : steps) {
             try {
-                step.execute(amount);
-                finishedSteps.add(step);
+                state.execute(step);
             } catch (Exception e) {
-                undo(finishedSteps);
+                state.rollback();
                 return;
             }
         }
-    }
-
-    public void undo(List<Algorithm> finishedSteps) {
-        finishedSteps.forEach(step -> step.undo(amount));
     }
 }
