@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @Getter
-public class TransactionRecord {
+public class Receipt {
     private final BankAccount destinationAccount;
     private final LocalDateTime dateTime;
     private final FundsMovement movement;
@@ -18,10 +18,10 @@ public class TransactionRecord {
     private final Balance amount;
     private final Balance resultBalance;
 
-    public static TransactionRecord debit(BankAccount destinationAccount, Action action, Money amount) {
+    public static Receipt debit(BankAccount destinationAccount, Action action, Money amount) {
         Balance balance = Balance.negative(amount);
 
-        return new TransactionRecord(destinationAccount,
+        return new Receipt(destinationAccount,
                 LocalDateTime.now(),
                 FundsMovement.Debit,
                 action,
@@ -30,10 +30,10 @@ public class TransactionRecord {
         );
     }
 
-    public static TransactionRecord credit(BankAccount destinationAccount, Action action, Money amount) {
+    public static Receipt credit(BankAccount destinationAccount, Action action, Money amount) {
         Balance positive = Balance.positive(amount);
 
-        return new TransactionRecord(destinationAccount,
+        return new Receipt(destinationAccount,
                 LocalDateTime.now(),
                 FundsMovement.Credit,
                 action,

@@ -1,7 +1,7 @@
 package ar.com.flow.bankaccount;
 
 import ar.com.flow.bankaccount.balance.Balance;
-import ar.com.flow.bankaccount.transaction.TransactionRecord;
+import ar.com.flow.bankaccount.transaction.Receipt;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,30 +12,30 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toList;
 
 public class InMemoryStatement implements Statement {
-    private List<TransactionRecord> history = new ArrayList<>();
+    private List<Receipt> history = new ArrayList<>();
 
     public int total() {
         return history.size();
     }
 
-    public Optional<TransactionRecord> first() {
+    public Optional<Receipt> first() {
         return history.stream().findFirst();
     }
 
-    public Optional<TransactionRecord> last() {
+    public Optional<Receipt> last() {
         return history.stream().reduce((first, second) -> second);
     }
 
-    public void add(TransactionRecord record) {
-        history.add(record);
+    public void add(Receipt receipt) {
+        history.add(receipt);
     }
 
-    public boolean contains(TransactionRecord record) {
-        return history.contains(record);
+    public boolean contains(Receipt receipt) {
+        return history.contains(receipt);
     }
 
-    public boolean containsInOrder(TransactionRecord... records) {
-        List<TransactionRecord> indexedMovements = Arrays.asList(records);
+    public boolean containsInOrder(Receipt... records) {
+        List<Receipt> indexedMovements = Arrays.asList(records);
 
         return history.stream()
                 .filter(indexedMovements::contains)
@@ -52,16 +52,16 @@ public class InMemoryStatement implements Statement {
     }
 
     public Optional<Balance> getInitialBalance() {
-        return first().map(TransactionRecord::getAmount);
+        return first().map(Receipt::getAmount);
     }
 
     private Optional<Balance> sum(int numberOfTransactions) {
         return entries(numberOfTransactions)
-                .map(TransactionRecord::getAmount)
+                .map(Receipt::getAmount)
                 .reduce(Balance::plus);
     }
 
-    private Stream<TransactionRecord> entries(int numberOfEntries) {
+    private Stream<Receipt> entries(int numberOfEntries) {
         if (!history.isEmpty()) {
             return history.stream().limit(numberOfEntries);
         } else {

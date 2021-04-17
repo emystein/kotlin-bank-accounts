@@ -1,7 +1,7 @@
 package ar.com.flow.bankaccount;
 
 import ar.com.flow.bankaccount.balance.Balance;
-import ar.com.flow.bankaccount.transaction.TransactionRecord;
+import ar.com.flow.bankaccount.transaction.Receipt;
 import ar.com.flow.money.Money;
 
 public interface BankAccount {
@@ -19,7 +19,7 @@ public interface BankAccount {
 
     void transfer(BankAccount creditAccount, Money amountToTransfer);
 
-    void addTransactionRecord(TransactionRecord transactionRecord);
+    void addTransactionRecord(Receipt receipt);
 
     Statement getStatement();
 

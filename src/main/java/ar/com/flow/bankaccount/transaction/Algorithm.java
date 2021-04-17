@@ -7,15 +7,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Algorithm {
     private final BankAccount account;
-    private final ProofStamper proofStamper;
+    private final ReceipPrinter receipPrinter;
 
-    TransactionRecord execute(Money amount) {
-        TransactionRecord record = proofStamper.record(amount);
-        account.addTransactionRecord(record);
-        return record;
+    Receipt execute(Money amount) {
+        Receipt receipt = receipPrinter.receipt(amount);
+        account.addTransactionRecord(receipt);
+        return receipt;
     }
 
-    void undo(Money amount) {
-        account.addTransactionRecord(proofStamper.revert(amount));
+    Receipt undo(Money amount) {
+        Receipt receipt = receipPrinter.revert(amount);
+        account.addTransactionRecord(receipt);
+        return receipt;
     }
 }

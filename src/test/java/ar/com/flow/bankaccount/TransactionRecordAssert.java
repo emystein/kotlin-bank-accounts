@@ -3,20 +3,20 @@ package ar.com.flow.bankaccount;
 import ar.com.flow.bankaccount.balance.Balance;
 import ar.com.flow.bankaccount.transaction.Action;
 import ar.com.flow.bankaccount.transaction.FundsMovement;
-import ar.com.flow.bankaccount.transaction.TransactionRecord;
+import ar.com.flow.bankaccount.transaction.Receipt;
 import ar.com.flow.money.Money;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TransactionRecordAssert extends AbstractAssert<TransactionRecordAssert, TransactionRecord> {
-    public static TransactionRecordAssert assertThat(TransactionRecord statement) {
+public class TransactionRecordAssert extends AbstractAssert<TransactionRecordAssert, Receipt> {
+    public static TransactionRecordAssert assertThat(Receipt statement) {
         return new TransactionRecordAssert(statement);
     }
 
-    public TransactionRecordAssert(TransactionRecord record) {
-        super(record, TransactionRecordAssert.class);
+    public TransactionRecordAssert(Receipt receipt) {
+        super(receipt, TransactionRecordAssert.class);
     }
 
     public TransactionRecordAssert hasMovement(FundsMovement expected) {

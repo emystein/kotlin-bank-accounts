@@ -1,17 +1,17 @@
 package ar.com.flow.bankaccount;
 
-import ar.com.flow.bankaccount.transaction.TransactionRecord;
+import ar.com.flow.bankaccount.transaction.Receipt;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 
 import java.util.Optional;
 
-public class OptionalTransactionRecordAssert extends AbstractAssert<OptionalTransactionRecordAssert, Optional<TransactionRecord>> {
-    public static OptionalTransactionRecordAssert assertThat(Optional<TransactionRecord> statement) {
+public class OptionalTransactionRecordAssert extends AbstractAssert<OptionalTransactionRecordAssert, Optional<Receipt>> {
+    public static OptionalTransactionRecordAssert assertThat(Optional<Receipt> statement) {
         return new OptionalTransactionRecordAssert(statement);
     }
     
-    public OptionalTransactionRecordAssert(Optional<TransactionRecord> statement) {
+    public OptionalTransactionRecordAssert(Optional<Receipt> statement) {
         super(statement, OptionalTransactionRecordAssert.class);
     }
 

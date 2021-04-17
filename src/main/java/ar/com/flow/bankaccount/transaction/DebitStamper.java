@@ -5,15 +5,15 @@ import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class DebitStamper implements ProofStamper {
+public class DebitStamper implements ReceipPrinter {
     private final BankAccount account;
     private final Action action;
 
-    public TransactionRecord record(Money amount) {
-        return TransactionRecord.debit(account, action, amount);
+    public Receipt receipt(Money amount) {
+        return Receipt.debit(account, action, amount);
     }
 
-    public TransactionRecord revert(Money amount) {
-        return TransactionRecord.credit(account, action, amount);
+    public Receipt revert(Money amount) {
+        return Receipt.credit(account, action, amount);
     }
 }

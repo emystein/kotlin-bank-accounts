@@ -2,8 +2,7 @@ package ar.com.flow.bankaccount;
 
 import ar.com.flow.bankaccount.balance.Balance;
 import ar.com.flow.bankaccount.transaction.Action;
-import ar.com.flow.bankaccount.transaction.FundsMovement;
-import ar.com.flow.bankaccount.transaction.TransactionRecord;
+import ar.com.flow.bankaccount.transaction.Receipt;
 import ar.com.flow.money.Dollars;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,16 +19,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class StatementTest {
     private BankAccount franciscosAccount;
     private Statement statement;
-    private TransactionRecord dollars10Record;
-    private TransactionRecord dollars20Record;
-    private TransactionRecord minusDollars20Record;
+    private Receipt dollars10Record;
+    private Receipt dollars20Record;
+    private Receipt minusDollars20Record;
 
     @BeforeEach
     void setUp() {
         franciscosAccount = createSavingsAccountFor(francisco, dollars100);
-        dollars10Record = TransactionRecord.credit(franciscosAccount, Action.Deposit, dollars10);
-        dollars20Record = TransactionRecord.credit(franciscosAccount, Action.Deposit, dollars20);
-        minusDollars20Record = TransactionRecord.debit(franciscosAccount, Action.Withdrawal, dollars20);
+        dollars10Record = Receipt.credit(franciscosAccount, Action.Deposit, dollars10);
+        dollars20Record = Receipt.credit(franciscosAccount, Action.Deposit, dollars20);
+        minusDollars20Record = Receipt.debit(franciscosAccount, Action.Withdrawal, dollars20);
         statement = new InMemoryStatement();
     }
 

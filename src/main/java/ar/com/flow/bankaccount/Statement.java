@@ -1,22 +1,22 @@
 package ar.com.flow.bankaccount;
 
 import ar.com.flow.bankaccount.balance.Balance;
-import ar.com.flow.bankaccount.transaction.TransactionRecord;
+import ar.com.flow.bankaccount.transaction.Receipt;
 
 import java.util.Optional;
 
 public interface Statement {
     int total();
 
-    Optional<TransactionRecord> first();
+    Optional<Receipt> first();
 
-    Optional<TransactionRecord> last();
+    Optional<Receipt> last();
 
-    void add(TransactionRecord record);
+    void add(Receipt receipt);
 
-    boolean contains(TransactionRecord record);
+    boolean contains(Receipt receipt);
 
-    boolean containsInOrder(TransactionRecord... records);
+    boolean containsInOrder(Receipt... records);
 
     Optional<Balance> getCurrentBalance();
 
