@@ -5,7 +5,7 @@ import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class DebitStamper implements ReceipPrinter {
+public class DebitStamper implements ReceiptPrinter {
     private final BankAccount account;
     private final Action action;
 

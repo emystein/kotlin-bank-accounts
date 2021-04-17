@@ -2,13 +2,13 @@ package ar.com.flow.bankaccount.transaction.transfer;
 
 import ar.com.flow.bankaccount.BankAccount;
 import ar.com.flow.bankaccount.transaction.Action;
-import ar.com.flow.bankaccount.transaction.ReceipPrinter;
+import ar.com.flow.bankaccount.transaction.ReceiptPrinter;
 import ar.com.flow.bankaccount.transaction.Receipt;
 import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class TransferDebitStamper implements ReceipPrinter {
+public class TransferDebitStamper implements ReceiptPrinter {
     private final BankAccount creditAccount;
 
     public Receipt receipt(Money amount) {
