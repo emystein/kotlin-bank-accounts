@@ -2,7 +2,7 @@ package ar.com.flow.bankaccount;
 
 import ar.com.flow.bankaccount.balance.Balance;
 import ar.com.flow.bankaccount.transaction.Action;
-import ar.com.flow.bankaccount.transaction.Receipt;
+import ar.com.flow.bankaccount.transaction.receipt.Receipt;
 import ar.com.flow.money.Dollars;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,6 @@ import java.util.Optional;
 import static ar.com.flow.bankaccount.TestObjects.createSavingsAccountFor;
 import static ar.com.flow.bankaccount.TestObjects.francisco;
 import static ar.com.flow.money.TestObjects.*;
-import static java.time.LocalDateTime.now;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

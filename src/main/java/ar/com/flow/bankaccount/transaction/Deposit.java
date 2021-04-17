@@ -1,6 +1,7 @@
 package ar.com.flow.bankaccount.transaction;
 
 import ar.com.flow.bankaccount.BankAccount;
+import ar.com.flow.bankaccount.transaction.receipt.CreditStamper;
 import ar.com.flow.money.Money;
 
 public class Deposit {
@@ -18,7 +19,7 @@ public class Deposit {
         public Transaction amount(Money amountToDeposit) {
             return Transaction.builder()
                     .amount(amountToDeposit)
-                    .step(new Algorithm(creditAccount, new DepositStamper(creditAccount)))
+                    .step(new Algorithm(creditAccount, CreditStamper.deposit(creditAccount)))
                     .build();
         }
     }

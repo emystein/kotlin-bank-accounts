@@ -1,7 +1,7 @@
 package ar.com.flow.bankaccount;
 
 import ar.com.flow.bankaccount.balance.Balance;
-import ar.com.flow.bankaccount.transaction.Receipt;
+import ar.com.flow.bankaccount.transaction.receipt.Receipt;
 
 import java.util.Optional;
 

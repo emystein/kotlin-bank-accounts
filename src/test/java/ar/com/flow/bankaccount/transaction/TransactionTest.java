@@ -1,6 +1,7 @@
 package ar.com.flow.bankaccount.transaction;
 
 import ar.com.flow.bankaccount.BankAccount;
+import ar.com.flow.bankaccount.transaction.receipt.DebitStamper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

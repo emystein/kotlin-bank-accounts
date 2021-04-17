@@ -1,6 +1,7 @@
-package ar.com.flow.bankaccount.transaction;
+package ar.com.flow.bankaccount.transaction.receipt;
 
 import ar.com.flow.bankaccount.BankAccount;
+import ar.com.flow.bankaccount.transaction.Action;
 import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
 
@@ -8,6 +9,14 @@ import lombok.RequiredArgsConstructor;
 public class DebitStamper implements ReceiptStamper {
     private final BankAccount account;
     private final Action action;
+
+    public static DebitStamper withdrawal(BankAccount account) {
+        return new DebitStamper(account, Action.Withdrawal);
+    }
+
+    public static DebitStamper transfer(BankAccount account) {
+        return new DebitStamper(account, Action.Transfer);
+    }
 
     public Receipt print(Money amount) {
         return Receipt.debit(account, action, amount);

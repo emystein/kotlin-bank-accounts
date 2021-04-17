@@ -1,6 +1,6 @@
 package ar.com.flow.bankaccount;
 
-import ar.com.flow.bankaccount.transaction.Receipt;
+import ar.com.flow.bankaccount.transaction.receipt.Receipt;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 
