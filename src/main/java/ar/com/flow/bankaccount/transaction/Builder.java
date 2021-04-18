@@ -6,22 +6,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class TransactionBuilder {
+public class Builder {
     private Collection<Precondition> preconditions = new ArrayList<>();
     private List<Step> steps = new ArrayList<>();
     private Money amount;
 
-    public TransactionBuilder precondition(Precondition precondition) {
+    public Builder precondition(Precondition precondition) {
         preconditions.add(precondition);
         return this;
     }
 
-    public TransactionBuilder step(Step step) {
+    public Builder step(Step step) {
         steps.add(step);
         return this;
     }
 
-    public TransactionBuilder amount(Money amount) {
+    public Builder amount(Money amount) {
         this.amount = amount;
         return this;
     }

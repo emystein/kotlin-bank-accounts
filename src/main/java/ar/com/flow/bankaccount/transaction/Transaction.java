@@ -11,14 +11,14 @@ public class Transaction {
     private final Collection<Step> steps;
     private final Money amount;
 
-    public static TransactionBuilder builder() {
-        return new TransactionBuilder();
+    public static Builder builder() {
+        return new Builder();
     }
 
     public void execute() {
         preconditions.check();
 
-        var state = new TransactionState();
+        var state = new State();
 
         for (Step step : steps) {
             try {

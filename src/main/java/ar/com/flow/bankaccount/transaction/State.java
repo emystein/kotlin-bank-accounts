@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class TransactionState {
+class State {
     private List<UndoStep> undoSteps = new ArrayList<>();
 
-    public void completed(Step completedStep, Money amount) {
+    void completed(Step completedStep, Money amount) {
         undoSteps.add(new UndoStep(completedStep, amount));
     }
 
-    public void rollback() {
+    void rollback() {
         undoSteps.forEach(UndoStep::execute);
     }
 }
