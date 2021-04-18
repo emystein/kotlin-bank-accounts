@@ -17,7 +17,7 @@ public interface BankAccount {
 
     void withdraw(Money amountToWithdraw);
 
-    void transfer(BankAccount creditAccount, Money amountToTransfer);
+    void transfer(Money amountToTransfer, BankAccount creditAccount);
 
     void addReceipt(Receipt receipt);
 

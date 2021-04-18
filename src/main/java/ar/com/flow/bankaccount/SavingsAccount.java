@@ -50,7 +50,7 @@ public class SavingsAccount implements BankAccount {
                 .execute();
     }
 
-    public void transfer(BankAccount creditAccount, Money amountToTransfer) {
+    public void transfer(Money amountToTransfer, BankAccount creditAccount) {
         Transfer.from(this)
                 .to(creditAccount)
                 .amount(amountToTransfer)

@@ -42,7 +42,7 @@ public class CheckingAccountTest {
 
     @Test
     void transferAmountLessThanAvailableFunds() {
-        franciscosAccount.transfer(mabelsAccount, dollars10);
+        franciscosAccount.transfer(dollars10, mabelsAccount);
 
         assertThat(franciscosAccount).decreasedFunds(dollars10);
         assertThat(mabelsAccount).increasedFunds(dollars10);
@@ -50,7 +50,7 @@ public class CheckingAccountTest {
 
     @Test
     void transferAmountGreaterThanPositiveBalanceAndAboveWithdrawalLimit() {
-        franciscosAccount.transfer(mabelsAccount, dollars110);
+        franciscosAccount.transfer(dollars110, mabelsAccount);
 
         assertThat(franciscosAccount).decreasedFunds(dollars110);
         assertThat(mabelsAccount).increasedFunds(dollars110);
@@ -58,7 +58,7 @@ public class CheckingAccountTest {
 
     @Test
     void transferAmountCanNotExceedWithdrawalLimit() {
-        assertThrows(InsufficientFundsException.class, () -> franciscosAccount.transfer(mabelsAccount, dollars300));
+        assertThrows(InsufficientFundsException.class, () -> franciscosAccount.transfer(dollars300, mabelsAccount));
 
         assertThat(franciscosAccount).keepsInitialBalance();
         assertThat(mabelsAccount).keepsInitialBalance();

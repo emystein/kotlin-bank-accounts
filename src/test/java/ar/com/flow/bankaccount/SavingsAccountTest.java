@@ -65,7 +65,7 @@ public class SavingsAccountTest {
 
     @Test
     void transferAmountLessThanAvailableFunds() {
-        franciscosAccount.transfer(mabelsAccount, dollars10);
+        franciscosAccount.transfer(dollars10, mabelsAccount);
 
         assertThat(franciscosAccount).decreasedFunds(dollars10);
 
@@ -88,7 +88,7 @@ public class SavingsAccountTest {
     @Test
     void canNotTransferAmountGreaterThanAvailableFunds() {
         assertThrows(InsufficientFundsException.class, () ->
-                franciscosAccount.transfer(mabelsAccount, dollars200));
+                franciscosAccount.transfer(dollars200, mabelsAccount));
 
         assertThat(franciscosAccount).keepsInitialBalance();
         assertThat(mabelsAccount).keepsInitialBalance();
@@ -97,7 +97,7 @@ public class SavingsAccountTest {
     @Test
     void canNotTransferToSelf() {
         assertThrows(SameAccountException.class, () ->
-                franciscosAccount.transfer(franciscosAccount, dollars10));
+                franciscosAccount.transfer(dollars10, franciscosAccount));
 
         assertThat(franciscosAccount).keepsInitialBalance();
     }
