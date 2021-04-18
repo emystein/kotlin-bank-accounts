@@ -1,12 +1,10 @@
 package ar.com.flow.bankaccount.transaction;
 
 import ar.com.flow.money.Money;
-import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RequiredArgsConstructor
 class State {
     private List<UndoStep> undoSteps = new ArrayList<>();
 

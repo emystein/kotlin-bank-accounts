@@ -10,22 +10,22 @@ import ar.com.flow.bankaccount.withdrawal.SufficientFunds;
 import ar.com.flow.money.Money;
 import lombok.RequiredArgsConstructor;
 
-public class Transfer {
-    public static BankTransferBuilder from(BankAccount debitAccount) {
+class Transfer {
+    static BankTransferBuilder from(BankAccount debitAccount) {
         return new BankTransferBuilder(debitAccount);
     }
 
     @RequiredArgsConstructor
-    public static class BankTransferBuilder {
+    static class BankTransferBuilder {
         private final BankAccount debitAccount;
         private BankAccount creditAccount;
 
-        public BankTransferBuilder to(BankAccount creditAccount) {
+        BankTransferBuilder to(BankAccount creditAccount) {
             this.creditAccount = creditAccount;
             return this;
         }
 
-        public Transaction amount(Money amountToTransfer) {
+        Transaction amount(Money amountToTransfer) {
             return Transaction.builder()
                     .precondition(new SufficientFunds(debitAccount, amountToTransfer))
                     .precondition(new DifferentAccounts(debitAccount, creditAccount))
@@ -36,11 +36,11 @@ public class Transfer {
         }
     }
 
-    public static DebitPrinter debitReceipt(BankAccount account) {
+    static DebitPrinter debitReceipt(BankAccount account) {
         return new DebitPrinter(account, Action.Transfer);
     }
 
-    public static CreditPrinter creditReceipt(BankAccount account) {
+    static CreditPrinter creditReceipt(BankAccount account) {
         return new CreditPrinter(account, Action.Transfer);
     }
 }

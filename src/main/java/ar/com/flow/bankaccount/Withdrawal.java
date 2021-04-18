@@ -8,12 +8,12 @@ import ar.com.flow.bankaccount.transaction.receipt.ReceiptPrinter;
 import ar.com.flow.bankaccount.withdrawal.SufficientFunds;
 import ar.com.flow.money.Money;
 
-public class Withdrawal {
-    public static WithdrawalBuilder from(BankAccount debitAccount) {
+class Withdrawal {
+    static WithdrawalBuilder from(BankAccount debitAccount) {
         return new WithdrawalBuilder(debitAccount);
     }
 
-    public static class WithdrawalBuilder {
+    static class WithdrawalBuilder {
         private final BankAccount debitAccount;
 
         public WithdrawalBuilder(BankAccount debitAccount) {
@@ -29,7 +29,7 @@ public class Withdrawal {
         }
     }
 
-    public static ReceiptPrinter receipt(BankAccount account) {
+    static ReceiptPrinter receipt(BankAccount account) {
         return new DebitPrinter(account, Action.Withdrawal);
     }
 }
