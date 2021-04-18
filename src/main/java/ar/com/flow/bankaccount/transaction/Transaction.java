@@ -16,9 +16,7 @@ public class Transaction {
     }
 
     public void execute() {
-        for (Precondition precondition : preconditions) {
-            precondition.check();
-        }
+        preconditions.forEach(Precondition::check);
 
         var state = new State();
 

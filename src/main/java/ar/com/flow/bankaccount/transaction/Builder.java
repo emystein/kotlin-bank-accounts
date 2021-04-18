@@ -3,11 +3,10 @@ package ar.com.flow.bankaccount.transaction;
 import ar.com.flow.money.Money;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class Builder {
-    private Collection<Precondition> preconditions = new ArrayList<>();
+    private List<Precondition> preconditions = new ArrayList<>();
     private List<Step> steps = new ArrayList<>();
     private Money amount;
 
