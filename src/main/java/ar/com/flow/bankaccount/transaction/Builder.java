@@ -27,7 +27,7 @@ public class Builder {
     }
 
     public Transaction build() {
-        return new Transaction(new Preconditions(preconditions), steps, amount);
+        return new Transaction(preconditions, steps, amount);
     }
 }
 

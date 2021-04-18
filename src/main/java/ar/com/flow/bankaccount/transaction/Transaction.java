@@ -7,7 +7,7 @@ import java.util.Collection;
 
 @AllArgsConstructor
 public class Transaction {
-    private Preconditions preconditions;
+    private Collection<Precondition> preconditions;
     private final Collection<Step> steps;
     private final Money amount;
 
@@ -16,7 +16,9 @@ public class Transaction {
     }
 
     public void execute() {
-        preconditions.check();
+        for (Precondition precondition : preconditions) {
+            precondition.check();
+        }
 
         var state = new State();
 
