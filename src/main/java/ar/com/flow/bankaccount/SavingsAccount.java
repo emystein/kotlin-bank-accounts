@@ -20,18 +20,15 @@ public class SavingsAccount implements BankAccount {
     private Statement statement = new InMemoryStatement();
 
     public Balance getInitialBalance() {
-        return statement.getInitialBalance()
-                .orElse(Balance.zero(getCurrency()));
+        return statement.getInitialBalance().orElse(zeroBalance());
     }
 
     public Balance getBalance() {
-        return statement.getCurrentBalance()
-                .orElse(Balance.zero(getCurrency()));
+        return statement.getCurrentBalance().orElse(zeroBalance());
     }
 
     public Balance getPreviousBalance() {
-        return statement.getPreviousBalance()
-                .orElse(Balance.zero(getCurrency()));
+        return statement.getPreviousBalance().orElse(zeroBalance());
     }
 
     public boolean withdrawalLimitSupports(Money amount) {
@@ -59,5 +56,9 @@ public class SavingsAccount implements BankAccount {
 
     public void addReceipt(Receipt receipt) {
         statement.add(receipt);
+    }
+
+    private Balance zeroBalance() {
+        return Balance.zero(getCurrency());
     }
 }
