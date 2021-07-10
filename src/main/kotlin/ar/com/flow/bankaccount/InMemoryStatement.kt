@@ -2,10 +2,10 @@ package ar.com.flow.bankaccount
 
 import ar.com.flow.bankaccount.balance.Balance
 import ar.com.flow.bankaccount.transaction.receipt.Receipt
-import ar.com.flow.money.Money
 import java.util.*
+import kotlin.math.max
 
-class InMemoryStatement : Statement {
+class InMemoryStatement(override val currency: String) : Statement {
     private val history: MutableList<Receipt> = ArrayList()
 
     override fun total(): Int {
@@ -13,19 +13,11 @@ class InMemoryStatement : Statement {
     }
 
     override fun first(): Optional<Receipt> {
-        return if (history.isNotEmpty()) {
-            Optional.of(history[0])
-        } else {
-            Optional.empty()
-        }
+        return Optional.ofNullable(history.firstOrNull())
     }
 
     override fun last(): Optional<Receipt> {
-        return if (history.isNotEmpty()) {
-            Optional.of(history[history.size - 1])
-        } else {
-            Optional.empty()
-        }
+        return Optional.ofNullable(history.lastOrNull())
     }
 
     override fun add(receipt: Receipt) {
@@ -37,38 +29,23 @@ class InMemoryStatement : Statement {
     }
 
     override fun containsInOrder(vararg records: Receipt): Boolean {
-        val indexedMovements: List<Receipt> = Arrays.asList(*records)
+        val expected = listOf(*records)
 
-        return (history.filter { o: Receipt -> indexedMovements.contains(o) }
-                == indexedMovements)
+        return (history.filter { receipt -> expected.contains(receipt) } == expected)
     }
 
-    override val currentBalance: Optional<Balance>
+    override val currentBalance: Balance
         get() = sum(total())
-    override val previousBalance: Optional<Balance>
-        get() = sum(total() - 1)
-    override val initialBalance: Optional<Balance>
-        get() = first().map(Receipt::amount)
+    override val previousBalance: Balance
+        get() = sum(max(0, total() - 1))
+    override val initialBalance: Balance
+        get() = if (first().isPresent) first().get().amount else zeroBalance()
 
-    private fun sum(numberOfTransactions: Int): Optional<Balance> {
-        if (history.isNotEmpty()) {
-            val currency: String = history.first().amount.currency
-
-            val amount: Int = entries(numberOfTransactions)
-                .map { it.amount }
-                .sumOf { it.amount }
-
-            return Optional.of(Balance.create(currency, amount))
-        } else {
-            return Optional.empty()
-        }
+    override fun sum(numberOfTransactions: Int): Balance {
+        return history.take(numberOfTransactions)
+            .map { receipt -> receipt.amount }
+            .fold(zeroBalance()) { balance, receiptAmount -> balance.plus(receiptAmount) }
     }
 
-    private fun entries(numberOfEntries: Int): List<Receipt> {
-        return if (history.isNotEmpty()) {
-            history.take(numberOfEntries)
-        } else {
-            listOf()
-        }
-    }
+    private fun zeroBalance() = Balance.zero(currency)
 }

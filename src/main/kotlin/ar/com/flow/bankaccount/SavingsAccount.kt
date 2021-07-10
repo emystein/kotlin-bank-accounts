@@ -12,14 +12,14 @@ class SavingsAccount(val owner: Customer, override val currency: String) : BankA
 
     var withdrawalLimit: WithdrawalLimit = CurrentFundsLimit()
 
-    override val statement: Statement = InMemoryStatement()
+    override val statement: Statement = InMemoryStatement(currency)
 
     override val initialBalance: Balance
-        get() = statement.initialBalance.orElse(zeroBalance())
+        get() = statement.initialBalance
     override val balance: Balance
-        get() = statement.currentBalance.orElse(zeroBalance())
+        get() = statement.currentBalance
     override val previousBalance: Balance
-        get() = statement.previousBalance.orElse(zeroBalance())
+        get() = statement.previousBalance
 
     override fun withdrawalLimitSupports(amount: Money): Boolean {
         return withdrawalLimit.accepts(this, amount)
@@ -46,9 +46,5 @@ class SavingsAccount(val owner: Customer, override val currency: String) : BankA
 
     override fun addReceipt(receipt: Receipt) {
         statement.add(receipt)
-    }
-
-    private fun zeroBalance(): Balance {
-        return zero(currency)
     }
 }

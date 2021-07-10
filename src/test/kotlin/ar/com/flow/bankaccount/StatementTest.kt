@@ -2,6 +2,7 @@ package ar.com.flow.bankaccount
 
 import ar.com.flow.bankaccount.TestObjects.createSavingsAccountFor
 import ar.com.flow.bankaccount.TestObjects.francisco
+import ar.com.flow.bankaccount.balance.Balance
 import ar.com.flow.bankaccount.balance.Balance.Companion.negative
 import ar.com.flow.bankaccount.balance.Balance.Companion.positive
 import ar.com.flow.bankaccount.transaction.receipt.Action
@@ -24,21 +25,25 @@ class StatementTest {
     private lateinit var dollars20Record: Receipt
     private lateinit var minusDollars20Record: Receipt
 
+    private val currency = "USD"
+
+    private val zeroBalance = Balance.zero(currency)
+
     @BeforeEach
     fun setUp() {
         franciscosAccount = createSavingsAccountFor(francisco, TestObjects.dollars100)
         dollars10Record = credit(franciscosAccount, Action.Deposit, dollars10)
         dollars20Record = credit(franciscosAccount, Action.Deposit, TestObjects.dollars20)
         minusDollars20Record = debit(franciscosAccount, Action.Withdrawal, TestObjects.dollars20)
-        statement = InMemoryStatement()
+        statement = InMemoryStatement(currency)
     }
 
     @Test
     fun newStatementIsEmpty() {
         assertEquals(Optional.empty<Any>(), statement.first())
-        assertEquals(Optional.empty<Any>(), statement.initialBalance)
-        assertEquals(Optional.empty<Any>(), statement.currentBalance)
-        assertEquals(Optional.empty<Any>(), statement.previousBalance)
+        assertEquals(zeroBalance, statement.initialBalance)
+        assertEquals(zeroBalance, statement.currentBalance)
+        assertEquals(zeroBalance, statement.previousBalance)
     }
 
     @Test
@@ -61,9 +66,9 @@ class StatementTest {
         statement.add(dollars10Record)
         statement.add(dollars20Record)
 
-        assertEquals(Optional.of(positive(amount(10))), statement.initialBalance)
-        assertEquals(Optional.of(positive(amount(30))), statement.currentBalance)
-        assertEquals(Optional.of(positive(amount(10))), statement.previousBalance)
+        assertEquals(positive(amount(10)), statement.initialBalance)
+        assertEquals(positive(amount(30)), statement.currentBalance)
+        assertEquals(positive(amount(10)), statement.previousBalance)
     }
 
     @Test
@@ -71,6 +76,6 @@ class StatementTest {
         statement.add(dollars10Record)
         statement.add(minusDollars20Record)
 
-        assertEquals(Optional.of(negative(dollars10)), statement.currentBalance)
+        assertEquals(negative(dollars10), statement.currentBalance)
     }
 }
