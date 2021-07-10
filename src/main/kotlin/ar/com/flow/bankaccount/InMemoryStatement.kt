@@ -42,7 +42,7 @@ class InMemoryStatement(override val currency: String) : Statement {
         get() = if (first().isPresent) first().get().amount else zeroBalance()
 
     override fun sum(numberOfTransactions: Int): Balance {
-        return history.take(max(0, numberOfTransactions))
+        return history.take(max(numberOfTransactions, 0))
             .map { receipt -> receipt.amount }
             .fold(zeroBalance()) { balance, receiptAmount -> balance.plus(receiptAmount) }
     }
