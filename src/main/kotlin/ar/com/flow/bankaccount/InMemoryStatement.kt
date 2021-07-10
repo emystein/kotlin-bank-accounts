@@ -37,12 +37,12 @@ class InMemoryStatement(override val currency: String) : Statement {
     override val currentBalance: Balance
         get() = sum(total())
     override val previousBalance: Balance
-        get() = sum(max(0, total() - 1))
+        get() = sum(total() - 1)
     override val initialBalance: Balance
         get() = if (first().isPresent) first().get().amount else zeroBalance()
 
     override fun sum(numberOfTransactions: Int): Balance {
-        return history.take(numberOfTransactions)
+        return history.take(max(0, numberOfTransactions))
             .map { receipt -> receipt.amount }
             .fold(zeroBalance()) { balance, receiptAmount -> balance.plus(receiptAmount) }
     }

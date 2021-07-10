@@ -79,6 +79,4 @@ internal class InMemoryStatementTest {
 
         assertFalse(statement.containsInOrder(receipt2, receipt1))
     }
-
-    private fun zeroBalance() = Balance.zero(currency)
 }
