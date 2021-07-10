@@ -10,72 +10,72 @@ import ar.com.flow.money.Money
 import org.assertj.core.api.AbstractAssert
 import org.assertj.core.api.Assertions
 
-class TransactionRecordAssert(receipt: Receipt) :
-    AbstractAssert<TransactionRecordAssert, Receipt>(receipt, TransactionRecordAssert::class.java) {
+class ReceiptAssert(receipt: Receipt) :
+    AbstractAssert<ReceiptAssert, Receipt>(receipt, ReceiptAssert::class.java) {
     
-    fun hasMovement(expected: FundsMovement): TransactionRecordAssert {
+    fun hasMovement(expected: FundsMovement): ReceiptAssert {
         Assertions.assertThat(actual.movement).isEqualTo(expected)
         return this
     }
 
-    fun hasAction(expected: Action): TransactionRecordAssert {
+    fun hasAction(expected: Action): ReceiptAssert {
         Assertions.assertThat(actual.action).isEqualTo(expected)
         return this
     }
 
-    fun hasBalance(expected: Balance): TransactionRecordAssert {
+    fun hasBalance(expected: Balance): ReceiptAssert {
         Assertions.assertThat(actual.amount).isEqualTo(expected)
         return this
     }
 
-    fun hasCreditAccount(expected: BankAccount): TransactionRecordAssert {
+    fun hasCreditAccount(expected: BankAccount): ReceiptAssert {
         org.junit.jupiter.api.Assertions.assertEquals(expected, actual.destinationAccount)
         return this
     }
 
-    fun isDebit(): TransactionRecordAssert {
+    fun isDebit(): ReceiptAssert {
         hasMovement(FundsMovement.Debit)
         return this
     }
 
-    fun isCredit(): TransactionRecordAssert {
+    fun isCredit(): ReceiptAssert {
         hasMovement(FundsMovement.Credit)
         return this
     }
 
-    fun isDeposit(): TransactionRecordAssert {
+    fun isDeposit(): ReceiptAssert {
         hasAction(Action.Deposit)
         return this
     }
 
-    fun isWithdrawal(): TransactionRecordAssert {
+    fun isWithdrawal(): ReceiptAssert {
         hasAction(Action.Withdrawal)
         return this
     }
 
-    fun isTransfer(): TransactionRecordAssert {
+    fun isTransfer(): ReceiptAssert {
         hasAction(Action.Transfer)
         return this
     }
 
-    fun hasPositiveBalance(amount: Money): TransactionRecordAssert {
+    fun hasPositiveBalance(amount: Money): ReceiptAssert {
         hasBalance(positive(amount))
         return this
     }
 
-    fun hasNegativeBalance(amount: Money): TransactionRecordAssert {
+    fun hasNegativeBalance(amount: Money): ReceiptAssert {
         hasBalance(negative(amount))
         return this
     }
 
-    fun hasResultBalance(balance: Balance): TransactionRecordAssert {
+    fun hasResultBalance(balance: Balance): ReceiptAssert {
         Assertions.assertThat(actual.resultBalance).isEqualTo(balance)
         return this
     }
 
     companion object {
-        fun assertThat(statement: Receipt): TransactionRecordAssert {
-            return TransactionRecordAssert(statement)
+        fun assertThat(statement: Receipt): ReceiptAssert {
+            return ReceiptAssert(statement)
         }
     }
 }

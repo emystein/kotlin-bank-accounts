@@ -11,9 +11,9 @@ class OptionalTransactionRecordAssert(statement: Optional<Receipt>) :
         OptionalTransactionRecordAssert::class.java
     ) {
 
-    fun isPresent(): TransactionRecordAssert {
+    fun isPresent(): ReceiptAssert {
         Assertions.assertThat(actual).isPresent
-        return TransactionRecordAssert(actual.get())
+        return ReceiptAssert(actual.get())
     }
 
     companion object {

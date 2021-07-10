@@ -26,7 +26,7 @@ class ReceiptTest {
     fun recordCreditResultBalance() {
         val receipt = credit(franciscosAccount, Action.Deposit, dollars10)
 
-        TransactionRecordAssert.assertThat(receipt)
+        ReceiptAssert.assertThat(receipt)
             .hasResultBalance(positive(dollars110))
     }
 
@@ -34,7 +34,7 @@ class ReceiptTest {
     fun recordDebitResultBalance() {
         val receipt = debit(franciscosAccount, Action.Deposit, dollars10)
 
-        TransactionRecordAssert.assertThat(receipt)
+        ReceiptAssert.assertThat(receipt)
             .hasResultBalance(positive(dollars90))
     }
 }
