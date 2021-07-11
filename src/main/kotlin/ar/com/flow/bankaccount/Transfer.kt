@@ -1,8 +1,8 @@
 package ar.com.flow.bankaccount
 
+import ar.com.flow.bankaccount.transaction.Builder
 import ar.com.flow.bankaccount.transaction.Step
 import ar.com.flow.bankaccount.transaction.Transaction
-import ar.com.flow.bankaccount.transaction.Transaction.Companion.builder
 import ar.com.flow.bankaccount.transaction.receipt.Action
 import ar.com.flow.bankaccount.transaction.receipt.CreditPrinter
 import ar.com.flow.bankaccount.transaction.receipt.DebitPrinter
@@ -34,7 +34,7 @@ internal object Transfer {
         }
 
         fun amount(amountToTransfer: Money): Transaction {
-            return builder()
+            return Builder()
                 .precondition(
                     SufficientFunds(
                         debitAccount,

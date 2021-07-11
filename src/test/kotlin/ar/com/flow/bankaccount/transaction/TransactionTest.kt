@@ -4,7 +4,6 @@ import ar.com.flow.bankaccount.BankAccount
 import ar.com.flow.bankaccount.BankAccountAssert
 import ar.com.flow.bankaccount.TestObjects.createSavingsAccountFor
 import ar.com.flow.bankaccount.TestObjects.francisco
-import ar.com.flow.bankaccount.transaction.Transaction.Companion.builder
 import ar.com.flow.bankaccount.transaction.receipt.Action
 import ar.com.flow.bankaccount.transaction.receipt.DebitPrinter
 import ar.com.flow.money.TestObjects.dollars10
@@ -30,7 +29,7 @@ class TransactionTest {
 
         every { creditMock.execute(dollars10) } throws RuntimeException()
 
-        builder()
+        Builder()
             .step(debit)
             .step(creditMock)
             .amount(dollars10)

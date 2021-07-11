@@ -1,8 +1,8 @@
 package ar.com.flow.bankaccount
 
+import ar.com.flow.bankaccount.transaction.Builder
 import ar.com.flow.bankaccount.transaction.Step
 import ar.com.flow.bankaccount.transaction.Transaction
-import ar.com.flow.bankaccount.transaction.Transaction.Companion.builder
 import ar.com.flow.bankaccount.transaction.receipt.Action
 import ar.com.flow.bankaccount.transaction.receipt.DebitPrinter
 import ar.com.flow.bankaccount.transaction.receipt.ReceiptPrinter
@@ -20,7 +20,7 @@ internal object Withdrawal {
 
     internal class WithdrawalBuilder(private val debitAccount: BankAccount) {
         fun amount(amountToWithdraw: Money): Transaction {
-            return builder()
+            return Builder()
                 .amount(amountToWithdraw)
                 .precondition(
                     SufficientFunds(
