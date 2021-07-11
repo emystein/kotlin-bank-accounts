@@ -1,4 +1,4 @@
-package ar.com.flow.bankaccount
+package ar.com.flow.bankaccount.application.spring
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
