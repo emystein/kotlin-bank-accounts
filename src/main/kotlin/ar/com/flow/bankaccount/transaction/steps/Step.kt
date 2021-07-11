@@ -5,19 +5,15 @@ import ar.com.flow.bankaccount.transaction.receipt.Receipt
 import ar.com.flow.bankaccount.transaction.receipt.ReceiptPrinter
 import ar.com.flow.money.Money
 
-class Step(
-    private val account: BankAccount,
-    private val receiptPrinter: ReceiptPrinter
-) {
+class Step(private val account: BankAccount, private val receiptPrinter: ReceiptPrinter) {
     fun execute(amount: Money): Receipt {
-        return register(receiptPrinter.print(amount))
+        val receipt = receiptPrinter.print(amount)
+        account.addReceipt(receipt)
+        return receipt
     }
 
-    fun undo(amount: Money): Receipt {
-        return register(receiptPrinter.scratch(amount))
-    }
-
-    private fun register(receipt: Receipt): Receipt {
+    fun revoke(amount: Money): Receipt {
+        val receipt = receiptPrinter.scratch(amount)
         account.addReceipt(receipt)
         return receipt
     }
