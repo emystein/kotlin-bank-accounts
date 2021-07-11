@@ -17,6 +17,11 @@ class Builder {
         return this
     }
 
+    fun steps(vararg steps: Step): Builder {
+        steps.forEach { step -> this.steps.add(step) }
+        return this
+    }
+
     fun amount(amount: Money): Builder {
         this.amount = amount
         return this

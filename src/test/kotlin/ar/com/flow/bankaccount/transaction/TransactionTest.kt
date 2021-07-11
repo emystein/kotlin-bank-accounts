@@ -1,7 +1,7 @@
 package ar.com.flow.bankaccount.transaction
 
 import ar.com.flow.bankaccount.BankAccount
-import ar.com.flow.bankaccount.BankAccountAssert
+import ar.com.flow.bankaccount.BankAccountAssert.Companion.assertThat
 import ar.com.flow.bankaccount.TestObjects.createSavingsAccountFor
 import ar.com.flow.bankaccount.TestObjects.francisco
 import ar.com.flow.bankaccount.transaction.receipt.Action
@@ -30,12 +30,11 @@ class TransactionTest {
         every { creditMock.execute(dollars10) } throws RuntimeException()
 
         Builder()
-            .step(debit)
-            .step(creditMock)
+            .steps(debit, creditMock)
             .amount(dollars10)
             .build()
             .execute()
 
-        BankAccountAssert.assertThat(debitAccount).keepsInitialBalance()
+        assertThat(debitAccount).keepsInitialBalance()
     }
 }
