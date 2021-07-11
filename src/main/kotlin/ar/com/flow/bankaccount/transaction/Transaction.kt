@@ -18,8 +18,8 @@ class Transaction(
         for (step in steps) {
             try {
                 val executedStep = step.execute(amount)
-                state.executed(executedStep)
-            } catch (e: Exception) {
+                state.addExecutedStep(executedStep)
+            } catch (exception: Exception) {
                 state.rollback()
                 return
             }
