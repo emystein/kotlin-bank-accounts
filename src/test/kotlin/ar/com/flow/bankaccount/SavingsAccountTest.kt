@@ -1,9 +1,12 @@
 package ar.com.flow.bankaccount
 
+import ar.com.flow.bankaccount.TestObjects.francisco
+import ar.com.flow.bankaccount.TestObjects.mabel
 import ar.com.flow.bankaccount.balance.Balance.Companion.zero
 import ar.com.flow.bankaccount.transfer.SameAccountException
 import ar.com.flow.money.InsufficientFundsException
 import ar.com.flow.money.TestObjects.dollars10
+import ar.com.flow.money.TestObjects.dollars100
 import ar.com.flow.money.TestObjects.dollars200
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -17,15 +20,13 @@ class SavingsAccountTest {
     @BeforeEach
     fun setUp() {
         franciscosAccount =
-            TestObjects.createSavingsAccountFor(TestObjects.francisco, ar.com.flow.money.TestObjects.dollars100)
-        mabelsAccount = TestObjects.createSavingsAccountFor(TestObjects.mabel, ar.com.flow.money.TestObjects.dollars100)
+            TestObjects.createSavingsAccountFor(francisco, dollars100)
+        mabelsAccount = TestObjects.createSavingsAccountFor(mabel, dollars100)
     }
 
     @Test
-    fun createdAccountHasBasicInformation() {
-        val account = SavingsAccount(TestObjects.francisco, "ARS")
-        assertEquals(TestObjects.francisco, account.owner)
-        assertEquals("ARS", account.currency)
+    fun createdAccountHasBalance0() {
+        val account = SavingsAccount(francisco, "ARS")
         assertEquals(zero("ARS"), account.balance)
     }
 

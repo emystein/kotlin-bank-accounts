@@ -15,11 +15,11 @@ class SavingsAccount(val owner: Customer, override val currency: String) : BankA
     override val statement: Statement = InMemoryStatement(currency)
 
     override val initialBalance: Balance
-        get() = statement.initialBalance
+        get() = statement.getInitialBalance()
     override val balance: Balance
-        get() = statement.currentBalance
+        get() = statement.getCurrentBalance()
     override val previousBalance: Balance
-        get() = statement.previousBalance
+        get() = statement.getPreviousBalance()
 
     override fun withdrawalLimitSupports(amount: Money): Boolean {
         return withdrawalLimit.accepts(this, amount)

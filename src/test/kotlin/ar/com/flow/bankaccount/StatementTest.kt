@@ -43,9 +43,9 @@ class StatementTest {
     @Test
     fun newStatementIsEmpty() {
         assertEquals(Optional.empty<Any>(), statement.first())
-        assertEquals(zeroBalance, statement.initialBalance)
-        assertEquals(zeroBalance, statement.currentBalance)
-        assertEquals(zeroBalance, statement.previousBalance)
+        assertEquals(zeroBalance, statement.getInitialBalance())
+        assertEquals(zeroBalance, statement.getCurrentBalance())
+        assertEquals(zeroBalance, statement.getPreviousBalance())
     }
 
     @Test
@@ -115,9 +115,9 @@ class StatementTest {
         statement.add(dollars10DepositReceipt)
         statement.add(dollars10WithdrawReceipt)
 
-        assertEquals(positive(amount(10)), statement.initialBalance)
-        assertEquals(positive(amount(0)), statement.currentBalance)
-        assertEquals(positive(amount(10)), statement.previousBalance)
+        assertEquals(positive(amount(10)), statement.getInitialBalance())
+        assertEquals(positive(amount(0)), statement.getCurrentBalance())
+        assertEquals(positive(amount(10)), statement.getPreviousBalance())
     }
 
     @Test
@@ -125,6 +125,6 @@ class StatementTest {
         statement.add(dollars10DepositReceipt)
         statement.add(minusDollars20Record)
 
-        assertEquals(negative(dollars10), statement.currentBalance)
+        assertEquals(negative(dollars10), statement.getCurrentBalance())
     }
 }

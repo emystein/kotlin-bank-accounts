@@ -12,8 +12,8 @@ interface Statement {
     fun add(receipt: Receipt)
     operator fun contains(receipt: Receipt): Boolean
     fun containsInOrder(vararg records: Receipt): Boolean
-    val currentBalance: Balance
-    val previousBalance: Balance
-    val initialBalance: Balance
+    fun getInitialBalance(): Balance
+    fun getCurrentBalance(): Balance
+    fun getPreviousBalance(): Balance
     fun sum(numberOfTransactions: Int): Balance
 }
