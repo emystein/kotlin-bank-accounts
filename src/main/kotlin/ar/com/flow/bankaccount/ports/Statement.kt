@@ -6,7 +6,7 @@ import java.util.*
 
 interface Statement {
     val currency: String
-    fun total(): Int
+    fun count(): Int
     fun first(): Optional<Receipt>
     fun last(): Optional<Receipt>
     fun add(receipt: Receipt)

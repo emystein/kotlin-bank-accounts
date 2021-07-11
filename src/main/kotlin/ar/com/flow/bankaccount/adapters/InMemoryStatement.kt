@@ -9,7 +9,7 @@ import kotlin.math.max
 class InMemoryStatement(override val currency: String) : Statement {
     private val history: MutableList<Receipt> = ArrayList()
 
-    override fun total(): Int {
+    override fun count(): Int {
         return history.size
     }
 
@@ -37,9 +37,9 @@ class InMemoryStatement(override val currency: String) : Statement {
 
     override fun getInitialBalance(): Balance = if (first().isPresent) first().get().amount else zeroBalance()
 
-    override fun getCurrentBalance(): Balance = sum(total())
+    override fun getCurrentBalance(): Balance = sum(count())
 
-    override fun getPreviousBalance(): Balance = sum(total() - 1)
+    override fun getPreviousBalance(): Balance = sum(count() - 1)
 
     override fun sum(numberOfTransactions: Int): Balance {
         return history.take(max(numberOfTransactions, 0))
