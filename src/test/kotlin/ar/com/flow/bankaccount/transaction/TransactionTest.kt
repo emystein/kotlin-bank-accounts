@@ -5,7 +5,8 @@ import ar.com.flow.bankaccount.BankAccountAssert.Companion.assertThat
 import ar.com.flow.bankaccount.TestObjects.createSavingsAccountFor
 import ar.com.flow.bankaccount.TestObjects.francisco
 import ar.com.flow.bankaccount.transaction.receipt.Action
-import ar.com.flow.bankaccount.transaction.receipt.DebitPrinter
+import ar.com.flow.bankaccount.transaction.receipt.DebitPrint
+import ar.com.flow.bankaccount.transaction.receipt.DebitScratch
 import ar.com.flow.bankaccount.transaction.steps.Step
 import ar.com.flow.money.TestObjects.dollars10
 import ar.com.flow.money.TestObjects.dollars100
@@ -21,7 +22,11 @@ class TransactionTest {
     @BeforeEach
     fun setUp() {
         debitAccount = createSavingsAccountFor(francisco, dollars100)
-        debit = Step(debitAccount, DebitPrinter(debitAccount, Action.Transfer))
+        debit = Step(
+            debitAccount,
+            DebitPrint(debitAccount, Action.Transfer),
+            DebitScratch(debitAccount, Action.Transfer)
+        )
     }
 
     @Test

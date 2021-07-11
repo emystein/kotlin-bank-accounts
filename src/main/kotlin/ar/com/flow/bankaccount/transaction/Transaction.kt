@@ -7,7 +7,7 @@ import ar.com.flow.money.Money
 class Transaction(
     private val preconditions: Collection<Precondition>,
     private val steps: List<Step>,
-    private val amount: Money
+    private val amount: Money,
 ) {
 
     fun execute() {
@@ -17,8 +17,8 @@ class Transaction(
 
         for (step in steps) {
             try {
-                step.execute(amount)
-                state.completed(step, amount)
+                val executedStep = step.execute(amount)
+                state.executed(executedStep)
             } catch (e: Exception) {
                 state.rollback()
                 return

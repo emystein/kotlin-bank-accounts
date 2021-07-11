@@ -1,15 +1,13 @@
 package ar.com.flow.bankaccount.transaction.steps
 
-import ar.com.flow.money.Money
+class State {
+    private val executedSteps: MutableList<ExecutedStep> = mutableListOf()
 
-internal class State {
-    private val completedSteps: MutableList<CompletedStep> = ArrayList()
-
-    fun completed(stepToComplete: Step, amount: Money) {
-        completedSteps.add(CompletedStep(stepToComplete, amount))
+    fun executed(step: ExecutedStep) {
+        executedSteps.add(step);
     }
 
     fun rollback() {
-        completedSteps.forEach{ step: CompletedStep -> step.undo() }
+        executedSteps.forEach{ step: ExecutedStep -> step.undo() }
     }
 }
