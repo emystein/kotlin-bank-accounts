@@ -1,4 +1,4 @@
-package ar.com.flow.bankaccount.transaction
+package ar.com.flow.bankaccount.transaction.steps
 
 import ar.com.flow.bankaccount.BankAccount
 import ar.com.flow.bankaccount.transaction.receipt.Receipt

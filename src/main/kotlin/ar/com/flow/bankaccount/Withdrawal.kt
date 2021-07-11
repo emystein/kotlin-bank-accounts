@@ -1,7 +1,7 @@
 package ar.com.flow.bankaccount
 
 import ar.com.flow.bankaccount.transaction.Builder
-import ar.com.flow.bankaccount.transaction.Step
+import ar.com.flow.bankaccount.transaction.steps.Step
 import ar.com.flow.bankaccount.transaction.Transaction
 import ar.com.flow.bankaccount.transaction.receipt.Action
 import ar.com.flow.bankaccount.transaction.receipt.DebitPrinter
