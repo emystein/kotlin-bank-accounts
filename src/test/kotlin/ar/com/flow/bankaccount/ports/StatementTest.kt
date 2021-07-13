@@ -14,6 +14,7 @@ import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.debi
 import ar.com.flow.money.Dollars.Companion.amount
 import ar.com.flow.money.TestObjects
 import ar.com.flow.money.TestObjects.dollars10
+import ar.com.flow.money.TestObjects.dollars100
 import ar.com.flow.money.TestObjects.dollars20
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -34,7 +35,7 @@ class StatementTest {
 
     @BeforeEach
     fun setUp() {
-        franciscosAccount = createSavingsAccountFor(francisco, TestObjects.dollars100)
+        franciscosAccount = createSavingsAccountFor(francisco, dollars100)
         dollars10DepositReceipt = credit(franciscosAccount, Action.Deposit, dollars10)
         dollars10WithdrawReceipt = debit(franciscosAccount, Action.Withdrawal, dollars10)
         minusDollars20Record = debit(franciscosAccount, Action.Withdrawal, dollars20)

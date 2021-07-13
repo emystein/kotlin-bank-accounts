@@ -9,7 +9,7 @@ import ar.com.flow.bankaccount.domain.withdrawal.WithdrawalLimit
 import ar.com.flow.bankaccount.ports.Statement
 import ar.com.flow.money.Money
 
-class SavingsAccount(val owner: Customer, override val currency: String) : BankAccount {
+class SavingsAccount(override val owner: Customer, override val currency: String) : BankAccount {
 
     var withdrawalLimit: WithdrawalLimit = CurrentFundsLimit()
 

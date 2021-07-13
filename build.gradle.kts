@@ -26,6 +26,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.assertj:assertj-core:3.19.0")
 	testImplementation("io.mockk:mockk:1.12.0")
+	runtimeOnly("com.h2database:h2")
 }
 
 tasks.withType<KotlinCompile> {
