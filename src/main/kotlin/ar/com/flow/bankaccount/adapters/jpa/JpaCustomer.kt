@@ -1,20 +1,16 @@
 package ar.com.flow.bankaccount.adapters.jpa
 
-import ar.com.flow.Customer
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.Id
 
 @Entity
 class JpaCustomer(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     val id: Long,
     @Column
     val name: String
-) {
+)
 
-    companion object {
-        fun from(customer: Customer): JpaCustomer {
-            return JpaCustomer(0, customer.name)
-        }
-    }
-}

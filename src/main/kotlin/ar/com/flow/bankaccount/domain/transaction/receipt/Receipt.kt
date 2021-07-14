@@ -6,8 +6,9 @@ import ar.com.flow.bankaccount.domain.balance.Balance.Companion.negative
 import ar.com.flow.bankaccount.domain.balance.Balance.Companion.positive
 import ar.com.flow.money.Money
 import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 
-class Receipt(
+data class Receipt(
     val destinationAccount: BankAccount,
     val dateTime: LocalDateTime,
     val movement: FundsMovement,
@@ -43,5 +44,21 @@ class Receipt(
                 destinationAccount.balance.plus(positive)
             )
         }
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Receipt
+
+        if (destinationAccount != other.destinationAccount) return false
+        if (dateTime.truncatedTo(ChronoUnit.MILLIS) != other.dateTime.truncatedTo(ChronoUnit.MILLIS)) return false
+        if (movement != other.movement) return false
+        if (action != other.action) return false
+        if (amount != other.amount) return false
+        if (resultBalance != other.resultBalance) return false
+
+        return true
     }
 }

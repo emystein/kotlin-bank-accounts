@@ -1,7 +1,5 @@
-package ar.com.flow.bankaccount.ports
+package ar.com.flow.bankaccount.adapters.jpa
 
-import ar.com.flow.bankaccount.adapters.jpa.BankAccountRepository
-import ar.com.flow.bankaccount.adapters.jpa.JpaBankAccount
 import ar.com.flow.bankaccount.application.spring.BankAccountConfiguration
 import ar.com.flow.bankaccount.domain.TestObjects.createSavingsAccountFor
 import ar.com.flow.bankaccount.domain.TestObjects.francisco
@@ -22,7 +20,7 @@ class JpaBankAccountRepositoryTest {
     internal fun create() {
         val franciscosAccount = createSavingsAccountFor(francisco, dollars100)
 
-        val jpaBankAccount = JpaBankAccount.from(franciscosAccount)
+        val jpaBankAccount = BankAccountMapper().toJpa(franciscosAccount)
 
         val createdAccount = accounts.save(jpaBankAccount)
 

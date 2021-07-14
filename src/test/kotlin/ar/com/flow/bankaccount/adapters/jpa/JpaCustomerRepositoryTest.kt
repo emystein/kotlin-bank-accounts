@@ -1,7 +1,5 @@
-package ar.com.flow.bankaccount.ports
+package ar.com.flow.bankaccount.adapters.jpa
 
-import ar.com.flow.bankaccount.adapters.jpa.CustomerRepository
-import ar.com.flow.bankaccount.adapters.jpa.JpaCustomer
 import ar.com.flow.bankaccount.application.spring.BankAccountConfiguration
 import ar.com.flow.bankaccount.domain.TestObjects.francisco
 import org.assertj.core.api.Assertions.assertThat
@@ -18,7 +16,7 @@ class JpaCustomerRepositoryTest {
 
     @Test
     internal fun addCustomer() {
-        val jpaCustomer = JpaCustomer.from(francisco)
+        val jpaCustomer = CustomerMapper().toJpa(francisco)
 
         val createdJpaCustomer = customers.save(jpaCustomer)
 

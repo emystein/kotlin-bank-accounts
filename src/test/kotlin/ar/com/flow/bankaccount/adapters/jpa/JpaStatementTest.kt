@@ -1,7 +1,5 @@
-package ar.com.flow.bankaccount.ports
+package ar.com.flow.bankaccount.adapters.jpa
 
-import ar.com.flow.bankaccount.adapters.JpaStatement
-import ar.com.flow.bankaccount.adapters.jpa.ReceiptRepository
 import ar.com.flow.bankaccount.application.spring.BankAccountApplication
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.TestObjects.createSavingsAccountFor
@@ -13,15 +11,14 @@ import ar.com.flow.bankaccount.domain.transaction.receipt.Action
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.credit
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.debit
+import ar.com.flow.bankaccount.ports.Statement
 import ar.com.flow.money.Dollars.Companion.amount
 import ar.com.flow.money.TestObjects.dollars10
 import ar.com.flow.money.TestObjects.dollars100
 import ar.com.flow.money.TestObjects.dollars20
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -51,6 +48,7 @@ class JpaStatementTest {
         minusDollars20Record = debit(franciscosAccount, Action.Withdrawal, dollars20)
 
         statement = JpaStatement(currency, jpaReceiptRepository)
+        statement.clear()
     }
 
     @Test
@@ -62,7 +60,6 @@ class JpaStatementTest {
     }
 
     @Test
-    @Disabled
     fun first() {
         statement.add(dollars10DepositReceipt)
 
@@ -70,13 +67,11 @@ class JpaStatementTest {
     }
 
     @Test
-    @Disabled
     fun firstDoNotExist() {
         assertThat(statement.first()).isEmpty
     }
 
     @Test
-    @Disabled
     fun last() {
         statement.add(dollars10DepositReceipt)
 
@@ -84,13 +79,11 @@ class JpaStatementTest {
     }
 
     @Test
-    @Disabled
     fun lastDoNotExist() {
         assertThat(statement.last()).isEmpty
     }
 
     @Test
-    @Disabled
     fun containsInOrderAll() {
         statement.add(dollars10DepositReceipt)
         statement.add(dollars10WithdrawReceipt)
@@ -99,7 +92,6 @@ class JpaStatementTest {
     }
 
     @Test
-    @Disabled
     fun containsInOrderFirst() {
         statement.add(dollars10DepositReceipt)
         statement.add(dollars10WithdrawReceipt)
@@ -108,12 +100,11 @@ class JpaStatementTest {
     }
 
     @Test
-    @Disabled
     fun notContainsInOrderSameReceiptsDifferentOrder() {
         statement.add(dollars10DepositReceipt)
         statement.add(dollars10WithdrawReceipt)
 
-        org.junit.jupiter.api.Assertions.assertFalse(
+        assertFalse(
             statement.containsInOrder(
                 dollars10WithdrawReceipt,
                 dollars10DepositReceipt
@@ -122,7 +113,6 @@ class JpaStatementTest {
     }
 
     @Test
-    @Disabled
     fun statementContainsTransactionRecordAdded() {
         statement.add(dollars10DepositReceipt)
 
@@ -130,7 +120,6 @@ class JpaStatementTest {
     }
 
     @Test
-    @Disabled
     fun statementStoresTransactionRecordsInOrderOfAddition() {
         statement.add(dollars10DepositReceipt)
         statement.add(dollars10WithdrawReceipt)
@@ -139,7 +128,6 @@ class JpaStatementTest {
     }
 
     @Test
-    @Disabled
     fun statementUpdatesBalance() {
         statement.add(dollars10DepositReceipt)
         statement.add(dollars10WithdrawReceipt)
@@ -150,7 +138,6 @@ class JpaStatementTest {
     }
 
     @Test
-    @Disabled
     fun balanceSumsUpCreditAndDebitTransactionRecords() {
         statement.add(dollars10DepositReceipt)
         statement.add(minusDollars20Record)

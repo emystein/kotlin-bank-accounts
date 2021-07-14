@@ -1,6 +1,6 @@
 package ar.com.flow.bankaccount.ports
 
-import ar.com.flow.bankaccount.adapters.InMemoryStatement
+import ar.com.flow.bankaccount.adapters.memory.InMemoryStatement
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.TestObjects.createSavingsAccountFor
 import ar.com.flow.bankaccount.domain.TestObjects.francisco
@@ -12,7 +12,6 @@ import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.credit
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.debit
 import ar.com.flow.money.Dollars.Companion.amount
-import ar.com.flow.money.TestObjects
 import ar.com.flow.money.TestObjects.dollars10
 import ar.com.flow.money.TestObjects.dollars100
 import ar.com.flow.money.TestObjects.dollars20

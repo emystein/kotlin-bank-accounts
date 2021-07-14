@@ -1,16 +1,21 @@
 package ar.com.flow.bankaccount.adapters.jpa
 
 import ar.com.flow.bankaccount.domain.transaction.receipt.Action
-import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
+import ar.com.flow.bankaccount.domain.transaction.receipt.FundsMovement
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
 class JpaReceipt(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     val id: Long,
-    @ManyToOne
+    @ManyToOne(cascade=[CascadeType.ALL])
     val bankAccount: JpaBankAccount,
+    @Column
+    val dateTime: LocalDateTime,
+    @Enumerated
+    val movement: FundsMovement,
     @Enumerated
     val action: Action,
     @Column
@@ -19,21 +24,6 @@ class JpaReceipt(
     val amount: Int,
     @Column
     val resultAmount: Int
-) {
+)
 
-    // TODO Extract class
-    companion object {
-        fun from(receipt: Receipt): JpaReceipt {
-            val jpaBankAccount = JpaBankAccount.from(receipt.destinationAccount)
 
-            return JpaReceipt(
-                0,
-                jpaBankAccount,
-                receipt.action,
-                receipt.amount.currency,
-                receipt.amount.amount,
-                receipt.resultBalance.amount
-            )
-        }
-    }
-}

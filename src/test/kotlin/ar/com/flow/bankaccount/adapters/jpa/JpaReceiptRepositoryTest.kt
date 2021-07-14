@@ -1,7 +1,5 @@
-package ar.com.flow.bankaccount.ports
+package ar.com.flow.bankaccount.adapters.jpa
 
-import ar.com.flow.bankaccount.adapters.jpa.JpaReceipt
-import ar.com.flow.bankaccount.adapters.jpa.ReceiptRepository
 import ar.com.flow.bankaccount.application.spring.BankAccountConfiguration
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.TestObjects.createSavingsAccountFor
@@ -35,7 +33,7 @@ class JpaReceiptRepositoryTest {
 
     @Test
     internal fun addReceiptToStatement() {
-        val jpaReceipt = JpaReceipt.from(dollars10DepositReceipt)
+        val jpaReceipt = ReceiptMapper().toJpa(dollars10DepositReceipt)
 
         val createdJpaReceipt = statement.save(jpaReceipt)
 

@@ -1,4 +1,4 @@
-package ar.com.flow.bankaccount.adapters
+package ar.com.flow.bankaccount.adapters.memory
 
 import ar.com.flow.bankaccount.domain.balance.Balance
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
@@ -8,6 +8,10 @@ import kotlin.math.max
 
 class InMemoryStatement(override val currency: String) : Statement {
     private val history: MutableList<Receipt> = ArrayList()
+
+    override fun all(): Collection<Receipt> {
+        return history
+    }
 
     override fun count(): Int {
         return history.size
@@ -42,10 +46,12 @@ class InMemoryStatement(override val currency: String) : Statement {
     override fun getPreviousBalance(): Balance = sum(count() - 1)
 
     override fun sum(numberOfTransactions: Int): Balance {
-        return history.take(max(numberOfTransactions, 0))
+        return all().take(max(numberOfTransactions, 0))
             .map { receipt -> receipt.amount }
             .fold(zeroBalance()) { balance, receiptAmount -> balance.plus(receiptAmount) }
     }
 
-    private fun zeroBalance() = Balance.zero(currency)
+    override fun clear() {
+        history.clear()
+    }
 }

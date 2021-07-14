@@ -1,22 +1,14 @@
 package ar.com.flow.bankaccount.adapters.jpa
 
-import ar.com.flow.bankaccount.domain.BankAccount
 import javax.persistence.*
 
 @Entity
 class JpaBankAccount(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     val id: Long,
-    @ManyToOne
+    @ManyToOne(cascade=[CascadeType.ALL])
     val owner: JpaCustomer,
     @Column
     val currency: String
-) {
-
-    companion object {
-        fun from(bankAccount: BankAccount): JpaBankAccount {
-            return JpaBankAccount(0, JpaCustomer.from(bankAccount.owner), bankAccount.currency)
-        }
-    }
-}
+)
