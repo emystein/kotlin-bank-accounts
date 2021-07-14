@@ -19,14 +19,15 @@ class JpaBankAccountRepositoryTest {
     private lateinit var accounts: BankAccountRepository
 
     @Test
-    internal fun addCustomer() {
+    internal fun create() {
         val franciscosAccount = createSavingsAccountFor(francisco, dollars100)
 
         val jpaBankAccount = JpaBankAccount.from(franciscosAccount)
 
-        val createdJpaBankAccount = accounts.save(jpaBankAccount)
+        val createdAccount = accounts.save(jpaBankAccount)
 
-        assertThat(accounts.findById(createdJpaBankAccount.id)).isNotEmpty
-        assertThat(createdJpaBankAccount.owner.name).isEqualTo(francisco.name)
+        assertThat(createdAccount.id).isNotNull
+        assertThat(createdAccount.owner.name).isEqualTo(francisco.name)
+        assertThat(createdAccount.currency).isEqualTo(franciscosAccount.currency)
     }
 }

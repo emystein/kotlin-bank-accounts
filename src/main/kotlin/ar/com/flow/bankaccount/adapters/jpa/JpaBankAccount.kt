@@ -9,12 +9,14 @@ class JpaBankAccount(
     @GeneratedValue(strategy = GenerationType.AUTO)
     val id: Long,
     @ManyToOne
-    val owner: JpaCustomer
+    val owner: JpaCustomer,
+    @Column
+    val currency: String
 ) {
 
     companion object {
         fun from(bankAccount: BankAccount): JpaBankAccount {
-            return JpaBankAccount(0, JpaCustomer.from(bankAccount.owner))
+            return JpaBankAccount(0, JpaCustomer.from(bankAccount.owner), bankAccount.currency)
         }
     }
 }

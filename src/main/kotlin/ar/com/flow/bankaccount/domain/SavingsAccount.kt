@@ -13,6 +13,7 @@ class SavingsAccount(override val owner: Customer, override val currency: String
 
     var withdrawalLimit: WithdrawalLimit = CurrentFundsLimit()
 
+    // TODO inject dependency
     override val statement: Statement = InMemoryStatement(currency)
 
     override val initialBalance: Balance

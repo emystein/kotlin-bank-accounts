@@ -39,6 +39,11 @@ class JpaReceiptRepositoryTest {
 
         val createdJpaReceipt = statement.save(jpaReceipt)
 
-        assertThat(statement.findById(createdJpaReceipt.id)).isNotEmpty
+        val retrieved = statement.findById(createdJpaReceipt.id).get()
+
+        assertThat(retrieved.action).isEqualTo(dollars10DepositReceipt.action)
+        assertThat(retrieved.currency).isEqualTo(dollars10DepositReceipt.amount.currency)
+        assertThat(retrieved.amount).isEqualTo(dollars10DepositReceipt.amount.amount)
+        assertThat(retrieved.resultAmount).isEqualTo(dollars10DepositReceipt.resultBalance.amount)
     }
 }
