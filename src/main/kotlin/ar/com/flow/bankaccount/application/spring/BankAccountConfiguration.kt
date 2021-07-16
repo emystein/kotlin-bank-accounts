@@ -5,8 +5,8 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 
 @Configuration
-@EnableJpaRepositories(basePackages = ["ar.com.flow.bankaccount.adapters.jpa"])
-@EntityScan(basePackages = ["ar.com.flow.bankaccount.adapters.jpa"])
+@EnableJpaRepositories(basePackages = ["ar.com.flow"])
+@EntityScan(basePackages = ["ar.com.flow"])
 class BankAccountConfiguration {
 
 }
