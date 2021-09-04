@@ -13,6 +13,10 @@ class InMemoryBankAccounts: BankAccounts {
         return created
     }
 
+    override fun accountOwnedBy(customer: Customer, currency: String): SavingsAccount? {
+        return accounts.find { a -> a.owner == customer && a.currency == currency}
+    }
+
     override fun contains(account: SavingsAccount): Boolean {
         return accounts.contains(account)
     }

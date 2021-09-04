@@ -10,4 +10,8 @@ class InMemoryCustomers: Customers {
         customers.add(customer)
         return customer
     }
+
+    override fun customerNamed(name: String): Customer? {
+        return customers.find { customer -> customer.name == name }
+    }
 }

@@ -22,7 +22,7 @@ class CreateSavingsAccountTest {
     internal fun createSavingsAccount() {
         val createSavingsAccount = CreateSavingsAccount(customers, bankAccounts)
 
-        val createdAccount = createSavingsAccount.execute("Juan Perez", "ARS")
+        val createdAccount = createSavingsAccount.createAccount("Juan Perez", "ARS")
 
         assertThat(bankAccounts.contains(createdAccount)).isTrue;
     }

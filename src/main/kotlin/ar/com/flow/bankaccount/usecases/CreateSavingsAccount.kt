@@ -6,7 +6,7 @@ import ar.com.flow.bankaccount.ports.out.BankAccounts
 import ar.com.flow.bankaccount.ports.out.Customers
 
 class CreateSavingsAccount(private val customers: Customers, private val bankAccounts: BankAccounts) {
-    fun execute(customerName: String, currency: String): SavingsAccount {
+    fun createAccount(customerName: String, currency: String): SavingsAccount {
         val customer = Customer(customerName)
         val savedCustomer = customers.save(customer)
         return bankAccounts.create(savedCustomer, currency)

@@ -17,8 +17,7 @@ import ar.com.flow.money.TestObjects.dollars10
 import ar.com.flow.money.TestObjects.dollars100
 import ar.com.flow.money.TestObjects.dollars20
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.util.*
@@ -96,7 +95,7 @@ class StatementTest {
         statement.add(dollars10DepositReceipt)
         statement.add(dollars10WithdrawReceipt)
 
-        org.junit.jupiter.api.Assertions.assertFalse(statement.containsInOrder(dollars10WithdrawReceipt, dollars10DepositReceipt))
+        assertFalse(statement.containsInOrder(dollars10WithdrawReceipt, dollars10DepositReceipt))
     }
     @Test
     fun statementContainsTransactionRecordAdded() {
