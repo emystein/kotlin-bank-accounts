@@ -1,5 +1,6 @@
 package ar.com.flow.bankaccount.usecases
 
+import ar.com.flow.Customer
 import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryBankAccounts
 import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryCustomers
 import ar.com.flow.bankaccount.domain.balance.Balance
@@ -22,14 +23,13 @@ class DepositTest {
 
     @Test
     internal fun deposit() {
-        val createSavingsAccount = CreateSavingsAccount(customers, bankAccounts)
-        createSavingsAccount.createAccount("Juan Perez", "ARS")
+        val juanPerez = customers.save(Customer("Juan Perez"))
+        bankAccounts.create(juanPerez, currency = "ARS")
 
         val deposit = Deposit(customers, bankAccounts)
 
-        deposit.deposit("Juan Perez", "ARS", 100);
+        deposit.deposit(customerName = "Juan Perez", currency = "ARS", amountToDeposit = 100);
 
-        val juanPerez = customers.customerNamed("Juan Perez")!!
         val savingsAccount = bankAccounts.accountOwnedBy(juanPerez, "ARS")!!
         assertThat(savingsAccount.balance).isEqualTo(Balance("ARS", 100));
     }
@@ -45,8 +45,8 @@ class DepositTest {
 
     @Test
     internal fun rejectDepositForCurrencyNotUsed() {
-        val createSavingsAccount = CreateSavingsAccount(customers, bankAccounts)
-        createSavingsAccount.createAccount("Juan Perez", "ARS")
+        val juanPerez = customers.save(Customer("Juan Perez"))
+        bankAccounts.create(juanPerez, "ARS")
 
         val deposit = Deposit(customers, bankAccounts)
 
