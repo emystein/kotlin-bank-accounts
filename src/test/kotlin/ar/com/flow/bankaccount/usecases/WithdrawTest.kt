@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class DepositTest {
+class WithdrawTest {
     private lateinit var customers: Customers
     private lateinit var bankAccounts: BankAccounts
 
@@ -24,16 +24,18 @@ class DepositTest {
     }
 
     @Test
-    internal fun deposit() {
+    internal fun withdraw() {
         val juanPerez = customers.save(Customer("Juan Perez"))
         bankAccounts.create(juanPerez, currency = "ARS")
 
         val deposit = Deposit(customers, bankAccounts)
-
         deposit.deposit(customerName = "Juan Perez", currency = "ARS", amountToDeposit = 100);
 
-        val savingsAccount = bankAccounts.accountOwnedBy(juanPerez, "ARS")!!
-        assertThat(savingsAccount.balance).isEqualTo(Balance("ARS", 100));
+        val withdraw = Withdraw(customers, bankAccounts)
+        withdraw.withdraw(customerName = "Juan Perez", currency = "ARS", amountToWithdraw = 100);
+
+        val savingsAccount = bankAccounts.accountOwnedBy(juanPerez, "ARS")
+        assertThat(savingsAccount.balance).isEqualTo(Balance("ARS", 0));
     }
 
     @Test
