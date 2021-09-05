@@ -1,15 +1,12 @@
 package ar.com.flow.bankaccount.usecases
 
 import ar.com.flow.Customer
-import ar.com.flow.bankaccount.adapters.out.AccountNotFound
 import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryBankAccounts
 import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryCustomers
 import ar.com.flow.bankaccount.domain.balance.Balance
 import ar.com.flow.bankaccount.ports.out.BankAccounts
-import ar.com.flow.bankaccount.ports.out.CustomerNotFound
 import ar.com.flow.bankaccount.ports.out.Customers
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -36,26 +33,5 @@ class WithdrawTest {
 
         val savingsAccount = bankAccounts.accountOwnedBy(juanPerez, "ARS")
         assertThat(savingsAccount.balance).isEqualTo(Balance("ARS", 0));
-    }
-
-    @Test
-    internal fun rejectDepositForNonCustomer() {
-        val deposit = Deposit(customers, bankAccounts)
-
-        Assertions.assertThrows(CustomerNotFound::class.java) {
-            deposit.deposit("Customer not found", "ARS", 100);
-        }
-    }
-
-    @Test
-    internal fun rejectDepositForCurrencyNotUsed() {
-        val juanPerez = customers.save(Customer("Juan Perez"))
-        bankAccounts.create(juanPerez, "ARS")
-
-        val deposit = Deposit(customers, bankAccounts)
-
-        Assertions.assertThrows(AccountNotFound::class.java) {
-            deposit.deposit("Juan Perez", "BLA", 100);
-        }
     }
 }
