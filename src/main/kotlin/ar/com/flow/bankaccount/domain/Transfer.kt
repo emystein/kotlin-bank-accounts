@@ -4,8 +4,8 @@ import ar.com.flow.bankaccount.domain.transaction.Builder
 import ar.com.flow.bankaccount.domain.transaction.Transaction
 import ar.com.flow.bankaccount.domain.transaction.receipt.*
 import ar.com.flow.bankaccount.domain.transaction.steps.Step
-import ar.com.flow.bankaccount.domain.transfer.DifferentAccounts
-import ar.com.flow.bankaccount.domain.withdrawal.SufficientFunds
+import ar.com.flow.bankaccount.domain.transfer.DifferentAccountsPrecondition
+import ar.com.flow.bankaccount.domain.withdrawal.SufficientFundsPrecondition
 import ar.com.flow.money.Money
 
 internal object Transfer {
@@ -42,13 +42,13 @@ internal object Transfer {
         fun amount(amountToTransfer: Money): Transaction {
             return Builder()
                 .precondition(
-                    SufficientFunds(
+                    SufficientFundsPrecondition(
                         debitAccount,
                         amountToTransfer
                     )
                 )
                 .precondition(
-                    DifferentAccounts(
+                    DifferentAccountsPrecondition(
                         debitAccount,
                         creditAccount
                     )

@@ -4,7 +4,7 @@ import ar.com.flow.bankaccount.domain.transaction.Builder
 import ar.com.flow.bankaccount.domain.transaction.Transaction
 import ar.com.flow.bankaccount.domain.transaction.receipt.*
 import ar.com.flow.bankaccount.domain.transaction.steps.Step
-import ar.com.flow.bankaccount.domain.withdrawal.SufficientFunds
+import ar.com.flow.bankaccount.domain.withdrawal.SufficientFundsPrecondition
 import ar.com.flow.money.Money
 
 internal object Withdrawal {
@@ -25,7 +25,7 @@ internal object Withdrawal {
             return Builder()
                 .amount(amountToWithdraw)
                 .precondition(
-                    SufficientFunds(
+                    SufficientFundsPrecondition(
                         debitAccount,
                         amountToWithdraw
                     )
