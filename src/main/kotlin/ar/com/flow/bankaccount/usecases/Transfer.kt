@@ -1,6 +1,5 @@
 package ar.com.flow.bankaccount.usecases
 
-import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.SavingsAccount
 import ar.com.flow.bankaccount.ports.out.BankAccounts
 import ar.com.flow.bankaccount.ports.out.Customers
