@@ -1,6 +1,6 @@
 package ar.com.flow.money
 
-open class Money(val currency: String, val amount: Int) {
+data class Money(val currency: String, val amount: Int) {
     init {
         require(amount >= 0) { "Amount must be non-negative: $amount" }
     }
@@ -24,20 +24,9 @@ open class Money(val currency: String, val amount: Int) {
         return Money(currency, amount - amountToSubtract.amount)
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-
-        other as Money
-
-        if (currency != other.currency) return false
-        if (amount != other.amount) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = currency.hashCode()
-        result = 31 * result + amount
-        return result
+    companion object {
+        fun zero(currency: String): Money {
+            return Money(currency, 0)
+        }
     }
 }

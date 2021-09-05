@@ -8,9 +8,10 @@ import kotlin.jvm.Throws
 interface BankAccounts {
     fun create(savedCustomer: Customer, currency: String): SavingsAccount
 
+    fun save(savingsAccount: SavingsAccount)
+
     @Throws(AccountNotFound::class)
     fun accountOwnedBy(customer: Customer, currency: String): SavingsAccount
 
-    fun contains(createdAccount: SavingsAccount): Boolean
-    fun save(savingsAccount: SavingsAccount)
+    fun contains(account: SavingsAccount): Boolean
 }

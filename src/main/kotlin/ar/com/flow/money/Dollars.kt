@@ -1,10 +1,7 @@
 package ar.com.flow.money
 
-class Dollars private constructor(amount: Int) : Money("USD", amount) {
-    companion object {
-        @JvmStatic
-        fun amount(amount: Int): Dollars {
-            return Dollars(amount)
-        }
+object Dollars {
+    fun amount(amount: Int): Money {
+        return Money("USD", amount)
     }
 }

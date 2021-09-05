@@ -1,12 +1,12 @@
 package ar.com.flow.money
 
-import ar.com.flow.money.Dollars.Companion.amount
+import ar.com.flow.money.Dollars.amount
 import ar.com.flow.money.TestObjects.dollars100
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
-class DollarsTest {
+class MoneyTest {
     @Test
     fun givenAPositiveAmountWhenCreateDollarsWithTheGivenAmountThenTheDollarsShouldBeCreated() {
         val dollars = amount(10)

@@ -12,7 +12,7 @@ import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.credit
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.debit
 import ar.com.flow.bankaccount.ports.out.Statement
-import ar.com.flow.money.Dollars.Companion.amount
+import ar.com.flow.money.Dollars
 import ar.com.flow.money.TestObjects.dollars10
 import ar.com.flow.money.TestObjects.dollars100
 import ar.com.flow.money.TestObjects.dollars20
@@ -132,9 +132,9 @@ class StatementTest {
         statement.add(dollars10DepositReceipt)
         statement.add(dollars10WithdrawReceipt)
 
-        assertEquals(positive(amount(10)), statement.getInitialBalance())
-        assertEquals(positive(amount(0)), statement.getCurrentBalance())
-        assertEquals(positive(amount(10)), statement.getPreviousBalance())
+        assertEquals(positive(Dollars.amount(10)), statement.getInitialBalance())
+        assertEquals(positive(Dollars.amount(0)), statement.getCurrentBalance())
+        assertEquals(positive(Dollars.amount(10)), statement.getPreviousBalance())
     }
 
     @Test

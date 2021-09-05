@@ -1,6 +1,6 @@
 package ar.com.flow.money
 
-import ar.com.flow.money.Dollars.Companion.amount
+import ar.com.flow.money.Dollars.amount
 
 object TestObjects {
     val dollars10: Money = amount(10)
