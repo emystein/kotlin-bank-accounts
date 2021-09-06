@@ -3,9 +3,9 @@ package ar.com.flow.bankaccount.adapters.out.persistence.memory
 import ar.com.flow.Customer
 import ar.com.flow.bankaccount.adapters.out.AccountNotFound
 import ar.com.flow.bankaccount.domain.SavingsAccount
-import ar.com.flow.bankaccount.ports.out.BankAccounts
+import ar.com.flow.bankaccount.ports.out.SavingsAccounts
 
-class InMemoryBankAccounts: BankAccounts {
+class InMemorySavingsAccounts: SavingsAccounts {
     private val accounts: MutableMap<Customer, MutableMap<String, SavingsAccount>> = mutableMapOf()
 
     override fun create(customer: Customer, currency: String): SavingsAccount {
@@ -20,8 +20,8 @@ class InMemoryBankAccounts: BankAccounts {
         return created
     }
 
-    override fun save(savingsAccount: SavingsAccount) {
-        accounts[savingsAccount.owner] = mutableMapOf(savingsAccount.currency to savingsAccount)
+    override fun save(account: SavingsAccount) {
+        accounts[account.owner] = mutableMapOf(account.currency to account)
     }
 
     override fun accountOwnedBy(customer: Customer, currency: String): SavingsAccount {

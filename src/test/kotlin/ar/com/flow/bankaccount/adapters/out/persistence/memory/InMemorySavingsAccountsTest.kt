@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
-class InMemoryBankAccountsTest {
+class InMemorySavingsAccountsTest {
     @Test
     internal fun createAccount() {
-        val bankAccounts = InMemoryBankAccounts()
+        val bankAccounts = InMemorySavingsAccounts()
 
         val createdAccount = bankAccounts.create(francisco, "ARS")
 
@@ -18,7 +18,7 @@ class InMemoryBankAccountsTest {
 
     @Test
     internal fun throwExceptionOnCustomerNotOwningAnyAccount() {
-        val bankAccounts = InMemoryBankAccounts()
+        val bankAccounts = InMemorySavingsAccounts()
 
         assertThrows(AccountNotFound::class.java) {
             bankAccounts.accountOwnedBy(francisco, "ARS")
@@ -27,7 +27,7 @@ class InMemoryBankAccountsTest {
 
     @Test
     internal fun throwExceptionOnAccountNotFoundForACurrency() {
-        val bankAccounts = InMemoryBankAccounts()
+        val bankAccounts = InMemorySavingsAccounts()
 
         bankAccounts.create(francisco, "ARS")
 
