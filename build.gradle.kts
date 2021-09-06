@@ -26,6 +26,9 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.assertj:assertj-core:3.19.0")
 	testImplementation("io.mockk:mockk:1.12.0")
+	testImplementation("com.ninja-squad:springmockk:3.0.1") {
+		exclude(module = "mockito-core")
+	}
 	runtimeOnly("com.h2database:h2")
 }
 

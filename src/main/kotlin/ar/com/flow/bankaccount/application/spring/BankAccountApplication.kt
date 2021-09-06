@@ -1,13 +1,14 @@
 package ar.com.flow.bankaccount.application.spring
 
+import ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccountPersistenceConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Import
 
 @SpringBootApplication
-@Configuration
-@ComponentScan(basePackages = ["ar.com.flow.bankaccount"])
+@Import(BankAccountPersistenceConfiguration::class)
 class BankAccountApplication
 
 fun main(args: Array<String>) {
