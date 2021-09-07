@@ -6,6 +6,7 @@ import ar.com.flow.bankaccount.domain.SavingsAccount
 import ar.com.flow.bankaccount.ports.out.SavingsAccounts
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import java.util.*
 import javax.transaction.Transactional
 
 @Component
@@ -29,30 +30,27 @@ class JpaSavingsAccounts(
         accountMapper.toDomain(createdJpaAccount)
     }
 
-    override fun accountOwnedBy(owner: Customer, currency: String): SavingsAccount {
-        val maybeAccountOwner = customerRepository.findByName(owner.name)
+    override fun accountOwnedBy(accountOwner: Customer, currency: String): SavingsAccount {
+        val maybeAccount = maybeAccountOwnedBy(accountOwner, currency)
 
-        if (maybeAccountOwner.isPresent) {
-            val maybeJpaAccount = bankAccountRepository.findByOwnerAndCurrency(maybeAccountOwner.get(), currency)
-
-            if (maybeJpaAccount.isPresent) {
-                return accountMapper.toDomain(maybeJpaAccount.get())
-            } else {
-                throw AccountNotFound("Account not found for Customer: ${owner.name} and currency: $currency")
-            }
-        } else {
-            throw AccountNotFound("Account not found for Customer: ${owner.name} and currency: $currency")
+        if (!maybeAccount.isPresent) {
+            throw AccountNotFound("Account not found for Customer: ${accountOwner.name} and currency: $currency")
         }
+
+        return accountMapper.toDomain(maybeAccount.get())
     }
 
     override fun contains(account: SavingsAccount): Boolean {
-        val maybeAccountOwner = customerRepository.findByName(account.owner.name)
+        return maybeAccountOwnedBy(account.owner, account.currency).isPresent
+    }
 
-        if (maybeAccountOwner.isPresent) {
-            val maybeJpaAccount = bankAccountRepository.findByOwnerAndCurrency(maybeAccountOwner.get(), account.currency)
-            return maybeJpaAccount.isPresent
+    private fun maybeAccountOwnedBy(accountOwner: Customer, currency: String): Optional<BankAccount> {
+        val maybeAccountOwner = customerRepository.findByName(accountOwner.name)
+
+        return if (maybeAccountOwner.isPresent) {
+            bankAccountRepository.findByOwnerAndCurrency(maybeAccountOwner.get(), currency)
         } else {
-            return false
+            Optional.empty()
         }
     }
 }

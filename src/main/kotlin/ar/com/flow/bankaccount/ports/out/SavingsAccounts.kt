@@ -11,7 +11,7 @@ interface SavingsAccounts {
     fun save(account: SavingsAccount)
 
     @Throws(AccountNotFound::class)
-    fun accountOwnedBy(customer: Customer, currency: String): SavingsAccount
+    fun accountOwnedBy(accountOwner: Customer, currency: String): SavingsAccount
 
     fun contains(account: SavingsAccount): Boolean
 }
