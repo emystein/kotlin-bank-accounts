@@ -31,13 +31,13 @@ class JpaSavingsAccounts(
     }
 
     override fun accountOwnedBy(accountOwner: Customer, currency: String): SavingsAccount {
-        val maybeAccount = maybeJpaAccountOwnedBy(accountOwner, currency)
+        val maybeJpaAccount = maybeJpaAccountOwnedBy(accountOwner, currency)
 
-        if (!maybeAccount.isPresent) {
+        if (!maybeJpaAccount.isPresent) {
             throw AccountNotFound("Account not found for Customer: ${accountOwner.name} and currency: $currency")
         }
 
-        return accountMapper.toDomain(maybeAccount.get())
+        return accountMapper.toDomain(maybeJpaAccount.get())
     }
 
     override fun contains(account: SavingsAccount): Boolean {
