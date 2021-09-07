@@ -31,7 +31,7 @@ class JpaSavingsAccounts(
     }
 
     override fun accountOwnedBy(accountOwner: Customer, currency: String): SavingsAccount {
-        val maybeAccount = maybeAccountOwnedBy(accountOwner, currency)
+        val maybeAccount = maybeJpaAccountOwnedBy(accountOwner, currency)
 
         if (!maybeAccount.isPresent) {
             throw AccountNotFound("Account not found for Customer: ${accountOwner.name} and currency: $currency")
@@ -41,14 +41,14 @@ class JpaSavingsAccounts(
     }
 
     override fun contains(account: SavingsAccount): Boolean {
-        return maybeAccountOwnedBy(account.owner, account.currency).isPresent
+        return maybeJpaAccountOwnedBy(account.owner, account.currency).isPresent
     }
 
-    private fun maybeAccountOwnedBy(accountOwner: Customer, currency: String): Optional<BankAccount> {
-        val maybeAccountOwner = customerRepository.findByName(accountOwner.name)
+    private fun maybeJpaAccountOwnedBy(accountOwner: Customer, currency: String): Optional<BankAccount> {
+        val maybeJpaAccountOwner = customerRepository.findByName(accountOwner.name)
 
-        return if (maybeAccountOwner.isPresent) {
-            bankAccountRepository.findByOwnerAndCurrency(maybeAccountOwner.get(), currency)
+        return if (maybeJpaAccountOwner.isPresent) {
+            bankAccountRepository.findByOwnerAndCurrency(maybeJpaAccountOwner.get(), currency)
         } else {
             Optional.empty()
         }
