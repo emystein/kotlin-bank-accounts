@@ -6,7 +6,7 @@ import ar.com.flow.bankaccount.ports.out.Customers
 import ar.com.flow.money.Money
 
 class Transfer(private val customers: Customers, private val savingsAccounts: SavingsAccounts) {
-    fun transfer(debitCustomerName: String, currency: String, amountToTransfer: Int, creditCustomerName: String) {
+    fun execute(debitCustomerName: String, currency: String, amountToTransfer: Int, creditCustomerName: String) {
         val (debitAccount, creditAccount) = accountsOwnedBy(debitCustomerName, creditCustomerName, currency = currency)
 
         debitAccount.transfer(Money(currency, amountToTransfer), creditAccount)

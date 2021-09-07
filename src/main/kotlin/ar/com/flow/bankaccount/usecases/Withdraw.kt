@@ -5,7 +5,7 @@ import ar.com.flow.bankaccount.ports.out.Customers
 import ar.com.flow.money.Money
 
 class Withdraw(private val customers: Customers, private val savingsAccounts: SavingsAccounts) {
-    fun withdraw(customerName: String, currency: String, amountToWithdraw: Int) {
+    fun execute(customerName: String, currency: String, amountToWithdraw: Int) {
         val customer = customers.customerNamed(customerName)
 
         val savingsAccount = savingsAccounts.accountOwnedBy(customer, currency)

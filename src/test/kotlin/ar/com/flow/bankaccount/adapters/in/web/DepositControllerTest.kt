@@ -24,7 +24,7 @@ class DepositControllerTest {
 
     @Test
     fun deposit() {
-        justRun { deposit.deposit("Juan Perez", "ARS", 100) }
+        justRun { deposit.execute("Juan Perez", "ARS", 100) }
 
         val depositUrl = "/savings-accounts/deposit/{accountOwner}/{currency}/{amount}"
 

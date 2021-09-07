@@ -26,10 +26,10 @@ class WithdrawTest {
         savingsAccounts.create(juanPerez, currency = "ARS")
 
         val deposit = Deposit(customers, savingsAccounts)
-        deposit.deposit(customerName = "Juan Perez", currency = "ARS", amountToDeposit = 100);
+        deposit.execute(customerName = "Juan Perez", currency = "ARS", amountToDeposit = 100);
 
         val withdraw = Withdraw(customers, savingsAccounts)
-        withdraw.withdraw(customerName = "Juan Perez", currency = "ARS", amountToWithdraw = 100);
+        withdraw.execute(customerName = "Juan Perez", currency = "ARS", amountToWithdraw = 100);
 
         val savingsAccount = savingsAccounts.accountOwnedBy(juanPerez, "ARS")
         assertThat(savingsAccount.balance).isEqualTo(Balance("ARS", 0));
