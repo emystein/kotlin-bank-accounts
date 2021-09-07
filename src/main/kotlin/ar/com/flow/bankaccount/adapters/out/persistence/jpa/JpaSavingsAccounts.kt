@@ -12,20 +12,20 @@ import javax.transaction.Transactional
 @Transactional
 class JpaSavingsAccounts(
     @Autowired private val customerRepository: CustomerRepository,
-    @Autowired private val repository: BankAccountRepository
+    @Autowired private val bankAccountRepository: BankAccountRepository
 ) : SavingsAccounts {
-    private val accountMapper: SavingsAccountMapper = SavingsAccountMapper(customerRepository, repository)
+    private val accountMapper: SavingsAccountMapper = SavingsAccountMapper(customerRepository, bankAccountRepository)
 
     override fun create(owner: Customer, currency: String): SavingsAccount {
         val jpaAccount = accountMapper.toJpa(SavingsAccount(owner, currency))
-        val createdJpaAccount = repository.save(jpaAccount)
-        repository.flush()
+        val createdJpaAccount = bankAccountRepository.save(jpaAccount)
+        bankAccountRepository.flush()
         return accountMapper.toDomain(createdJpaAccount)
     }
 
     override fun save(account: SavingsAccount) {
         val jpaAccount = accountMapper.toJpa(account)
-        val createdJpaAccount = repository.save(jpaAccount)
+        val createdJpaAccount = bankAccountRepository.save(jpaAccount)
         accountMapper.toDomain(createdJpaAccount)
     }
 
@@ -33,7 +33,7 @@ class JpaSavingsAccounts(
         val maybeAccountOwner = customerRepository.findByName(owner.name)
 
         if (maybeAccountOwner.isPresent) {
-            val maybeJpaAccount = repository.findByOwnerAndCurrency(maybeAccountOwner.get(), currency)
+            val maybeJpaAccount = bankAccountRepository.findByOwnerAndCurrency(maybeAccountOwner.get(), currency)
 
             if (maybeJpaAccount.isPresent) {
                 return accountMapper.toDomain(maybeJpaAccount.get())
@@ -49,7 +49,7 @@ class JpaSavingsAccounts(
         val maybeAccountOwner = customerRepository.findByName(account.owner.name)
 
         if (maybeAccountOwner.isPresent) {
-            val maybeJpaAccount = repository.findByOwnerAndCurrency(maybeAccountOwner.get(), account.currency)
+            val maybeJpaAccount = bankAccountRepository.findByOwnerAndCurrency(maybeAccountOwner.get(), account.currency)
             return maybeJpaAccount.isPresent
         } else {
             return false

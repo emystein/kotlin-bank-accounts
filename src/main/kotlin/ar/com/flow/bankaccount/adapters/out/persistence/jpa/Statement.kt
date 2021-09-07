@@ -2,18 +2,14 @@ package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
 import ar.com.flow.bankaccount.domain.balance.Balance
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
-import ar.com.flow.bankaccount.ports.out.SavingsAccounts
 import java.util.*
 import kotlin.math.max
 
 class Statement(
     override val currency: String,
-    customerRepository: CustomerRepository,
-    bankAccountRepository: BankAccountRepository,
+    private val receiptMapper: ReceiptMapper,
     private val receiptRepository: ReceiptRepository
 ) : ar.com.flow.bankaccount.ports.out.Statement {
-
-    private val receiptMapper = ReceiptMapper(customerRepository, bankAccountRepository)
 
     override fun all(): Collection<Receipt> {
         return receiptRepository.findAll()

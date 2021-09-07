@@ -53,7 +53,10 @@ class StatementTest {
         dollars10WithdrawReceipt = debit(franciscosAccount, Action.Withdrawal, dollars10)
         minusDollars20Record = debit(franciscosAccount, Action.Withdrawal, dollars20)
 
-        statement = Statement(currency, jpaCustomerRepository, jpaBankAccountRepository, jpaReceiptRepository)
+        val savingsAccountMapper = SavingsAccountMapper(jpaCustomerRepository, jpaBankAccountRepository)
+        val receiptMapper = ReceiptMapper(savingsAccountMapper)
+
+        statement = Statement(currency, receiptMapper, jpaReceiptRepository)
         statement.clear()
     }
 

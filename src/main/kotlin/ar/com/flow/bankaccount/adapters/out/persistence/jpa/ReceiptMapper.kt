@@ -4,9 +4,7 @@ import ar.com.flow.bankaccount.domain.balance.Balance
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
 import java.util.*
 
-class ReceiptMapper(private val customerRepository: CustomerRepository, private val bankAccountRepository: BankAccountRepository) {
-    private val savingsAccountMapper = SavingsAccountMapper(customerRepository, bankAccountRepository)
-
+class ReceiptMapper(private val savingsAccountMapper: SavingsAccountMapper) {
     fun toDomain(receipt: ar.com.flow.bankaccount.adapters.out.persistence.jpa.Receipt?): Optional<Receipt> {
        return toDomain(Optional.ofNullable(receipt))
     }
@@ -29,25 +27,11 @@ class ReceiptMapper(private val customerRepository: CustomerRepository, private 
     }
 
     fun toJpa(receipt: Receipt): ar.com.flow.bankaccount.adapters.out.persistence.jpa.Receipt {
-        val customerName = receipt.destinationAccount.owner.name
-        val maybeJpaOwner = customerRepository.findByName(customerName)
-        val jpaOwner: Customer = if (maybeJpaOwner.isPresent) {
-            maybeJpaOwner.get()
-        } else {
-            customerRepository.save(Customer(0, customerName))
-        }
-
-        val currency = receipt.destinationAccount.currency
-        val maybeJpaBankAccount = bankAccountRepository.findByOwnerAndCurrency(jpaOwner, currency)
-        val jpaBankAccount: BankAccount = if (maybeJpaBankAccount.isPresent) {
-            maybeJpaBankAccount.get()
-        } else {
-            bankAccountRepository.save(BankAccount(0L, jpaOwner, currency))
-        }
+        val bankAccount = savingsAccountMapper.toJpa(receipt.destinationAccount)
 
         return Receipt(
             0,
-            jpaBankAccount,
+            bankAccount,
             receipt.dateTime,
             receipt.movement,
             receipt.action,
