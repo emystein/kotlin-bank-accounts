@@ -1,5 +1,6 @@
 package ar.com.flow.bankaccount.adapters.`in`.web
 
+import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryPersistenceConfiguration
 import ar.com.flow.bankaccount.application.spring.BankAccountConfiguration
 import ar.com.flow.bankaccount.usecases.Deposit
 import com.ninjasquad.springmockk.MockkBean
@@ -14,7 +15,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 
 @WebMvcTest
-@ContextConfiguration(classes = [BankAccountConfiguration::class])
+@ContextConfiguration(
+    classes = [BankAccountConfiguration::class, InMemoryPersistenceConfiguration::class]
+)
 class DepositControllerTest {
     @Autowired
     private lateinit var mockMvc: MockMvc
