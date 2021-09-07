@@ -29,6 +29,12 @@ class StatementTest {
     private lateinit var jpaStatement: Statement
 
     @Autowired
+    private lateinit var jpaCustomerRepository: CustomerRepository
+
+    @Autowired
+    private lateinit var jpaBankAccountRepository: BankAccountRepository
+
+    @Autowired
     private lateinit var jpaReceiptRepository: ReceiptRepository
 
     private val currency = "USD"
@@ -47,7 +53,7 @@ class StatementTest {
         dollars10WithdrawReceipt = debit(franciscosAccount, Action.Withdrawal, dollars10)
         minusDollars20Record = debit(franciscosAccount, Action.Withdrawal, dollars20)
 
-        statement = Statement(currency, jpaReceiptRepository)
+        statement = Statement(currency, jpaCustomerRepository, jpaBankAccountRepository, jpaReceiptRepository)
         statement.clear()
     }
 

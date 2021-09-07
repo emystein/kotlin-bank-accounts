@@ -10,7 +10,7 @@ class Receipt(
     @Id
     @GeneratedValue
     val id: Long,
-    @ManyToOne(cascade=[CascadeType.ALL])
+    @ManyToOne
     val bankAccount: BankAccount,
     @Column
     val dateTime: LocalDateTime,

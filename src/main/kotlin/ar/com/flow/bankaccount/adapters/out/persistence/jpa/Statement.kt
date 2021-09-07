@@ -2,17 +2,22 @@ package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
 import ar.com.flow.bankaccount.domain.balance.Balance
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
+import ar.com.flow.bankaccount.ports.out.SavingsAccounts
 import java.util.*
 import kotlin.math.max
 
 class Statement(
     override val currency: String,
+    customerRepository: CustomerRepository,
+    bankAccountRepository: BankAccountRepository,
     private val receiptRepository: ReceiptRepository
 ) : ar.com.flow.bankaccount.ports.out.Statement {
 
+    private val receiptMapper = ReceiptMapper(customerRepository, bankAccountRepository)
+
     override fun all(): Collection<Receipt> {
         return receiptRepository.findAll()
-            .map { ReceiptMapper().toDomain(it) }
+            .map { receiptMapper.toDomain(it) }
             .sortedBy { it.dateTime }
     }
 
@@ -22,16 +27,16 @@ class Statement(
 
     override fun first(): Optional<Receipt> {
         val jpaReceipt = receiptRepository.findAll().firstOrNull()
-        return ReceiptMapper().toDomain(jpaReceipt)
+        return receiptMapper.toDomain(jpaReceipt)
     }
 
     override fun last(): Optional<Receipt> {
         val jpaReceipt = receiptRepository.findAll().lastOrNull()
-        return ReceiptMapper().toDomain(jpaReceipt)
+        return receiptMapper.toDomain(jpaReceipt)
     }
 
     override fun add(receipt: Receipt) {
-        val jpaReceipt = ReceiptMapper().toJpa(receipt)
+        val jpaReceipt = receiptMapper.toJpa(receipt)
         receiptRepository.save(jpaReceipt)
     }
 

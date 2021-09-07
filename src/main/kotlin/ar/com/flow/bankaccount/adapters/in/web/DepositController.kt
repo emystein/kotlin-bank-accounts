@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class DepositController(private val deposit: Deposit) {
-    @PostMapping("/savings-accounts/deposit/{customerName}/{currency}/{amount}")
+    @PostMapping("/savings-accounts/deposit/{accountOwner}/{currency}/{amount}")
     fun deposit(
-        @PathVariable("customerName") customerName: String,
+        @PathVariable("accountOwner") accountOwner: String,
         @PathVariable("currency") currency: String,
         @PathVariable("amount") amount: Int
     ) {
-        deposit.deposit(customerName, currency, amount)
+        deposit.deposit(accountOwner, currency, amount)
     }
 }

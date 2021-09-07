@@ -7,7 +7,7 @@ class BankAccount(
     @Id
     @GeneratedValue
     val id: Long,
-    @ManyToOne(cascade=[CascadeType.ALL])
+    @ManyToOne
     val owner: Customer,
     @Column
     val currency: String

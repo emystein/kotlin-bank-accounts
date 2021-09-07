@@ -10,7 +10,7 @@ class Customer(
     @Id
     @GeneratedValue
     val id: Long,
-    @Column
+    @Column(unique = true)
     val name: String
 )
 

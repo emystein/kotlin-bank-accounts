@@ -23,10 +23,10 @@ class DepositControllerTest {
     private lateinit var deposit: Deposit
 
     @Test
-    internal fun deposit() {
+    fun deposit() {
         justRun { deposit.deposit("Juan Perez", "ARS", 100) }
 
-        val depositUrl = "/savings-accounts/deposit/{customerName}/{currency}/{amount}"
+        val depositUrl = "/savings-accounts/deposit/{accountOwner}/{currency}/{amount}"
 
         mockMvc.perform(post(depositUrl, "Juan Perez", "ARS", 100))
             .andExpect(status().isOk)
