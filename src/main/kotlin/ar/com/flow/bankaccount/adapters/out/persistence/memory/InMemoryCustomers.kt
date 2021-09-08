@@ -1,8 +1,8 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.memory
 
 import ar.com.flow.Customer
-import ar.com.flow.bankaccount.ports.out.CustomerNotFound
 import ar.com.flow.bankaccount.ports.out.Customers
+import java.util.*
 
 class InMemoryCustomers : Customers {
     private val customers: MutableList<Customer> = mutableListOf()
@@ -12,8 +12,7 @@ class InMemoryCustomers : Customers {
         return customer
     }
 
-    override fun customerNamed(name: String): Customer {
-        return customers.find { customer -> customer.name == name }
-            ?: throw CustomerNotFound("Customer not found: $name")
+    override fun customerNamed(name: String): Optional<Customer> {
+        return Optional.ofNullable(customers.find { customer -> customer.name == name })
     }
 }

@@ -1,10 +1,10 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
 import ar.com.flow.Customer
-import ar.com.flow.bankaccount.ports.out.CustomerNotFound
 import ar.com.flow.bankaccount.ports.out.Customers
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import java.util.*
 import javax.transaction.Transactional
 
 @Component
@@ -19,13 +19,8 @@ class JpaCustomers(@Autowired private val repository: CustomerRepository) : Cust
         return customerMapper.toDomain(savedJpaCustomer)
     }
 
-    override fun customerNamed(name: String): Customer {
+    override fun customerNamed(name: String): Optional<Customer> {
         val maybeCustomer = repository.findByName(name)
-
-        if (maybeCustomer.isPresent) {
-            return customerMapper.toDomain(maybeCustomer.get())
-        } else {
-            throw CustomerNotFound("Customer not found: $name")
-        }
+        return maybeCustomer.map { customerMapper.toDomain(it) }
     }
 }

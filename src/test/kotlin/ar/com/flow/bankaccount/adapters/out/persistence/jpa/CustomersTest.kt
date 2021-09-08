@@ -18,6 +18,6 @@ class CustomersTest {
     fun createCustomer() {
         val customer = customers.save(daniel)
 
-        assertThat(customers.customerNamed(daniel.name)).isEqualTo(customer)
+        assertThat(customers.customerNamed(daniel.name)).hasValue(customer)
     }
 }
