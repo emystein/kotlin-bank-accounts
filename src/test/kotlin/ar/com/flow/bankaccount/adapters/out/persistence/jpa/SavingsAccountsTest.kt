@@ -12,7 +12,7 @@ import org.springframework.test.context.ContextConfiguration
 
 @DataJpaTest
 @ContextConfiguration(classes = [BankAccountPersistenceConfiguration::class])
-class JpaSavingsAccountsTest {
+class SavingsAccountsTest {
     @Autowired
     private lateinit var savingsAccounts: SavingsAccounts
 
