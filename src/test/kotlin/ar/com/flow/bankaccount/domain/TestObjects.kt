@@ -7,12 +7,12 @@ import ar.com.flow.bankaccount.domain.balance.Balance.Companion.negative
 import ar.com.flow.bankaccount.domain.withdrawal.LowerLimit
 import ar.com.flow.bankaccount.domain.withdrawal.WithdrawalLimit
 import ar.com.flow.money.Money
-import ar.com.flow.money.TestObjects
+import ar.com.flow.money.TestMoney
 
 object TestObjects {
     var francisco = named("francisco")
     var mabel = named("mabel")
-    var minusDollars100Limit = LowerLimit(negative(TestObjects.dollars100))
+    var minusDollars100Limit = LowerLimit(negative(TestMoney.dollars100))
     
     fun createSavingsAccountFor(accountOwner: Customer, initialBalance: Money, statement: ar.com.flow.bankaccount.ports.out.Statement): BankAccount {
         val account = SavingsAccount(accountOwner, "USD", statement)

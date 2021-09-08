@@ -3,7 +3,7 @@ package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 import ar.com.flow.Customer
 import ar.com.flow.bankaccount.domain.balance.Balance
 import ar.com.flow.bankaccount.ports.out.SavingsAccounts
-import ar.com.flow.money.Money
+import ar.com.flow.money.TestMoney.ars100
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,8 +13,6 @@ import org.springframework.test.context.ContextConfiguration
 @DataJpaTest
 @ContextConfiguration(classes = [BankAccountPersistenceConfiguration::class])
 class JpaSavingsAccountsTest {
-    val ars100 = Money("ARS", 100)
-
     @Autowired
     private lateinit var savingsAccounts: SavingsAccounts
 

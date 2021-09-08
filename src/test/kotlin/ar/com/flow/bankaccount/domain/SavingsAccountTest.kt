@@ -7,9 +7,9 @@ import ar.com.flow.bankaccount.domain.TestObjects.mabel
 import ar.com.flow.bankaccount.domain.balance.Balance.Companion.zero
 import ar.com.flow.bankaccount.domain.transfer.SameAccountException
 import ar.com.flow.money.InsufficientFundsException
-import ar.com.flow.money.TestObjects.dollars10
-import ar.com.flow.money.TestObjects.dollars100
-import ar.com.flow.money.TestObjects.dollars200
+import ar.com.flow.money.TestMoney.dollars10
+import ar.com.flow.money.TestMoney.dollars100
+import ar.com.flow.money.TestMoney.dollars200
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach

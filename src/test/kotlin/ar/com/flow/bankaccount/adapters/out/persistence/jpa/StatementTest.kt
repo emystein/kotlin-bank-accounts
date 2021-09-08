@@ -13,9 +13,9 @@ import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.cred
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.debit
 import ar.com.flow.bankaccount.ports.out.Statement
 import ar.com.flow.money.Dollars
-import ar.com.flow.money.TestObjects.dollars10
-import ar.com.flow.money.TestObjects.dollars100
-import ar.com.flow.money.TestObjects.dollars20
+import ar.com.flow.money.TestMoney.dollars10
+import ar.com.flow.money.TestMoney.dollars100
+import ar.com.flow.money.TestMoney.dollars20
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach

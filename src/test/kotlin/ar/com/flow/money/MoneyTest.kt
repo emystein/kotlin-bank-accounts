@@ -1,9 +1,9 @@
 package ar.com.flow.money
 
 import ar.com.flow.money.Dollars.amount
-import ar.com.flow.money.TestObjects.dollars10
-import ar.com.flow.money.TestObjects.dollars100
-import ar.com.flow.money.TestObjects.dollars110
+import ar.com.flow.money.TestMoney.dollars10
+import ar.com.flow.money.TestMoney.dollars100
+import ar.com.flow.money.TestMoney.dollars110
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
@@ -34,12 +34,12 @@ class MoneyTest {
 
     @Test
     fun given100USDWhenSubtract10USDThenResultShouldBe90USD() {
-        assertEquals(TestObjects.dollars90, dollars100.minus(dollars10))
+        assertEquals(TestMoney.dollars90, dollars100.minus(dollars10))
     }
 
     @Test
     fun given100USDWhenSubtract200USDThenSubtractionShouldBeRejected() {
-        assertThrows(InsufficientFundsException::class.java) { dollars100.minus(TestObjects.dollars200) }
+        assertThrows(InsufficientFundsException::class.java) { dollars100.minus(TestMoney.dollars200) }
     }
 
     @Test

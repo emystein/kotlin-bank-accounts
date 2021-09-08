@@ -5,10 +5,10 @@ import ar.com.flow.bankaccount.domain.TestObjects.francisco
 import ar.com.flow.bankaccount.domain.TestObjects.mabel
 import ar.com.flow.bankaccount.domain.TestObjects.minusDollars100Limit
 import ar.com.flow.money.InsufficientFundsException
-import ar.com.flow.money.TestObjects.dollars10
-import ar.com.flow.money.TestObjects.dollars100
-import ar.com.flow.money.TestObjects.dollars110
-import ar.com.flow.money.TestObjects.dollars300
+import ar.com.flow.money.TestMoney.dollars10
+import ar.com.flow.money.TestMoney.dollars100
+import ar.com.flow.money.TestMoney.dollars110
+import ar.com.flow.money.TestMoney.dollars300
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

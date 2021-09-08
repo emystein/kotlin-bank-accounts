@@ -7,10 +7,10 @@ import ar.com.flow.bankaccount.domain.balance.Balance.Companion.positive
 import ar.com.flow.bankaccount.domain.transaction.receipt.Action
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.credit
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.debit
-import ar.com.flow.money.TestObjects.dollars10
-import ar.com.flow.money.TestObjects.dollars100
-import ar.com.flow.money.TestObjects.dollars110
-import ar.com.flow.money.TestObjects.dollars90
+import ar.com.flow.money.TestMoney.dollars10
+import ar.com.flow.money.TestMoney.dollars100
+import ar.com.flow.money.TestMoney.dollars110
+import ar.com.flow.money.TestMoney.dollars90
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 

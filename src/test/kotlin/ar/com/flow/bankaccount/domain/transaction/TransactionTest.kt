@@ -9,8 +9,8 @@ import ar.com.flow.bankaccount.domain.transaction.receipt.Action
 import ar.com.flow.bankaccount.domain.transaction.receipt.DebitPrint
 import ar.com.flow.bankaccount.domain.transaction.receipt.DebitScratch
 import ar.com.flow.bankaccount.domain.transaction.steps.Step
-import ar.com.flow.money.TestObjects.dollars10
-import ar.com.flow.money.TestObjects.dollars100
+import ar.com.flow.money.TestMoney.dollars10
+import ar.com.flow.money.TestMoney.dollars100
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.BeforeEach
