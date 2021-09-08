@@ -8,7 +8,7 @@ class Withdraw(private val customers: Customers, private val savingsAccounts: Sa
     fun execute(customerName: String, currency: String, amountToWithdraw: Int) {
         val customer = customers.customerNamed(customerName)
 
-        val savingsAccount = savingsAccounts.accountOwnedBy(customer, currency)
+        val savingsAccount = savingsAccounts.accountOwnedBy(customer, currency).get()
 
         savingsAccount.withdraw(Money(currency, amountToWithdraw))
 

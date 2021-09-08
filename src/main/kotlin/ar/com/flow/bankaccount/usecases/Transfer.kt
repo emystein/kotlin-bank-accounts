@@ -20,7 +20,7 @@ class Transfer(private val customers: Customers, private val savingsAccounts: Sa
 
     private fun accountOwnedBy(ownerName: String, currency: String): SavingsAccount {
         val accountOwner = customers.customerNamed(ownerName)
-        return savingsAccounts.accountOwnedBy(accountOwner, currency)
+        return savingsAccounts.accountOwnedBy(accountOwner, currency).get()
     }
 
     private fun saveChanges(vararg accounts: SavingsAccount) {

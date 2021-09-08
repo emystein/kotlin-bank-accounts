@@ -16,11 +16,7 @@ class Statement(
 ) : ar.com.flow.bankaccount.ports.out.Statement {
 
     override fun all(): Collection<Receipt> {
-        val owner = customerRepository.findByName(accountOwner.name)
-
-        val bankAccount = bankAccountRepository.findByOwnerAndCurrency(owner.get(), currency)
-
-        return receiptRepository.findAllByBankAccount(bankAccount.get())
+        return receiptRepository.findAllByBankAccount(currentAccount())
             .map { receiptMapper.toDomain(it) }
             .sortedBy { it.dateTime }
     }
@@ -30,13 +26,11 @@ class Statement(
     }
 
     override fun first(): Optional<Receipt> {
-        val jpaReceipt = receiptRepository.findAll().firstOrNull()
-        return receiptMapper.toDomain(jpaReceipt)
+        return Optional.ofNullable(all().firstOrNull())
     }
 
     override fun last(): Optional<Receipt> {
-        val jpaReceipt = receiptRepository.findAll().lastOrNull()
-        return receiptMapper.toDomain(jpaReceipt)
+        return Optional.ofNullable(all().lastOrNull())
     }
 
     override fun add(receipt: Receipt) {
@@ -87,5 +81,10 @@ class Statement(
         var result = accountOwner.hashCode()
         result = 31 * result + currency.hashCode()
         return result
+    }
+
+    private fun currentAccount(): BankAccount {
+        val owner = customerRepository.findByName(accountOwner.name).get()
+        return bankAccountRepository.findByOwnerAndCurrency(owner, currency).get()
     }
 }

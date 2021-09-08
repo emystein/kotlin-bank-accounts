@@ -1,7 +1,6 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
 import ar.com.flow.Customer
-import ar.com.flow.bankaccount.adapters.out.AccountNotFound
 import ar.com.flow.bankaccount.domain.SavingsAccount
 import ar.com.flow.bankaccount.ports.out.SavingsAccounts
 import org.springframework.beans.factory.annotation.Autowired
@@ -20,7 +19,8 @@ class JpaSavingsAccounts(
 
     override fun create(owner: Customer, currency: String): SavingsAccount {
         val receiptMapper = ReceiptMapper(accountMapper)
-        val statement = Statement(owner, currency, customerRepository, bankAccountRepository, receiptMapper, receiptRepository)
+        val statement =
+            Statement(owner, currency, customerRepository, bankAccountRepository, receiptMapper, receiptRepository)
         val savingsAccount = SavingsAccount(owner, currency, statement)
         val jpaAccount = accountMapper.toJpa(savingsAccount)
         val createdJpaAccount = bankAccountRepository.save(jpaAccount)
@@ -34,14 +34,9 @@ class JpaSavingsAccounts(
         bankAccountRepository.flush()
     }
 
-    override fun accountOwnedBy(accountOwner: Customer, currency: String): SavingsAccount {
+    override fun accountOwnedBy(accountOwner: Customer, currency: String): Optional<SavingsAccount> {
         val maybeJpaAccount = maybeJpaAccountOwnedBy(accountOwner, currency)
-
-        if (!maybeJpaAccount.isPresent) {
-            throw AccountNotFound("Account not found for Customer: ${accountOwner.name} and currency: $currency")
-        }
-
-        return accountMapper.toDomain(maybeJpaAccount.get())
+        return maybeJpaAccount.map { jpaAccount -> accountMapper.toDomain(jpaAccount) }
     }
 
     override fun contains(account: SavingsAccount): Boolean {

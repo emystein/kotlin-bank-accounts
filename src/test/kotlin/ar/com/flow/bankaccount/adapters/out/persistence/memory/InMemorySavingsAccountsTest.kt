@@ -1,8 +1,7 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.memory
 
-import ar.com.flow.bankaccount.adapters.out.AccountNotFound
 import ar.com.flow.bankaccount.domain.TestObjects.francisco
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
@@ -17,22 +16,9 @@ class InMemorySavingsAccountsTest {
     }
 
     @Test
-    internal fun throwExceptionOnCustomerNotOwningAnyAccount() {
+    internal fun accountNotFound() {
         val bankAccounts = InMemorySavingsAccounts()
 
-        assertThrows(AccountNotFound::class.java) {
-            bankAccounts.accountOwnedBy(francisco, "ARS")
-        }
-    }
-
-    @Test
-    internal fun throwExceptionOnAccountNotFoundForACurrency() {
-        val bankAccounts = InMemorySavingsAccounts()
-
-        bankAccounts.create(francisco, "ARS")
-
-        assertThrows(AccountNotFound::class.java) {
-            bankAccounts.accountOwnedBy(francisco, "USD")
-        }
+        assertThat(bankAccounts.accountOwnedBy(francisco, "ARS")).isEmpty
     }
 }

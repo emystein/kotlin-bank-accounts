@@ -1,17 +1,15 @@
 package ar.com.flow.bankaccount.ports.out
 
 import ar.com.flow.Customer
-import ar.com.flow.bankaccount.adapters.out.AccountNotFound
 import ar.com.flow.bankaccount.domain.SavingsAccount
-import kotlin.jvm.Throws
+import java.util.*
 
 interface SavingsAccounts {
     fun create(owner: Customer, currency: String): SavingsAccount
 
     fun save(account: SavingsAccount)
 
-    @Throws(AccountNotFound::class)
-    fun accountOwnedBy(accountOwner: Customer, currency: String): SavingsAccount
+    fun accountOwnedBy(accountOwner: Customer, currency: String): Optional<SavingsAccount>
 
     fun contains(account: SavingsAccount): Boolean
 }

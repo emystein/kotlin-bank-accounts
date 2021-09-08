@@ -8,7 +8,7 @@ class Deposit(private val customers: Customers, private val savingsAccounts: Sav
     fun execute(customerName: String, currency: String, amountToDeposit: Int) {
         val customer = customers.customerNamed(customerName)
 
-        val savingsAccount = savingsAccounts.accountOwnedBy(customer, currency)
+        val savingsAccount = savingsAccounts.accountOwnedBy(customer, currency).get()
 
         savingsAccount.deposit(Money(currency, amountToDeposit))
 

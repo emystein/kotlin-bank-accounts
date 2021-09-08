@@ -27,9 +27,9 @@ class DepositTest {
 
         val deposit = Deposit(customers, savingsAccounts)
 
-        deposit.execute(customerName = "Juan Perez", currency = "ARS", amountToDeposit = 100);
+        deposit.execute(customerName = "Juan Perez", currency = "ARS", amountToDeposit = 100)
 
-        val savingsAccount = savingsAccounts.accountOwnedBy(juanPerez, "ARS")!!
-        assertThat(savingsAccount.balance).isEqualTo(Balance("ARS", 100));
+        val savingsAccount = savingsAccounts.accountOwnedBy(juanPerez, "ARS").get()
+        assertThat(savingsAccount.balance).isEqualTo(Balance("ARS", 100))
     }
 }
