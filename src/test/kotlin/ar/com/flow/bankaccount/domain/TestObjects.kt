@@ -10,8 +10,8 @@ import ar.com.flow.money.Money
 import ar.com.flow.money.TestMoney
 
 object TestObjects {
-    var francisco = named("francisco")
-    var mabel = named("mabel")
+    var daniel = named("Daniel")
+    var mabel = named("Mabel")
     var minusDollars100Limit = LowerLimit(negative(TestMoney.dollars100))
     
     fun createSavingsAccountFor(accountOwner: Customer, initialBalance: Money, statement: ar.com.flow.bankaccount.ports.out.Statement): BankAccount {

@@ -3,7 +3,7 @@ package ar.com.flow.bankaccount.ports
 import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryStatement
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.TestObjects.createSavingsAccountFor
-import ar.com.flow.bankaccount.domain.TestObjects.francisco
+import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.domain.balance.Balance
 import ar.com.flow.bankaccount.domain.balance.Balance.Companion.negative
 import ar.com.flow.bankaccount.domain.balance.Balance.Companion.positive
@@ -36,7 +36,7 @@ class StatementTest {
     fun setUp() {
         statement = InMemoryStatement(currency)
 
-        franciscosAccount = createSavingsAccountFor(francisco, dollars100, statement)
+        franciscosAccount = createSavingsAccountFor(daniel, dollars100, statement)
 
         dollars10DepositReceipt = credit(franciscosAccount, Action.Deposit, dollars10)
         dollars10WithdrawReceipt = debit(franciscosAccount, Action.Withdrawal, dollars10)

@@ -1,7 +1,7 @@
 package ar.com.flow.bankaccount.domain
 
 import ar.com.flow.bankaccount.domain.TestObjects.createCheckingAccountFor
-import ar.com.flow.bankaccount.domain.TestObjects.francisco
+import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.domain.TestObjects.mabel
 import ar.com.flow.bankaccount.domain.TestObjects.minusDollars100Limit
 import ar.com.flow.money.InsufficientFundsException
@@ -19,7 +19,7 @@ class CheckingAccountTest {
 
     @BeforeEach
     fun setUp() {
-        franciscosAccount = createCheckingAccountFor(francisco, dollars100, minusDollars100Limit )
+        franciscosAccount = createCheckingAccountFor(daniel, dollars100, minusDollars100Limit )
         mabelsAccount = createCheckingAccountFor(mabel, dollars100, minusDollars100Limit)
     }
 

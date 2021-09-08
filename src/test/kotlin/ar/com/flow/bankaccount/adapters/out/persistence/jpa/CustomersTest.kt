@@ -1,6 +1,6 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
-import ar.com.flow.bankaccount.domain.TestObjects.francisco
+import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.ports.out.Customers
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
@@ -18,17 +18,17 @@ class CustomersTest {
 
     @Test
     fun createCustomer() {
-        val customer = customers.save(francisco)
+        val customer = customers.save(daniel)
 
-        assertThat(customers.customerNamed(francisco.name)).isEqualTo(customer)
+        assertThat(customers.customerNamed(daniel.name)).isEqualTo(customer)
     }
 
     @Test
     fun shouldNotCreateTwoCustomersWithSameName() {
-        customers.save(francisco)
+        customers.save(daniel)
 
         assertThrows(DataIntegrityViolationException::class.java) {
-            customers.save(francisco)
+            customers.save(daniel)
         }
     }
 }

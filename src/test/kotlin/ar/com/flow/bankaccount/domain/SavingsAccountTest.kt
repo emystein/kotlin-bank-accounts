@@ -2,7 +2,7 @@ package ar.com.flow.bankaccount.domain
 
 import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryStatement
 import ar.com.flow.bankaccount.domain.TestObjects.createSavingsAccountFor
-import ar.com.flow.bankaccount.domain.TestObjects.francisco
+import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.domain.TestObjects.mabel
 import ar.com.flow.bankaccount.domain.balance.Balance.Companion.zero
 import ar.com.flow.bankaccount.domain.transfer.SameAccountException
@@ -21,13 +21,13 @@ class SavingsAccountTest {
 
     @BeforeEach
     fun setUp() {
-        franciscosAccount = createSavingsAccountFor(francisco, dollars100, InMemoryStatement("USD"))
+        franciscosAccount = createSavingsAccountFor(daniel, dollars100, InMemoryStatement("USD"))
         mabelsAccount = createSavingsAccountFor(mabel, dollars100, InMemoryStatement("USD"))
     }
 
     @Test
     fun createdAccountHasBalance0() {
-        val account = SavingsAccount(francisco, "ARS", InMemoryStatement("ARS"))
+        val account = SavingsAccount(daniel, "ARS", InMemoryStatement("ARS"))
         assertEquals(zero("ARS"), account.balance)
     }
 

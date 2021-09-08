@@ -3,7 +3,7 @@ package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 import ar.com.flow.bankaccount.application.spring.BankAccountApplication
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.TestObjects.createSavingsAccountFor
-import ar.com.flow.bankaccount.domain.TestObjects.francisco
+import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.domain.balance.Balance
 import ar.com.flow.bankaccount.domain.balance.Balance.Companion.negative
 import ar.com.flow.bankaccount.domain.balance.Balance.Companion.positive
@@ -50,13 +50,13 @@ class StatementTest {
 
     @BeforeEach
     fun setUp() {
-        if (!customerRepository.findByName(francisco.name).isPresent) {
-            customerRepository.save(CustomerMapper().toJpa(francisco))
+        if (!customerRepository.findByName(daniel.name).isPresent) {
+            customerRepository.save(CustomerMapper().toJpa(daniel))
         }
 
-        statement = Statement(francisco, dollars, customerRepository, bankAccountRepository, ReceiptMapper(savingsAccountMapper), receiptRepository)
+        statement = Statement(daniel, dollars, customerRepository, bankAccountRepository, ReceiptMapper(savingsAccountMapper), receiptRepository)
 
-        franciscosAccount = createSavingsAccountFor(francisco, dollars100, statement)
+        franciscosAccount = createSavingsAccountFor(daniel, dollars100, statement)
 
         bankAccountRepository.save(savingsAccountMapper.toJpa(franciscosAccount))
 
