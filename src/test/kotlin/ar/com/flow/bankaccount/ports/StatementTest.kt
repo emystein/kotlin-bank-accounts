@@ -34,12 +34,15 @@ class StatementTest {
 
     @BeforeEach
     fun setUp() {
-        franciscosAccount = createSavingsAccountFor(francisco, dollars100)
+        statement = InMemoryStatement(currency)
+
+        franciscosAccount = createSavingsAccountFor(francisco, dollars100, statement)
+
         dollars10DepositReceipt = credit(franciscosAccount, Action.Deposit, dollars10)
         dollars10WithdrawReceipt = debit(franciscosAccount, Action.Withdrawal, dollars10)
         minusDollars20Record = debit(franciscosAccount, Action.Withdrawal, dollars20)
 
-        statement = InMemoryStatement(currency)
+        statement.clear()
     }
 
     @Test

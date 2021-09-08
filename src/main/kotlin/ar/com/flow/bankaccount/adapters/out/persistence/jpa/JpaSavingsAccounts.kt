@@ -13,12 +13,16 @@ import javax.transaction.Transactional
 @Transactional
 class JpaSavingsAccounts(
     @Autowired private val customerRepository: CustomerRepository,
-    @Autowired private val bankAccountRepository: BankAccountRepository
+    @Autowired private val bankAccountRepository: BankAccountRepository,
+    @Autowired private val accountMapper: SavingsAccountMapper,
+    @Autowired private val receiptRepository: ReceiptRepository,
 ) : SavingsAccounts {
-    private val accountMapper: SavingsAccountMapper = SavingsAccountMapper(customerRepository, bankAccountRepository)
 
     override fun create(owner: Customer, currency: String): SavingsAccount {
-        val jpaAccount = accountMapper.toJpa(SavingsAccount(owner, currency))
+        val receiptMapper = ReceiptMapper(accountMapper)
+        val statement = Statement(owner, currency, customerRepository, bankAccountRepository, receiptMapper, receiptRepository)
+        val savingsAccount = SavingsAccount(owner, currency, statement)
+        val jpaAccount = accountMapper.toJpa(savingsAccount)
         val createdJpaAccount = bankAccountRepository.save(jpaAccount)
         bankAccountRepository.flush()
         return accountMapper.toDomain(createdJpaAccount)
@@ -26,8 +30,8 @@ class JpaSavingsAccounts(
 
     override fun save(account: SavingsAccount) {
         val jpaAccount = accountMapper.toJpa(account)
-        val createdJpaAccount = bankAccountRepository.save(jpaAccount)
-        accountMapper.toDomain(createdJpaAccount)
+        bankAccountRepository.save(jpaAccount)
+        bankAccountRepository.flush()
     }
 
     override fun accountOwnedBy(accountOwner: Customer, currency: String): SavingsAccount {

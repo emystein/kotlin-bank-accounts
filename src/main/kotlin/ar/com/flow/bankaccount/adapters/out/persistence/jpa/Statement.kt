@@ -1,18 +1,26 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
+import ar.com.flow.Customer
 import ar.com.flow.bankaccount.domain.balance.Balance
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
 import java.util.*
 import kotlin.math.max
 
 class Statement(
+    private val accountOwner: Customer,
     override val currency: String,
+    private val customerRepository: CustomerRepository,
+    private val bankAccountRepository: BankAccountRepository,
     private val receiptMapper: ReceiptMapper,
     private val receiptRepository: ReceiptRepository
 ) : ar.com.flow.bankaccount.ports.out.Statement {
 
     override fun all(): Collection<Receipt> {
-        return receiptRepository.findAll()
+        val owner = customerRepository.findByName(accountOwner.name)
+
+        val bankAccount = bankAccountRepository.findByOwnerAndCurrency(owner.get(), currency)
+
+        return receiptRepository.findAllByBankAccount(bankAccount.get())
             .map { receiptMapper.toDomain(it) }
             .sortedBy { it.dateTime }
     }
@@ -62,5 +70,22 @@ class Statement(
 
     override fun clear() {
         receiptRepository.deleteAll()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+
+        other as Statement
+
+        if (accountOwner != other.accountOwner) return false
+        if (currency != other.currency) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = accountOwner.hashCode()
+        result = 31 * result + currency.hashCode()
+        return result
     }
 }

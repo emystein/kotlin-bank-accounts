@@ -1,7 +1,6 @@
 package ar.com.flow.bankaccount.domain
 
 import ar.com.flow.Customer
-import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryStatement
 import ar.com.flow.bankaccount.domain.balance.Balance
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
 import ar.com.flow.bankaccount.domain.withdrawal.CurrentFundsLimit
@@ -9,12 +8,12 @@ import ar.com.flow.bankaccount.domain.withdrawal.WithdrawalLimit
 import ar.com.flow.bankaccount.ports.out.Statement
 import ar.com.flow.money.Money
 
-data class SavingsAccount(override val owner: Customer, override val currency: String) : BankAccount {
-
+data class SavingsAccount(
+    override val owner: Customer,
+    override val currency: String,
+    override val statement: Statement
+) : BankAccount {
     var withdrawalLimit: WithdrawalLimit = CurrentFundsLimit()
-
-    // TODO inject dependency
-    override val statement: Statement = InMemoryStatement(currency)
 
     override val initialBalance: Balance
         get() = statement.getInitialBalance()

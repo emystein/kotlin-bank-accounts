@@ -1,5 +1,6 @@
 package ar.com.flow.bankaccount.domain.transaction
 
+import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryStatement
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.BankAccountAssert.Companion.assertThat
 import ar.com.flow.bankaccount.domain.TestObjects.createSavingsAccountFor
@@ -21,7 +22,8 @@ class TransactionTest {
 
     @BeforeEach
     fun setUp() {
-        debitAccount = createSavingsAccountFor(francisco, dollars100)
+        debitAccount = createSavingsAccountFor(francisco, dollars100, InMemoryStatement("USD"))
+
         debit = Step(
             debitAccount,
             DebitPrint(debitAccount, Action.Transfer),

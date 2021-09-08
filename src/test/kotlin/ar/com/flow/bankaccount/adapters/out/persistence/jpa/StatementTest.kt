@@ -26,18 +26,20 @@ import java.util.*
 
 @SpringBootTest(classes = [BankAccountApplication::class])
 class StatementTest {
-    private lateinit var jpaStatement: Statement
+    @Autowired
+    private lateinit var customerRepository: CustomerRepository
 
     @Autowired
-    private lateinit var jpaCustomerRepository: CustomerRepository
+    private lateinit var bankAccountRepository: BankAccountRepository
 
     @Autowired
-    private lateinit var jpaBankAccountRepository: BankAccountRepository
+    private lateinit var receiptRepository: ReceiptRepository
 
     @Autowired
-    private lateinit var jpaReceiptRepository: ReceiptRepository
+    private lateinit var savingsAccountMapper: SavingsAccountMapper
 
     private val currency = "USD"
+
     private val zeroBalance = Balance.zero(currency)
 
     private lateinit var franciscosAccount: BankAccount
@@ -48,15 +50,20 @@ class StatementTest {
 
     @BeforeEach
     fun setUp() {
-        franciscosAccount = createSavingsAccountFor(francisco, dollars100)
+        if (!customerRepository.findByName(francisco.name).isPresent) {
+            customerRepository.save(CustomerMapper().toJpa(francisco))
+        }
+
+        statement = Statement(francisco, currency, customerRepository, bankAccountRepository, ReceiptMapper(savingsAccountMapper), receiptRepository)
+
+        franciscosAccount = createSavingsAccountFor(francisco, dollars100, statement)
+
+        bankAccountRepository.save(savingsAccountMapper.toJpa(franciscosAccount))
+
         dollars10DepositReceipt = credit(franciscosAccount, Action.Deposit, dollars10)
         dollars10WithdrawReceipt = debit(franciscosAccount, Action.Withdrawal, dollars10)
         minusDollars20Record = debit(franciscosAccount, Action.Withdrawal, dollars20)
 
-        val savingsAccountMapper = SavingsAccountMapper(jpaCustomerRepository, jpaBankAccountRepository)
-        val receiptMapper = ReceiptMapper(savingsAccountMapper)
-
-        statement = Statement(currency, receiptMapper, jpaReceiptRepository)
         statement.clear()
     }
 
