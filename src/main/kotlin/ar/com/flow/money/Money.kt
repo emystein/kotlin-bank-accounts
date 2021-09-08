@@ -30,3 +30,15 @@ data class Money(val currency: String, val amount: Int) {
         }
     }
 }
+
+object Dollars {
+    fun amount(amount: Int): Money {
+        return Money("USD", amount)
+    }
+}
+
+object Pesos {
+    fun amount(amount: Int): Money {
+        return Money("ARS", amount)
+    }
+}
