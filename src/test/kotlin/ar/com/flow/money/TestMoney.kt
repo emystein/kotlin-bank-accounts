@@ -1,6 +1,7 @@
 package ar.com.flow.money
 
 object TestMoney {
+    val dollars0: Money = Dollars.amount(0)
     val dollars10: Money = Dollars.amount(10)
     val dollars20: Money = Dollars.amount(20)
     val dollars90: Money = Dollars.amount(90)
