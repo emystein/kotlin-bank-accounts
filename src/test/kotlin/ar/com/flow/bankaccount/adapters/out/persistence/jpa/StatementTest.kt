@@ -42,7 +42,7 @@ class StatementTest {
 
     private val zeroBalance = Balance.zero(dollars)
 
-    private lateinit var franciscosAccount: BankAccount
+    private lateinit var danielsAccount: BankAccount
     private lateinit var statement: Statement
     private lateinit var dollars10DepositReceipt: Receipt
     private lateinit var dollars10WithdrawReceipt: Receipt
@@ -56,13 +56,13 @@ class StatementTest {
 
         statement = Statement(daniel, dollars, customerRepository, bankAccountRepository, ReceiptMapper(savingsAccountMapper), receiptRepository)
 
-        franciscosAccount = createSavingsAccountFor(daniel, dollars100, statement)
+        danielsAccount = createSavingsAccountFor(daniel, dollars100, statement)
 
-        bankAccountRepository.save(savingsAccountMapper.toJpa(franciscosAccount))
+        bankAccountRepository.save(savingsAccountMapper.toJpa(danielsAccount))
 
-        dollars10DepositReceipt = credit(franciscosAccount, Action.Deposit, dollars10)
-        dollars10WithdrawReceipt = debit(franciscosAccount, Action.Withdrawal, dollars10)
-        minusDollars20Record = debit(franciscosAccount, Action.Withdrawal, dollars20)
+        dollars10DepositReceipt = credit(danielsAccount, Action.Deposit, dollars10)
+        dollars10WithdrawReceipt = debit(danielsAccount, Action.Withdrawal, dollars10)
+        minusDollars20Record = debit(danielsAccount, Action.Withdrawal, dollars20)
 
         statement.clear()
     }

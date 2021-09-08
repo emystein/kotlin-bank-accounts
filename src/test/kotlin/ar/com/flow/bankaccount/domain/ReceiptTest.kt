@@ -15,17 +15,17 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class ReceiptTest {
-    private lateinit var franciscosAccount: BankAccount
+    private lateinit var danielsAccount: BankAccount
     
     @BeforeEach
     fun setUp() {
-        franciscosAccount =
+        danielsAccount =
             createSavingsAccountFor(daniel, dollars100, InMemoryStatement("USD"))
     }
 
     @Test
     fun recordCreditResultBalance() {
-        val receipt = credit(franciscosAccount, Action.Deposit, dollars10)
+        val receipt = credit(danielsAccount, Action.Deposit, dollars10)
 
         ReceiptAssert.assertThat(receipt)
             .hasResultBalance(positive(dollars110))
@@ -33,7 +33,7 @@ class ReceiptTest {
 
     @Test
     fun recordDebitResultBalance() {
-        val receipt = debit(franciscosAccount, Action.Deposit, dollars10)
+        val receipt = debit(danielsAccount, Action.Deposit, dollars10)
 
         ReceiptAssert.assertThat(receipt)
             .hasResultBalance(positive(dollars90))

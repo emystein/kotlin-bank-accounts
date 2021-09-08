@@ -26,7 +26,7 @@ class StatementTest {
     private val currency = "USD"
     private val zeroBalance = Balance.zero(currency)
 
-    private lateinit var franciscosAccount: BankAccount
+    private lateinit var danielsAccount: BankAccount
     private lateinit var statement: Statement
     private lateinit var dollars10DepositReceipt: Receipt
     private lateinit var dollars10WithdrawReceipt: Receipt
@@ -36,11 +36,11 @@ class StatementTest {
     fun setUp() {
         statement = InMemoryStatement(currency)
 
-        franciscosAccount = createSavingsAccountFor(daniel, dollars100, statement)
+        danielsAccount = createSavingsAccountFor(daniel, dollars100, statement)
 
-        dollars10DepositReceipt = credit(franciscosAccount, Action.Deposit, dollars10)
-        dollars10WithdrawReceipt = debit(franciscosAccount, Action.Withdrawal, dollars10)
-        minusDollars20Record = debit(franciscosAccount, Action.Withdrawal, dollars20)
+        dollars10DepositReceipt = credit(danielsAccount, Action.Deposit, dollars10)
+        dollars10WithdrawReceipt = debit(danielsAccount, Action.Withdrawal, dollars10)
+        minusDollars20Record = debit(danielsAccount, Action.Withdrawal, dollars20)
 
         statement.clear()
     }

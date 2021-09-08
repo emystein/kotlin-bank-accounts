@@ -14,44 +14,44 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class CheckingAccountTest {
-    private lateinit var franciscosAccount: BankAccount
+    private lateinit var danielsAccount: BankAccount
     private lateinit var mabelsAccount: BankAccount
 
     @BeforeEach
     fun setUp() {
-        franciscosAccount = createCheckingAccountFor(daniel, dollars100, minusDollars100Limit )
+        danielsAccount = createCheckingAccountFor(daniel, dollars100, minusDollars100Limit )
         mabelsAccount = createCheckingAccountFor(mabel, dollars100, minusDollars100Limit)
     }
 
     @Test
     fun withdrawalDecrementsFunds() {
-        franciscosAccount.withdraw(dollars10)
+        danielsAccount.withdraw(dollars10)
 
-        BankAccountAssert.assertThat(franciscosAccount)
+        BankAccountAssert.assertThat(danielsAccount)
             .decreasedFunds(dollars10)
     }
 
     @Test
     fun withdrawAmountGreaterThanPositiveBalanceAndAboveWithdrawalLimit() {
-        franciscosAccount.withdraw(dollars110)
+        danielsAccount.withdraw(dollars110)
 
-        BankAccountAssert.assertThat(franciscosAccount)
+        BankAccountAssert.assertThat(danielsAccount)
             .hasNegativeBalance(dollars10)
     }
 
     @Test
     fun withdrawalAmountCanNotExceedWithdrawalLimit() {
-        Assertions.assertThrows(InsufficientFundsException::class.java) { franciscosAccount.withdraw(dollars300) }
+        Assertions.assertThrows(InsufficientFundsException::class.java) { danielsAccount.withdraw(dollars300) }
 
-        BankAccountAssert.assertThat(franciscosAccount)
+        BankAccountAssert.assertThat(danielsAccount)
             .keepsInitialBalance()
     }
 
     @Test
     fun transferAmountLessThanAvailableFunds() {
-        franciscosAccount.transfer(dollars10, mabelsAccount)
+        danielsAccount.transfer(dollars10, mabelsAccount)
 
-        BankAccountAssert.assertThat(franciscosAccount)
+        BankAccountAssert.assertThat(danielsAccount)
             .decreasedFunds(dollars10)
 
         BankAccountAssert.assertThat(mabelsAccount)
@@ -60,9 +60,9 @@ class CheckingAccountTest {
 
     @Test
     fun transferAmountGreaterThanPositiveBalanceAndAboveWithdrawalLimit() {
-        franciscosAccount.transfer(dollars110, mabelsAccount)
+        danielsAccount.transfer(dollars110, mabelsAccount)
 
-        BankAccountAssert.assertThat(franciscosAccount)
+        BankAccountAssert.assertThat(danielsAccount)
             .decreasedFunds(dollars110)
 
         BankAccountAssert.assertThat(mabelsAccount)
@@ -72,10 +72,10 @@ class CheckingAccountTest {
     @Test
     fun transferAmountCanNotExceedWithdrawalLimit() {
         Assertions.assertThrows(InsufficientFundsException::class.java) {
-            franciscosAccount.transfer(dollars300, mabelsAccount)
+            danielsAccount.transfer(dollars300, mabelsAccount)
         }
 
-        BankAccountAssert.assertThat(franciscosAccount)
+        BankAccountAssert.assertThat(danielsAccount)
             .keepsInitialBalance()
 
         BankAccountAssert.assertThat(mabelsAccount)
