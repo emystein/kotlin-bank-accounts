@@ -18,7 +18,4 @@ class InMemoryStatement(override val currency: String) : Statement {
         history.add(receipt)
     }
 
-    override fun clear() {
-        history.clear()
-    }
 }

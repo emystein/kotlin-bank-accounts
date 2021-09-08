@@ -2,16 +2,14 @@ package ar.com.flow.bankaccount.ports
 
 import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryStatement
 import ar.com.flow.bankaccount.domain.BankAccount
-import ar.com.flow.bankaccount.domain.TestObjects.createSavingsAccountFor
+import ar.com.flow.bankaccount.domain.SavingsAccount
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
-import ar.com.flow.bankaccount.domain.balance.Balance
 import ar.com.flow.bankaccount.domain.transaction.receipt.Action
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.credit
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.debit
 import ar.com.flow.bankaccount.ports.out.Statement
 import ar.com.flow.money.TestMoney.dollars10
-import ar.com.flow.money.TestMoney.dollars100
 import ar.com.flow.money.TestMoney.dollars20
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertFalse
@@ -20,8 +18,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class StatementTest {
-    private val currency = "USD"
-    private val zeroBalance = Balance.zero(currency)
+    private val dollars = "USD"
 
     private lateinit var danielsAccount: BankAccount
     private lateinit var statement: Statement
@@ -31,15 +28,13 @@ class StatementTest {
 
     @BeforeEach
     fun setUp() {
-        statement = InMemoryStatement(currency)
+        statement = InMemoryStatement(dollars)
 
-        danielsAccount = createSavingsAccountFor(daniel, dollars100, statement)
+        danielsAccount = SavingsAccount(daniel, dollars, statement)
 
         dollars10DepositReceipt = credit(danielsAccount, Action.Deposit, dollars10)
         dollars10WithdrawReceipt = debit(danielsAccount, Action.Withdrawal, dollars10)
         minusDollars20Record = debit(danielsAccount, Action.Withdrawal, dollars20)
-
-        statement.clear()
     }
 
     @Test

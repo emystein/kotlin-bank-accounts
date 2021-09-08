@@ -2,6 +2,7 @@ package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
 import ar.com.flow.bankaccount.application.spring.BankAccountApplication
 import ar.com.flow.bankaccount.domain.BankAccount
+import ar.com.flow.bankaccount.domain.SavingsAccount
 import ar.com.flow.bankaccount.domain.TestObjects.createSavingsAccountFor
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.domain.balance.Balance
@@ -37,8 +38,6 @@ class StatementTest {
 
     private val dollars = "USD"
 
-    private val zeroBalance = Balance.zero(dollars)
-
     private lateinit var danielsAccount: BankAccount
     private lateinit var statement: Statement
     private lateinit var dollars10DepositReceipt: Receipt
@@ -53,17 +52,17 @@ class StatementTest {
             customerRepository.save(customerMapper.toJpa(daniel))
         }
 
+        receiptRepository.deleteAll()
+
         statement = Statement(daniel, dollars, customerRepository, ReceiptMapper(customerMapper), receiptRepository)
 
-        danielsAccount = createSavingsAccountFor(daniel, dollars100, statement)
+        danielsAccount =  SavingsAccount(daniel, dollars, statement)
 
         bankAccountRepository.save(savingsAccountMapper.toJpa(danielsAccount))
 
         dollars10DepositReceipt = credit(danielsAccount, Action.Deposit, dollars10)
         dollars10WithdrawReceipt = debit(danielsAccount, Action.Withdrawal, dollars10)
         minusDollars20Record = debit(danielsAccount, Action.Withdrawal, dollars20)
-
-        statement.clear()
     }
 
     @Test

@@ -10,7 +10,6 @@ interface Statement {
     fun all(): Collection<Receipt>
     fun count(): Int
     fun add(receipt: Receipt)
-    fun clear()
 
     fun first(): Optional<Receipt> {
         return Optional.ofNullable(all().firstOrNull())

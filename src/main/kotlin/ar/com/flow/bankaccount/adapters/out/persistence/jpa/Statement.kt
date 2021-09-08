@@ -1,10 +1,7 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
 import ar.com.flow.Customer
-import ar.com.flow.bankaccount.domain.balance.Balance
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
-import java.util.*
-import kotlin.math.max
 
 class Statement(
     private val accountOwner: Customer,
@@ -28,10 +25,6 @@ class Statement(
     override fun add(receipt: Receipt) {
         val jpaReceipt = receiptMapper.toJpa(receipt)
         receiptRepository.save(jpaReceipt)
-    }
-
-    override fun clear() {
-        receiptRepository.deleteAll()
     }
 
     override fun equals(other: Any?): Boolean {
