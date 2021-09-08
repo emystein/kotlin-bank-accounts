@@ -5,22 +5,19 @@ import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.TestObjects.createSavingsAccountFor
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.domain.balance.Balance
-import ar.com.flow.bankaccount.domain.balance.Balance.Companion.negative
-import ar.com.flow.bankaccount.domain.balance.Balance.Companion.positive
 import ar.com.flow.bankaccount.domain.transaction.receipt.Action
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.credit
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.debit
 import ar.com.flow.bankaccount.ports.out.Statement
-import ar.com.flow.money.Dollars.amount
 import ar.com.flow.money.TestMoney.dollars10
 import ar.com.flow.money.TestMoney.dollars100
 import ar.com.flow.money.TestMoney.dollars20
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.util.*
 
 class StatementTest {
     private val currency = "USD"
@@ -43,14 +40,6 @@ class StatementTest {
         minusDollars20Record = debit(danielsAccount, Action.Withdrawal, dollars20)
 
         statement.clear()
-    }
-
-    @Test
-    fun newStatementIsEmpty() {
-        assertEquals(Optional.empty<Any>(), statement.first())
-        assertEquals(zeroBalance, statement.getInitialBalance())
-        assertEquals(zeroBalance, statement.getCurrentBalance())
-        assertEquals(zeroBalance, statement.getPreviousBalance())
     }
 
     @Test
@@ -113,23 +102,5 @@ class StatementTest {
         statement.add(dollars10WithdrawReceipt)
 
         assertTrue(statement.containsInOrder(dollars10DepositReceipt, dollars10WithdrawReceipt))
-    }
-
-    @Test
-    fun statementUpdatesBalance() {
-        statement.add(dollars10DepositReceipt)
-        statement.add(dollars10WithdrawReceipt)
-
-        assertEquals(positive(amount(10)), statement.getInitialBalance())
-        assertEquals(positive(amount(0)), statement.getCurrentBalance())
-        assertEquals(positive(amount(10)), statement.getPreviousBalance())
-    }
-
-    @Test
-    fun balanceSumsUpCreditAndDebitTransactionRecords() {
-        statement.add(dollars10DepositReceipt)
-        statement.add(minusDollars20Record)
-
-        assertEquals(negative(dollars10), statement.getCurrentBalance())
     }
 }

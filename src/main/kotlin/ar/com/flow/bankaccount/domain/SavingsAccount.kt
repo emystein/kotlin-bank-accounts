@@ -16,11 +16,13 @@ data class SavingsAccount(
     var withdrawalLimit: WithdrawalLimit = CurrentFundsLimit()
 
     override val initialBalance: Balance
-        get() = statement.getInitialBalance()
+        get() = if (statement.first().isPresent) statement.first().get().amount else Balance.zero(currency)
+
     override val balance: Balance
-        get() = statement.getCurrentBalance()
+        get() = statement.sum(statement.count())
+
     override val previousBalance: Balance
-        get() = statement.getPreviousBalance()
+        get() = statement.sum(statement.count() - 1)
 
     override fun withdrawalLimitSupports(amount: Money): Boolean {
         return withdrawalLimit.accepts(this, amount)

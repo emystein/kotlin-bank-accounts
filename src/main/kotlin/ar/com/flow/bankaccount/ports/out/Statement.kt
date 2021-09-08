@@ -3,20 +3,38 @@ package ar.com.flow.bankaccount.ports.out
 import ar.com.flow.bankaccount.domain.balance.Balance
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
 import java.util.*
+import kotlin.math.max
 
 interface Statement {
     val currency: String
     fun all(): Collection<Receipt>
     fun count(): Int
-    fun first(): Optional<Receipt>
-    fun last(): Optional<Receipt>
     fun add(receipt: Receipt)
-    operator fun contains(receipt: Receipt): Boolean
-    fun containsInOrder(vararg records: Receipt): Boolean
-    fun zeroBalance() = Balance.zero(currency)
-    fun getInitialBalance(): Balance
-    fun getCurrentBalance(): Balance
-    fun getPreviousBalance(): Balance
-    fun sum(numberOfTransactions: Int): Balance
     fun clear()
+
+    fun first(): Optional<Receipt> {
+        return Optional.ofNullable(all().firstOrNull())
+    }
+
+    fun last(): Optional<Receipt> {
+        return Optional.ofNullable(all().lastOrNull())
+    }
+
+    fun contains(receipt: Receipt): Boolean {
+        return containsInOrder(receipt)
+    }
+
+    fun containsInOrder(vararg records: Receipt): Boolean {
+        val expected = listOf(*records)
+
+        val stored = all().filter { receipt -> expected.contains(receipt) }
+
+        return (stored == expected)
+    }
+
+    fun sum(numberOfTransactions: Int): Balance {
+        return all().take(max(numberOfTransactions, 0))
+            .map { receipt -> receipt.amount }
+            .fold(Balance.zero(currency)) { balance, receiptAmount -> balance.plus(receiptAmount) }
+    }
 }

@@ -25,41 +25,9 @@ class Statement(
         return all().size
     }
 
-    override fun first(): Optional<Receipt> {
-        return Optional.ofNullable(all().firstOrNull())
-    }
-
-    override fun last(): Optional<Receipt> {
-        return Optional.ofNullable(all().lastOrNull())
-    }
-
     override fun add(receipt: Receipt) {
         val jpaReceipt = receiptMapper.toJpa(receipt)
         receiptRepository.save(jpaReceipt)
-    }
-
-    override fun contains(receipt: Receipt): Boolean {
-        return containsInOrder(receipt)
-    }
-
-    override fun containsInOrder(vararg records: Receipt): Boolean {
-        val expected = listOf(*records)
-
-        val stored = all().filter { receipt -> expected.contains(receipt) }
-
-        return (stored == expected)
-    }
-
-    override fun getInitialBalance(): Balance = if (first().isPresent) first().get().amount else zeroBalance()
-
-    override fun getCurrentBalance(): Balance = sum(count())
-
-    override fun getPreviousBalance(): Balance = sum(count() - 1)
-
-    override fun sum(numberOfTransactions: Int): Balance {
-        return all().take(max(numberOfTransactions, 0))
-            .map { receipt -> receipt.amount }
-            .fold(zeroBalance()) { balance, receiptAmount -> balance.plus(receiptAmount) }
     }
 
     override fun clear() {
