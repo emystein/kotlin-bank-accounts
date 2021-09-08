@@ -17,7 +17,7 @@ class SavingsAccountMapper(
     fun toDomain(bankAccount: ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccount): SavingsAccount {
         val owner = customerMapper.toDomain(bankAccount.owner)
         val statement = Statement(owner, bankAccount.currency,
-            customerRepository, bankAccountRepository,
+            customerRepository,
             receiptMapper, receiptRepository)
         return SavingsAccount(owner, bankAccount.currency, statement)
     }

@@ -20,7 +20,7 @@ class JpaSavingsAccounts(
     override fun create(owner: Customer, currency: String): SavingsAccount {
         val receiptMapper = ReceiptMapper(CustomerMapper(customerRepository))
         val statement =
-            Statement(owner, currency, customerRepository, bankAccountRepository, receiptMapper, receiptRepository)
+            Statement(owner, currency, customerRepository, receiptMapper, receiptRepository)
         val savingsAccount = SavingsAccount(owner, currency, statement)
         val jpaAccount = accountMapper.toJpa(savingsAccount)
         val createdJpaAccount = bankAccountRepository.save(jpaAccount)

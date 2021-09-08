@@ -10,7 +10,6 @@ class Statement(
     private val accountOwner: Customer,
     override val currency: String,
     private val customerRepository: CustomerRepository,
-    private val bankAccountRepository: BankAccountRepository,
     private val receiptMapper: ReceiptMapper,
     private val receiptRepository: ReceiptRepository
 ) : ar.com.flow.bankaccount.ports.out.Statement {
@@ -82,10 +81,5 @@ class Statement(
         var result = accountOwner.hashCode()
         result = 31 * result + currency.hashCode()
         return result
-    }
-
-    private fun currentAccount(): BankAccount {
-        val owner = customerRepository.findByName(accountOwner.name).get()
-        return bankAccountRepository.findByOwnerAndCurrency(owner, currency).get()
     }
 }

@@ -56,7 +56,7 @@ class StatementTest {
             customerRepository.save(customerMapper.toJpa(daniel))
         }
 
-        statement = Statement(daniel, dollars, customerRepository, bankAccountRepository, ReceiptMapper(customerMapper), receiptRepository)
+        statement = Statement(daniel, dollars, customerRepository, ReceiptMapper(customerMapper), receiptRepository)
 
         danielsAccount = createSavingsAccountFor(daniel, dollars100, statement)
 
