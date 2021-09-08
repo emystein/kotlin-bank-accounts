@@ -50,4 +50,21 @@ data class SavingsAccount(
     override fun addReceipt(receipt: Receipt) {
         statement.add(receipt)
     }
+    
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+
+        other as SavingsAccount
+
+        if (owner != other.owner) return false
+        if (currency != other.currency) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = owner.hashCode()
+        result = 31 * result + currency.hashCode()
+        return result
+    }
 }

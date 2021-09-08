@@ -22,21 +22,4 @@ class Statement(
         val jpaReceipt = receiptMapper.toJpa(receipt)
         receiptRepository.save(jpaReceipt)
     }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-
-        other as Statement
-
-        if (accountOwner != other.accountOwner) return false
-        if (currency != other.currency) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = accountOwner.hashCode()
-        result = 31 * result + currency.hashCode()
-        return result
-    }
 }

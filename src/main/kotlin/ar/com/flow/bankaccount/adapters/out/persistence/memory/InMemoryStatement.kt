@@ -13,5 +13,4 @@ class InMemoryStatement(override val currency: String) : Statement {
     override fun add(receipt: Receipt) {
         history.add(receipt)
     }
-
 }
