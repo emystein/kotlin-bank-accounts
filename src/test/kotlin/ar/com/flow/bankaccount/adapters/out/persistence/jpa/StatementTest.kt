@@ -50,11 +50,13 @@ class StatementTest {
 
     @BeforeEach
     fun setUp() {
+        val customerMapper = CustomerMapper(customerRepository)
+
         if (!customerRepository.findByName(daniel.name).isPresent) {
-            customerRepository.save(CustomerMapper().toJpa(daniel))
+            customerRepository.save(customerMapper.toJpa(daniel))
         }
 
-        statement = Statement(daniel, dollars, customerRepository, bankAccountRepository, ReceiptMapper(savingsAccountMapper), receiptRepository)
+        statement = Statement(daniel, dollars, customerRepository, bankAccountRepository, ReceiptMapper(customerMapper), receiptRepository)
 
         danielsAccount = createSavingsAccountFor(daniel, dollars100, statement)
 

@@ -1,5 +1,6 @@
 package ar.com.flow.bankaccount.domain.transaction.receipt
 
+import ar.com.flow.Customer
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.balance.Balance
 import ar.com.flow.bankaccount.domain.balance.Balance.Companion.negative
@@ -9,7 +10,7 @@ import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 
 data class Receipt(
-    val destinationAccount: BankAccount,
+    val customer: Customer,
     val dateTime: LocalDateTime,
     val movement: FundsMovement,
     val action: Action,
@@ -17,12 +18,11 @@ data class Receipt(
     val resultBalance: Balance,
 ) {
     companion object {
-        @JvmStatic
         fun debit(destinationAccount: BankAccount, action: Action, amount: Money): Receipt {
             val balance = negative(amount)
 
             return Receipt(
-                destinationAccount,
+                destinationAccount.owner,
                 LocalDateTime.now(),
                 FundsMovement.Debit,
                 action,
@@ -31,12 +31,11 @@ data class Receipt(
             )
         }
 
-        @JvmStatic
         fun credit(destinationAccount: BankAccount, action: Action, amount: Money): Receipt {
             val positive = positive(amount)
 
             return Receipt(
-                destinationAccount,
+                destinationAccount.owner,
                 LocalDateTime.now(),
                 FundsMovement.Credit,
                 action,
@@ -52,7 +51,7 @@ data class Receipt(
 
         other as Receipt
 
-        if (destinationAccount != other.destinationAccount) return false
+        if (customer != other.customer) return false
         if (dateTime.truncatedTo(ChronoUnit.MILLIS) != other.dateTime.truncatedTo(ChronoUnit.MILLIS)) return false
         if (movement != other.movement) return false
         if (action != other.action) return false

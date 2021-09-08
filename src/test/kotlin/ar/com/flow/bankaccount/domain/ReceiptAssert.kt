@@ -29,7 +29,8 @@ class ReceiptAssert(receipt: Receipt) :
     }
 
     fun hasCreditAccount(expected: BankAccount): ReceiptAssert {
-        org.junit.jupiter.api.Assertions.assertEquals(expected, actual.destinationAccount)
+        org.junit.jupiter.api.Assertions.assertEquals(expected.owner, actual.customer)
+        org.junit.jupiter.api.Assertions.assertEquals(expected.currency, actual.amount.currency)
         return this
     }
 

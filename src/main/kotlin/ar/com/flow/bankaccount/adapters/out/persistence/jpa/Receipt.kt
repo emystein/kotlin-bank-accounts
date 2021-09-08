@@ -11,7 +11,7 @@ class Receipt(
     @GeneratedValue
     val id: Long,
     @ManyToOne
-    val bankAccount: BankAccount,
+    val customer: Customer,
     @Column
     val dateTime: LocalDateTime,
     @Enumerated

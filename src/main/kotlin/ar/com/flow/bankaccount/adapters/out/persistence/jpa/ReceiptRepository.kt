@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface ReceiptRepository: JpaRepository<Receipt, Long> {
-    fun findAllByBankAccount(bankAccount: BankAccount): List<Receipt>
+    fun findAllByCustomerAndCurrency(customer: Customer, currency: String): List<Receipt>
 }

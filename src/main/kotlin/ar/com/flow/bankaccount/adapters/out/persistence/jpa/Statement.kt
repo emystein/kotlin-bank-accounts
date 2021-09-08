@@ -16,7 +16,8 @@ class Statement(
 ) : ar.com.flow.bankaccount.ports.out.Statement {
 
     override fun all(): Collection<Receipt> {
-        return receiptRepository.findAllByBankAccount(currentAccount())
+        val customer = customerRepository.findByName(accountOwner.name).get()
+        return receiptRepository.findAllByCustomerAndCurrency(customer, currency)
             .map { receiptMapper.toDomain(it) }
             .sortedBy { it.dateTime }
     }

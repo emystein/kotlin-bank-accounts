@@ -4,20 +4,14 @@ import ar.com.flow.bankaccount.domain.balance.Balance
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
 import java.util.*
 
-class ReceiptMapper(private val savingsAccountMapper: SavingsAccountMapper) {
-    fun toDomain(receipt: ar.com.flow.bankaccount.adapters.out.persistence.jpa.Receipt?): Optional<Receipt> {
-       return toDomain(Optional.ofNullable(receipt))
-    }
-
+class ReceiptMapper(private val customerMapper: CustomerMapper) {
     fun toDomain(maybeReceipt: Optional<ar.com.flow.bankaccount.adapters.out.persistence.jpa.Receipt>): Optional<Receipt> {
         return maybeReceipt.map { toDomain(it)}
     }
 
     fun toDomain(receipt: ar.com.flow.bankaccount.adapters.out.persistence.jpa.Receipt): Receipt {
-        val bankAccount = savingsAccountMapper.toDomain(receipt.bankAccount)
-
         return Receipt(
-            bankAccount,
+            customerMapper.toDomain(receipt.customer),
             receipt.dateTime,
             receipt.movement,
             receipt.action,
@@ -27,11 +21,9 @@ class ReceiptMapper(private val savingsAccountMapper: SavingsAccountMapper) {
     }
 
     fun toJpa(receipt: Receipt): ar.com.flow.bankaccount.adapters.out.persistence.jpa.Receipt {
-        val bankAccount = savingsAccountMapper.toJpa(receipt.destinationAccount)
-
-        return Receipt(
+        return ar.com.flow.bankaccount.adapters.out.persistence.jpa.Receipt(
             0,
-            bankAccount,
+            customerMapper.toJpa(receipt.customer),
             receipt.dateTime,
             receipt.movement,
             receipt.action,
