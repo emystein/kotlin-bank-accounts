@@ -38,9 +38,9 @@ class StatementTest {
     @Autowired
     private lateinit var savingsAccountMapper: SavingsAccountMapper
 
-    private val currency = "USD"
+    private val dollars = "USD"
 
-    private val zeroBalance = Balance.zero(currency)
+    private val zeroBalance = Balance.zero(dollars)
 
     private lateinit var franciscosAccount: BankAccount
     private lateinit var statement: Statement
@@ -54,7 +54,7 @@ class StatementTest {
             customerRepository.save(CustomerMapper().toJpa(francisco))
         }
 
-        statement = Statement(francisco, currency, customerRepository, bankAccountRepository, ReceiptMapper(savingsAccountMapper), receiptRepository)
+        statement = Statement(francisco, dollars, customerRepository, bankAccountRepository, ReceiptMapper(savingsAccountMapper), receiptRepository)
 
         franciscosAccount = createSavingsAccountFor(francisco, dollars100, statement)
 
