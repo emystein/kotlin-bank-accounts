@@ -8,8 +8,11 @@ import kotlin.math.max
 interface Statement {
     val currency: String
     fun all(): Collection<Receipt>
-    fun count(): Int
     fun add(receipt: Receipt)
+
+    fun count(): Int {
+        return all().size
+    }
 
     fun first(): Optional<Receipt> {
         return Optional.ofNullable(all().firstOrNull())

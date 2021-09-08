@@ -10,10 +10,6 @@ class InMemoryStatement(override val currency: String) : Statement {
         return history
     }
 
-    override fun count(): Int {
-        return history.size
-    }
-
     override fun add(receipt: Receipt) {
         history.add(receipt)
     }

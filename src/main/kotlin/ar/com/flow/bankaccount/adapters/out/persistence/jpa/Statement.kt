@@ -18,10 +18,6 @@ class Statement(
             .sortedBy { it.dateTime }
     }
 
-    override fun count(): Int {
-        return all().size
-    }
-
     override fun add(receipt: Receipt) {
         val jpaReceipt = receiptMapper.toJpa(receipt)
         receiptRepository.save(jpaReceipt)
