@@ -16,39 +16,37 @@ class JpaSavingsAccountsTest {
     @Autowired
     private lateinit var savingsAccounts: SavingsAccounts
 
+    val pesos = "ARS"
+
+    val juan = Customer("Juan Perez")
+
     @Test
     fun createSavingsAccount() {
-        val owner = Customer("Juan Perez")
+        val account = savingsAccounts.create(juan, pesos)
 
-        val account = savingsAccounts.create(owner, "ARS")
-
-        assertThat(savingsAccounts.accountOwnedBy(owner, "ARS")).hasValue(account)
+        assertThat(savingsAccounts.accountOwnedBy(juan, pesos)).hasValue(account)
     }
 
     @Test
     fun updateSavingsAccount() {
-        val owner = Customer("Juan Perez")
-        val account = savingsAccounts.create(owner, "ARS")
+        val account = savingsAccounts.create(juan, pesos)
         account.deposit(ars100)
 
         savingsAccounts.save(account)
 
-        val updatedAccount = savingsAccounts.accountOwnedBy(owner, "ARS").get()
+        val updatedAccount = savingsAccounts.accountOwnedBy(juan, pesos).get()
         assertThat(updatedAccount.balance).isEqualTo(Balance.positive(ars100))
     }
 
     @Test
     fun containsCreatedAccount() {
-        val owner = Customer("Juan Perez")
-
-        val account = savingsAccounts.create(owner, "ARS")
+        val account = savingsAccounts.create(juan, pesos)
 
         assertThat(savingsAccounts.contains(account)).isTrue
     }
 
     @Test
     fun transientAccountNotFound() {
-        val owner = Customer("Juan Perez")
-        assertThat(savingsAccounts.accountOwnedBy(owner, "ARS")).isEmpty
+        assertThat(savingsAccounts.accountOwnedBy(juan, pesos)).isEmpty
     }
 }
