@@ -2,9 +2,7 @@ package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
 import ar.com.flow.Customer
 import ar.com.flow.bankaccount.domain.BankAccount
-import ar.com.flow.bankaccount.domain.SavingsAccount
 import ar.com.flow.bankaccount.ports.out.BankAccounts
-import ar.com.flow.bankaccount.ports.out.Receipts
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.util.*
@@ -16,22 +14,18 @@ class SavingsAccounts(
     @Autowired private val customerRepository: CustomerRepository,
     @Autowired private val accountMapper: SavingsAccountMapper,
     @Autowired private val bankAccountRepository: BankAccountRepository,
-    @Autowired private val receipts: Receipts,
+    @Autowired private val savingsAccountFactory: SavingsAccountFactory
 ) : BankAccounts {
 
     override fun create(owner: Customer, currency: String): BankAccount {
-        val statement = Statement(owner, currency, receipts)
-        val savingsAccount = SavingsAccount(owner, currency, statement)
-        val jpaAccount = accountMapper.toJpa(savingsAccount)
-        val createdJpaAccount = bankAccountRepository.save(jpaAccount)
-        bankAccountRepository.flush()
-        return accountMapper.toDomain(createdJpaAccount)
+        val newAccount = savingsAccountFactory.createSavingsAccount(owner, currency)
+        return save(newAccount)
     }
 
-    override fun save(account: BankAccount) {
+    override fun save(account: BankAccount): BankAccount {
         val jpaAccount = accountMapper.toJpa(account)
         bankAccountRepository.save(jpaAccount)
-        bankAccountRepository.flush()
+        return accountMapper.toDomain(jpaAccount)
     }
 
     override fun accountOwnedBy(accountOwner: Customer, currency: String): Optional<BankAccount> {

@@ -7,7 +7,7 @@ import java.util.*
 interface BankAccounts {
     fun create(owner: Customer, currency: String): BankAccount
 
-    fun save(account: BankAccount)
+    fun save(account: BankAccount): BankAccount
 
     fun accountOwnedBy(accountOwner: Customer, currency: String): Optional<BankAccount>
 

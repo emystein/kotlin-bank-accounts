@@ -2,7 +2,6 @@ package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.SavingsAccount
-import ar.com.flow.bankaccount.ports.out.Receipts
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -10,11 +9,11 @@ import org.springframework.stereotype.Component
 class SavingsAccountMapper(
     @Autowired private val customerMapper: CustomerMapper,
     @Autowired private val bankAccountRepository: BankAccountRepository,
-    @Autowired private val receipts: Receipts,
+    @Autowired private val savingsAccountFactory: SavingsAccountFactory,
 ) {
     fun toDomain(bankAccount: ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccount): SavingsAccount {
         val owner = customerMapper.toDomain(bankAccount.owner)
-        return SavingsAccount(owner, bankAccount.currency, Statement(owner, bankAccount.currency, receipts))
+        return savingsAccountFactory.createSavingsAccount(owner, bankAccount.currency)
     }
 
     fun toJpa(bankAccount: BankAccount): ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccount {

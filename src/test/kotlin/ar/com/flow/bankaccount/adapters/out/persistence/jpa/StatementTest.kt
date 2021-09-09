@@ -27,6 +27,9 @@ class StatementTest {
     private lateinit var customers: Customers
 
     @Autowired
+    private lateinit var savingsAccountFactory: SavingsAccountFactory
+
+    @Autowired
     private lateinit var receipts: Receipts
 
     @Autowired
@@ -48,7 +51,7 @@ class StatementTest {
 
         statement = Statement(daniel, dollars, receipts)
 
-        danielsAccount = SavingsAccount(daniel, dollars, statement)
+        danielsAccount = savingsAccountFactory.createSavingsAccount(daniel, dollars)
 
         dollars10DepositReceipt = credit(danielsAccount, Action.Deposit, dollars10)
         dollars10WithdrawReceipt = debit(danielsAccount, Action.Withdrawal, dollars10)

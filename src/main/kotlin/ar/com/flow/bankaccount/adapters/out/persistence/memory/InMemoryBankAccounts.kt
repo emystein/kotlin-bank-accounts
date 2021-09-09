@@ -21,8 +21,10 @@ class InMemoryBankAccounts: BankAccounts {
         return created
     }
 
-    override fun save(account: BankAccount) {
+    override fun save(account: BankAccount): BankAccount {
         accounts[account.owner] = mutableMapOf(account.currency to account)
+
+        return account
     }
 
     override fun accountOwnedBy(customer: Customer, currency: String): Optional<BankAccount> {
