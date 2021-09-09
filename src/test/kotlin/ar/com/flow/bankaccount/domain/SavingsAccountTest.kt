@@ -21,14 +21,14 @@ class SavingsAccountTest {
 
     @BeforeEach
     fun setUp() {
-        danielsAccount = createSavingsAccountFor(daniel, dollars100, InMemoryStatement("USD"))
-        mabelsAccount = createSavingsAccountFor(mabel, dollars100, InMemoryStatement("USD"))
+        danielsAccount = createSavingsAccountFor(daniel, dollars100, InMemoryStatement(Currency.USD))
+        mabelsAccount = createSavingsAccountFor(mabel, dollars100, InMemoryStatement(Currency.USD))
     }
 
     @Test
     fun createdAccountHasBalance0() {
-        val account = SavingsAccount(daniel, "ARS", InMemoryStatement("ARS"))
-        assertEquals(zero("ARS"), account.balance)
+        val account = SavingsAccount(daniel, Currency.ARS, InMemoryStatement(Currency.ARS))
+        assertEquals(zero(Currency.ARS), account.balance)
     }
 
     @Test

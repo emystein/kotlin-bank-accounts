@@ -1,6 +1,7 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
 import ar.com.flow.Customer
+import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.ports.out.BankAccounts
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,7 +18,7 @@ class SavingsAccounts(
     @Autowired private val savingsAccountFactory: SavingsAccountFactory
 ) : BankAccounts {
 
-    override fun create(owner: Customer, currency: String): BankAccount {
+    override fun create(owner: Customer, currency: Currency): BankAccount {
         val newAccount = savingsAccountFactory.createSavingsAccount(owner, currency)
         return save(newAccount)
     }
@@ -28,7 +29,7 @@ class SavingsAccounts(
         return accountMapper.toDomain(jpaAccount)
     }
 
-    override fun accountOwnedBy(accountOwner: Customer, currency: String): Optional<BankAccount> {
+    override fun accountOwnedBy(accountOwner: Customer, currency: Currency): Optional<BankAccount> {
         val maybeJpaAccount = maybeJpaAccountOwnedBy(accountOwner, currency)
         return maybeJpaAccount.map { jpaAccount -> accountMapper.toDomain(jpaAccount) }
     }
@@ -37,11 +38,11 @@ class SavingsAccounts(
         return maybeJpaAccountOwnedBy(account.owner, account.currency).isPresent
     }
 
-    private fun maybeJpaAccountOwnedBy(accountOwner: Customer, currency: String): Optional<ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccount> {
+    private fun maybeJpaAccountOwnedBy(accountOwner: Customer, currency: Currency): Optional<ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccount> {
         val maybeJpaAccountOwner = customerRepository.findByName(accountOwner.name)
 
         return if (maybeJpaAccountOwner.isPresent) {
-            bankAccountRepository.findByOwnerAndCurrency(maybeJpaAccountOwner.get(), currency)
+            bankAccountRepository.findByOwnerAndCurrency(maybeJpaAccountOwner.get(), currency.code)
         } else {
             Optional.empty()
         }

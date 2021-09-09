@@ -10,13 +10,6 @@ import org.junit.jupiter.api.Test
 
 class MoneyTest {
     @Test
-    fun givenAPositiveAmountWhenCreateDollarsWithTheGivenAmountThenTheDollarsShouldBeCreated() {
-        val dollars = amount(10)
-        assertEquals("USD", dollars.currency)
-        assertEquals(10, dollars.amount)
-    }
-
-    @Test
     fun givenANegativeAmountWhenCreateDollarsWithTheGivenAmountThenTheDollarsShouldNotBeCreated() {
         assertThrows(IllegalArgumentException::class.java) { amount(-10) }
     }

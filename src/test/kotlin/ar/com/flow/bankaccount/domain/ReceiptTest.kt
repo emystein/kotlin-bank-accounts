@@ -20,7 +20,7 @@ class ReceiptTest {
     @BeforeEach
     fun setUp() {
         danielsAccount =
-            createSavingsAccountFor(daniel, dollars100, InMemoryStatement("USD"))
+            createSavingsAccountFor(daniel, dollars100, InMemoryStatement(Currency.USD))
     }
 
     @Test

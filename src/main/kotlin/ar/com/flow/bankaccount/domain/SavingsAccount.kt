@@ -10,7 +10,7 @@ import ar.com.flow.money.Money
 
 data class SavingsAccount(
     override val owner: Customer,
-    override val currency: String,
+    override val currency: Currency,
     override val statement: Statement
 ) : BankAccount {
     var withdrawalLimit: WithdrawalLimit = CurrentFundsLimit()

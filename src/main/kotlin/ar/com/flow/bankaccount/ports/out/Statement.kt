@@ -1,12 +1,13 @@
 package ar.com.flow.bankaccount.ports.out
 
+import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.balance.Balance
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
 import java.util.*
 import kotlin.math.max
 
 interface Statement {
-    val currency: String
+    val currency: Currency
     fun all(): Collection<Receipt>
     fun add(receipt: Receipt)
 

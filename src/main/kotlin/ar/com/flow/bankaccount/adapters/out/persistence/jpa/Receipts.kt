@@ -1,5 +1,7 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
+import ar.com.flow.Customer
+import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
 import ar.com.flow.bankaccount.ports.out.Receipts
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,9 +16,9 @@ class Receipts(
     @Autowired
     private val receiptRepository: ReceiptRepository
 ) : Receipts {
-    override fun all(accountOwner: ar.com.flow.Customer, currency: String): List<Receipt> {
+    override fun all(accountOwner: Customer, currency: Currency): List<Receipt> {
         val customer = customerMapper.toJpa(accountOwner)
-        return receiptRepository.findAllByCustomerAndCurrency(customer, currency)
+        return receiptRepository.findAllByCustomerAndCurrency(customer, currency.code)
             .map { receiptMapper.toDomain(it) }
     }
 

@@ -2,6 +2,7 @@ package ar.com.flow.bankaccount.ports
 
 import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryStatement
 import ar.com.flow.bankaccount.domain.BankAccount
+import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.SavingsAccount
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.domain.transaction.receipt.Action
@@ -18,8 +19,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class StatementTest {
-    private val dollars = "USD"
-
     private lateinit var danielsAccount: BankAccount
     private lateinit var statement: Statement
     private lateinit var dollars10DepositReceipt: Receipt
@@ -28,9 +27,9 @@ class StatementTest {
 
     @BeforeEach
     fun setUp() {
-        statement = InMemoryStatement(dollars)
+        statement = InMemoryStatement(Currency.USD)
 
-        danielsAccount = SavingsAccount(daniel, dollars, InMemoryStatement("USD"))
+        danielsAccount = SavingsAccount(daniel, Currency.USD, InMemoryStatement(Currency.USD))
 
         dollars10DepositReceipt = credit(danielsAccount, Action.Deposit, dollars10)
         dollars10WithdrawReceipt = debit(danielsAccount, Action.Withdrawal, dollars10)

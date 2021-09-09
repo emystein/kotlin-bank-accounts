@@ -2,7 +2,7 @@ package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
 import ar.com.flow.bankaccount.application.spring.BankAccountApplication
 import ar.com.flow.bankaccount.domain.BankAccount
-import ar.com.flow.bankaccount.domain.SavingsAccount
+import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.domain.transaction.receipt.Action
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
@@ -35,8 +35,6 @@ class StatementTest {
     @Autowired
     private lateinit var receiptRepository: ReceiptRepository
 
-    private val dollars = "USD"
-
     private lateinit var danielsAccount: BankAccount
     private lateinit var statement: Statement
     private lateinit var dollars10DepositReceipt: Receipt
@@ -49,9 +47,9 @@ class StatementTest {
 
         customers.save(daniel)
 
-        statement = Statement(daniel, dollars, receipts)
+        statement = Statement(daniel, Currency.USD, receipts)
 
-        danielsAccount = savingsAccountFactory.createSavingsAccount(daniel, dollars)
+        danielsAccount = savingsAccountFactory.createSavingsAccount(daniel, Currency.USD)
 
         dollars10DepositReceipt = credit(danielsAccount, Action.Deposit, dollars10)
         dollars10WithdrawReceipt = debit(danielsAccount, Action.Withdrawal, dollars10)

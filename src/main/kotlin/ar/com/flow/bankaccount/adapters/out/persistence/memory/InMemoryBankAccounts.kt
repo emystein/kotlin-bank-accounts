@@ -1,15 +1,16 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.memory
 
 import ar.com.flow.Customer
+import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.SavingsAccount
 import ar.com.flow.bankaccount.ports.out.BankAccounts
 import java.util.*
 
 class InMemoryBankAccounts: BankAccounts {
-    private val accounts: MutableMap<Customer, MutableMap<String, BankAccount>> = mutableMapOf()
+    private val accounts: MutableMap<Customer, MutableMap<Currency, BankAccount>> = mutableMapOf()
 
-    override fun create(customer: Customer, currency: String): BankAccount {
+    override fun create(customer: Customer, currency: Currency): BankAccount {
         val created = SavingsAccount(customer, currency, InMemoryStatement(currency))
 
         if (accounts.containsKey(customer)) {
@@ -27,7 +28,7 @@ class InMemoryBankAccounts: BankAccounts {
         return account
     }
 
-    override fun accountOwnedBy(customer: Customer, currency: String): Optional<BankAccount> {
+    override fun accountOwnedBy(customer: Customer, currency: Currency): Optional<BankAccount> {
         return if (accounts.containsKey(customer) && accounts[customer]!!.containsKey(currency)) {
             Optional.ofNullable(accounts[customer]!![currency])
         } else {

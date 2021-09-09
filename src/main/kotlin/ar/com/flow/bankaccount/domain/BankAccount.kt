@@ -8,7 +8,7 @@ import ar.com.flow.money.Money
 
 interface BankAccount {
     val owner: Customer
-    val currency: String
+    val currency: Currency
     val initialBalance: Balance
     val balance: Balance
     val previousBalance: Balance

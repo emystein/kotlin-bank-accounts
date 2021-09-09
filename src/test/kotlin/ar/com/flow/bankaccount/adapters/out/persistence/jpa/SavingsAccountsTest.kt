@@ -1,5 +1,6 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
+import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.domain.balance.Balance
 import ar.com.flow.bankaccount.ports.out.BankAccounts
@@ -16,35 +17,33 @@ class SavingsAccountsTest {
     @Autowired
     private lateinit var bankAccounts: BankAccounts
 
-    val pesos = "ARS"
-
     @Test
     fun createSavingsAccount() {
-        val account = bankAccounts.create(daniel, pesos)
+        val account = bankAccounts.create(daniel, Currency.ARS)
 
-        assertThat(bankAccounts.accountOwnedBy(daniel, pesos)).hasValue(account)
+        assertThat(bankAccounts.accountOwnedBy(daniel, Currency.ARS)).hasValue(account)
     }
 
     @Test
     fun updateSavingsAccount() {
-        val account = bankAccounts.create(daniel, pesos)
+        val account = bankAccounts.create(daniel, Currency.ARS)
         account.deposit(ars100)
 
         bankAccounts.save(account)
 
-        val updatedAccount = bankAccounts.accountOwnedBy(daniel, pesos).get()
+        val updatedAccount = bankAccounts.accountOwnedBy(daniel, Currency.ARS).get()
         assertThat(updatedAccount.balance).isEqualTo(Balance.positive(ars100))
     }
 
     @Test
     fun containsCreatedAccount() {
-        val account = bankAccounts.create(daniel, pesos)
+        val account = bankAccounts.create(daniel, Currency.ARS)
 
         assertThat(bankAccounts.contains(account)).isTrue
     }
 
     @Test
     fun transientAccountNotFound() {
-        assertThat(bankAccounts.accountOwnedBy(daniel, pesos)).isEmpty
+        assertThat(bankAccounts.accountOwnedBy(daniel, Currency.ARS)).isEmpty
     }
 }

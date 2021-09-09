@@ -1,5 +1,6 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.memory
 
+import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -10,7 +11,7 @@ class InMemorySavingsAccountsTest {
     internal fun createAccount() {
         val bankAccounts = InMemoryBankAccounts()
 
-        val createdAccount = bankAccounts.create(daniel, "ARS")
+        val createdAccount = bankAccounts.create(daniel, Currency.ARS)
 
         assertTrue(bankAccounts.contains(createdAccount))
     }
@@ -19,6 +20,6 @@ class InMemorySavingsAccountsTest {
     internal fun accountNotFound() {
         val bankAccounts = InMemoryBankAccounts()
 
-        assertThat(bankAccounts.accountOwnedBy(daniel, "ARS")).isEmpty
+        assertThat(bankAccounts.accountOwnedBy(daniel, Currency.ARS)).isEmpty
     }
 }

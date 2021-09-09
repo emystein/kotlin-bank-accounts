@@ -1,8 +1,9 @@
 package ar.com.flow.bankaccount.domain.balance
 
+import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.money.Money
 
-class Balance(val currency: String, val amount: Int) {
+class Balance(val currency: Currency, val amount: Int) {
     fun isGreaterThanOrEqual(other: Money): Boolean {
         return amount >= other.amount
     }
@@ -47,7 +48,7 @@ class Balance(val currency: String, val amount: Int) {
 
     companion object {
         @JvmStatic
-        fun zero(currency: String): Balance {
+        fun zero(currency: Currency): Balance {
             return create(currency, 0)
         }
 
@@ -55,7 +56,7 @@ class Balance(val currency: String, val amount: Int) {
             return create(initialBalance.currency, initialBalance.amount)
         }
 
-        fun create(currency: String, amount: Int): Balance {
+        fun create(currency: Currency, amount: Int): Balance {
             return if (amount >= 0) {
                 PositiveBalance.of(currency, amount)
             } else {

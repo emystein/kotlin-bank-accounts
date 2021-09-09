@@ -1,6 +1,8 @@
 package ar.com.flow.money
 
-data class Money(val currency: String, val amount: Int) {
+import ar.com.flow.bankaccount.domain.Currency
+
+data class Money(val currency: Currency, val amount: Int) {
     init {
         require(amount >= 0) { "Amount must be non-negative: $amount" }
     }
@@ -25,7 +27,7 @@ data class Money(val currency: String, val amount: Int) {
     }
 
     companion object {
-        fun zero(currency: String): Money {
+        fun zero(currency: Currency): Money {
             return Money(currency, 0)
         }
     }
@@ -33,12 +35,12 @@ data class Money(val currency: String, val amount: Int) {
 
 object Dollars {
     fun amount(amount: Int): Money {
-        return Money("USD", amount)
+        return Money(Currency.USD, amount)
     }
 }
 
 object Pesos {
     fun amount(amount: Int): Money {
-        return Money("ARS", amount)
+        return Money(Currency.ARS, amount)
     }
 }
