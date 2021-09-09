@@ -3,7 +3,7 @@ package ar.com.flow.bankaccount.domain
 import ar.com.flow.Customer
 import ar.com.flow.Customer.Companion.named
 import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryStatement
-import ar.com.flow.bankaccount.domain.balance.Balance.Companion.negative
+import ar.com.flow.bankaccount.domain.Balance.Companion.negative
 import ar.com.flow.bankaccount.domain.withdrawal.LowerLimit
 import ar.com.flow.bankaccount.domain.withdrawal.WithdrawalLimit
 import ar.com.flow.money.Money

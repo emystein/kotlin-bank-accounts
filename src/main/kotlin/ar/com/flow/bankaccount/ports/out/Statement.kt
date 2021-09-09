@@ -1,7 +1,7 @@
 package ar.com.flow.bankaccount.ports.out
 
 import ar.com.flow.bankaccount.domain.Currency
-import ar.com.flow.bankaccount.domain.balance.Balance
+import ar.com.flow.bankaccount.domain.Balance
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
 import java.util.*
 import kotlin.math.max

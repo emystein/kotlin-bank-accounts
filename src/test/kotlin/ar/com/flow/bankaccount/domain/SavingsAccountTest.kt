@@ -4,7 +4,7 @@ import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryStatement
 import ar.com.flow.bankaccount.domain.TestObjects.createSavingsAccountFor
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.domain.TestObjects.mabel
-import ar.com.flow.bankaccount.domain.balance.Balance.Companion.zero
+import ar.com.flow.bankaccount.domain.Balance.Companion.zero
 import ar.com.flow.bankaccount.domain.transfer.SameAccountException
 import ar.com.flow.money.InsufficientFundsException
 import ar.com.flow.money.TestMoney.dollars10

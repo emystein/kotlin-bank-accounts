@@ -1,8 +1,7 @@
 package ar.com.flow.bankaccount.domain
 
-import ar.com.flow.bankaccount.domain.balance.Balance
-import ar.com.flow.bankaccount.domain.balance.Balance.Companion.negative
-import ar.com.flow.bankaccount.domain.balance.Balance.Companion.positive
+import ar.com.flow.bankaccount.domain.Balance.Companion.negative
+import ar.com.flow.bankaccount.domain.Balance.Companion.positive
 import ar.com.flow.bankaccount.domain.transaction.receipt.Action
 import ar.com.flow.bankaccount.domain.transaction.receipt.FundsMovement
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt

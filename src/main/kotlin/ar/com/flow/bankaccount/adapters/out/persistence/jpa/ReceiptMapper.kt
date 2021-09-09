@@ -1,7 +1,7 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
 import ar.com.flow.bankaccount.domain.Currency
-import ar.com.flow.bankaccount.domain.balance.Balance
+import ar.com.flow.bankaccount.domain.Balance
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
