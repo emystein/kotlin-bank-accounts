@@ -1,7 +1,7 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.memory
 
 import ar.com.flow.bankaccount.ports.out.Customers
-import ar.com.flow.bankaccount.ports.out.SavingsAccounts
+import ar.com.flow.bankaccount.ports.out.BankAccounts
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -13,7 +13,7 @@ class InMemoryPersistenceConfiguration {
     }
 
     @Bean
-    fun savingsAccounts(): SavingsAccounts {
-        return InMemorySavingsAccounts()
+    fun savingsAccounts(): BankAccounts {
+        return InMemoryBankAccounts()
     }
 }

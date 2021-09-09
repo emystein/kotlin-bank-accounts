@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component
 @Component
 class SavingsAccountMapper(
     @Autowired private val customerMapper: CustomerMapper,
-    @Autowired private val customerRepository: CustomerRepository,
     @Autowired private val bankAccountRepository: BankAccountRepository,
     @Autowired private val receipts: Receipts,
 ) {
@@ -19,13 +18,7 @@ class SavingsAccountMapper(
     }
 
     fun toJpa(bankAccount: BankAccount): ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccount {
-        val customerName = bankAccount.owner.name
-        val maybeOwner = customerRepository.findByName(customerName)
-        val owner = if (maybeOwner.isPresent) {
-            maybeOwner.get()
-        } else {
-            customerRepository.save(Customer(0, customerName))
-        }
+        val owner = customerMapper.toJpa(bankAccount.owner)
 
         val currency = bankAccount.currency
         val maybeBankAccount = bankAccountRepository.findByOwnerAndCurrency(owner, currency)

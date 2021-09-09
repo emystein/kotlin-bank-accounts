@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class InMemorySavingsAccountsTest {
     @Test
     internal fun createAccount() {
-        val bankAccounts = InMemorySavingsAccounts()
+        val bankAccounts = InMemoryBankAccounts()
 
         val createdAccount = bankAccounts.create(daniel, "ARS")
 
@@ -17,7 +17,7 @@ class InMemorySavingsAccountsTest {
 
     @Test
     internal fun accountNotFound() {
-        val bankAccounts = InMemorySavingsAccounts()
+        val bankAccounts = InMemoryBankAccounts()
 
         assertThat(bankAccounts.accountOwnedBy(daniel, "ARS")).isEmpty
     }

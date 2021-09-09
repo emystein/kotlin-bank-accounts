@@ -27,16 +27,10 @@ class StatementTest {
     private lateinit var customers: Customers
 
     @Autowired
-    private lateinit var bankAccountRepository: BankAccountRepository
+    private lateinit var receipts: Receipts
 
     @Autowired
     private lateinit var receiptRepository: ReceiptRepository
-
-    @Autowired
-    private lateinit var accountMapper: SavingsAccountMapper
-
-    @Autowired
-    private lateinit var receipts: Receipts
 
     private val dollars = "USD"
 
@@ -48,15 +42,13 @@ class StatementTest {
 
     @BeforeEach
     fun setUp() {
-        customers.save(daniel)
-
         receiptRepository.deleteAll()
+
+        customers.save(daniel)
 
         statement = Statement(daniel, dollars, receipts)
 
         danielsAccount = SavingsAccount(daniel, dollars, statement)
-
-        bankAccountRepository.save(accountMapper.toJpa(danielsAccount))
 
         dollars10DepositReceipt = credit(danielsAccount, Action.Deposit, dollars10)
         dollars10WithdrawReceipt = debit(danielsAccount, Action.Withdrawal, dollars10)

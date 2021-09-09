@@ -1,7 +1,7 @@
 package ar.com.flow.bankaccount.application.spring
 
 import ar.com.flow.bankaccount.ports.out.Customers
-import ar.com.flow.bankaccount.ports.out.SavingsAccounts
+import ar.com.flow.bankaccount.ports.out.BankAccounts
 import ar.com.flow.bankaccount.usecases.Deposit
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
@@ -17,10 +17,10 @@ class BankAccountConfiguration {
     private lateinit var customers: Customers
 
     @Autowired
-    private lateinit var savingsAccounts: SavingsAccounts
+    private lateinit var bankAccounts: BankAccounts
 
     @Bean
     fun deposit(): Deposit {
-        return Deposit(customers, savingsAccounts)
+        return Deposit(customers, bankAccounts)
     }
 }
