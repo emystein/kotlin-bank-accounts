@@ -24,10 +24,7 @@ import org.springframework.boot.test.context.SpringBootTest
 @SpringBootTest(classes = [BankAccountApplication::class])
 class StatementTest {
     @Autowired
-    private lateinit var customers: Customers
-
-    @Autowired
-    private lateinit var savingsAccountFactory: SavingsAccountFactory
+    private lateinit var accountRegistry: AccountRegistry
 
     @Autowired
     private lateinit var receipts: Receipts
@@ -35,8 +32,8 @@ class StatementTest {
     @Autowired
     private lateinit var receiptRepository: ReceiptRepository
 
-    private lateinit var danielsAccount: BankAccount
     private lateinit var statement: Statement
+
     private lateinit var dollars10DepositReceipt: Receipt
     private lateinit var dollars10WithdrawReceipt: Receipt
     private lateinit var minusDollars20Record: Receipt
@@ -45,15 +42,18 @@ class StatementTest {
     fun setUp() {
         receiptRepository.deleteAll()
 
-        customers.save(daniel)
-
         statement = Statement(daniel, Currency.USD, receipts)
 
-        danielsAccount = savingsAccountFactory.createSavingsAccount(daniel, Currency.USD)
+        val danielsAccount = accountRegistry.createSavingsAccount(daniel, Currency.USD)
 
         dollars10DepositReceipt = credit(danielsAccount, Action.Deposit, dollars10)
         dollars10WithdrawReceipt = debit(danielsAccount, Action.Withdrawal, dollars10)
         minusDollars20Record = debit(danielsAccount, Action.Withdrawal, dollars20)
+    }
+
+    @Test
+    fun firstDoNotExistWhenStatementIsEmpty() {
+        assertThat(statement.first()).isEmpty
     }
 
     @Test
@@ -64,8 +64,8 @@ class StatementTest {
     }
 
     @Test
-    fun firstDoNotExist() {
-        assertThat(statement.first()).isEmpty
+    fun lastDoNotExistWhenStatementIsEmpty() {
+        assertThat(statement.last()).isEmpty
     }
 
     @Test
@@ -76,12 +76,7 @@ class StatementTest {
     }
 
     @Test
-    fun lastDoNotExist() {
-        assertThat(statement.last()).isEmpty
-    }
-
-    @Test
-    fun containsInOrderAll() {
+    fun containsAllInOrderOfAddition() {
         statement.add(dollars10DepositReceipt)
         statement.add(dollars10WithdrawReceipt)
 
@@ -89,7 +84,7 @@ class StatementTest {
     }
 
     @Test
-    fun containsInOrderFirst() {
+    fun containsFirstInOrderOfAddition() {
         statement.add(dollars10DepositReceipt)
         statement.add(dollars10WithdrawReceipt)
 
@@ -97,30 +92,9 @@ class StatementTest {
     }
 
     @Test
-    fun notContainsInOrderSameReceiptsDifferentOrder() {
-        statement.add(dollars10DepositReceipt)
-        statement.add(dollars10WithdrawReceipt)
-
-        assertFalse(
-            statement.containsInOrder(
-                dollars10WithdrawReceipt,
-                dollars10DepositReceipt
-            )
-        )
-    }
-
-    @Test
     fun statementContainsTransactionRecordAdded() {
         statement.add(dollars10DepositReceipt)
 
         assertTrue(statement.contains(dollars10DepositReceipt))
-    }
-
-    @Test
-    fun statementStoresTransactionRecordsInOrderOfAddition() {
-        statement.add(dollars10DepositReceipt)
-        statement.add(dollars10WithdrawReceipt)
-
-        assertTrue(statement.containsInOrder(dollars10DepositReceipt, dollars10WithdrawReceipt))
     }
 }

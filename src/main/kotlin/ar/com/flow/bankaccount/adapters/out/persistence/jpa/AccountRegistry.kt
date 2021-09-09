@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-class SavingsAccountFactory(@Autowired private val receipts: Receipts) {
+class AccountRegistry(@Autowired private val receipts: Receipts) {
     fun createSavingsAccount(owner: Customer, currency: Currency): SavingsAccount {
         return SavingsAccount(owner, currency, Statement(owner, currency, receipts))
     }

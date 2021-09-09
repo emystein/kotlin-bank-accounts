@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component
 class SavingsAccountMapper(
     @Autowired private val customerMapper: CustomerMapper,
     @Autowired private val bankAccountRepository: BankAccountRepository,
-    @Autowired private val savingsAccountFactory: SavingsAccountFactory,
+    @Autowired private val accountRegistry: AccountRegistry,
 ) {
     fun toDomain(bankAccount: ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccount): SavingsAccount {
         val owner = customerMapper.toDomain(bankAccount.owner)
-        return savingsAccountFactory.createSavingsAccount(owner, Currency.valueOf(bankAccount.currency))
+        return accountRegistry.createSavingsAccount(owner, Currency.valueOf(bankAccount.currency))
     }
 
     fun toJpa(bankAccount: BankAccount): ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccount {
