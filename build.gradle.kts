@@ -1,9 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot") version "2.5.2"
+	id("com.github.ben-manes.versions") version "0.39.0"
+	id("se.patrikerdes.use-latest-versions") version "0.2.17"
+	id("org.springframework.boot") version "2.5.4"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
-	kotlin("jvm") version "1.5.20"
+	kotlin("jvm") version "1.5.30"
 	kotlin("plugin.spring") version "1.5.20"
 	kotlin("plugin.jpa") version "1.5.20"
 }
@@ -24,7 +26,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.assertj:assertj-core:3.19.0")
+	testImplementation("org.assertj:assertj-core:3.20.2")
 	testImplementation("io.mockk:mockk:1.12.0")
 	testImplementation("com.ninja-squad:springmockk:3.0.1") {
 		exclude(module = "mockito-core")
