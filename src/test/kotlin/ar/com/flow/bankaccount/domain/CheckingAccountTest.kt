@@ -19,7 +19,7 @@ class CheckingAccountTest {
 
     @BeforeEach
     fun setUp() {
-        danielsAccount = createCheckingAccountFor(daniel, dollars100, minusDollars100Limit )
+        danielsAccount = createCheckingAccountFor(daniel, dollars100, minusDollars100Limit)
         mabelsAccount = createCheckingAccountFor(mabel, dollars100, minusDollars100Limit)
     }
 

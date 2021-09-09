@@ -30,7 +30,7 @@ class StatementTest {
     fun setUp() {
         statement = InMemoryStatement(dollars)
 
-        danielsAccount = SavingsAccount(daniel, dollars, statement)
+        danielsAccount = SavingsAccount(daniel, dollars, InMemoryStatement("USD"))
 
         dollars10DepositReceipt = credit(danielsAccount, Action.Deposit, dollars10)
         dollars10WithdrawReceipt = debit(danielsAccount, Action.Withdrawal, dollars10)

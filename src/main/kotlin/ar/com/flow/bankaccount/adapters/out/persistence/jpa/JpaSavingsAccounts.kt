@@ -2,6 +2,7 @@ package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
 import ar.com.flow.Customer
 import ar.com.flow.bankaccount.domain.SavingsAccount
+import ar.com.flow.bankaccount.ports.out.Receipts
 import ar.com.flow.bankaccount.ports.out.SavingsAccounts
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -12,15 +13,13 @@ import javax.transaction.Transactional
 @Transactional
 class JpaSavingsAccounts(
     @Autowired private val customerRepository: CustomerRepository,
-    @Autowired private val bankAccountRepository: BankAccountRepository,
     @Autowired private val accountMapper: SavingsAccountMapper,
-    @Autowired private val receiptRepository: ReceiptRepository,
+    @Autowired private val bankAccountRepository: BankAccountRepository,
+    @Autowired private val receipts: Receipts,
 ) : SavingsAccounts {
 
     override fun create(owner: Customer, currency: String): SavingsAccount {
-        val receiptMapper = ReceiptMapper(CustomerMapper(customerRepository))
-        val statement =
-            Statement(owner, currency, customerRepository, receiptMapper, receiptRepository)
+        val statement = Statement(owner, currency, receipts)
         val savingsAccount = SavingsAccount(owner, currency, statement)
         val jpaAccount = accountMapper.toJpa(savingsAccount)
         val createdJpaAccount = bankAccountRepository.save(jpaAccount)

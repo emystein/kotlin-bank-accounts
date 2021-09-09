@@ -3,16 +3,14 @@ package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 import ar.com.flow.bankaccount.application.spring.BankAccountApplication
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.SavingsAccount
-import ar.com.flow.bankaccount.domain.TestObjects.createSavingsAccountFor
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
-import ar.com.flow.bankaccount.domain.balance.Balance
 import ar.com.flow.bankaccount.domain.transaction.receipt.Action
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.credit
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.debit
+import ar.com.flow.bankaccount.ports.out.Receipts
 import ar.com.flow.bankaccount.ports.out.Statement
 import ar.com.flow.money.TestMoney.dollars10
-import ar.com.flow.money.TestMoney.dollars100
 import ar.com.flow.money.TestMoney.dollars20
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertFalse
@@ -34,7 +32,10 @@ class StatementTest {
     private lateinit var receiptRepository: ReceiptRepository
 
     @Autowired
-    private lateinit var savingsAccountMapper: SavingsAccountMapper
+    private lateinit var accountMapper: SavingsAccountMapper
+
+    @Autowired
+    private lateinit var receipts: Receipts
 
     private val dollars = "USD"
 
@@ -54,11 +55,11 @@ class StatementTest {
 
         receiptRepository.deleteAll()
 
-        statement = Statement(daniel, dollars, customerRepository, ReceiptMapper(customerMapper), receiptRepository)
+        statement = Statement(daniel, dollars, receipts)
 
-        danielsAccount =  SavingsAccount(daniel, dollars, statement)
+        danielsAccount = SavingsAccount(daniel, dollars, statement)
 
-        bankAccountRepository.save(savingsAccountMapper.toJpa(danielsAccount))
+        bankAccountRepository.save(accountMapper.toJpa(danielsAccount))
 
         dollars10DepositReceipt = credit(danielsAccount, Action.Deposit, dollars10)
         dollars10WithdrawReceipt = debit(danielsAccount, Action.Withdrawal, dollars10)
