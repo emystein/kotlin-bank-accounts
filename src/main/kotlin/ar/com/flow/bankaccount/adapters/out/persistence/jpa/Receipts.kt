@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-class JpaReceipts(
+class Receipts(
     @Autowired
     private val customerMapper: CustomerMapper,
     @Autowired

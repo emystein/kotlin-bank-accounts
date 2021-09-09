@@ -9,7 +9,8 @@ import javax.transaction.Transactional
 
 @Component
 @Transactional
-class JpaCustomers(@Autowired private val repository: CustomerRepository) : Customers {
+class Customers(@Autowired private val repository: CustomerRepository) :
+    Customers {
     private val customerMapper: CustomerMapper = CustomerMapper(repository)
 
     override fun save(customer: Customer): Customer {

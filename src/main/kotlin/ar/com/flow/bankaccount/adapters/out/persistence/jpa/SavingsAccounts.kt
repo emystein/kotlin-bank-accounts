@@ -11,7 +11,7 @@ import javax.transaction.Transactional
 
 @Component
 @Transactional
-class JpaSavingsAccounts(
+class SavingsAccounts(
     @Autowired private val customerRepository: CustomerRepository,
     @Autowired private val accountMapper: SavingsAccountMapper,
     @Autowired private val bankAccountRepository: BankAccountRepository,

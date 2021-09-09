@@ -16,7 +16,7 @@ import java.time.LocalDateTime.now
 
 @DataJpaTest
 @ContextConfiguration(classes = [BankAccountPersistenceConfiguration::class])
-class JpaReceiptsTest {
+class ReceiptsTest {
     private val dollars = "USD"
 
     @Autowired
