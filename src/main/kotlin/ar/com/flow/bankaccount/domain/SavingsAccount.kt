@@ -23,7 +23,7 @@ data class SavingsAccount(
     override val previousBalance: Balance
         get() = statement.sum(statement.count() - 1)
 
-    override fun withdrawalLimitSupports(amount: Money): Boolean {
+    override fun allowsWithdraw(amount: Money): Boolean {
         return withdrawalLimit.accepts(this, amount)
     }
 

@@ -7,7 +7,7 @@ import ar.com.flow.money.Money
 
 class SufficientFundsPrecondition(private val account: BankAccount, private val amount: Money) : Precondition {
     override fun check() {
-        if (!account.withdrawalLimitSupports(amount)) {
+        if (!account.allowsWithdraw(amount)) {
             throw InsufficientFundsException()
         }
     }

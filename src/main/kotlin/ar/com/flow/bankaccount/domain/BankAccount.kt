@@ -16,5 +16,5 @@ interface BankAccount {
     fun transfer(amountToTransfer: Money, creditAccount: BankAccount)
     fun addReceipt(receipt: Receipt)
     val statement: Statement
-    fun withdrawalLimitSupports(amount: Money): Boolean
+    fun allowsWithdraw(amount: Money): Boolean
 }
