@@ -35,10 +35,10 @@ class TransferTest {
         val transfer = Transfer(customers, bankAccounts)
         transfer.execute(debitCustomerName = "Juan Perez", Currency.ARS.code, amountToTransfer = 100, creditCustomerName = "David Gomez")
 
-        val debitAccount = bankAccounts.accountOwnedBy(juanPerez, Currency.ARS).get()
+        val debitAccount = bankAccounts.ownedBy(juanPerez, Currency.ARS).first()
         assertThat(debitAccount.balance).isEqualTo(Balance(Currency.ARS, 0))
 
-        val creditAccount = bankAccounts.accountOwnedBy(davidGomez, Currency.ARS).get()
+        val creditAccount = bankAccounts.ownedBy(davidGomez, Currency.ARS).first()
         assertThat(creditAccount.balance).isEqualTo(Balance(Currency.ARS, 100))
     }
 }

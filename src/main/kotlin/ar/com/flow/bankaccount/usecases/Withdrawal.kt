@@ -11,7 +11,7 @@ class Withdrawal(private val customers: Customers, private val bankAccounts: Ban
 
         val currency = Currency.valueOf(currencyCode)
 
-        val savingsAccount = bankAccounts.accountOwnedBy(customer, currency).get()
+        val savingsAccount = bankAccounts.ownedBy(customer, currency).first()
 
         savingsAccount.withdraw(Money(currency, amountToWithdraw))
 

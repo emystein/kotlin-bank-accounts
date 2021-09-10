@@ -6,6 +6,7 @@ import ar.com.flow.bankaccount.ports.out.Statement
 import ar.com.flow.money.Money
 
 interface BankAccount {
+    val id: AccountId
     val owner: Customer
     val currency: Currency
     val initialBalance: Balance

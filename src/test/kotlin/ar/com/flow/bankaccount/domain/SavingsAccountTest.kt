@@ -9,6 +9,7 @@ import ar.com.flow.money.InsufficientFundsException
 import ar.com.flow.money.TestMoney.dollars10
 import ar.com.flow.money.TestMoney.dollars100
 import ar.com.flow.money.TestMoney.dollars200
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
@@ -102,5 +103,13 @@ class SavingsAccountTest {
             danielsAccount.transfer(dollars10, danielsAccount)
         }
         BankAccountAssert.assertThat(danielsAccount).keepsInitialBalance()
+    }
+
+    @Test
+    fun canCreateMultipleAccountsForSameCustomerAndCurrency() {
+        val danielsAccount1 = createSavingsAccountFor(daniel, dollars100)
+        val danielsAccount2 = createSavingsAccountFor(daniel, dollars100)
+
+        assertThat(danielsAccount1).isNotEqualTo(danielsAccount2)
     }
 }

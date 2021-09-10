@@ -32,7 +32,7 @@ class WithdrawalTest {
         val withdrawal = Withdrawal(customers, bankAccounts)
         withdrawal.execute(customerName = "Juan Perez", Currency.ARS.code, amountToWithdraw = 100)
 
-        val savingsAccount = bankAccounts.accountOwnedBy(juanPerez, Currency.ARS).get()
+        val savingsAccount = bankAccounts.ownedBy(juanPerez, Currency.ARS).first()
         assertThat(savingsAccount.balance).isEqualTo(Balance(Currency.ARS, 0))
     }
 }

@@ -11,7 +11,7 @@ class Deposit(private val customers: Customers, private val bankAccounts: BankAc
 
         val currency = Currency.valueOf(currencyCode)
 
-        val savingsAccount = bankAccounts.accountOwnedBy(customer, currency).get()
+        val savingsAccount = bankAccounts.ownedBy(customer, currency).first()
 
         savingsAccount.deposit(Money(currency, amountToDeposit))
 

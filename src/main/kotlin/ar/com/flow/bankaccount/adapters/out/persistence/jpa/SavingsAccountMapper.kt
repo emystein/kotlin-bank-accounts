@@ -15,18 +15,18 @@ class SavingsAccountMapper(
     fun toDomain(bankAccount: ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccount): SavingsAccount {
         val owner = customerMapper.toDomain(bankAccount.owner)
 
-        return accountRegistry.createSavingsAccount(owner, Currency.valueOf(bankAccount.currency))
+        return accountRegistry.createSavingsAccount(bankAccount.accountId, owner, Currency.valueOf(bankAccount.currency))
     }
 
     fun toJpa(bankAccount: BankAccount): ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccount {
         val owner = customerMapper.toJpa(bankAccount.owner)
 
-        val currency = bankAccount.currency.code
-        val maybeBankAccount = bankAccountRepository.findByOwnerAndCurrency(owner, currency)
+        val maybeBankAccount = bankAccountRepository.findByAccountId(bankAccount.id.value)
+
         return if (maybeBankAccount.isPresent) {
             maybeBankAccount.get()
         } else {
-            bankAccountRepository.save(BankAccount(0L, owner, currency))
+            bankAccountRepository.save(BankAccount(0L, bankAccount.id.value, owner, bankAccount.currency.code))
         }
     }
 }

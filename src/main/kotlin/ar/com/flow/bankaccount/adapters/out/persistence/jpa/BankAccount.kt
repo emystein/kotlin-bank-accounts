@@ -7,6 +7,7 @@ class BankAccount(
     @Id
     @GeneratedValue
     val id: Long,
+    val accountId: String,
     @ManyToOne
     val owner: Customer,
     @Column

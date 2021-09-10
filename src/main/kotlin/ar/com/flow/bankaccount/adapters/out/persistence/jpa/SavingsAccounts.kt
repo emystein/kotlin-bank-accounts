@@ -1,12 +1,11 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
 import ar.com.flow.Customer
-import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.BankAccount
+import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.ports.out.BankAccounts
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import java.util.*
 import javax.transaction.Transactional
 
 @Component
@@ -18,8 +17,8 @@ class SavingsAccounts(
     @Autowired private val accountRegistry: AccountRegistry
 ) : BankAccounts {
 
-    override fun create(owner: Customer, currency: Currency): BankAccount {
-        val newAccount = accountRegistry.createSavingsAccount(owner, currency)
+    override fun create(accountOwner: Customer, currency: Currency): BankAccount {
+        val newAccount = accountRegistry.createSavingsAccount(accountOwner, currency)
         return save(newAccount)
     }
 
@@ -29,22 +28,21 @@ class SavingsAccounts(
         return accountMapper.toDomain(jpaAccount)
     }
 
-    override fun accountOwnedBy(accountOwner: Customer, currency: Currency): Optional<BankAccount> {
-        val maybeJpaAccount = maybeJpaAccountOwnedBy(accountOwner, currency)
-        return maybeJpaAccount.map { jpaAccount -> accountMapper.toDomain(jpaAccount) }
+    override fun ownedBy(accountOwner: Customer, currency: Currency): List<BankAccount> {
+        return jpaAccountsOwnedBy(accountOwner, currency).map { jpaAccount -> accountMapper.toDomain(jpaAccount) }
     }
 
     override fun contains(account: BankAccount): Boolean {
-        return maybeJpaAccountOwnedBy(account.owner, account.currency).isPresent
+        return jpaAccountsOwnedBy(account.owner, account.currency).isNotEmpty()
     }
 
-    private fun maybeJpaAccountOwnedBy(accountOwner: Customer, currency: Currency): Optional<ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccount> {
+    private fun jpaAccountsOwnedBy(accountOwner: Customer, currency: Currency): List<ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccount> {
         val maybeJpaAccountOwner = customerRepository.findByName(accountOwner.name)
 
         return if (maybeJpaAccountOwner.isPresent) {
-            bankAccountRepository.findByOwnerAndCurrency(maybeJpaAccountOwner.get(), currency.code)
+            bankAccountRepository.findAllByOwnerAndCurrency(maybeJpaAccountOwner.get(), currency.code)
         } else {
-            Optional.empty()
+            listOf()
         }
     }
 }

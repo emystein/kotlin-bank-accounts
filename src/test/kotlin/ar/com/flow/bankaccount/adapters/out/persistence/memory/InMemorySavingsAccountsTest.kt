@@ -20,6 +20,6 @@ class InMemorySavingsAccountsTest {
     internal fun accountNotFound() {
         val bankAccounts = InMemoryBankAccounts()
 
-        assertThat(bankAccounts.accountOwnedBy(daniel, Currency.ARS)).isEmpty
+        assertThat(bankAccounts.ownedBy(daniel, Currency.ARS)).isEmpty()
     }
 }

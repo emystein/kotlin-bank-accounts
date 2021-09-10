@@ -4,38 +4,38 @@ import ar.com.flow.Customer
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.ports.out.BankAccounts
-import java.util.*
 
-class InMemoryBankAccounts: BankAccounts {
-    private val accounts: MutableMap<Customer, MutableMap<Currency, BankAccount>> = mutableMapOf()
+class InMemoryBankAccounts : BankAccounts {
+    private val accounts: MutableMap<Customer, MutableSet<BankAccount>> = mutableMapOf()
 
-    override fun create(owner: Customer, currency: Currency): BankAccount {
-        val created = InMemoryAccountRegistry.createSavingsAccountFor(owner, currency)
+    override fun create(accountOwner: Customer, currency: Currency): BankAccount {
+        val created = InMemoryAccountRegistry.createSavingsAccountFor(accountOwner, currency)
 
-        if (accounts.containsKey(owner)) {
-            accounts[owner]!![currency] = created
+        if (accounts.containsKey(accountOwner)) {
+            accounts[accountOwner]!!.add(created)
         } else {
-            accounts[owner] = mutableMapOf(currency to created)
+            accounts[accountOwner] = mutableSetOf(created)
         }
 
         return created
     }
 
     override fun save(account: BankAccount): BankAccount {
-        accounts[account.owner] = mutableMapOf(account.currency to account)
+        accounts[account.owner]!!.add(account)
 
         return account
     }
 
-    override fun accountOwnedBy(owner: Customer, currency: Currency): Optional<BankAccount> {
-        return if (accounts.containsKey(owner) && accounts[owner]!!.containsKey(currency)) {
-            Optional.ofNullable(accounts[owner]!![currency])
+    override fun ownedBy(accountOwner: Customer, currency: Currency): List<BankAccount> {
+        return if (accounts.containsKey(accountOwner)) {
+            accounts[accountOwner]!!.filter { account -> account.currency == currency }
         } else {
-            Optional.empty()
+            listOf()
         }
     }
 
     override fun contains(account: BankAccount): Boolean {
-        return (accounts.containsKey(account.owner) && accounts[account.owner]!!.containsKey(account.currency))
+        return accounts.containsKey(account.owner) &&
+                accounts[account.owner]!!.any { a -> a.currency == account.currency }
     }
 }

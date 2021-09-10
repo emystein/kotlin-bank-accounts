@@ -1,8 +1,8 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
+import ar.com.flow.bankaccount.domain.Balance
 import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
-import ar.com.flow.bankaccount.domain.Balance
 import ar.com.flow.bankaccount.ports.out.BankAccounts
 import ar.com.flow.money.TestMoney.ars100
 import org.assertj.core.api.Assertions.assertThat
@@ -21,7 +21,7 @@ class SavingsAccountsTest {
     fun createSavingsAccount() {
         val account = bankAccounts.create(daniel, Currency.ARS)
 
-        assertThat(bankAccounts.accountOwnedBy(daniel, Currency.ARS)).hasValue(account)
+        assertThat(bankAccounts.ownedBy(daniel, Currency.ARS)).contains(account)
     }
 
     @Test
@@ -31,7 +31,7 @@ class SavingsAccountsTest {
 
         bankAccounts.save(account)
 
-        val updatedAccount = bankAccounts.accountOwnedBy(daniel, Currency.ARS).get()
+        val updatedAccount = bankAccounts.ownedBy(daniel, Currency.ARS).first()
         assertThat(updatedAccount.balance).isEqualTo(Balance.positive(ars100))
     }
 
@@ -44,6 +44,6 @@ class SavingsAccountsTest {
 
     @Test
     fun transientAccountNotFound() {
-        assertThat(bankAccounts.accountOwnedBy(daniel, Currency.ARS)).isEmpty
+        assertThat(bankAccounts.ownedBy(daniel, Currency.ARS)).isEmpty()
     }
 }
