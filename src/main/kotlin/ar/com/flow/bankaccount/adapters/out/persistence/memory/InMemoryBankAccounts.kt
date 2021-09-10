@@ -1,22 +1,21 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.memory
 
 import ar.com.flow.Customer
-import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.BankAccount
-import ar.com.flow.bankaccount.domain.SavingsAccount
+import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.ports.out.BankAccounts
 import java.util.*
 
 class InMemoryBankAccounts: BankAccounts {
     private val accounts: MutableMap<Customer, MutableMap<Currency, BankAccount>> = mutableMapOf()
 
-    override fun create(customer: Customer, currency: Currency): BankAccount {
-        val created = SavingsAccount(customer, currency, InMemoryStatement(currency))
+    override fun create(owner: Customer, currency: Currency): BankAccount {
+        val created = InMemoryAccountRegistry.createSavingsAccountFor(owner, currency)
 
-        if (accounts.containsKey(customer)) {
-            accounts[customer]!![currency] = created
+        if (accounts.containsKey(owner)) {
+            accounts[owner]!![currency] = created
         } else {
-            accounts[customer] = mutableMapOf(currency to created)
+            accounts[owner] = mutableMapOf(currency to created)
         }
 
         return created
@@ -28,9 +27,9 @@ class InMemoryBankAccounts: BankAccounts {
         return account
     }
 
-    override fun accountOwnedBy(customer: Customer, currency: Currency): Optional<BankAccount> {
-        return if (accounts.containsKey(customer) && accounts[customer]!!.containsKey(currency)) {
-            Optional.ofNullable(accounts[customer]!![currency])
+    override fun accountOwnedBy(owner: Customer, currency: Currency): Optional<BankAccount> {
+        return if (accounts.containsKey(owner) && accounts[owner]!!.containsKey(currency)) {
+            Optional.ofNullable(accounts[owner]!![currency])
         } else {
             Optional.empty()
         }

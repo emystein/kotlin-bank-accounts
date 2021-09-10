@@ -10,7 +10,7 @@ interface BankAccounts {
 
     fun save(account: BankAccount): BankAccount
 
-    fun accountOwnedBy(accountOwner: Customer, currency: Currency): Optional<BankAccount>
+    fun accountOwnedBy(owner: Customer, currency: Currency): Optional<BankAccount>
 
     fun contains(account: BankAccount): Boolean
 }
