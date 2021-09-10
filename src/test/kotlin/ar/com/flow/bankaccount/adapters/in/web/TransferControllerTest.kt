@@ -2,7 +2,7 @@ package ar.com.flow.bankaccount.adapters.`in`.web
 
 import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryPersistenceConfiguration
 import ar.com.flow.bankaccount.application.spring.BankAccountConfiguration
-import ar.com.flow.bankaccount.usecases.Withdrawal
+import ar.com.flow.bankaccount.usecases.Transfer
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.justRun
 import org.junit.jupiter.api.Test
@@ -18,20 +18,20 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 @ContextConfiguration(
     classes = [BankAccountConfiguration::class, InMemoryPersistenceConfiguration::class]
 )
-class WithdrawalControllerTest {
+class TransferControllerTest {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
     @MockkBean
-    private lateinit var withdrawal: Withdrawal
+    private lateinit var transfer: Transfer
 
     @Test
-    fun withdrawal() {
-        justRun { withdrawal.execute("Juan Perez", "ARS", 100) }
+    fun transfer() {
+        justRun { transfer.execute("Juan Perez", "ARS", 100, "Raúl Lopez") }
 
-        val withdrawalUrl = "/savings-accounts/withdrawal/{accountOwner}/{currency}/{amount}"
+        val transferUrl = "/savings-accounts/transfer/{debitCustomer}/{currency}/{amount}/{creditCustomer}"
 
-        mockMvc.perform(post(withdrawalUrl, "Juan Perez", "ARS", 100))
+        mockMvc.perform(post(transferUrl, "Juan Perez", "ARS", 100, "Raúl Lopez"))
             .andExpect(status().isOk)
     }
 }
