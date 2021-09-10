@@ -1,7 +1,7 @@
 package ar.com.flow.bankaccount.domain
 
 import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryStatement
-import ar.com.flow.bankaccount.domain.TestObjects.createSavingsAccountFor
+import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryAccountRegistry.createSavingsAccountFor
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.domain.Balance.Companion.positive
 import ar.com.flow.bankaccount.domain.transaction.receipt.Action
@@ -19,8 +19,7 @@ class ReceiptTest {
     
     @BeforeEach
     fun setUp() {
-        danielsAccount =
-            createSavingsAccountFor(daniel, dollars100, InMemoryStatement(Currency.USD))
+        danielsAccount = createSavingsAccountFor(daniel, dollars100)
     }
 
     @Test

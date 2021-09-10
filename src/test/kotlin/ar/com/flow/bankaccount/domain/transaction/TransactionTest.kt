@@ -4,7 +4,7 @@ import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryStatement
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.BankAccountAssert.Companion.assertThat
 import ar.com.flow.bankaccount.domain.Currency
-import ar.com.flow.bankaccount.domain.TestObjects.createSavingsAccountFor
+import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryAccountRegistry.createSavingsAccountFor
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.domain.transaction.receipt.Action
 import ar.com.flow.bankaccount.domain.transaction.receipt.DebitPrint
@@ -23,7 +23,7 @@ class TransactionTest {
 
     @BeforeEach
     fun setUp() {
-        debitAccount = createSavingsAccountFor(daniel, dollars100, InMemoryStatement(Currency.USD))
+        debitAccount = createSavingsAccountFor(daniel, dollars100)
 
         debit = Step(
             debitAccount,

@@ -1,6 +1,6 @@
 package ar.com.flow.bankaccount.domain
 
-import ar.com.flow.bankaccount.domain.TestObjects.createCheckingAccountFor
+import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryAccountRegistry.createCheckingAccountFor
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.domain.TestObjects.mabel
 import ar.com.flow.bankaccount.domain.TestObjects.minusDollars100Limit
