@@ -28,19 +28,23 @@ class SavingsAccounts(
         return accountMapper.toDomain(jpaAccount)
     }
 
+    override fun ownedBy(accountOwner: Customer): List<BankAccount> {
+        return jpaAccountsOwnedBy(accountOwner).map { accountMapper.toDomain(it) }
+    }
+
     override fun ownedBy(accountOwner: Customer, currency: Currency): List<BankAccount> {
-        return jpaAccountsOwnedBy(accountOwner, currency).map { jpaAccount -> accountMapper.toDomain(jpaAccount) }
+        return ownedBy(accountOwner).filter { it.currency == currency }
     }
 
     override fun contains(account: BankAccount): Boolean {
-        return jpaAccountsOwnedBy(account.owner, account.currency).isNotEmpty()
+        return bankAccountRepository.findByAccountId(account.id.value).isPresent
     }
 
-    private fun jpaAccountsOwnedBy(accountOwner: Customer, currency: Currency): List<ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccount> {
+    private fun jpaAccountsOwnedBy(accountOwner: Customer): List<ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccount> {
         val maybeJpaAccountOwner = customerRepository.findByName(accountOwner.name)
 
         return if (maybeJpaAccountOwner.isPresent) {
-            bankAccountRepository.findAllByOwnerAndCurrency(maybeJpaAccountOwner.get(), currency.code)
+            bankAccountRepository.findAllByOwner(maybeJpaAccountOwner.get())
         } else {
             listOf()
         }

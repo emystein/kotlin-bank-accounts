@@ -44,6 +44,27 @@ class SavingsAccountsTest {
 
     @Test
     fun transientAccountNotFound() {
-        assertThat(bankAccounts.ownedBy(daniel, Currency.ARS)).isEmpty()
+        assertThat(bankAccounts.ownedBy(daniel)).isEmpty()
+    }
+
+    @Test
+    fun allSavingsAccountsOwnedByCustomer() {
+        val arsAccount = bankAccounts.create(daniel, Currency.ARS)
+        val usdAccount = bankAccounts.create(daniel, Currency.USD)
+
+        assertThat(bankAccounts.ownedBy(daniel)).containsAll(listOf(arsAccount, usdAccount))
+    }
+
+
+    @Test
+    fun allSavingsAccountsOwnedByCustomerForAGivenCurrency() {
+        val arsAccount1 = bankAccounts.create(daniel, Currency.ARS)
+        val arsAccount2 = bankAccounts.create(daniel, Currency.ARS)
+        val usdAccount = bankAccounts.create(daniel, Currency.USD)
+
+        val arsAccounts = bankAccounts.ownedBy(daniel, Currency.ARS)
+
+        assertThat(arsAccounts).containsAll(listOf(arsAccount1, arsAccount2))
+        assertThat(arsAccounts).doesNotContain(usdAccount)
     }
 }

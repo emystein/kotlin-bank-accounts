@@ -12,21 +12,20 @@ class SavingsAccountMapper(
     @Autowired private val bankAccountRepository: BankAccountRepository,
     @Autowired private val accountRegistry: AccountRegistry,
 ) {
-    fun toDomain(bankAccount: ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccount): SavingsAccount {
-        val owner = customerMapper.toDomain(bankAccount.owner)
+    fun toDomain(account: ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccount): SavingsAccount {
+        val owner = customerMapper.toDomain(account.owner)
 
-        return accountRegistry.createSavingsAccount(bankAccount.accountId, owner, Currency.valueOf(bankAccount.currency))
+        return accountRegistry.createSavingsAccount(account.accountId, owner, Currency.valueOf(account.currency))
     }
 
-    fun toJpa(bankAccount: BankAccount): ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccount {
-        val owner = customerMapper.toJpa(bankAccount.owner)
+    fun toJpa(account: BankAccount): ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccount {
+        val jpaAccount = bankAccountRepository.findByAccountId(account.id.value)
 
-        val maybeBankAccount = bankAccountRepository.findByAccountId(bankAccount.id.value)
-
-        return if (maybeBankAccount.isPresent) {
-            maybeBankAccount.get()
+        return if (jpaAccount.isPresent) {
+            jpaAccount.get()
         } else {
-            bankAccountRepository.save(BankAccount(0L, bankAccount.id.value, owner, bankAccount.currency.code))
+            val owner = customerMapper.toJpa(account.owner)
+            bankAccountRepository.save(BankAccount(0L, account.id.value, owner, account.currency.code))
         }
     }
 }

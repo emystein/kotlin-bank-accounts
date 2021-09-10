@@ -26,6 +26,14 @@ class InMemoryBankAccounts : BankAccounts {
         return account
     }
 
+    override fun ownedBy(accountOwner: Customer): List<BankAccount> {
+        return if (accounts.containsKey(accountOwner)) {
+            accounts[accountOwner]!!.toList()
+        } else {
+            listOf()
+        }
+    }
+
     override fun ownedBy(accountOwner: Customer, currency: Currency): List<BankAccount> {
         return if (accounts.containsKey(accountOwner)) {
             accounts[accountOwner]!!.filter { account -> account.currency == currency }

@@ -9,6 +9,8 @@ interface BankAccounts {
 
     fun save(account: BankAccount): BankAccount
 
+    fun ownedBy(accountOwner: Customer): List<BankAccount>
+
     fun ownedBy(accountOwner: Customer, currency: Currency): List<BankAccount>
 
     fun contains(account: BankAccount): Boolean
