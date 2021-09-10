@@ -1,8 +1,9 @@
 package ar.com.flow.bankaccount.application.spring
 
-import ar.com.flow.bankaccount.ports.out.Customers
 import ar.com.flow.bankaccount.ports.out.BankAccounts
+import ar.com.flow.bankaccount.ports.out.Customers
 import ar.com.flow.bankaccount.usecases.Deposit
+import ar.com.flow.bankaccount.usecases.Withdrawal
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
@@ -22,5 +23,10 @@ class BankAccountConfiguration {
     @Bean
     fun deposit(): Deposit {
         return Deposit(customers, bankAccounts)
+    }
+
+    @Bean
+    fun withdrawal(): Withdrawal {
+        return Withdrawal(customers, bankAccounts)
     }
 }

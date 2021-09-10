@@ -11,7 +11,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class WithdrawTest {
+class WithdrawalTest {
     private lateinit var customers: Customers
     private lateinit var bankAccounts: BankAccounts
 
@@ -29,8 +29,8 @@ class WithdrawTest {
         val deposit = Deposit(customers, bankAccounts)
         deposit.execute(customerName = "Juan Perez", currencyCode = Currency.ARS.code, amountToDeposit = 100)
 
-        val withdraw = Withdraw(customers, bankAccounts)
-        withdraw.execute(customerName = "Juan Perez", Currency.ARS.code, amountToWithdraw = 100)
+        val withdrawal = Withdrawal(customers, bankAccounts)
+        withdrawal.execute(customerName = "Juan Perez", Currency.ARS.code, amountToWithdraw = 100)
 
         val savingsAccount = bankAccounts.accountOwnedBy(juanPerez, Currency.ARS).get()
         assertThat(savingsAccount.balance).isEqualTo(Balance(Currency.ARS, 0))
