@@ -21,26 +21,28 @@ import org.junit.jupiter.api.Test
 class StatementTest {
     private lateinit var danielsAccount: BankAccount
     private lateinit var statement: Statement
-    private lateinit var dollars10DepositReceipt: Receipt
-    private lateinit var dollars10WithdrawReceipt: Receipt
-    private lateinit var minusDollars20Record: Receipt
+    private lateinit var deposit10Receipt: Receipt
+    private lateinit var withdraw10Receipt: Receipt
+    private lateinit var withdraw20Receipt: Receipt
+
+    private val accountRegistry = InMemoryAccountRegistry()
 
     @BeforeEach
     fun setUp() {
         statement = InMemoryStatement(Currency.USD)
 
-        danielsAccount = InMemoryAccountRegistry.createSavingsAccountFor(daniel, Currency.USD)
+        danielsAccount = accountRegistry.createSavingsAccountFor(daniel, Currency.USD)
 
-        dollars10DepositReceipt = credit(danielsAccount, Action.Deposit, dollars10)
-        dollars10WithdrawReceipt = debit(danielsAccount, Action.Withdrawal, dollars10)
-        minusDollars20Record = debit(danielsAccount, Action.Withdrawal, dollars20)
+        deposit10Receipt = credit(danielsAccount, Action.Deposit, dollars10)
+        withdraw10Receipt = debit(danielsAccount, Action.Withdrawal, dollars10)
+        withdraw20Receipt = debit(danielsAccount, Action.Withdrawal, dollars20)
     }
 
     @Test
     fun first() {
-        statement.add(dollars10DepositReceipt)
+        statement.add(deposit10Receipt)
 
-        assertThat(statement.first()).hasValue(dollars10DepositReceipt)
+        assertThat(statement.first()).hasValue(deposit10Receipt)
     }
 
     @Test
@@ -50,9 +52,9 @@ class StatementTest {
 
     @Test
     fun last() {
-        statement.add(dollars10DepositReceipt)
+        statement.add(deposit10Receipt)
 
-        assertThat(statement.last()).hasValue(dollars10DepositReceipt)
+        assertThat(statement.last()).hasValue(deposit10Receipt)
     }
 
     @Test
@@ -62,39 +64,39 @@ class StatementTest {
 
     @Test
     fun containsInOrderAll() {
-        statement.add(dollars10DepositReceipt)
-        statement.add(dollars10WithdrawReceipt)
+        statement.add(deposit10Receipt)
+        statement.add(withdraw10Receipt)
 
-        assertTrue(statement.containsInOrder(dollars10DepositReceipt, dollars10WithdrawReceipt))
+        assertTrue(statement.containsInOrder(deposit10Receipt, withdraw10Receipt))
     }
 
     @Test
     fun containsInOrderFirst() {
-        statement.add(dollars10DepositReceipt)
-        statement.add(dollars10WithdrawReceipt)
+        statement.add(deposit10Receipt)
+        statement.add(withdraw10Receipt)
 
-        assertTrue(statement.containsInOrder(dollars10DepositReceipt))
+        assertTrue(statement.containsInOrder(deposit10Receipt))
     }
 
     @Test
     fun notContainsInOrderSameReceiptsDifferentOrder() {
-        statement.add(dollars10DepositReceipt)
-        statement.add(dollars10WithdrawReceipt)
+        statement.add(deposit10Receipt)
+        statement.add(withdraw10Receipt)
 
-        assertFalse(statement.containsInOrder(dollars10WithdrawReceipt, dollars10DepositReceipt))
+        assertFalse(statement.containsInOrder(withdraw10Receipt, deposit10Receipt))
     }
     @Test
     fun statementContainsTransactionRecordAdded() {
-        statement.add(dollars10DepositReceipt)
+        statement.add(deposit10Receipt)
 
-        assertTrue(statement.contains(dollars10DepositReceipt))
+        assertTrue(statement.contains(deposit10Receipt))
     }
 
     @Test
     fun statementStoresTransactionRecordsInOrderOfAddition() {
-        statement.add(dollars10DepositReceipt)
-        statement.add(dollars10WithdrawReceipt)
+        statement.add(deposit10Receipt)
+        statement.add(withdraw10Receipt)
 
-        assertTrue(statement.containsInOrder(dollars10DepositReceipt, dollars10WithdrawReceipt))
+        assertTrue(statement.containsInOrder(deposit10Receipt, withdraw10Receipt))
     }
 }

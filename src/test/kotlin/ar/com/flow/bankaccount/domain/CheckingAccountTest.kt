@@ -1,6 +1,6 @@
 package ar.com.flow.bankaccount.domain
 
-import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryAccountRegistry.createCheckingAccountFor
+import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryAccountRegistry
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.domain.TestObjects.mabel
 import ar.com.flow.bankaccount.domain.TestObjects.minusDollars100Limit
@@ -14,13 +14,15 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class CheckingAccountTest {
+    private val accountRegistry = InMemoryAccountRegistry()
+
     private lateinit var danielsAccount: BankAccount
     private lateinit var mabelsAccount: BankAccount
 
     @BeforeEach
     fun setUp() {
-        danielsAccount = createCheckingAccountFor(daniel, dollars100, minusDollars100Limit)
-        mabelsAccount = createCheckingAccountFor(mabel, dollars100, minusDollars100Limit)
+        danielsAccount = accountRegistry.createCheckingAccountFor(daniel, dollars100, minusDollars100Limit)
+        mabelsAccount = accountRegistry.createCheckingAccountFor(mabel, dollars100, minusDollars100Limit)
     }
 
     @Test

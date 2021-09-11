@@ -1,10 +1,8 @@
 package ar.com.flow.bankaccount.domain.transaction
 
-import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryStatement
+import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryAccountRegistry
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.BankAccountAssert.Companion.assertThat
-import ar.com.flow.bankaccount.domain.Currency
-import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryAccountRegistry.createSavingsAccountFor
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.domain.transaction.receipt.Action
 import ar.com.flow.bankaccount.domain.transaction.receipt.DebitPrint
@@ -18,12 +16,14 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class TransactionTest {
+    private val accountRegistry = InMemoryAccountRegistry()
+
     private lateinit var debitAccount: BankAccount
     private lateinit var debit: Step
 
     @BeforeEach
     fun setUp() {
-        debitAccount = createSavingsAccountFor(daniel, dollars100)
+        debitAccount = accountRegistry.createSavingsAccountFor(daniel, dollars100)
 
         debit = Step(
             debitAccount,

@@ -1,7 +1,7 @@
 package ar.com.flow.bankaccount.domain
 
+import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryAccountRegistry
 import ar.com.flow.bankaccount.domain.Balance.Companion.zero
-import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryAccountRegistry.createSavingsAccountFor
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.domain.TestObjects.mabel
 import ar.com.flow.bankaccount.domain.transfer.SameAccountException
@@ -16,18 +16,20 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class SavingsAccountTest {
+    private val accountRegistry = InMemoryAccountRegistry()
+    
     private lateinit var danielsAccount: BankAccount
     private lateinit var mabelsAccount: BankAccount
 
     @BeforeEach
     fun setUp() {
-        danielsAccount = createSavingsAccountFor(daniel, dollars100)
-        mabelsAccount = createSavingsAccountFor(mabel, dollars100)
+        danielsAccount = accountRegistry.createSavingsAccountFor(daniel, dollars100)
+        mabelsAccount = accountRegistry.createSavingsAccountFor(mabel, dollars100)
     }
 
     @Test
     fun createdAccountHasBalance0() {
-        val account = createSavingsAccountFor(daniel, Currency.ARS)
+        val account = accountRegistry.createSavingsAccountFor(daniel, Currency.ARS)
 
         assertEquals(zero(Currency.ARS), account.balance)
     }
@@ -107,8 +109,8 @@ class SavingsAccountTest {
 
     @Test
     fun canCreateMultipleAccountsForSameCustomerAndCurrency() {
-        val danielsAccount1 = createSavingsAccountFor(daniel, dollars100)
-        val danielsAccount2 = createSavingsAccountFor(daniel, dollars100)
+        val danielsAccount1 = accountRegistry.createSavingsAccountFor(daniel, dollars100)
+        val danielsAccount2 = accountRegistry.createSavingsAccountFor(daniel, dollars100)
 
         assertThat(danielsAccount1).isNotEqualTo(danielsAccount2)
     }

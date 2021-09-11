@@ -9,7 +9,7 @@ import ar.com.flow.bankaccount.domain.withdrawal.WithdrawalLimit
 import ar.com.flow.money.Money
 import java.util.*
 
-object InMemoryAccountRegistry {
+class InMemoryAccountRegistry {
     fun createSavingsAccountFor(accountOwner: Customer, currency: Currency): BankAccount {
         return SavingsAccount(generateId(), accountOwner, currency, InMemoryStatement(currency))
     }

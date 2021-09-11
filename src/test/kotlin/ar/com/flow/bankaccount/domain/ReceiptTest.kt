@@ -1,9 +1,8 @@
 package ar.com.flow.bankaccount.domain
 
-import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryStatement
-import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryAccountRegistry.createSavingsAccountFor
-import ar.com.flow.bankaccount.domain.TestObjects.daniel
+import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryAccountRegistry
 import ar.com.flow.bankaccount.domain.Balance.Companion.positive
+import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.domain.transaction.receipt.Action
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.credit
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.debit
@@ -15,11 +14,13 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class ReceiptTest {
+    private val accountRegistry = InMemoryAccountRegistry()
+
     private lateinit var danielsAccount: BankAccount
     
     @BeforeEach
     fun setUp() {
-        danielsAccount = createSavingsAccountFor(daniel, dollars100)
+        danielsAccount = accountRegistry.createSavingsAccountFor(daniel, dollars100)
     }
 
     @Test

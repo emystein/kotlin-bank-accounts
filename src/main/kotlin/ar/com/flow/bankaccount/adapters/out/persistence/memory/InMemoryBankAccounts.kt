@@ -6,10 +6,11 @@ import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.ports.out.BankAccounts
 
 class InMemoryBankAccounts : BankAccounts {
+    private val accountRegistry = InMemoryAccountRegistry()
     private val accounts: MutableMap<Customer, MutableSet<BankAccount>> = mutableMapOf()
 
     override fun create(accountOwner: Customer, currency: Currency): BankAccount {
-        val created = InMemoryAccountRegistry.createSavingsAccountFor(accountOwner, currency)
+        val created = accountRegistry.createSavingsAccountFor(accountOwner, currency)
 
         if (accounts.containsKey(accountOwner)) {
             accounts[accountOwner]!!.add(created)
