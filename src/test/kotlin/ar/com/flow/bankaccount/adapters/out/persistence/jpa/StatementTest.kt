@@ -1,20 +1,17 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
 import ar.com.flow.bankaccount.application.spring.BankAccountApplication
-import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.domain.transaction.receipt.Action
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.credit
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.debit
-import ar.com.flow.bankaccount.ports.out.Customers
 import ar.com.flow.bankaccount.ports.out.Receipts
 import ar.com.flow.bankaccount.ports.out.Statement
 import ar.com.flow.money.TestMoney.dollars10
 import ar.com.flow.money.TestMoney.dollars20
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -24,7 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest
 @SpringBootTest(classes = [BankAccountApplication::class])
 class StatementTest {
     @Autowired
-    private lateinit var accountRegistry: AccountRegistry
+    private lateinit var accountRegistry: BankAccountRegistry
 
     @Autowired
     private lateinit var receipts: Receipts

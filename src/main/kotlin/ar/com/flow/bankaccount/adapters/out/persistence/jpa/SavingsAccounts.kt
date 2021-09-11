@@ -14,7 +14,7 @@ class SavingsAccounts(
     @Autowired private val customerRepository: CustomerRepository,
     @Autowired private val accountMapper: SavingsAccountMapper,
     @Autowired private val bankAccountRepository: BankAccountRepository,
-    @Autowired private val accountRegistry: AccountRegistry
+    @Autowired private val accountRegistry: BankAccountRegistry
 ) : BankAccounts {
 
     override fun create(accountOwner: Customer, currency: Currency): BankAccount {

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 class SavingsAccountMapper(
     @Autowired private val customerMapper: CustomerMapper,
     @Autowired private val bankAccountRepository: BankAccountRepository,
-    @Autowired private val accountRegistry: AccountRegistry,
+    @Autowired private val accountRegistry: BankAccountRegistry,
 ) {
     fun toDomain(account: ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccount): SavingsAccount {
         val owner = customerMapper.toDomain(account.owner)

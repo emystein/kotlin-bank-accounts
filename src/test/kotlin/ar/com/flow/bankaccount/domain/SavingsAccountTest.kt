@@ -23,13 +23,13 @@ class SavingsAccountTest {
 
     @BeforeEach
     fun setUp() {
-        danielsAccount = accountRegistry.createSavingsAccountFor(daniel, dollars100)
-        mabelsAccount = accountRegistry.createSavingsAccountFor(mabel, dollars100)
+        danielsAccount = accountRegistry.createSavingsAccount(daniel, dollars100)
+        mabelsAccount = accountRegistry.createSavingsAccount(mabel, dollars100)
     }
 
     @Test
     fun createdAccountHasBalance0() {
-        val account = accountRegistry.createSavingsAccountFor(daniel, Currency.ARS)
+        val account = accountRegistry.createSavingsAccount(daniel, Currency.ARS)
 
         assertEquals(zero(Currency.ARS), account.balance)
     }
@@ -109,8 +109,8 @@ class SavingsAccountTest {
 
     @Test
     fun canCreateMultipleAccountsForSameCustomerAndCurrency() {
-        val danielsAccount1 = accountRegistry.createSavingsAccountFor(daniel, dollars100)
-        val danielsAccount2 = accountRegistry.createSavingsAccountFor(daniel, dollars100)
+        val danielsAccount1 = accountRegistry.createSavingsAccount(daniel, dollars100)
+        val danielsAccount2 = accountRegistry.createSavingsAccount(daniel, dollars100)
 
         assertThat(danielsAccount1).isNotEqualTo(danielsAccount2)
     }

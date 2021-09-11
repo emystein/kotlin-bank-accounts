@@ -20,7 +20,7 @@ class ReceiptTest {
     
     @BeforeEach
     fun setUp() {
-        danielsAccount = accountRegistry.createSavingsAccountFor(daniel, dollars100)
+        danielsAccount = accountRegistry.createSavingsAccount(daniel, dollars100)
     }
 
     @Test

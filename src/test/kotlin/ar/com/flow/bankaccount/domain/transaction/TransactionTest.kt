@@ -23,7 +23,7 @@ class TransactionTest {
 
     @BeforeEach
     fun setUp() {
-        debitAccount = accountRegistry.createSavingsAccountFor(daniel, dollars100)
+        debitAccount = accountRegistry.createSavingsAccount(daniel, dollars100)
 
         debit = Step(
             debitAccount,

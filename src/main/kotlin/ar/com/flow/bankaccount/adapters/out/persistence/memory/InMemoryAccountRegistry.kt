@@ -6,15 +6,16 @@ import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.SavingsAccount
 import ar.com.flow.bankaccount.domain.withdrawal.WithdrawalLimit
+import ar.com.flow.bankaccount.ports.out.BankAccountRegistry
 import ar.com.flow.money.Money
 import java.util.*
 
-class InMemoryAccountRegistry {
-    fun createSavingsAccountFor(accountOwner: Customer, currency: Currency): BankAccount {
+class InMemoryAccountRegistry : BankAccountRegistry {
+    override fun createSavingsAccount(accountOwner: Customer, currency: Currency): BankAccount {
         return SavingsAccount(generateId(), accountOwner, currency, InMemoryStatement(currency))
     }
 
-    fun createSavingsAccountFor(accountOwner: Customer, initialBalance: Money): BankAccount {
+    fun createSavingsAccount(accountOwner: Customer, initialBalance: Money): BankAccount {
         val account = SavingsAccount(generateId(), accountOwner, initialBalance.currency, InMemoryStatement(initialBalance.currency))
         account.deposit(initialBalance)
         return account

@@ -31,7 +31,7 @@ class StatementTest {
     fun setUp() {
         statement = InMemoryStatement(Currency.USD)
 
-        danielsAccount = accountRegistry.createSavingsAccountFor(daniel, Currency.USD)
+        danielsAccount = accountRegistry.createSavingsAccount(daniel, Currency.USD)
 
         deposit10Receipt = credit(danielsAccount, Action.Deposit, dollars10)
         withdraw10Receipt = debit(danielsAccount, Action.Withdrawal, dollars10)
