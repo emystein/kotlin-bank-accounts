@@ -1,10 +1,10 @@
 package ar.com.flow.bankaccount.domain.transaction.receipt
 
 import ar.com.flow.Customer
-import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.Balance
 import ar.com.flow.bankaccount.domain.Balance.Companion.negative
 import ar.com.flow.bankaccount.domain.Balance.Companion.positive
+import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.money.Money
 import java.time.LocalDateTime
 
@@ -14,7 +14,6 @@ data class Receipt(
     val movement: FundsMovement,
     val action: Action,
     val amount: Balance,
-    val resultBalance: Balance,
 ) {
     val currency = amount.currency
 
@@ -27,8 +26,7 @@ data class Receipt(
                 LocalDateTime.now(),
                 FundsMovement.Debit,
                 action,
-                balance,
-                destinationAccount.balance.plus(balance)
+                balance
             )
         }
 
@@ -40,8 +38,7 @@ data class Receipt(
                 LocalDateTime.now(),
                 FundsMovement.Credit,
                 action,
-                positive,
-                destinationAccount.balance.plus(positive)
+                positive
             )
         }
     }

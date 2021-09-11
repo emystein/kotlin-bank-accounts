@@ -21,9 +21,7 @@ class Receipt(
     @Column
     val currency: String,
     @Column
-    val amount: Int,
-    @Column
-    val resultAmount: Int
+    val amount: Int
 )
 
 

@@ -1,7 +1,7 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
-import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.Balance
+import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -16,8 +16,7 @@ class ReceiptMapper(@Autowired private val customerMapper: CustomerMapper) {
             receipt.dateTime,
             receipt.movement,
             receipt.action,
-            Balance.create(currency, receipt.amount),
-            Balance.create(currency, receipt.resultAmount),
+            Balance.create(currency, receipt.amount)
         )
     }
 
@@ -30,7 +29,6 @@ class ReceiptMapper(@Autowired private val customerMapper: CustomerMapper) {
             receipt.action,
             receipt.amount.currency.code,
             receipt.amount.amount,
-            receipt.resultBalance.amount
         )
     }
 }

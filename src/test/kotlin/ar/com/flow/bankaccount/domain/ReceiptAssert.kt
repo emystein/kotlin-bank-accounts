@@ -68,11 +68,6 @@ class ReceiptAssert(receipt: Receipt) :
         return this
     }
 
-    fun hasResultBalance(balance: Balance): ReceiptAssert {
-        Assertions.assertThat(actual.resultBalance).isEqualTo(balance)
-        return this
-    }
-
     companion object {
         fun assertThat(statement: Receipt): ReceiptAssert {
             return ReceiptAssert(statement)
