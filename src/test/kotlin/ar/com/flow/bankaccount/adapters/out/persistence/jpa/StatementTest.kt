@@ -39,9 +39,9 @@ class StatementTest {
     fun setUp() {
         receiptRepository.deleteAll()
 
-        statement = Statement(daniel, Currency.USD, receipts)
-
         val danielsAccount = accountRegistry.createSavingsAccount(daniel, Currency.USD)
+
+        statement = Statement(danielsAccount.id, Currency.USD, receipts)
 
         dollars10DepositReceipt = credit(danielsAccount, Action.Deposit, dollars10)
         dollars10WithdrawReceipt = debit(danielsAccount, Action.Withdrawal, dollars10)

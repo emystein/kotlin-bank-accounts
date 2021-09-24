@@ -1,18 +1,18 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
+import ar.com.flow.bankaccount.domain.AccountId
 import ar.com.flow.bankaccount.domain.Balance
 import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-class ReceiptMapper(@Autowired private val customerMapper: CustomerMapper) {
+class ReceiptMapper {
     fun toDomain(receipt: ar.com.flow.bankaccount.adapters.out.persistence.jpa.Receipt): Receipt {
         val currency = Currency.valueOf(receipt.currency)
 
         return Receipt(
-            customerMapper.toDomain(receipt.customer),
+            AccountId(receipt.accountId),
             receipt.dateTime,
             receipt.movement,
             receipt.action,
@@ -23,7 +23,7 @@ class ReceiptMapper(@Autowired private val customerMapper: CustomerMapper) {
     fun toJpa(receipt: Receipt): ar.com.flow.bankaccount.adapters.out.persistence.jpa.Receipt {
         return Receipt(
             0,
-            customerMapper.toJpa(receipt.customer),
+            receipt.accountId.value,
             receipt.dateTime,
             receipt.movement,
             receipt.action,

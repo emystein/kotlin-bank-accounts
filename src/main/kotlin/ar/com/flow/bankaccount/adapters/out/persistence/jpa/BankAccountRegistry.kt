@@ -13,11 +13,13 @@ import java.util.*
 @Component
 class BankAccountRegistry(@Autowired private val receipts: Receipts) : BankAccountRegistry {
     override fun createSavingsAccount(accountOwner: Customer, currency: Currency): SavingsAccount {
-        return SavingsAccount(generateId(), accountOwner, currency, Statement(accountOwner, currency, receipts))
+        val accountId = generateId()
+        return SavingsAccount(accountId, accountOwner, currency, Statement(accountId, currency, receipts))
     }
 
     fun createSavingsAccount(accountId: String, owner: Customer, currency: Currency): SavingsAccount {
-        return SavingsAccount(AccountId(accountId), owner, currency, Statement(owner, currency, receipts))
+        val accountId = AccountId(accountId)
+        return SavingsAccount(accountId, owner, currency, Statement(accountId, currency, receipts))
     }
 
     private fun generateId(): AccountId {

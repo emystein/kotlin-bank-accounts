@@ -10,8 +10,7 @@ class Receipt(
     @Id
     @GeneratedValue
     val id: Long,
-    @ManyToOne
-    val customer: Customer,
+    val accountId: String,
     @Column
     val dateTime: LocalDateTime,
     @Enumerated
