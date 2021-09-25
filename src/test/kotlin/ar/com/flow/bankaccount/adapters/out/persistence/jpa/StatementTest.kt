@@ -21,10 +21,8 @@ import org.springframework.boot.test.context.SpringBootTest
 class StatementTest {
     @Autowired
     private lateinit var accountRegistry: BankAccountRegistry
-
     @Autowired
     private lateinit var receiptMapper: ReceiptMapper
-
     @Autowired
     private lateinit var receiptRepository: ReceiptRepository
 
