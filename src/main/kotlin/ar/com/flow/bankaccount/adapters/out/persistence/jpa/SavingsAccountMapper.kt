@@ -1,5 +1,6 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
+import ar.com.flow.bankaccount.domain.AccountId
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.SavingsAccount
@@ -15,7 +16,9 @@ class SavingsAccountMapper(
     fun toDomain(account: ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccount): SavingsAccount {
         val owner = customerMapper.toDomain(account.owner)
 
-        return accountRegistry.createSavingsAccount(account.accountId, owner, Currency.valueOf(account.currency))
+        val accountId = AccountId(account.accountId)
+
+        return accountRegistry.createSavingsAccount(accountId, owner, Currency.valueOf(account.currency))
     }
 
     fun toJpa(account: BankAccount): ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccount {

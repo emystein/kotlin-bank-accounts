@@ -22,8 +22,7 @@ class BankAccountRegistry(
         return SavingsAccount(accountId, accountOwner, currency, Statement(accountId, currency, receipts))
     }
 
-    fun createSavingsAccount(accountId: String, owner: Customer, currency: Currency): SavingsAccount {
-        val accountId = AccountId(accountId)
+    fun createSavingsAccount(accountId: AccountId, owner: Customer, currency: Currency): SavingsAccount {
         val receipts = AccountReceipts(accountId, receiptMapper, receiptRepository)
         return SavingsAccount(accountId, owner, currency, Statement(accountId, currency, receipts))
     }
