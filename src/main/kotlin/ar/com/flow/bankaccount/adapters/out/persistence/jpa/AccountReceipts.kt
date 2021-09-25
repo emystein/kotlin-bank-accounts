@@ -5,7 +5,7 @@ import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
 import ar.com.flow.bankaccount.ports.out.AccountReceipts
 
 class AccountReceipts(
-    private val accountId: AccountId,
+    override val accountId: AccountId,
     private val receiptMapper: ReceiptMapper,
     private val receiptRepository: ReceiptRepository
 ) : AccountReceipts {

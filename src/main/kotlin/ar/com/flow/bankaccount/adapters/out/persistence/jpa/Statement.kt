@@ -13,7 +13,6 @@ class Statement(
     }
 
     override fun add(receipt: Receipt) {
-        // TODO: add precondition of receipt account owner and currency must match this instance accountOwner and currency
         receipts.add(receipt)
     }
 }
