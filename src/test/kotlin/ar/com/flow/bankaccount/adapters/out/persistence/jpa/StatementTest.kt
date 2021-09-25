@@ -42,7 +42,7 @@ class StatementTest {
 
         val receipts = AccountReceipts(danielsAccount.id, receiptMapper, receiptRepository)
 
-        statement = Statement(danielsAccount.id, Currency.USD, receipts)
+        statement = Statement(Currency.USD, receipts)
 
         dollars10DepositReceipt = credit(danielsAccount, Action.Deposit, dollars10)
         dollars10WithdrawReceipt = debit(danielsAccount, Action.Withdrawal, dollars10)

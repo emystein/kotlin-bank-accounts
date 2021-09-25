@@ -19,12 +19,12 @@ class BankAccountRegistry(
     override fun createSavingsAccount(accountOwner: Customer, currency: Currency): SavingsAccount {
         val accountId = generateId()
         val receipts = AccountReceipts(accountId, receiptMapper, receiptRepository)
-        return SavingsAccount(accountId, accountOwner, currency, Statement(accountId, currency, receipts))
+        return SavingsAccount(accountId, accountOwner, currency, Statement(currency, receipts))
     }
 
     fun createSavingsAccount(accountId: AccountId, owner: Customer, currency: Currency): SavingsAccount {
         val receipts = AccountReceipts(accountId, receiptMapper, receiptRepository)
-        return SavingsAccount(accountId, owner, currency, Statement(accountId, currency, receipts))
+        return SavingsAccount(accountId, owner, currency, Statement(currency, receipts))
     }
 
     private fun generateId(): AccountId {
