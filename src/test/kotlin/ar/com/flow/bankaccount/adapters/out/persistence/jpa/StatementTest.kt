@@ -7,7 +7,6 @@ import ar.com.flow.bankaccount.domain.transaction.receipt.Action
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.credit
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.debit
-import ar.com.flow.bankaccount.ports.out.Receipts
 import ar.com.flow.bankaccount.ports.out.Statement
 import ar.com.flow.money.TestMoney.dollars10
 import ar.com.flow.money.TestMoney.dollars20
@@ -24,7 +23,7 @@ class StatementTest {
     private lateinit var accountRegistry: BankAccountRegistry
 
     @Autowired
-    private lateinit var receipts: Receipts
+    private lateinit var receiptMapper: ReceiptMapper
 
     @Autowired
     private lateinit var receiptRepository: ReceiptRepository
@@ -40,6 +39,8 @@ class StatementTest {
         receiptRepository.deleteAll()
 
         val danielsAccount = accountRegistry.createSavingsAccount(daniel, Currency.USD)
+
+        val receipts = AccountReceipts(danielsAccount.id, receiptMapper, receiptRepository)
 
         statement = Statement(danielsAccount.id, Currency.USD, receipts)
 

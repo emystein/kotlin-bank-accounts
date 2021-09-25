@@ -2,18 +2,14 @@ package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
 import ar.com.flow.bankaccount.domain.AccountId
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
-import ar.com.flow.bankaccount.ports.out.Receipts
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Component
+import ar.com.flow.bankaccount.ports.out.AccountReceipts
 
-@Component
-class Receipts(
-    @Autowired
+class AccountReceipts(
+    private val accountId: AccountId,
     private val receiptMapper: ReceiptMapper,
-    @Autowired
     private val receiptRepository: ReceiptRepository
-) : Receipts {
-    override fun all(accountId: AccountId): List<Receipt> {
+) : AccountReceipts {
+    override fun all(): List<Receipt> {
         return receiptRepository.findAllByAccountId(accountId.value)
             .map { receiptMapper.toDomain(it) }
     }
