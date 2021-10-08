@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+// import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
 	id("com.github.ben-manes.versions") version "0.39.0"
@@ -35,12 +35,12 @@ dependencies {
 	runtimeOnly("com.h2database:h2")
 }
 
-tasks.withType<KotlinCompile> {
-	kotlinOptions {
-		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "1.8"
-	}
-}
+//tasks.withType<KotlinCompile> {
+//	kotlinOptions {
+//		freeCompilerArgs = listOf("-Xjsr305=strict")
+//		jvmTarget = "1.8"
+//	}
+//}
 
 tasks.withType<Test> {
 	useJUnitPlatform()
