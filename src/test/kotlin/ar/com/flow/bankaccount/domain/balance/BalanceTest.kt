@@ -3,7 +3,8 @@ package ar.com.flow.bankaccount.domain.balance
 import ar.com.flow.bankaccount.domain.Balance
 import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.money.TestMoney.dollars10
-import org.junit.jupiter.api.Assertions
+import assertk.assertThat
+import assertk.assertions.isEqualTo
 import org.junit.jupiter.api.Test
 
 internal class BalanceTest {
@@ -26,7 +27,7 @@ internal class BalanceTest {
     }
 
     private fun assertBalance(balance: Balance, expectedCurrency: Currency, expectedAmount: Int) {
-        Assertions.assertEquals(expectedCurrency, balance.currency)
-        Assertions.assertEquals(expectedAmount, balance.amount)
+        assertThat(expectedCurrency).isEqualTo(balance.currency)
+        assertThat(expectedAmount).isEqualTo(balance.amount)
     }
 }

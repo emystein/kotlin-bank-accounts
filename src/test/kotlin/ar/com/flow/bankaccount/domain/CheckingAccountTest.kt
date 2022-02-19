@@ -9,6 +9,7 @@ import ar.com.flow.money.TestMoney.dollars10
 import ar.com.flow.money.TestMoney.dollars100
 import ar.com.flow.money.TestMoney.dollars110
 import ar.com.flow.money.TestMoney.dollars300
+import assertk.assertThat
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -31,46 +32,37 @@ class CheckingAccountTest {
     fun withdrawalDecrementsFunds() {
         danielsAccount.withdraw(dollars10)
 
-        BankAccountAssert.assertThat(danielsAccount)
-            .decreasedFunds(dollars10)
+        assertThat(danielsAccount).decreasedFunds(dollars10)
     }
 
     @Test
     fun withdrawAmountGreaterThanPositiveBalanceAndAboveWithdrawalLimit() {
         danielsAccount.withdraw(dollars110)
 
-        BankAccountAssert.assertThat(danielsAccount)
-            .hasNegativeBalance(dollars10)
+        assertThat(danielsAccount).hasNegativeBalance(dollars10)
     }
 
     @Test
     fun withdrawalAmountCanNotExceedWithdrawalLimit() {
         Assertions.assertThrows(InsufficientFundsException::class.java) { danielsAccount.withdraw(dollars300) }
 
-        BankAccountAssert.assertThat(danielsAccount)
-            .keepsInitialBalance()
+        assertThat(danielsAccount).keepsInitialBalance()
     }
 
     @Test
     fun transferAmountLessThanAvailableFunds() {
         danielsAccount.transfer(dollars10, mabelsAccount)
 
-        BankAccountAssert.assertThat(danielsAccount)
-            .decreasedFunds(dollars10)
-
-        BankAccountAssert.assertThat(mabelsAccount)
-            .increasedFunds(dollars10)
+        assertThat(danielsAccount).decreasedFunds(dollars10)
+        assertThat(mabelsAccount).increasedFunds(dollars10)
     }
 
     @Test
     fun transferAmountGreaterThanPositiveBalanceAndAboveWithdrawalLimit() {
         danielsAccount.transfer(dollars110, mabelsAccount)
 
-        BankAccountAssert.assertThat(danielsAccount)
-            .decreasedFunds(dollars110)
-
-        BankAccountAssert.assertThat(mabelsAccount)
-            .increasedFunds(dollars110)
+        assertThat(danielsAccount).decreasedFunds(dollars110)
+        assertThat(mabelsAccount).increasedFunds(dollars110)
     }
 
     @Test
@@ -79,10 +71,7 @@ class CheckingAccountTest {
             danielsAccount.transfer(dollars300, mabelsAccount)
         }
 
-        BankAccountAssert.assertThat(danielsAccount)
-            .keepsInitialBalance()
-
-        BankAccountAssert.assertThat(mabelsAccount)
-            .keepsInitialBalance()
+        assertThat(danielsAccount).keepsInitialBalance()
+        assertThat(mabelsAccount).keepsInitialBalance()
     }
 }

@@ -7,7 +7,8 @@ import ar.com.flow.bankaccount.domain.Balance
 import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.ports.out.BankAccounts
 import ar.com.flow.bankaccount.ports.out.Customers
-import org.assertj.core.api.Assertions.assertThat
+import assertk.assertThat
+import assertk.assertions.isEqualTo
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 

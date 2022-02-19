@@ -2,9 +2,9 @@ package ar.com.flow.bankaccount.domain.transaction
 
 import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryAccountRegistry
 import ar.com.flow.bankaccount.domain.BankAccount
-import ar.com.flow.bankaccount.domain.BankAccountAssert.Companion.assertThat
 import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
+import ar.com.flow.bankaccount.domain.keepsInitialBalance
 import ar.com.flow.bankaccount.domain.transaction.receipt.Action
 import ar.com.flow.bankaccount.domain.transaction.receipt.DebitPrint
 import ar.com.flow.bankaccount.domain.transaction.receipt.DebitScratch
@@ -12,6 +12,10 @@ import ar.com.flow.bankaccount.domain.transaction.steps.Step
 import ar.com.flow.bankaccount.ports.out.BankAccountRegistry
 import ar.com.flow.money.TestMoney.dollars10
 import ar.com.flow.money.TestMoney.dollars100
+import assertk.Assert
+import assertk.assertThat
+import assertk.assertions.support.expected
+import assertk.assertions.support.show
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.BeforeEach

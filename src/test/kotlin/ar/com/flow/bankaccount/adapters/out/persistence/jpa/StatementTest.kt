@@ -10,8 +10,10 @@ import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.debi
 import ar.com.flow.bankaccount.ports.out.Statement
 import ar.com.flow.money.TestMoney.dollars10
 import ar.com.flow.money.TestMoney.dollars20
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertTrue
+import assertk.assertThat
+import assertk.assertions.hasValue
+import assertk.assertions.isEmpty
+import assertk.assertions.isTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -49,7 +51,7 @@ class StatementTest {
 
     @Test
     fun firstDoNotExistWhenStatementIsEmpty() {
-        assertThat(statement.first()).isEmpty
+        assertThat(statement.first()).isEmpty()
     }
 
     @Test
@@ -61,7 +63,7 @@ class StatementTest {
 
     @Test
     fun lastDoNotExistWhenStatementIsEmpty() {
-        assertThat(statement.last()).isEmpty
+        assertThat(statement.last()).isEmpty()
     }
 
     @Test
@@ -76,7 +78,7 @@ class StatementTest {
         statement.add(dollars10DepositReceipt)
         statement.add(dollars10WithdrawReceipt)
 
-        assertTrue(statement.containsInOrder(dollars10DepositReceipt, dollars10WithdrawReceipt))
+        assertThat(statement.containsInOrder(dollars10DepositReceipt, dollars10WithdrawReceipt)).isTrue()
     }
 
     @Test
@@ -84,13 +86,13 @@ class StatementTest {
         statement.add(dollars10DepositReceipt)
         statement.add(dollars10WithdrawReceipt)
 
-        assertTrue(statement.containsInOrder(dollars10DepositReceipt))
+        assertThat(statement.containsInOrder(dollars10DepositReceipt)).isTrue()
     }
 
     @Test
     fun statementContainsTransactionRecordAdded() {
         statement.add(dollars10DepositReceipt)
 
-        assertTrue(statement.contains(dollars10DepositReceipt))
+        assertThat(statement.contains(dollars10DepositReceipt)).isTrue()
     }
 }

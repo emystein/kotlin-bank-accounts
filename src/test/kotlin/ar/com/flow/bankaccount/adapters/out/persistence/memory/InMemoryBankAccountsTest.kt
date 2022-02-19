@@ -2,8 +2,11 @@ package ar.com.flow.bankaccount.adapters.out.persistence.memory
 
 import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertTrue
+import assertk.assertThat
+import assertk.assertions.containsAll
+import assertk.assertions.doesNotContain
+import assertk.assertions.isEmpty
+import assertk.assertions.isTrue
 import org.junit.jupiter.api.Test
 
 class InMemoryBankAccountsTest {
@@ -13,7 +16,7 @@ class InMemoryBankAccountsTest {
 
         val createdAccount = bankAccounts.create(daniel, Currency.ARS)
 
-        assertTrue(bankAccounts.contains(createdAccount))
+        assertThat(bankAccounts.contains(createdAccount)).isTrue()
     }
 
     @Test
@@ -30,7 +33,7 @@ class InMemoryBankAccountsTest {
         val arsAccount = bankAccounts.create(daniel, Currency.ARS)
         val usdAccount = bankAccounts.create(daniel, Currency.USD)
 
-        assertThat(bankAccounts.ownedBy(daniel)).containsAll(listOf(arsAccount, usdAccount))
+        assertThat(bankAccounts.ownedBy(daniel)).containsAll(arsAccount, usdAccount)
     }
 
     @Test
@@ -50,7 +53,7 @@ class InMemoryBankAccountsTest {
 
         val arsAccounts = bankAccounts.ownedBy(daniel, Currency.ARS)
 
-        assertThat(arsAccounts).containsAll(listOf(arsAccount1, arsAccount2))
+        assertThat(arsAccounts).containsAll(arsAccount1, arsAccount2)
         assertThat(arsAccounts).doesNotContain(usdAccount)
     }
 }

@@ -4,7 +4,9 @@ import ar.com.flow.money.Dollars.amount
 import ar.com.flow.money.TestMoney.dollars10
 import ar.com.flow.money.TestMoney.dollars100
 import ar.com.flow.money.TestMoney.dollars110
-import org.junit.jupiter.api.Assertions.assertEquals
+import ar.com.flow.money.TestMoney.dollars90
+import assertk.assertThat
+import assertk.assertions.isEqualTo
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
@@ -16,18 +18,18 @@ class MoneyTest {
 
     @Test
     fun given100USDWhenAdd10USDThenResultShould110USD() {
-        assertEquals(dollars110, dollars100.plus(dollars10))
+        assertThat(dollars100.plus(dollars10)).isEqualTo(dollars110)
     }
 
     @Test
     fun given100USDWhenAdd10USDThen100USDShouldKeepOriginalAmount() {
         dollars100.plus(dollars10)
-        assertEquals(amount(100), dollars100)
+        assertThat(dollars100).isEqualTo(amount(100))
     }
 
     @Test
     fun given100USDWhenSubtract10USDThenResultShouldBe90USD() {
-        assertEquals(TestMoney.dollars90, dollars100.minus(dollars10))
+        assertThat(dollars100.minus(dollars10)).isEqualTo(dollars90)
     }
 
     @Test
@@ -38,7 +40,6 @@ class MoneyTest {
     @Test
     fun given100USDWhenSubtract10USDThen100USDShouldKeepOriginalAmount() {
         dollars100.minus(dollars10)
-
-        assertEquals(amount(100), dollars100)
+        assertThat(dollars100).isEqualTo(amount(100))
     }
 }

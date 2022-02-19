@@ -9,8 +9,9 @@ import ar.com.flow.money.InsufficientFundsException
 import ar.com.flow.money.TestMoney.dollars10
 import ar.com.flow.money.TestMoney.dollars100
 import ar.com.flow.money.TestMoney.dollars200
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertEquals
+import assertk.assertThat
+import assertk.assertions.isEqualTo
+import assertk.assertions.isNotEqualTo
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -33,63 +34,56 @@ class SavingsAccountTest {
     fun createdAccountHasBalance0() {
         val account = accountRegistry.createSavingsAccount(daniel, Currency.ARS)
 
-        assertEquals(zero(Currency.ARS), account.balance)
+        assertThat(account.balance).isEqualTo(zero(Currency.ARS))
     }
 
     @Test
     fun depositIncrementsFunds() {
         danielsAccount.deposit(dollars10)
 
-        BankAccountAssert.assertThat(danielsAccount)
-            .increasedFunds(dollars10)
+        assertThat(danielsAccount).increasedFunds(dollars10)
     }
 
     @Test
     fun withdrawalDecrementsFunds() {
         danielsAccount.withdraw(dollars10)
 
-        BankAccountAssert.assertThat(danielsAccount)
-            .decreasedFunds(dollars10)
+        assertThat(danielsAccount).decreasedFunds(dollars10)
     }
 
     @Test
     fun canNotWithdrawAmountGreaterThanAvailableFunds() {
         assertThrows(InsufficientFundsException::class.java) { danielsAccount.withdraw(dollars200) }
 
-        BankAccountAssert.assertThat(danielsAccount).keepsInitialBalance()
+        assertThat(danielsAccount).keepsInitialBalance()
     }
 
     @Test
     fun withdrawalAddsTransactionRecordToStatement() {
         danielsAccount.withdraw(dollars10)
 
-        OptionalReceiptAssert.assertThat(danielsAccount.statement.last())
-            .isPresent()
-            .isWithdrawal()
-            .hasNegativeBalance(dollars10)
+        val actual = danielsAccount.statement.last().get()
+        assertThat(actual).isWithdrawal()
+        assertThat(actual).hasNegativeBalance(dollars10)
     }
 
     @Test
     fun transferAmountLessThanAvailableFunds() {
         danielsAccount.transfer(dollars10, mabelsAccount)
 
-        BankAccountAssert.assertThat(danielsAccount)
-            .decreasedFunds(dollars10)
+        assertThat(danielsAccount).decreasedFunds(dollars10)
+        assertThat(mabelsAccount).increasedFunds(dollars10)
 
-        BankAccountAssert.assertThat(mabelsAccount).increasedFunds(dollars10)
+        val danielsLastMovement = danielsAccount.statement.last().get()
+        assertThat(danielsLastMovement).isDebit()
+        assertThat(danielsLastMovement).isTransfer()
+        assertThat(danielsLastMovement).hasNegativeBalance(dollars10)
+        assertThat(danielsLastMovement).hasCreditAccount(mabelsAccount)
 
-        OptionalReceiptAssert.assertThat(danielsAccount.statement.last())
-            .isPresent()
-            .isDebit()
-            .isTransfer()
-            .hasNegativeBalance(dollars10)
-            .hasCreditAccount(mabelsAccount)
-
-        OptionalReceiptAssert.assertThat(mabelsAccount.statement.last())
-            .isPresent()
-            .isCredit()
-            .isTransfer()
-            .hasPositiveBalance(dollars10)
+        val mabelsLastMovement = mabelsAccount.statement.last().get()
+        assertThat(mabelsLastMovement).isCredit()
+        assertThat(mabelsLastMovement).isTransfer()
+        assertThat(mabelsLastMovement).hasPositiveBalance(dollars10)
     }
 
     @Test
@@ -97,8 +91,8 @@ class SavingsAccountTest {
         assertThrows(InsufficientFundsException::class.java) {
             danielsAccount.transfer(dollars200, mabelsAccount)
         }
-        BankAccountAssert.assertThat(danielsAccount).keepsInitialBalance()
-        BankAccountAssert.assertThat(mabelsAccount).keepsInitialBalance()
+        assertThat(danielsAccount).keepsInitialBalance()
+        assertThat(mabelsAccount).keepsInitialBalance()
     }
 
     @Test
@@ -106,7 +100,7 @@ class SavingsAccountTest {
         assertThrows(SameAccountException::class.java) {
             danielsAccount.transfer(dollars10, danielsAccount)
         }
-        BankAccountAssert.assertThat(danielsAccount).keepsInitialBalance()
+        assertThat(danielsAccount).keepsInitialBalance()
     }
 
     @Test

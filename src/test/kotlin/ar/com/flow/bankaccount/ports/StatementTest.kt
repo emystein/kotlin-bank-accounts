@@ -12,9 +12,11 @@ import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.debi
 import ar.com.flow.bankaccount.ports.out.Statement
 import ar.com.flow.money.TestMoney.dollars10
 import ar.com.flow.money.TestMoney.dollars20
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertTrue
+import assertk.assertThat
+import assertk.assertions.hasValue
+import assertk.assertions.isEmpty
+import assertk.assertions.isFalse
+import assertk.assertions.isTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -47,7 +49,7 @@ class StatementTest {
 
     @Test
     fun firstDoNotExist() {
-        assertThat(statement.first()).isEmpty
+        assertThat(statement.first()).isEmpty()
     }
 
     @Test
@@ -59,7 +61,7 @@ class StatementTest {
 
     @Test
     fun lastDoNotExist() {
-        assertThat(statement.last()).isEmpty
+        assertThat(statement.last()).isEmpty()
     }
 
     @Test
@@ -67,7 +69,7 @@ class StatementTest {
         statement.add(deposit10Receipt)
         statement.add(withdraw10Receipt)
 
-        assertTrue(statement.containsInOrder(deposit10Receipt, withdraw10Receipt))
+        assertThat(statement.containsInOrder(deposit10Receipt, withdraw10Receipt)).isTrue()
     }
 
     @Test
@@ -75,7 +77,7 @@ class StatementTest {
         statement.add(deposit10Receipt)
         statement.add(withdraw10Receipt)
 
-        assertTrue(statement.containsInOrder(deposit10Receipt))
+        assertThat(statement.containsInOrder(deposit10Receipt)).isTrue()
     }
 
     @Test
@@ -83,13 +85,13 @@ class StatementTest {
         statement.add(deposit10Receipt)
         statement.add(withdraw10Receipt)
 
-        assertFalse(statement.containsInOrder(withdraw10Receipt, deposit10Receipt))
+        assertThat(statement.containsInOrder(withdraw10Receipt, deposit10Receipt)).isFalse()
     }
     @Test
     fun statementContainsTransactionRecordAdded() {
         statement.add(deposit10Receipt)
 
-        assertTrue(statement.contains(deposit10Receipt))
+        assertThat(statement.contains(deposit10Receipt)).isTrue()
     }
 
     @Test
@@ -97,6 +99,6 @@ class StatementTest {
         statement.add(deposit10Receipt)
         statement.add(withdraw10Receipt)
 
-        assertTrue(statement.containsInOrder(deposit10Receipt, withdraw10Receipt))
+        assertThat(statement.containsInOrder(deposit10Receipt, withdraw10Receipt)).isTrue()
     }
 }

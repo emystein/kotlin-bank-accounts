@@ -4,7 +4,8 @@ import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryBankAccou
 import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryCustomers
 import ar.com.flow.bankaccount.ports.out.BankAccounts
 import ar.com.flow.bankaccount.ports.out.Customers
-import org.assertj.core.api.Assertions.assertThat
+import assertk.assertThat
+import assertk.assertions.isTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -24,6 +25,6 @@ class CreateSavingsAccountTest {
 
         val createdAccount = createSavingsAccount.execute("Juan Perez", "ARS")
 
-        assertThat(bankAccounts.contains(createdAccount)).isTrue;
+        assertThat(bankAccounts.contains(createdAccount)).isTrue()
     }
 }

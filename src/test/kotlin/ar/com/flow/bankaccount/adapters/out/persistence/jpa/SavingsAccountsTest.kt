@@ -5,7 +5,8 @@ import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.ports.out.BankAccounts
 import ar.com.flow.money.TestMoney.ars100
-import org.assertj.core.api.Assertions.assertThat
+import assertk.assertThat
+import assertk.assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
@@ -40,7 +41,7 @@ class SavingsAccountsTest {
     fun containsCreatedAccount() {
         val account = bankAccounts.create(daniel, Currency.ARS)
 
-        assertThat(bankAccounts.contains(account)).isTrue
+        assertThat(bankAccounts.contains(account)).isTrue()
     }
 
     @Test
@@ -53,7 +54,7 @@ class SavingsAccountsTest {
         val arsAccount = bankAccounts.create(daniel, Currency.ARS)
         val usdAccount = bankAccounts.create(daniel, Currency.USD)
 
-        assertThat(bankAccounts.ownedBy(daniel)).containsAll(listOf(arsAccount, usdAccount))
+        assertThat(bankAccounts.ownedBy(daniel)).containsAll(arsAccount, usdAccount)
     }
 
 
@@ -65,7 +66,7 @@ class SavingsAccountsTest {
 
         val arsAccounts = bankAccounts.ownedBy(daniel, Currency.ARS)
 
-        assertThat(arsAccounts).containsAll(listOf(arsAccount1, arsAccount2))
+        assertThat(arsAccounts).containsAll(arsAccount1, arsAccount2)
         assertThat(arsAccounts).doesNotContain(usdAccount)
     }
 }
