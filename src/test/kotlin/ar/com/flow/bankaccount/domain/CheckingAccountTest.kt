@@ -21,8 +21,10 @@ class CheckingAccountTest {
 
     @BeforeEach
     fun setUp() {
-        danielsAccount = accountRegistry.createCheckingAccountFor(daniel, dollars100, minusDollars100Limit)
-        mabelsAccount = accountRegistry.createCheckingAccountFor(mabel, dollars100, minusDollars100Limit)
+        danielsAccount = accountRegistry.createCheckingAccountFor(daniel, Currency.USD, minusDollars100Limit)
+        danielsAccount.deposit(dollars100)
+        mabelsAccount = accountRegistry.createCheckingAccountFor(mabel, Currency.USD, minusDollars100Limit)
+        mabelsAccount.deposit(dollars100)
     }
 
     @Test

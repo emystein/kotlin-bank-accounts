@@ -1,38 +1,26 @@
 package ar.com.flow.bankaccount.usecases
 
-import ar.com.flow.Customer
-import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryBankAccounts
-import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryCustomers
 import ar.com.flow.bankaccount.domain.Balance
 import ar.com.flow.bankaccount.domain.Currency
-import ar.com.flow.bankaccount.ports.out.BankAccounts
-import ar.com.flow.bankaccount.ports.out.Customers
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class TransferTest {
-    private lateinit var customers: Customers
-    private lateinit var bankAccounts: BankAccounts
+class TransferTest: UseCaseTestSupport() {
+    private lateinit var deposit: Deposit
+    private lateinit var transfer: Transfer
 
     @BeforeEach
-    internal fun setUp() {
-        customers = InMemoryCustomers()
-        bankAccounts = InMemoryBankAccounts()
+    override fun setUp() {
+        super.setUp()
+        deposit = Deposit(customers, bankAccounts)
+        transfer = Transfer(customers, bankAccounts)
     }
 
     @Test
     internal fun transferBetweenDifferentAccountsSameCurrency() {
-        val juanPerez = customers.save(Customer("Juan Perez"))
-        bankAccounts.create(juanPerez, currency = Currency.ARS)
-
-        val davidGomez = customers.save(Customer("David Gomez"))
-        bankAccounts.create(davidGomez, currency = Currency.ARS)
-
-        val deposit = Deposit(customers, bankAccounts)
         deposit.execute(customerName = "Juan Perez", currencyCode = Currency.ARS.code, amountToDeposit = 100)
 
-        val transfer = Transfer(customers, bankAccounts)
         transfer.execute(debitCustomerName = "Juan Perez", Currency.ARS.code, amountToTransfer = 100, creditCustomerName = "David Gomez")
 
         val debitAccount = bankAccounts.ownedBy(juanPerez, Currency.ARS).first()

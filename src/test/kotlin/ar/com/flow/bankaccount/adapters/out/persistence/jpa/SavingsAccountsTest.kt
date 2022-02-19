@@ -27,6 +27,7 @@ class SavingsAccountsTest {
     @Test
     fun updateSavingsAccount() {
         val account = bankAccounts.create(daniel, Currency.ARS)
+
         account.deposit(ars100)
 
         bankAccounts.save(account)
