@@ -10,9 +10,10 @@ import ar.com.flow.money.TestMoney.dollars10
 import ar.com.flow.money.TestMoney.dollars100
 import ar.com.flow.money.TestMoney.dollars200
 import assertk.assertThat
+import assertk.assertions.hasClass
 import assertk.assertions.isEqualTo
+import assertk.assertions.isFailure
 import assertk.assertions.isNotEqualTo
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -53,7 +54,9 @@ class SavingsAccountTest {
 
     @Test
     fun canNotWithdrawAmountGreaterThanAvailableFunds() {
-        assertThrows(InsufficientFundsException::class.java) { danielsAccount.withdraw(dollars200) }
+        assertThat { danielsAccount.withdraw(dollars200) }
+            .isFailure()
+            .hasClass(InsufficientFundsException::class)
 
         assertThat(danielsAccount).keepsInitialBalance()
     }
@@ -88,18 +91,20 @@ class SavingsAccountTest {
 
     @Test
     fun canNotTransferAmountGreaterThanAvailableFunds() {
-        assertThrows(InsufficientFundsException::class.java) {
-            danielsAccount.transfer(dollars200, mabelsAccount)
-        }
+        assertThat { danielsAccount.transfer(dollars200, mabelsAccount) }
+            .isFailure()
+            .hasClass(InsufficientFundsException::class)
+
         assertThat(danielsAccount).keepsInitialBalance()
         assertThat(mabelsAccount).keepsInitialBalance()
     }
 
     @Test
     fun canNotTransferToSelf() {
-        assertThrows(SameAccountException::class.java) {
-            danielsAccount.transfer(dollars10, danielsAccount)
-        }
+        assertThat { danielsAccount.transfer(dollars10, danielsAccount) }
+            .isFailure()
+            .hasClass(SameAccountException::class)
+
         assertThat(danielsAccount).keepsInitialBalance()
     }
 

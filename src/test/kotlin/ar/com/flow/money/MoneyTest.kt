@@ -6,14 +6,17 @@ import ar.com.flow.money.TestMoney.dollars100
 import ar.com.flow.money.TestMoney.dollars110
 import ar.com.flow.money.TestMoney.dollars90
 import assertk.assertThat
+import assertk.assertions.hasClass
 import assertk.assertions.isEqualTo
-import org.junit.jupiter.api.Assertions.assertThrows
+import assertk.assertions.isFailure
 import org.junit.jupiter.api.Test
 
 class MoneyTest {
     @Test
     fun givenANegativeAmountWhenCreateDollarsWithTheGivenAmountThenTheDollarsShouldNotBeCreated() {
-        assertThrows(IllegalArgumentException::class.java) { amount(-10) }
+        assertThat { amount(-10) }
+            .isFailure()
+            .hasClass(IllegalArgumentException::class)
     }
 
     @Test
@@ -34,7 +37,9 @@ class MoneyTest {
 
     @Test
     fun given100USDWhenSubtract200USDThenSubtractionShouldBeRejected() {
-        assertThrows(InsufficientFundsException::class.java) { dollars100.minus(TestMoney.dollars200) }
+        assertThat { dollars100.minus(TestMoney.dollars200) }
+            .isFailure()
+            .hasClass(InsufficientFundsException::class)
     }
 
     @Test

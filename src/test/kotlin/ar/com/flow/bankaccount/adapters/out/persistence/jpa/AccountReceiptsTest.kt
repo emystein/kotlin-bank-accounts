@@ -8,7 +8,9 @@ import ar.com.flow.bankaccount.domain.TestObjects
 import ar.com.flow.bankaccount.domain.transaction.receipt.Action
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
 import ar.com.flow.money.TestMoney
-import org.junit.jupiter.api.Assertions.assertThrows
+import assertk.assertThat
+import assertk.assertions.hasClass
+import assertk.assertions.isFailure
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -40,6 +42,8 @@ internal class AccountReceiptsTest {
 
         val danielsReceipts = AccountReceipts(danielsAccount.id, receiptMapper, receiptRepository)
 
-        assertThrows(DifferentAccountException::class.java) { danielsReceipts.add(mabelReceipt) }
+        assertThat { danielsReceipts.add(mabelReceipt) }
+            .isFailure()
+            .hasClass(DifferentAccountException::class)
     }
 }
