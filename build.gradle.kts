@@ -3,7 +3,7 @@
 plugins {
 	id("com.github.ben-manes.versions") version "0.39.0"
 	id("se.patrikerdes.use-latest-versions") version "0.2.17"
-	id("org.springframework.boot") version "2.5.4"
+	id("org.springframework.boot") version "2.6.3"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 	kotlin("jvm") version "1.5.30"
 	kotlin("plugin.spring") version "1.5.20"
