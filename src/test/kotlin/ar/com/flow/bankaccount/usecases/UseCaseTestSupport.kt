@@ -1,6 +1,7 @@
 package ar.com.flow.bankaccount.usecases
 
 import ar.com.flow.Customer
+import ar.com.flow.bankaccount.adapters.out.UUIDAccountIdGenerator
 import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryBankAccounts
 import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryCustomers
 import ar.com.flow.bankaccount.domain.Currency
@@ -17,7 +18,7 @@ abstract class UseCaseTestSupport {
     @BeforeEach
     open fun setUp() {
         customers = InMemoryCustomers()
-        bankAccounts = InMemoryBankAccounts()
+        bankAccounts = InMemoryBankAccounts(UUIDAccountIdGenerator())
         juanPerez = customers.save(Customer(name = "Juan Perez"))
         bankAccounts.createSavingsAccount(juanPerez, currency = Currency.ARS)
         davidGomez = customers.save(Customer(name = "David Gomez"))

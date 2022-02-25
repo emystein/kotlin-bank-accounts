@@ -5,13 +5,16 @@ import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.SavingsAccount
 import ar.com.flow.bankaccount.domain.withdrawal.WithdrawalLimit
+import ar.com.flow.bankaccount.ports.out.AccountIdGenerator
 import ar.com.flow.bankaccount.ports.out.BankAccounts
 
-class InMemoryBankAccounts : BankAccounts {
+class InMemoryBankAccounts(
+    private val accountIdGenerator: AccountIdGenerator
+) : BankAccounts {
     private val accounts: MutableMap<Customer, MutableSet<BankAccount>> = mutableMapOf()
 
     override fun createSavingsAccount(accountOwner: Customer, currency: Currency): BankAccount {
-        val created = SavingsAccount(generateId(), accountOwner, currency, InMemoryStatement(currency))
+        val created = SavingsAccount(accountIdGenerator.generate(), accountOwner, currency, InMemoryStatement(currency))
 
         if (accounts.containsKey(accountOwner)) {
             accounts[accountOwner]!!.add(created)
@@ -23,7 +26,7 @@ class InMemoryBankAccounts : BankAccounts {
     }
 
     override fun createCheckingAccount(owner: Customer, currency: Currency, withdrawalLimit: WithdrawalLimit): BankAccount {
-        val account = SavingsAccount(generateId(), owner, currency, InMemoryStatement(currency))
+        val account = SavingsAccount(accountIdGenerator.generate(), owner, currency, InMemoryStatement(currency))
         account.withdrawalLimit = withdrawalLimit
         return account
     }

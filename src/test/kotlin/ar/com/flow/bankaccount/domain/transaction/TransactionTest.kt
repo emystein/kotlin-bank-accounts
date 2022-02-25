@@ -1,5 +1,6 @@
 package ar.com.flow.bankaccount.domain.transaction
 
+import ar.com.flow.bankaccount.adapters.out.UUIDAccountIdGenerator
 import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryBankAccounts
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.Currency
@@ -19,7 +20,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class TransactionTest {
-    private val bankAccounts: BankAccounts = InMemoryBankAccounts()
+    private val bankAccounts: BankAccounts = InMemoryBankAccounts(UUIDAccountIdGenerator())
 
     private lateinit var debitAccount: BankAccount
     private lateinit var debit: Step

@@ -1,5 +1,6 @@
 package ar.com.flow.bankaccount.ports
 
+import ar.com.flow.bankaccount.adapters.out.UUIDAccountIdGenerator
 import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryBankAccounts
 import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryStatement
 import ar.com.flow.bankaccount.domain.BankAccount
@@ -28,7 +29,7 @@ class StatementTest {
     private lateinit var withdraw10Receipt: Receipt
     private lateinit var withdraw20Receipt: Receipt
 
-    private val bankAccounts: BankAccounts = InMemoryBankAccounts()
+    private val bankAccounts: BankAccounts = InMemoryBankAccounts(UUIDAccountIdGenerator())
 
     @BeforeEach
     fun setUp() {

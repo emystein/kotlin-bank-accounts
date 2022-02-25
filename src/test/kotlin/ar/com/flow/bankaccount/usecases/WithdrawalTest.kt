@@ -1,6 +1,7 @@
 package ar.com.flow.bankaccount.usecases
 
 import ar.com.flow.Customer
+import ar.com.flow.bankaccount.adapters.out.UUIDAccountIdGenerator
 import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryBankAccounts
 import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryCustomers
 import ar.com.flow.bankaccount.domain.Balance
@@ -19,7 +20,7 @@ class WithdrawalTest {
     @BeforeEach
     internal fun setUp() {
         customers = InMemoryCustomers()
-        bankAccounts = InMemoryBankAccounts()
+        bankAccounts = InMemoryBankAccounts(UUIDAccountIdGenerator())
     }
 
     @Test
