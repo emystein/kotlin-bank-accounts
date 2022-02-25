@@ -9,5 +9,4 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 @ComponentScan
 @EnableJpaRepositories
 @EntityScan
-class BankAccountPersistenceConfiguration {
-}
+class BankAccountPersistenceConfiguration

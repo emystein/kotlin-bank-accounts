@@ -1,6 +1,6 @@
 package ar.com.flow.bankaccount.ports
 
-import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryAccountRegistry
+import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryBankAccounts
 import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryStatement
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.Currency
@@ -9,6 +9,7 @@ import ar.com.flow.bankaccount.domain.transaction.receipt.Action
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.credit
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.debit
+import ar.com.flow.bankaccount.ports.out.BankAccounts
 import ar.com.flow.bankaccount.ports.out.Statement
 import ar.com.flow.money.TestMoney.dollars10
 import ar.com.flow.money.TestMoney.dollars20
@@ -27,13 +28,13 @@ class StatementTest {
     private lateinit var withdraw10Receipt: Receipt
     private lateinit var withdraw20Receipt: Receipt
 
-    private val accountRegistry = InMemoryAccountRegistry()
+    private val bankAccounts: BankAccounts = InMemoryBankAccounts()
 
     @BeforeEach
     fun setUp() {
         statement = InMemoryStatement(Currency.USD)
 
-        danielsAccount = accountRegistry.createSavingsAccount(daniel, Currency.USD)
+        danielsAccount = bankAccounts.createSavingsAccount(daniel, Currency.USD)
 
         deposit10Receipt = credit(danielsAccount, Action.Deposit, dollars10)
         withdraw10Receipt = debit(danielsAccount, Action.Withdrawal, dollars10)

@@ -10,6 +10,6 @@ class CreateSavingsAccount(private val customers: Customers, private val bankAcc
     fun execute(customerName: String, currencyCode: String): BankAccount {
         val customer = customers.save(Customer(customerName))
 
-        return bankAccounts.create(customer, Currency.valueOf(currencyCode))
+        return bankAccounts.createSavingsAccount(customer, Currency.valueOf(currencyCode))
     }
 }

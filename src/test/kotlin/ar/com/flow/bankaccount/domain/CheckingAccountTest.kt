@@ -1,9 +1,10 @@
 package ar.com.flow.bankaccount.domain
 
-import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryAccountRegistry
+import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryBankAccounts
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.domain.TestObjects.mabel
 import ar.com.flow.bankaccount.domain.TestObjects.minusDollars100Limit
+import ar.com.flow.bankaccount.ports.out.BankAccounts
 import ar.com.flow.money.InsufficientFundsException
 import ar.com.flow.money.TestMoney.dollars10
 import ar.com.flow.money.TestMoney.dollars100
@@ -16,16 +17,16 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class CheckingAccountTest {
-    private val accountRegistry = InMemoryAccountRegistry()
+    private val bankAccounts: BankAccounts = InMemoryBankAccounts()
 
     private lateinit var danielsAccount: BankAccount
     private lateinit var mabelsAccount: BankAccount
 
     @BeforeEach
     fun setUp() {
-        danielsAccount = accountRegistry.createCheckingAccountFor(daniel, Currency.USD, minusDollars100Limit)
+        danielsAccount = bankAccounts.createCheckingAccount(daniel, Currency.USD, minusDollars100Limit)
         danielsAccount.deposit(dollars100)
-        mabelsAccount = accountRegistry.createCheckingAccountFor(mabel, Currency.USD, minusDollars100Limit)
+        mabelsAccount = bankAccounts.createCheckingAccount(mabel, Currency.USD, minusDollars100Limit)
         mabelsAccount.deposit(dollars100)
     }
 

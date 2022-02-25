@@ -1,10 +1,10 @@
 package ar.com.flow.bankaccount.domain
 
-import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryAccountRegistry
+import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryBankAccounts
 import ar.com.flow.bankaccount.domain.Balance.Companion.zero
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.domain.TestObjects.mabel
-import ar.com.flow.bankaccount.ports.out.BankAccountRegistry
+import ar.com.flow.bankaccount.ports.out.BankAccounts
 import ar.com.flow.money.InsufficientFundsException
 import ar.com.flow.money.TestMoney.dollars10
 import ar.com.flow.money.TestMoney.dollars100
@@ -18,25 +18,34 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class SavingsAccountTest {
-    private val accountRegistry: BankAccountRegistry = InMemoryAccountRegistry()
+    private val bankAccounts: BankAccounts = InMemoryBankAccounts()
 
     private lateinit var danielsAccount: BankAccount
     private lateinit var mabelsAccount: BankAccount
 
     @BeforeEach
     fun setUp() {
-        danielsAccount = accountRegistry.createSavingsAccount(daniel, Currency.USD)
+        danielsAccount = bankAccounts.createSavingsAccount(daniel, Currency.USD)
         danielsAccount.deposit(dollars100)
-        mabelsAccount = accountRegistry.createSavingsAccount(mabel, Currency.USD)
+        mabelsAccount = bankAccounts.createSavingsAccount(mabel, Currency.USD)
         mabelsAccount.deposit(dollars100)
     }
 
     @Test
     fun createdAccountHasBalance0() {
-        val account = accountRegistry.createSavingsAccount(daniel, Currency.ARS)
+        val account = bankAccounts.createSavingsAccount(daniel, Currency.ARS)
 
         assertThat(account.balance).isEqualTo(zero(Currency.ARS))
     }
+
+    @Test
+    fun canCreateMoreThanOneAccountPerCustomerAndCurrency() {
+        val account1 = bankAccounts.createSavingsAccount(daniel, Currency.ARS)
+        val account2 = bankAccounts.createSavingsAccount(daniel, Currency.ARS)
+
+        assertThat(account1.id).isNotEqualTo(account2.id)
+    }
+
 
     @Test
     fun depositIncrementsFunds() {
@@ -110,8 +119,8 @@ class SavingsAccountTest {
 
     @Test
     fun canCreateMultipleAccountsForSameCustomerAndCurrency() {
-        val danielsAccount1 = accountRegistry.createSavingsAccount(daniel, Currency.ARS)
-        val danielsAccount2 = accountRegistry.createSavingsAccount(daniel, Currency.ARS)
+        val danielsAccount1 = bankAccounts.createSavingsAccount(daniel, Currency.ARS)
+        val danielsAccount2 = bankAccounts.createSavingsAccount(daniel, Currency.ARS)
 
         assertThat(danielsAccount1).isNotEqualTo(danielsAccount2)
     }

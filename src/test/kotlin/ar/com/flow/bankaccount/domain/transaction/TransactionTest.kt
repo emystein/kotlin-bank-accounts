@@ -1,6 +1,6 @@
 package ar.com.flow.bankaccount.domain.transaction
 
-import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryAccountRegistry
+import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryBankAccounts
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
@@ -9,27 +9,24 @@ import ar.com.flow.bankaccount.domain.transaction.receipt.Action
 import ar.com.flow.bankaccount.domain.transaction.receipt.DebitPrint
 import ar.com.flow.bankaccount.domain.transaction.receipt.DebitScratch
 import ar.com.flow.bankaccount.domain.transaction.steps.Step
-import ar.com.flow.bankaccount.ports.out.BankAccountRegistry
+import ar.com.flow.bankaccount.ports.out.BankAccounts
 import ar.com.flow.money.TestMoney.dollars10
 import ar.com.flow.money.TestMoney.dollars100
-import assertk.Assert
 import assertk.assertThat
-import assertk.assertions.support.expected
-import assertk.assertions.support.show
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class TransactionTest {
-    private val accountRegistry: BankAccountRegistry = InMemoryAccountRegistry()
+    private val bankAccounts: BankAccounts = InMemoryBankAccounts()
 
     private lateinit var debitAccount: BankAccount
     private lateinit var debit: Step
 
     @BeforeEach
     fun setUp() {
-        debitAccount = accountRegistry.createSavingsAccount(daniel, Currency.USD)
+        debitAccount = bankAccounts.createSavingsAccount(daniel, Currency.USD)
         debitAccount.deposit(dollars100)
 
         debit = Step(

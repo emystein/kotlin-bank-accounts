@@ -19,8 +19,8 @@ abstract class UseCaseTestSupport {
         customers = InMemoryCustomers()
         bankAccounts = InMemoryBankAccounts()
         juanPerez = customers.save(Customer(name = "Juan Perez"))
-        bankAccounts.create(juanPerez, currency = Currency.ARS)
+        bankAccounts.createSavingsAccount(juanPerez, currency = Currency.ARS)
         davidGomez = customers.save(Customer(name = "David Gomez"))
-        bankAccounts.create(davidGomez, currency = Currency.ARS)
+        bankAccounts.createSavingsAccount(davidGomez, currency = Currency.ARS)
     }
 }

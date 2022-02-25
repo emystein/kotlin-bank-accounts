@@ -7,6 +7,7 @@ import ar.com.flow.bankaccount.domain.transaction.receipt.Action
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.credit
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.debit
+import ar.com.flow.bankaccount.ports.out.BankAccounts
 import ar.com.flow.bankaccount.ports.out.Statement
 import ar.com.flow.money.TestMoney.dollars10
 import ar.com.flow.money.TestMoney.dollars20
@@ -22,7 +23,7 @@ import org.springframework.boot.test.context.SpringBootTest
 @SpringBootTest(classes = [BankAccountApplication::class])
 class StatementTest {
     @Autowired
-    private lateinit var accountRegistry: BankAccountRegistry
+    private lateinit var bankAccounts: BankAccounts
     @Autowired
     private lateinit var receiptMapper: ReceiptMapper
     @Autowired
@@ -38,7 +39,7 @@ class StatementTest {
     fun setUp() {
         receiptRepository.deleteAll()
 
-        val danielsAccount = accountRegistry.createSavingsAccount(daniel, Currency.USD)
+        val danielsAccount = bankAccounts.createSavingsAccount(daniel, Currency.USD)
 
         val receipts = AccountReceipts(danielsAccount.id, receiptMapper, receiptRepository)
 

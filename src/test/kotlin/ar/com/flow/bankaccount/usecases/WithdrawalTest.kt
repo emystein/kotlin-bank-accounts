@@ -25,7 +25,7 @@ class WithdrawalTest {
     @Test
     internal fun withdraw() {
         val juanPerez = customers.save(Customer("Juan Perez"))
-        bankAccounts.create(juanPerez, currency = Currency.ARS)
+        bankAccounts.createSavingsAccount(juanPerez, currency = Currency.ARS)
 
         val deposit = Deposit(customers, bankAccounts)
         deposit.execute(customerName = "Juan Perez", currencyCode = Currency.ARS.code, amountToDeposit = 100)

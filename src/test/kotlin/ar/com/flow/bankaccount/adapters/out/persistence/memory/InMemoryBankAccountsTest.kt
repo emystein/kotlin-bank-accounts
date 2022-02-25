@@ -14,7 +14,7 @@ class InMemoryBankAccountsTest {
     internal fun createAccount() {
         val bankAccounts = InMemoryBankAccounts()
 
-        val createdAccount = bankAccounts.create(daniel, Currency.ARS)
+        val createdAccount = bankAccounts.createSavingsAccount(daniel, Currency.ARS)
 
         assertThat(bankAccounts.contains(createdAccount)).isTrue()
     }
@@ -30,8 +30,8 @@ class InMemoryBankAccountsTest {
     fun allSavingsAccountsOwnedByCustomer() {
         val bankAccounts = InMemoryBankAccounts()
 
-        val arsAccount = bankAccounts.create(daniel, Currency.ARS)
-        val usdAccount = bankAccounts.create(daniel, Currency.USD)
+        val arsAccount = bankAccounts.createSavingsAccount(daniel, Currency.ARS)
+        val usdAccount = bankAccounts.createSavingsAccount(daniel, Currency.USD)
 
         assertThat(bankAccounts.ownedBy(daniel)).containsAll(arsAccount, usdAccount)
     }
@@ -47,9 +47,9 @@ class InMemoryBankAccountsTest {
     fun allSavingsAccountsOwnedByCustomerForAGivenCurrency() {
         val bankAccounts = InMemoryBankAccounts()
 
-        val arsAccount1 = bankAccounts.create(daniel, Currency.ARS)
-        val arsAccount2 = bankAccounts.create(daniel, Currency.ARS)
-        val usdAccount = bankAccounts.create(daniel, Currency.USD)
+        val arsAccount1 = bankAccounts.createSavingsAccount(daniel, Currency.ARS)
+        val arsAccount2 = bankAccounts.createSavingsAccount(daniel, Currency.ARS)
+        val usdAccount = bankAccounts.createSavingsAccount(daniel, Currency.USD)
 
         val arsAccounts = bankAccounts.ownedBy(daniel, Currency.ARS)
 

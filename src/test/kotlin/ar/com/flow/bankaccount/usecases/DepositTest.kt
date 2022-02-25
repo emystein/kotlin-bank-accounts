@@ -25,7 +25,7 @@ class DepositTest {
     @Test
     internal fun deposit() {
         val juanPerez = customers.save(Customer("Juan Perez"))
-        bankAccounts.create(juanPerez, currency = Currency.ARS)
+        bankAccounts.createSavingsAccount(juanPerez, currency = Currency.ARS)
 
         val deposit = Deposit(customers, bankAccounts)
 
