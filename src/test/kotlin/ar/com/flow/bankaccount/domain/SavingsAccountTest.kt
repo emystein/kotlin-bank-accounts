@@ -11,10 +11,7 @@ import ar.com.flow.money.TestMoney.dollars10
 import ar.com.flow.money.TestMoney.dollars100
 import ar.com.flow.money.TestMoney.dollars200
 import assertk.assertThat
-import assertk.assertions.hasClass
-import assertk.assertions.isEqualTo
-import assertk.assertions.isFailure
-import assertk.assertions.isNotEqualTo
+import assertk.assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -124,5 +121,13 @@ class SavingsAccountTest {
         val danielsAccount2 = bankAccounts.createSavingsAccount(daniel, Currency.ARS)
 
         assertThat(danielsAccount1).isNotEqualTo(danielsAccount2)
+    }
+
+    @Test
+    internal fun retrieveAccountByItsId() {
+        val retrievedAccount = bankAccounts.getById(danielsAccount.id)
+
+        assertThat(retrievedAccount).isPresent()
+        assertThat(retrievedAccount.get()).isEqualTo(danielsAccount)
     }
 }

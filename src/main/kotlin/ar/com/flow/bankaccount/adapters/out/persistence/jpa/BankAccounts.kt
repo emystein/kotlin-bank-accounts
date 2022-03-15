@@ -1,6 +1,7 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 
 import ar.com.flow.Customer
+import ar.com.flow.bankaccount.domain.AccountId
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.SavingsAccount
@@ -8,6 +9,7 @@ import ar.com.flow.bankaccount.domain.withdrawal.WithdrawalLimit
 import ar.com.flow.bankaccount.ports.out.AccountIdGenerator
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import java.util.*
 import javax.transaction.Transactional
 
 @Component
@@ -20,23 +22,28 @@ class BankAccounts(
     @Autowired private val receiptRepository: ReceiptRepository,
     @Autowired private val accountIdGenerator: AccountIdGenerator,
 ) : ar.com.flow.bankaccount.ports.out.BankAccounts {
-    override fun createSavingsAccount(accountOwner: Customer, currency: Currency): BankAccount {
+    override fun createSavingsAccount(owner: Customer, currency: Currency): BankAccount {
         val accountId = accountIdGenerator.generate()
         val receipts = AccountReceipts(accountId, receiptMapper, receiptRepository)
-        val account = SavingsAccount(accountId, accountOwner, currency, Statement(currency, receipts))
+        val account = SavingsAccount(accountId, owner, currency, Statement(currency, receipts))
         val persistenceAccount = accountMapper.toJpa(account)
         bankAccountRepository.save(persistenceAccount)
         return account
     }
 
-    override fun createCheckingAccount(accountOwner: Customer, currency: Currency, withdrawalLimit: WithdrawalLimit): BankAccount {
+    override fun createCheckingAccount(owner: Customer, currency: Currency, withdrawalLimit: WithdrawalLimit): BankAccount {
         val accountId = accountIdGenerator.generate()
         val receipts = AccountReceipts(accountId, receiptMapper, receiptRepository)
-        val account = SavingsAccount(accountId, accountOwner, currency, Statement(currency, receipts))
+        val account = SavingsAccount(accountId, owner, currency, Statement(currency, receipts))
         account.withdrawalLimit = withdrawalLimit
         val persistenceAccount = accountMapper.toJpa(account)
         bankAccountRepository.save(persistenceAccount)
         return account
+    }
+
+    override fun getById(accountId: AccountId): Optional<BankAccount> {
+        val persistenceAccount = bankAccountRepository.findByAccountId(accountId.value)
+        return persistenceAccount.map { accountMapper.toDomain(it) }
     }
 
     override fun save(account: BankAccount): BankAccount {

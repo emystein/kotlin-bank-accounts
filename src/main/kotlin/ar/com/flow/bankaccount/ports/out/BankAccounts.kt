@@ -1,14 +1,18 @@
 package ar.com.flow.bankaccount.ports.out
 
 import ar.com.flow.Customer
+import ar.com.flow.bankaccount.domain.AccountId
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.withdrawal.WithdrawalLimit
+import java.util.*
 
 interface BankAccounts {
-    fun createSavingsAccount(accountOwner: Customer, currency: Currency): BankAccount
+    fun createSavingsAccount(owner: Customer, currency: Currency): BankAccount
 
-    fun createCheckingAccount(accountOwner: Customer, currency: Currency, withdrawalLimit: WithdrawalLimit): BankAccount
+    fun createCheckingAccount(owner: Customer, currency: Currency, withdrawalLimit: WithdrawalLimit): BankAccount
+
+    fun getById(accountId: AccountId): Optional<BankAccount>
 
     fun save(account: BankAccount): BankAccount
 

@@ -1,25 +1,27 @@
 package ar.com.flow.bankaccount.adapters.out.persistence.memory
 
 import ar.com.flow.Customer
+import ar.com.flow.bankaccount.domain.AccountId
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.SavingsAccount
 import ar.com.flow.bankaccount.domain.withdrawal.WithdrawalLimit
 import ar.com.flow.bankaccount.ports.out.AccountIdGenerator
 import ar.com.flow.bankaccount.ports.out.BankAccounts
+import java.util.*
 
 class InMemoryBankAccounts(
     private val accountIdGenerator: AccountIdGenerator
 ) : BankAccounts {
     private val accounts: MutableMap<Customer, MutableSet<BankAccount>> = mutableMapOf()
 
-    override fun createSavingsAccount(accountOwner: Customer, currency: Currency): BankAccount {
-        val created = SavingsAccount(accountIdGenerator.generate(), accountOwner, currency, InMemoryStatement(currency))
+    override fun createSavingsAccount(owner: Customer, currency: Currency): BankAccount {
+        val created = SavingsAccount(accountIdGenerator.generate(), owner, currency, InMemoryStatement(currency))
 
-        if (accounts.containsKey(accountOwner)) {
-            accounts[accountOwner]!!.add(created)
+        if (accounts.containsKey(owner)) {
+            accounts[owner]!!.add(created)
         } else {
-            accounts[accountOwner] = mutableSetOf(created)
+            accounts[owner] = mutableSetOf(created)
         }
 
         return created
@@ -29,6 +31,10 @@ class InMemoryBankAccounts(
         val account = SavingsAccount(accountIdGenerator.generate(), owner, currency, InMemoryStatement(currency))
         account.withdrawalLimit = withdrawalLimit
         return account
+    }
+
+    override fun getById(accountId: AccountId): Optional<BankAccount> {
+        return Optional.ofNullable(accounts.values.flatten().find { it.id == accountId })
     }
 
     override fun save(account: BankAccount): BankAccount {
