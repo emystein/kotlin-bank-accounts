@@ -8,29 +8,24 @@ class BankAccountFilters {
     var owner: Customer? = null
     var currency: Currency? = null
 
-    var filters: MutableList<BankAccountFilter> = mutableListOf()
+    var filters: MutableList<(BankAccount) -> Boolean> = mutableListOf()
 
     fun owner(ownerToFilter: Customer): BankAccountFilters {
         this.owner = ownerToFilter
-        filters.add(BankAccountFilter { account -> account.owner == ownerToFilter })
+        filters.add({ account -> account.owner == ownerToFilter })
         return this
     }
 
     fun currency(currencyToFilter: Currency): BankAccountFilters {
         this.currency = currencyToFilter
-        filters.add(BankAccountFilter { account -> account.currency == currencyToFilter})
-        return this
-    }
-
-    fun add(filter: BankAccountFilter): BankAccountFilters {
-        filters.add(filter)
+        filters.add({ account -> account.currency == currencyToFilter })
         return this
     }
 
     fun applyTo(accountsToFilter: List<BankAccount>): List<BankAccount> {
         var filtered = accountsToFilter
         filters.forEach { filter ->
-            filtered = filter.applyTo(filtered)
+            filtered = filtered.filter(filter)
         }
         return filtered
     }
