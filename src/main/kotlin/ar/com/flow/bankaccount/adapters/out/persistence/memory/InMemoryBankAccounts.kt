@@ -7,6 +7,7 @@ import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.SavingsAccount
 import ar.com.flow.bankaccount.domain.withdrawal.WithdrawalLimit
 import ar.com.flow.bankaccount.ports.out.AccountIdGenerator
+import ar.com.flow.bankaccount.ports.out.BankAccountFilters
 import ar.com.flow.bankaccount.ports.out.BankAccounts
 import java.util.*
 
@@ -43,6 +44,10 @@ class InMemoryBankAccounts(
         return account
     }
 
+    override fun all(): List<BankAccount> {
+        return accounts.values.flatten()
+    }
+
     override fun ownedBy(accountOwner: Customer): List<BankAccount> {
         return if (accounts.containsKey(accountOwner)) {
             accounts[accountOwner]!!.toList()
@@ -62,5 +67,9 @@ class InMemoryBankAccounts(
     override fun contains(account: BankAccount): Boolean {
         return accounts.containsKey(account.owner) &&
                 accounts[account.owner]!!.any { a -> a.currency == account.currency }
+    }
+
+    override fun query(filters: BankAccountFilters): List<BankAccount> {
+        return filters.applyTo(accounts.values.flatten())
     }
 }

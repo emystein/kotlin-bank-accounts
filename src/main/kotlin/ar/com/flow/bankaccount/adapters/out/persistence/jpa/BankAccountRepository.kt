@@ -8,5 +8,6 @@ import java.util.*
 interface BankAccountRepository : JpaRepository<BankAccount, Long> {
     fun findByAccountId(value: String): Optional<BankAccount>
     fun findAllByOwner(accountOwner: Customer): List<BankAccount>
+    fun findAllByCurrency(currency: String): List<BankAccount>
     fun findAllByOwnerAndCurrency(accountOwner: Customer, currency: String): List<BankAccount>
 }

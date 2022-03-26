@@ -7,6 +7,7 @@ import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.SavingsAccount
 import ar.com.flow.bankaccount.domain.withdrawal.WithdrawalLimit
 import ar.com.flow.bankaccount.ports.out.AccountIdGenerator
+import ar.com.flow.bankaccount.ports.out.BankAccountFilters
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.util.*
@@ -62,6 +63,14 @@ class BankAccounts(
 
     override fun contains(account: BankAccount): Boolean {
         return bankAccountRepository.findByAccountId(account.id.value).isPresent
+    }
+
+    override fun query(filters: BankAccountFilters): List<BankAccount> {
+        return filters.applyTo(all())
+    }
+
+    override fun all(): List<BankAccount> {
+        return bankAccountRepository.findAll().map{ account -> accountMapper.toDomain(account) }
     }
 
     private fun jpaAccountsOwnedBy(accountOwner: Customer): List<ar.com.flow.bankaccount.adapters.out.persistence.jpa.BankAccount> {
