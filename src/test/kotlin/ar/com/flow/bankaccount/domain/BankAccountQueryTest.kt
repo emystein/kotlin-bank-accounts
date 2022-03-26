@@ -10,6 +10,7 @@ import ar.com.flow.bankaccount.ports.out.BankAccounts
 import ar.com.flow.money.TestMoney
 import assertk.assertThat
 import assertk.assertions.isEqualTo
+import assertk.assertions.isNotEmpty
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -20,9 +21,6 @@ class BankAccountQueryTest {
     private lateinit var danielsARSAccount: BankAccount
     private lateinit var mabelsUSDAccount: BankAccount
 
-    private lateinit var danielsAccounts: MutableList<BankAccount>
-    private lateinit var usdAccounts: MutableList<BankAccount>
-
     @BeforeEach
     fun setUp() {
         danielsUSDAccount = bankAccounts.createSavingsAccount(daniel, USD)
@@ -31,26 +29,28 @@ class BankAccountQueryTest {
         danielsARSAccount = bankAccounts.createSavingsAccount(daniel, Currency.ARS)
         danielsARSAccount.deposit(TestMoney.ars100)
 
-        danielsAccounts = mutableListOf(danielsUSDAccount, danielsARSAccount)
-
         mabelsUSDAccount = bankAccounts.createSavingsAccount(mabel, USD)
         mabelsUSDAccount.deposit(TestMoney.dollars100)
-
-        usdAccounts = mutableListOf(danielsUSDAccount, mabelsUSDAccount)
     }
 
     @Test
     fun shouldFilterAccountsOwnedByAGivenUser() {
         val foundAccounts = bankAccounts.query(BankAccountFilters().owner(daniel))
 
-        assertThat(foundAccounts).isEqualTo(danielsAccounts)
+        assertThat(foundAccounts).isNotEmpty()
+        foundAccounts.forEach { account ->
+            assertThat(account.owner).isEqualTo(daniel)
+        }
     }
 
     @Test
     fun shouldFilterAccountsHoldingAGivenCurrency() {
         val foundAccounts = bankAccounts.query(BankAccountFilters().currency(USD))
 
-        assertThat(foundAccounts).isEqualTo(usdAccounts)
+        assertThat(foundAccounts).isNotEmpty()
+        foundAccounts.forEach { account ->
+            assertThat(account.currency).isEqualTo(USD)
+        }
     }
 
     @Test
