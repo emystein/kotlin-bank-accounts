@@ -14,8 +14,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class InterBankTransferTest {
-    private val bbvaBankAccounts: BankAccounts = InMemoryBankAccounts(UUIDAccountIdGenerator())
-    private val santanderBankAccounts: BankAccounts = InMemoryBankAccounts(UUIDAccountIdGenerator())
+    private val bbvaBankAccounts = InMemoryBankAccounts(UUIDAccountIdGenerator())
+    private val santanderBankAccounts = InMemoryBankAccounts(UUIDAccountIdGenerator())
 
     private lateinit var danielsBbvaUsdAccount: BankAccount
     private lateinit var mabelsSantanderUsdAccount: BankAccount
