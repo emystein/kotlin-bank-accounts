@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class BankRegistryTest {
     @Test
     fun addABankToTheRegistry() {
-        val bankRegistry: BankRegistry = InMemoryBankRegistry()
+        val bankRegistry = InMemoryBankRegistry()
 
         val bbva = Bank
             .withName("BBVA")
