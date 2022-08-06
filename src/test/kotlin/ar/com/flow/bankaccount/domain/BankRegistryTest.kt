@@ -9,7 +9,6 @@ class BankRegistryTest {
         val bankRegistry: BankRegistry = InMemoryBankRegistry()
 
         val bbva = Bank
-            .startCreate()
             .withName("BBVA")
             .withCode("1")
             .create()

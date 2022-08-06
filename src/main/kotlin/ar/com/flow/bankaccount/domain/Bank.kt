@@ -2,8 +2,14 @@ package ar.com.flow.bankaccount.domain
 
 data class Bank(private val name: String, private val code: String) {
     companion object {
-        fun startCreate(): BankBuilder {
-            return BankBuilder()
+        fun withName(aName: String): BankBuilder {
+            val builder = BankBuilder()
+            return builder.withName(aName)
+        }
+
+        fun withCode(aCode: String): BankBuilder {
+            val builder = BankBuilder()
+            return builder.withName(aCode)
         }
     }
 }
