@@ -3,6 +3,8 @@ package ar.com.flow.bankaccount.domain
 import ar.com.flow.bankaccount.adapters.out.UUIDAccountIdGenerator
 import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryBankAccounts
 import ar.com.flow.bankaccount.domain.Balance.Companion.zero
+import ar.com.flow.bankaccount.domain.Currency.ARS
+import ar.com.flow.bankaccount.domain.Currency.USD
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.domain.TestObjects.mabel
 import ar.com.flow.bankaccount.ports.out.BankAccounts
@@ -23,23 +25,23 @@ class SavingsAccountTest {
 
     @BeforeEach
     fun setUp() {
-        danielsAccount = bankAccounts.createSavingsAccount(daniel, Currency.USD)
+        danielsAccount = bankAccounts.createSavingsAccount(daniel, USD)
         danielsAccount.deposit(dollars100)
-        mabelsAccount = bankAccounts.createSavingsAccount(mabel, Currency.USD)
+        mabelsAccount = bankAccounts.createSavingsAccount(mabel, USD)
         mabelsAccount.deposit(dollars100)
     }
 
     @Test
     fun createdAccountHasBalance0() {
-        val account = bankAccounts.createSavingsAccount(daniel, Currency.ARS)
+        val account = bankAccounts.createSavingsAccount(daniel, ARS)
 
-        assertThat(account.balance).isEqualTo(zero(Currency.ARS))
+        assertThat(account.balance).isEqualTo(zero(ARS))
     }
 
     @Test
     fun canCreateMoreThanOneAccountPerCustomerAndCurrency() {
-        val account1 = bankAccounts.createSavingsAccount(daniel, Currency.ARS)
-        val account2 = bankAccounts.createSavingsAccount(daniel, Currency.ARS)
+        val account1 = bankAccounts.createSavingsAccount(daniel, ARS)
+        val account2 = bankAccounts.createSavingsAccount(daniel, ARS)
 
         assertThat(account1.id).isNotEqualTo(account2.id)
     }
@@ -117,8 +119,8 @@ class SavingsAccountTest {
 
     @Test
     fun canCreateMultipleAccountsForSameCustomerAndCurrency() {
-        val danielsAccount1 = bankAccounts.createSavingsAccount(daniel, Currency.ARS)
-        val danielsAccount2 = bankAccounts.createSavingsAccount(daniel, Currency.ARS)
+        val danielsAccount1 = bankAccounts.createSavingsAccount(daniel, ARS)
+        val danielsAccount2 = bankAccounts.createSavingsAccount(daniel, ARS)
 
         assertThat(danielsAccount1).isNotEqualTo(danielsAccount2)
     }
