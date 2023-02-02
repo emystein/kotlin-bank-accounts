@@ -15,7 +15,7 @@ internal object Deposit {
         return DepositCreditPrint(account)
     }
 
-    fun scratch(account: BankAccount): ReceiptScratch {
+    fun scratch(account: BankAccount): ReceiptPrint {
         return DepositCreditScratch(account)
     }
 

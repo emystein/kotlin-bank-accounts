@@ -16,7 +16,7 @@ internal object Transfer {
         return TransferDebitPrint(account)
     }
 
-    fun debitScratch(account: BankAccount): ReceiptScratch {
+    fun debitScratch(account: BankAccount): ReceiptPrint {
         return TransferDebitScratch(account)
     }
 
@@ -24,7 +24,7 @@ internal object Transfer {
         return TransferCreditPrint(account)
     }
 
-    fun creditScratch(account: BankAccount): ReceiptScratch {
+    fun creditScratch(account: BankAccount): ReceiptPrint {
         return TransferCreditScratch(account)
     }
 

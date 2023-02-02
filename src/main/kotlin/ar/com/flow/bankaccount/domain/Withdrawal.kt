@@ -16,7 +16,7 @@ internal object Withdrawal {
         return WithdrawalDebitPrint(account)
     }
 
-    fun scratch(account: BankAccount): ReceiptScratch {
+    fun scratch(account: BankAccount): ReceiptPrint {
         return WithdrawalDebitScratch(account)
     }
 
