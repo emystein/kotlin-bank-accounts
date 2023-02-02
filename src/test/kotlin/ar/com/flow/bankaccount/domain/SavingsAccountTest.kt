@@ -75,7 +75,7 @@ class SavingsAccountTest {
         danielsAccount.withdraw(dollars10)
 
         val actual = danielsAccount.statement.last().get()
-        assertThat(actual).isWithdrawal()
+        assertThat(actual.isWithdrawal()).isTrue()
         assertThat(actual).hasNegativeBalance(dollars10)
     }
 
@@ -88,13 +88,13 @@ class SavingsAccountTest {
 
         val danielsLastMovement = danielsAccount.statement.last().get()
         assertThat(danielsLastMovement).isDebit()
-        assertThat(danielsLastMovement).isTransfer()
+        assertThat(danielsLastMovement.isTransfer()).isTrue()
         assertThat(danielsLastMovement).hasNegativeBalance(dollars10)
         assertThat(danielsLastMovement).hasCreditAccount(mabelsAccount)
 
         val mabelsLastMovement = mabelsAccount.statement.last().get()
         assertThat(mabelsLastMovement).isCredit()
-        assertThat(mabelsLastMovement).isTransfer()
+        assertThat(mabelsLastMovement.isTransfer()).isTrue()
         assertThat(mabelsLastMovement).hasPositiveBalance(dollars10)
     }
 

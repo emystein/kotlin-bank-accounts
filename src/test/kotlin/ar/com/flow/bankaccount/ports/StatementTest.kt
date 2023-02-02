@@ -6,10 +6,9 @@ import ar.com.flow.bankaccount.adapters.out.persistence.memory.InMemoryStatement
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
-import ar.com.flow.bankaccount.domain.transaction.receipt.Action
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
-import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.credit
-import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.debit
+import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.creditDeposit
+import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.debitWithdrawal
 import ar.com.flow.bankaccount.ports.out.BankAccounts
 import ar.com.flow.bankaccount.ports.out.Statement
 import ar.com.flow.money.TestMoney.dollars10
@@ -37,9 +36,9 @@ class StatementTest {
 
         danielsAccount = bankAccounts.createSavingsAccount(daniel, Currency.USD)
 
-        deposit10Receipt = credit(danielsAccount, Action.Deposit, dollars10)
-        withdraw10Receipt = debit(danielsAccount, Action.Withdrawal, dollars10)
-        withdraw20Receipt = debit(danielsAccount, Action.Withdrawal, dollars20)
+        deposit10Receipt = creditDeposit(danielsAccount, dollars10)
+        withdraw10Receipt = debitWithdrawal(danielsAccount, dollars10)
+        withdraw20Receipt = debitWithdrawal(danielsAccount, dollars20)
     }
 
     @Test

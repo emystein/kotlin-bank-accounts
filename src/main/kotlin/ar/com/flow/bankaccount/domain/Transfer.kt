@@ -12,20 +12,20 @@ internal object Transfer {
         return BankTransferBuilder(debitAccount)
     }
 
-    fun debitReceipt(account: BankAccount): DebitPrint {
-        return DebitPrint(account, Action.Transfer)
+    fun debitReceipt(account: BankAccount): ReceiptPrint {
+        return TransferDebitPrint(account)
     }
 
-    fun debitScratch(account: BankAccount): DebitScratch {
-        return DebitScratch(account, Action.Transfer)
+    fun debitScratch(account: BankAccount): ReceiptScratch {
+        return TransferDebitScratch(account)
     }
 
-    fun creditReceipt(account: BankAccount): CreditPrint {
-        return CreditPrint(account, Action.Transfer)
+    fun creditReceipt(account: BankAccount): ReceiptPrint {
+        return TransferCreditPrint(account)
     }
 
-    fun creditScratch(account: BankAccount): CreditScratch {
-        return CreditScratch(account, Action.Transfer)
+    fun creditScratch(account: BankAccount): ReceiptScratch {
+        return TransferCreditScratch(account)
     }
 
     internal class BankTransferBuilder(

@@ -3,8 +3,14 @@ package ar.com.flow.bankaccount.domain.transaction.receipt
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.money.Money
 
-class CreditScratch(private val account: BankAccount, private val action: Action) : ReceiptScratch {
+class DepositCreditScratch(private val account: BankAccount) : ReceiptScratch {
     override fun print(amount: Money): Receipt {
-        return Receipt.debit(account, action, amount)
+        return Receipt.debitDeposit(account, amount)
+    }
+}
+
+class TransferCreditScratch(private val account: BankAccount) : ReceiptScratch {
+    override fun print(amount: Money): Receipt {
+        return Receipt.debitTransfer(account, amount)
     }
 }

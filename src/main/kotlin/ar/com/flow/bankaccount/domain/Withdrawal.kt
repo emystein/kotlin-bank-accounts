@@ -13,11 +13,11 @@ internal object Withdrawal {
     }
 
     fun receipt(account: BankAccount): ReceiptPrint {
-        return DebitPrint(account, Action.Withdrawal)
+        return WithdrawalDebitPrint(account)
     }
 
     fun scratch(account: BankAccount): ReceiptScratch {
-        return DebitScratch(account, Action.Withdrawal)
+        return WithdrawalDebitScratch(account)
     }
 
     internal class WithdrawalBuilder(private val debitAccount: BankAccount) {

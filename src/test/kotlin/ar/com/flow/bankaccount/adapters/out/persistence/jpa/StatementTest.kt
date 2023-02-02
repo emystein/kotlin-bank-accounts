@@ -3,10 +3,8 @@ package ar.com.flow.bankaccount.adapters.out.persistence.jpa
 import ar.com.flow.bankaccount.application.spring.BankAccountApplication
 import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
-import ar.com.flow.bankaccount.domain.transaction.receipt.Action
 import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt
-import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.credit
-import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.debit
+import ar.com.flow.bankaccount.domain.transaction.receipt.Receipt.Companion.creditDeposit
 import ar.com.flow.bankaccount.ports.out.BankAccounts
 import ar.com.flow.bankaccount.ports.out.Statement
 import ar.com.flow.money.TestMoney.dollars10
@@ -45,9 +43,9 @@ class StatementTest {
 
         statement = Statement(Currency.USD, receipts)
 
-        dollars10DepositReceipt = credit(danielsAccount, Action.Deposit, dollars10)
-        dollars10WithdrawReceipt = debit(danielsAccount, Action.Withdrawal, dollars10)
-        minusDollars20Record = debit(danielsAccount, Action.Withdrawal, dollars20)
+        dollars10DepositReceipt = creditDeposit(danielsAccount, dollars10)
+        dollars10WithdrawReceipt = Receipt.debitWithdrawal(danielsAccount, dollars10)
+        minusDollars20Record = Receipt.debitWithdrawal(danielsAccount,  dollars20)
     }
 
     @Test

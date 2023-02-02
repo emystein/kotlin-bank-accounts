@@ -39,7 +39,7 @@ internal class AccountReceiptsTest {
 
     @Test
     fun shouldNotAddReceiptFromDifferentAccount() {
-        val mabelReceipt = Receipt.credit(mabelsAccount, Action.Deposit, TestMoney.dollars10)
+        val mabelReceipt = Receipt.creditDeposit(mabelsAccount, TestMoney.dollars10)
 
         val danielsReceipts = AccountReceipts(danielsAccount.id, receiptMapper, receiptRepository)
 

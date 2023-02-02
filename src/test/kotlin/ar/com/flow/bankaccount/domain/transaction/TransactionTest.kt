@@ -6,9 +6,8 @@ import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.bankaccount.domain.Currency
 import ar.com.flow.bankaccount.domain.TestObjects.daniel
 import ar.com.flow.bankaccount.domain.keepsInitialBalance
-import ar.com.flow.bankaccount.domain.transaction.receipt.Action
-import ar.com.flow.bankaccount.domain.transaction.receipt.DebitPrint
-import ar.com.flow.bankaccount.domain.transaction.receipt.DebitScratch
+import ar.com.flow.bankaccount.domain.transaction.receipt.TransferDebitPrint
+import ar.com.flow.bankaccount.domain.transaction.receipt.TransferDebitScratch
 import ar.com.flow.bankaccount.domain.transaction.steps.Step
 import ar.com.flow.bankaccount.ports.out.BankAccounts
 import ar.com.flow.money.TestMoney.dollars10
@@ -32,8 +31,8 @@ class TransactionTest {
 
         debit = Step(
             debitAccount,
-            DebitPrint(debitAccount, Action.Transfer),
-            DebitScratch(debitAccount, Action.Transfer)
+            TransferDebitPrint(debitAccount),
+            TransferDebitScratch(debitAccount)
         )
     }
 

@@ -7,6 +7,7 @@ import ar.com.flow.bankaccount.domain.Balance.Companion.positive
 import ar.com.flow.bankaccount.domain.BankAccount
 import ar.com.flow.money.Money
 import java.time.LocalDateTime
+import java.time.LocalDateTime.now
 import java.time.ZoneOffset
 
 data class Receipt(
@@ -19,29 +20,53 @@ data class Receipt(
     val currency = amount.currency
 
     companion object {
-        fun debit(destinationAccount: BankAccount, action: Action, amount: Money): Receipt {
+        fun debitDeposit(destinationAccount: BankAccount, amount: Money): Receipt {
+            return debit(destinationAccount, Action.Deposit, amount)
+        }
+
+        fun debitWithdrawal(destinationAccount: BankAccount, amount: Money): Receipt {
+            return debit(destinationAccount, Action.Withdrawal, amount)
+        }
+
+        fun debitTransfer(destinationAccount: BankAccount, amount: Money): Receipt {
+            return debit(destinationAccount, Action.Transfer, amount)
+        }
+
+        fun creditDeposit(destinationAccount: BankAccount, amount: Money): Receipt {
+            return credit(destinationAccount, Action.Deposit, amount)
+        }
+
+        fun creditWithdrawal(destinationAccount: BankAccount, amount: Money): Receipt {
+            return credit(destinationAccount, Action.Withdrawal, amount)
+        }
+
+        fun creditTransfer(destinationAccount: BankAccount, amount: Money): Receipt {
+            return credit(destinationAccount, Action.Transfer, amount)
+        }
+
+        private fun debit(destinationAccount: BankAccount, action: Action, amount: Money): Receipt {
             val balance = negative(amount)
 
-            return Receipt(
-                destinationAccount.id,
-                LocalDateTime.now(),
-                FundsMovement.Debit,
-                action,
-                balance
-            )
+            return Receipt(destinationAccount.id, now(), FundsMovement.Debit, action, balance)
         }
 
-        fun credit(destinationAccount: BankAccount, action: Action, amount: Money): Receipt {
+        private fun credit(destinationAccount: BankAccount, action: Action, amount: Money): Receipt {
             val positive = positive(amount)
 
-            return Receipt(
-                destinationAccount.id,
-                LocalDateTime.now(),
-                FundsMovement.Credit,
-                action,
-                positive
-            )
+            return Receipt(destinationAccount.id, now(), FundsMovement.Credit, action, positive)
         }
+    }
+
+    fun isDeposit(): Boolean {
+        return action == Action.Deposit
+    }
+
+    fun isWithdrawal(): Boolean {
+        return action == Action.Withdrawal
+    }
+
+    fun isTransfer(): Boolean {
+        return action == Action.Transfer
     }
 
     override fun equals(other: Any?): Boolean {
@@ -54,7 +79,6 @@ data class Receipt(
         // FIXME: Java 16 LocalDateTime equals fails due to millis truncation then a workaround is to compare with seconds precision
         if (dateTime.toEpochSecond(ZoneOffset.UTC) != other.dateTime.toEpochSecond((ZoneOffset.UTC))) return false
         if (movement != other.movement) return false
-        if (action != other.action) return false
         if (amount != other.amount) return false
         if (currency != other.currency) return false
 
@@ -65,11 +89,8 @@ data class Receipt(
         var result = accountId.hashCode()
         result = 31 * result + dateTime.hashCode()
         result = 31 * result + movement.hashCode()
-        result = 31 * result + action.hashCode()
         result = 31 * result + amount.hashCode()
         result = 31 * result + currency.hashCode()
         return result
     }
-
-
 }
