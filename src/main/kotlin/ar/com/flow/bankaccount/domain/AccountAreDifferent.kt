@@ -1,10 +1,8 @@
 package ar.com.flow.bankaccount.domain
 
-import ar.com.flow.bankaccount.domain.BankAccount
-import ar.com.flow.bankaccount.domain.SameAccountException
 import ar.com.flow.bankaccount.domain.transaction.Precondition
 
-class DifferentAccountsPrecondition(
+class AccountAreDifferent(
     private val debitAccount: BankAccount,
     private val creditAccount: BankAccount
 ) : Precondition {

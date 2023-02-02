@@ -4,7 +4,7 @@ import ar.com.flow.bankaccount.domain.transaction.Builder
 import ar.com.flow.bankaccount.domain.transaction.Transaction
 import ar.com.flow.bankaccount.domain.transaction.receipt.*
 import ar.com.flow.bankaccount.domain.transaction.steps.Step
-import ar.com.flow.bankaccount.domain.withdrawal.SufficientFundsPrecondition
+import ar.com.flow.bankaccount.domain.withdrawal.SufficientFunds
 import ar.com.flow.money.Money
 
 internal object Withdrawal {
@@ -12,25 +12,17 @@ internal object Withdrawal {
         return WithdrawalBuilder(debitAccount)
     }
 
-    fun receipt(account: BankAccount): ReceiptPrint {
-        return WithdrawalDebitPrint(account)
-    }
-
-    fun scratch(account: BankAccount): ReceiptPrint {
-        return WithdrawalDebitScratch(account)
-    }
-
     internal class WithdrawalBuilder(private val debitAccount: BankAccount) {
         fun amount(amountToWithdraw: Money): Transaction {
             return Builder()
                 .amount(amountToWithdraw)
                 .precondition(
-                    SufficientFundsPrecondition(
+                    SufficientFunds(
                         debitAccount,
                         amountToWithdraw
                     )
                 )
-                .step(Step(debitAccount, receipt(debitAccount), scratch(debitAccount)))
+                .step(Step(debitAccount, WithdrawalDebitPrint(debitAccount), WithdrawalDebitScratch(debitAccount)))
                 .build()
         }
     }

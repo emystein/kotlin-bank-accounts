@@ -5,7 +5,7 @@ import ar.com.flow.bankaccount.domain.transaction.Precondition
 import ar.com.flow.money.InsufficientFundsException
 import ar.com.flow.money.Money
 
-class SufficientFundsPrecondition(private val account: BankAccount, private val amount: Money) : Precondition {
+class SufficientFunds(private val account: BankAccount, private val amount: Money) : Precondition {
     override fun check() {
         if (!account.allowsWithdraw(amount)) {
             throw InsufficientFundsException()

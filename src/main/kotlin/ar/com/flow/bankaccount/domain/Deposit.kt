@@ -11,19 +11,11 @@ internal object Deposit {
         return DepositBuilder(creditAccount)
     }
 
-    fun receipt(account: BankAccount): ReceiptPrint {
-        return DepositCreditPrint(account)
-    }
-
-    fun scratch(account: BankAccount): ReceiptPrint {
-        return DepositCreditScratch(account)
-    }
-
     internal class DepositBuilder(private val creditAccount: BankAccount) {
         fun amount(amountToDeposit: Money): Transaction {
             return Builder()
                 .amount(amountToDeposit)
-                .step(Step(creditAccount, receipt(creditAccount), scratch(creditAccount)))
+                .step(Step(creditAccount, DepositCreditPrint(creditAccount), DepositCreditScratch(creditAccount)))
                 .build()
         }
     }
